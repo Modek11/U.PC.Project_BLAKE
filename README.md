@@ -110,4 +110,4 @@ class A
 }
 
 ```
-Hubert/Papkin
+#Hubert/Papkin - Autor
