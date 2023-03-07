@@ -1,11 +1,14 @@
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerInputController))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Camera cam;
     
     [SerializeField] private float playerSpeed;
-    private PlayerInputSystem _controls;
+    private PlayerInputController playerInputController;
+
+    private Vector2 movementAxis;
     private Vector3 _playerInput;
     private Rigidbody _rigidbody;
     
@@ -15,24 +18,37 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        _controls = new PlayerInputSystem();
-        _controls.Gameplay.Enable();
+        playerInputController = GetComponent<PlayerInputController>();
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-   private void Update()
+    private void Start()
+    {
+        playerInputController.movementEvent += MovementHandler;
+    }
+
+    private void Update()
     {
         Rotation();
         
-        //Player movement input
-        _playerInput = _controls.Gameplay.Movement.ReadValue<Vector3>();
     }
 
 
    void FixedUpdate()
     {
+        MovePlayer();
+    }
+
+    private void MovementHandler(Vector2 dir)
+    {
+        movementAxis = dir;
+    }
+
+    private void MovePlayer()
+    {
         //Player movement
-        _rigidbody.MovePosition(transform.position + (_playerInput * (playerSpeed * Time.fixedDeltaTime)));
+        movementAxis = movementAxis.normalized;
+        _rigidbody.MovePosition(transform.position + (new Vector3(movementAxis.x,0, movementAxis.y) * (playerSpeed * Time.fixedDeltaTime)));
     }
 
 
@@ -56,8 +72,4 @@ public class PlayerMovement : MonoBehaviour
        transform.LookAt(position + _lookDirection,Vector3.up);
    }
 
-   private void OnDestroy()
-   {
-       _controls.Gameplay.Disable();
-   }
 }

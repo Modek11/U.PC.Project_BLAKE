@@ -7,8 +7,10 @@ public class GunSelector : MonoBehaviour
     private PlayerShooting _playerShooting;
     private int _chosenGunIndex;
 
+
     private void Awake()
     {
+        //Nie zmienia³em tu input systemu bo i tak jak dla mnie trzeba to wszystko zmieniæ
         _controls = new PlayerInputSystem();
         _controls.Gameplay.Enable();
         _playerShooting = GetComponent<PlayerShooting>();

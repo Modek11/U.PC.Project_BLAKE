@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerInputController))]
 public class PlayerInteractables : MonoBehaviour
 {
     //List of Interactable objects nearby
@@ -11,14 +12,18 @@ public class PlayerInteractables : MonoBehaviour
     [SerializeField]
     private GameObject interactUI;
     
-    private PlayerInputSystem inputSystem;
+    private PlayerInputController inputSystem;
 
     private void Awake()
     {
-        //TO DO: Change it to new implementation of InputSystem
-        inputSystem = new PlayerInputSystem();
-        inputSystem.Gameplay.Interact.performed += ctx => Interact();
+        inputSystem = GetComponent<PlayerInputController>();
     }
+
+    private void Start()
+    {
+        inputSystem.interactEvent += Interact;
+    }
+
     /// <summary>
     /// Add Interactable to list
     /// </summary>
@@ -83,15 +88,5 @@ public class PlayerInteractables : MonoBehaviour
         interactUI.SetActive(true);
         interactUI.transform.position = closest.GetPositionForUI();
         interactUI.transform.LookAt(Camera.main.transform);
-    }
-
-    private void OnEnable()
-    {
-        inputSystem.Enable();
-    }
-
-    private void OnDisable()
-    {
-        inputSystem.Disable();
     }
 }
