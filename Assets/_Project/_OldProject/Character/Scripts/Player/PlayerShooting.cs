@@ -1,15 +1,18 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerInputController))]
 public class PlayerShooting : MonoBehaviour
 {
     private PlayerInputSystem _controls;
-    
+    private PlayerInputController inputSystem;
+
     private GameObject _activeBulletPrefab;
     private Transform _gunHandlerObject;
     private GunSelector _gunSelector;
 
     private bool _isReloading;
+    private bool isShootHeld = false;
 
     private byte _activeGunIndex;
     private byte _activeGunMagazineSize;
@@ -26,7 +29,7 @@ public class PlayerShooting : MonoBehaviour
         //Game controls
         _controls = new PlayerInputSystem();
         _controls.Gameplay.Enable();
-
+        inputSystem = GetComponent<PlayerInputController>();
         //Guns variables
         _gunHandlerObject = GameObject.Find("GunHandler").transform;
         _isReloading = false;
@@ -40,17 +43,20 @@ public class PlayerShooting : MonoBehaviour
         _uiController = GetComponent<UIPlayerController>();
     }
 
-    void Update()
+    private void Start()
     {
-        if (_isReloading) return;
-        
-        Shoot();
+        inputSystem.reloadEvent += StartReload;
+        inputSystem.onShootStartEvent += OnShootHeld;
+        inputSystem.onShootCancelEvent += OnShootCanceled;
+    }
 
-        if (_controls.Gameplay.Reload.triggered)
+    private void Update()
+    {
+        if (_elapsedTimeForNextBullet > 0)
         {
-           StartCoroutine(Reload());
+            _elapsedTimeForNextBullet -= Time.deltaTime;
         }
-        
+        if(isShootHeld) Shoot();
     }
 
     private void LateUpdate()
@@ -79,26 +85,37 @@ public class PlayerShooting : MonoBehaviour
         _uiController.GunNameUI(gun.nameToDisplay);
         _uiController.MagazineSizeUI(_activeGunBulletsLeft,_activeGunMagazineSize);
     }
-    
+
+    private void OnShootHeld()
+    {
+        isShootHeld = true;
+    }
+
+    private void OnShootCanceled()
+    {
+        isShootHeld = false;
+    }
+
     private void Shoot()
     {
-        if(_activeGunBulletsLeft <= 0) return;
-        
-        if(_elapsedTimeForNextBullet > 0)
-        {
-            _elapsedTimeForNextBullet -= Time.deltaTime;
-            return;
-        }
+        if (_isReloading) return;
+        if (_activeGunBulletsLeft <= 0) return;
+        if (_elapsedTimeForNextBullet > 0) return;
 
-        if(_controls.Gameplay.Shooting.ReadValue<float>() > 0f)
-        {
-            Instantiate(_activeBulletPrefab, _gunMuzzle.position, _gunMuzzle.rotation);
-            
-            _elapsedTimeForNextBullet = _rateOfFire;
-            _activeGunBulletsLeft -= 1;
-            
-            _uiController.MagazineSizeUI(_activeGunBulletsLeft,_activeGunMagazineSize);
-        }
+
+        Instantiate(_activeBulletPrefab, _gunMuzzle.position, _gunMuzzle.rotation);
+
+        _elapsedTimeForNextBullet = _rateOfFire;
+        _activeGunBulletsLeft -= 1;
+
+        _uiController.MagazineSizeUI(_activeGunBulletsLeft, _activeGunMagazineSize);
+
+    }
+
+    private void StartReload()
+    {
+        if (_isReloading) return;
+        StartCoroutine(Reload());
     }
 
     private IEnumerator Reload()
