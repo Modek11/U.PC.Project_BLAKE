@@ -1,9 +1,12 @@
 using UnityEngine;
 
 using System;
+using System.Collections.Generic;
 
 public class WeaponsManager : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> attachSockets;
+
     private int capacity;
     public int Capacity
     {
@@ -33,6 +36,7 @@ public class WeaponsManager : MonoBehaviour
 
     WeaponsManager()
     {
+        attachSockets = new List<GameObject>();
         capacity = 2;
         activeWeaponIndex = 0;
         weaponItems = new ValueTuple<EquipmentItemDefinition, IWeapon>[3] { (null, null), (null, null), (null, null) };
@@ -94,7 +98,17 @@ public class WeaponsManager : MonoBehaviour
 
     private void SpawnWeapon()
     {
-        Vector3 spawnLocation = transform.position + weaponItems[activeWeaponIndex].Item1.locationOffset;
+        Transform socketTransform = transform;
+        foreach(var socket in attachSockets)
+        {
+            if(socket.name == weaponItems[activeWeaponIndex].Item1.attachSocketName)
+            {
+                socketTransform = socket.transform;
+                break;
+            }
+        }
+
+        Vector3 spawnLocation = socketTransform.position + weaponItems[activeWeaponIndex].Item1.locationOffset;
         Quaternion spawnRotation = weaponItems[activeWeaponIndex].Item1.rotation;
 
         var weapon = Instantiate(weaponItems[activeWeaponIndex].Item1.equipmentPrefab, spawnLocation, spawnRotation, transform);

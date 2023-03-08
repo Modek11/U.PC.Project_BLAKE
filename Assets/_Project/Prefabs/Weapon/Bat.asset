@@ -15,7 +15,7 @@ MonoBehaviour:
   equipmentPrefab: {fileID: 6770924938227727370, guid: 51554d862ae34f444b6baec656c9188e,
     type: 3}
   equipmentName: Bat
-  boneName: 
-  locationOffset: {x: 1, y: 3, z: 1}
+  attachSocketName: GunHandler
+  locationOffset: {x: 0, y: 0.47, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 1}
-  scale: {x: 0.2, y: 0.2, z: 0.5}
+  scale: {x: 0.2, y: 0.7, z: 0.2}
