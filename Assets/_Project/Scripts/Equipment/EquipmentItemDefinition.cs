@@ -7,11 +7,11 @@ public class EquipmentItemDefinition : ScriptableObject
 
     public string equipmentName;
 
-    public string boneName;
+    public string attachSocketName;
 
     public Vector3 locationOffset;
     
-    public Quaternion rotationOffset;
+    public Quaternion rotation;
 
     public Vector3 scale;
 }

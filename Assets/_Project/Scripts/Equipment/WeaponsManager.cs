@@ -48,6 +48,7 @@ public class WeaponsManager : MonoBehaviour
         ChangeItem(defaultWeapon, 0);
     }
 
+    //Use to add or replace item
     public bool ChangeItem(EquipmentItemDefinition item, int index)
     {
         if (item == null) return false;
@@ -94,8 +95,11 @@ public class WeaponsManager : MonoBehaviour
     private void SpawnWeapon()
     {
         Vector3 spawnLocation = transform.position + weaponItems[activeWeaponIndex].Item1.locationOffset;
-        Quaternion spawnRotation = transform.rotation * weaponItems[activeWeaponIndex].Item1.rotationOffset;
+        Quaternion spawnRotation = weaponItems[activeWeaponIndex].Item1.rotation;
 
-        weaponItems[activeWeaponIndex].Item2 = Instantiate(weaponItems[activeWeaponIndex].Item1.equipmentPrefab, spawnLocation, spawnRotation).GetComponent<IWeapon>();
+        var weapon = Instantiate(weaponItems[activeWeaponIndex].Item1.equipmentPrefab, spawnLocation, spawnRotation, transform);
+        weapon.transform.localScale = weaponItems[activeWeaponIndex].Item1.scale;
+
+        weaponItems[activeWeaponIndex].Item2 = weapon.GetComponent<IWeapon>();
     }
 }
