@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a982e479cb5e0ef4e9da5465e69574b3, type: 3}
   m_Name: Bat
   m_EditorClassIdentifier: 
-  equipmentPrefab: {fileID: 6770924938227727370, guid: 51554d862ae34f444b6baec656c9188e,
+  weaponPrefab: {fileID: 6770924938227727370, guid: 51554d862ae34f444b6baec656c9188e,
     type: 3}
-  equipmentName: Bat
+  weaponName: Bat
   attachSocketName: GunHandler
   locationOffset: {x: 0, y: 0.47, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 1}

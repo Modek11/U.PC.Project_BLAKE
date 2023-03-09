@@ -30,16 +30,16 @@ public class WeaponsManager : MonoBehaviour
     private int activeWeaponIndex;
     public int ActiveWeaponIndex { get { return activeWeaponIndex; } }
 
-    private ValueTuple<EquipmentItemDefinition, IWeapon>[] weaponItems;
+    private ValueTuple<WeaponDefinition, IWeapon>[] weaponItems;
 
-    public EquipmentItemDefinition defaultWeapon;
+    public WeaponDefinition defaultWeapon;
 
     WeaponsManager()
     {
         attachSockets = new List<GameObject>();
         capacity = 2;
         activeWeaponIndex = 0;
-        weaponItems = new ValueTuple<EquipmentItemDefinition, IWeapon>[3] { (null, null), (null, null), (null, null) };
+        weaponItems = new ValueTuple<WeaponDefinition, IWeapon>[3] { (null, null), (null, null), (null, null) };
     }
 
     private void Awake()
@@ -53,7 +53,7 @@ public class WeaponsManager : MonoBehaviour
     }
 
     //Use to add or replace item
-    public bool ChangeItem(EquipmentItemDefinition item, int index)
+    public bool ChangeItem(WeaponDefinition item, int index)
     {
         if (item == null) return false;
         if (index < 0 || index > capacity - 1) return false;
@@ -111,7 +111,7 @@ public class WeaponsManager : MonoBehaviour
         Vector3 spawnLocation = socketTransform.position + weaponItems[activeWeaponIndex].Item1.locationOffset;
         Quaternion spawnRotation = weaponItems[activeWeaponIndex].Item1.rotation;
 
-        var weapon = Instantiate(weaponItems[activeWeaponIndex].Item1.equipmentPrefab, spawnLocation, spawnRotation, transform);
+        var weapon = Instantiate(weaponItems[activeWeaponIndex].Item1.weaponPrefab, spawnLocation, spawnRotation, transform);
         weapon.transform.localScale = weaponItems[activeWeaponIndex].Item1.scale;
 
         weaponItems[activeWeaponIndex].Item2 = weapon.GetComponent<IWeapon>();
