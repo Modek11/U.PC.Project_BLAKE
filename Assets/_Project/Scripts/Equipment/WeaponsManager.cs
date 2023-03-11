@@ -2,12 +2,13 @@ using UnityEngine;
 
 using System;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph;
 
 public class WeaponsManager : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> attachSockets;
+    [SerializeField] private List<GameObject> attachSockets = new List<GameObject>();
 
-    private int capacity;
+    private int capacity = 2;
     public int Capacity
     {
         get { return capacity; }
@@ -27,20 +28,12 @@ public class WeaponsManager : MonoBehaviour
         }
     }
 
-    private int activeWeaponIndex;
+    private int activeWeaponIndex = 0;
     public int ActiveWeaponIndex { get { return activeWeaponIndex; } }
 
-    private ValueTuple<WeaponDefinition, IWeapon>[] weaponItems;
+    private ValueTuple<WeaponDefinition, IWeapon>[] weaponItems = new ValueTuple<WeaponDefinition, IWeapon>[3] { (null, null), (null, null), (null, null) };
 
     public WeaponDefinition defaultWeapon;
-
-    WeaponsManager()
-    {
-        attachSockets = new List<GameObject>();
-        capacity = 2;
-        activeWeaponIndex = 0;
-        weaponItems = new ValueTuple<WeaponDefinition, IWeapon>[3] { (null, null), (null, null), (null, null) };
-    }
 
     private void Awake()
     {
@@ -50,6 +43,12 @@ public class WeaponsManager : MonoBehaviour
             return;
         }
         ChangeItem(defaultWeapon, 0);
+
+        PlayerInputController playerInputController = GetComponent<PlayerInputController>();
+        if (playerInputController != null)
+        {
+            playerInputController.changeWeaponEvent += Equip;
+        }
     }
 
     //Use to add or replace item
@@ -70,7 +69,7 @@ public class WeaponsManager : MonoBehaviour
 
     public void Equip(int index)
     {
-        if (index < 0 || index > capacity - 1) return;
+        if (index < 0 || index > capacity - 1 || index == activeWeaponIndex) return;
         if (weaponItems[index].Item1 == null) return;
 
         if (weaponItems[activeWeaponIndex].Item2 != null)
