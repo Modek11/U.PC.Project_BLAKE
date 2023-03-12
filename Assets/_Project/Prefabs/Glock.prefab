@@ -138,6 +138,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5319882019298209557}
   - component: {fileID: 5319882019298209558}
+  - component: {fileID: 1896440285}
+  - component: {fileID: 1896440286}
   m_Layer: 0
   m_Name: Glock
   m_TagString: Untagged
@@ -152,7 +154,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5319882019298209556}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.114, y: 2.497, z: 1.001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -175,18 +177,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961f286b4752ab149a0825dd6c5a6ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 3
   TimeBetweenShooting: 0.5
   Spread: 3
   Range: 6
   ReloadTime: 1
   TimeBetweenShots: 0.2
   MagazineSize: 15
-  BulletsPerTap: 1
+  bulletsLeft: 10
+  readyToShoot: 0
   allowButtonHold: 0
   attackPoint: {fileID: 5319882019081080685}
   bulletPrefab: {fileID: 2067707786190466171, guid: 3e16fe1e040fb1d46906820603db60b3,
     type: 3}
+  _primaryAttack:
+    _underlyingValue: {fileID: 1896440285}
+  _secondaryAttack:
+    _underlyingValue: {fileID: 1896440286}
+--- !u!114 &1896440285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5319882019298209556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eda587f63642855459c33caf66f6478d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBetweenShooting: 0.3
+  bulletsPerTap: 1
+--- !u!114 &1896440286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5319882019298209556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eda587f63642855459c33caf66f6478d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBetweenShooting: 0.1
+  bulletsPerTap: 3
 --- !u!1 &5319882019317814439
 GameObject:
   m_ObjectHideFlags: 0

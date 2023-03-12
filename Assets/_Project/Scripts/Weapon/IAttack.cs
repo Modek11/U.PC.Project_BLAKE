@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IAttack
 {
-    public void Shot(Glock glock);
+    public void Shot(Weapon weapon);
 }

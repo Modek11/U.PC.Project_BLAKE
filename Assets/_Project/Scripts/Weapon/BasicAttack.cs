@@ -5,22 +5,27 @@ using UnityEngine;
 public class BasicAttack : MonoBehaviour, IAttack
 {
     [SerializeField] private float timeBetweenShooting;
-    [SerializeField] private int bulletsShot;
+    [SerializeField] private float spread;
     [SerializeField] private int bulletsPerTap;
-    public void Shot(Glock glock)
+    private int bulletsToShotInThisAttack;
+    private Weapon usedWeapon;
+    
+    public void Shot(Weapon weapon)
     {
-        bulletsShot = bulletsPerTap;
-        Attack(glock);
+        bulletsToShotInThisAttack = bulletsPerTap;
+        usedWeapon = weapon;
+        Attack();
     }
 
-    private void Attack(Glock glock)
+    private void Attack()
     {
-        glock.readyToShoot = false;
-        Instantiate(glock.bulletPrefab, glock.attackPoint.position, glock.transform.rotation);
-        glock.bulletsLeft--;
-        bulletsShot--;
-        glock.Invoke(nameof(glock.ResetShot), timeBetweenShooting);
-        if (bulletsShot > 0 && glock.bulletsLeft > 0)
+        float xSpread = Random.Range(-spread, spread);
+        usedWeapon.isLastShotOver = false;
+        Instantiate(usedWeapon.BulletPrefab, usedWeapon.BulletsSpawnPoint.position, usedWeapon.transform.rotation);
+        usedWeapon.BulletsLeft--;
+        bulletsToShotInThisAttack--;
+        usedWeapon.Invoke(nameof(usedWeapon.ResetShot), timeBetweenShooting);
+        if (bulletsToShotInThisAttack > 0 && usedWeapon.BulletsLeft > 0)
         {
             Invoke(nameof(Attack), timeBetweenShooting);
         }
