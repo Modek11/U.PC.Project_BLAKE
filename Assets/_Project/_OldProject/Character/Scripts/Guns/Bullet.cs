@@ -7,7 +7,6 @@ public class Bullet : MonoBehaviour
     
     private Rigidbody _rigidbody;
 
-
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();

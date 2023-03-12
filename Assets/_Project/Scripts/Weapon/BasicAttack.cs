@@ -10,24 +10,25 @@ public class BasicAttack : MonoBehaviour, IAttack
     private int bulletsToShotInThisAttack;
     private Weapon usedWeapon;
     
-    public void Shot(Weapon weapon)
+    public void Attack(Weapon weapon)
     {
         bulletsToShotInThisAttack = bulletsPerTap;
         usedWeapon = weapon;
-        Attack();
+        Shot();
     }
 
-    private void Attack()
+    private void Shot()
     {
-        float xSpread = Random.Range(-spread, spread);
         usedWeapon.isLastShotOver = false;
-        Instantiate(usedWeapon.BulletPrefab, usedWeapon.BulletsSpawnPoint.position, usedWeapon.transform.rotation);
+        float xSpread = Random.Range(-spread, spread);
+        //TODO: Add pooling
+        Instantiate(usedWeapon.BulletPrefab, usedWeapon.BulletsSpawnPoint.position, usedWeapon.transform.rotation).GetComponent<IBullet>().SetupBullet(xSpread);
         usedWeapon.BulletsLeft--;
         bulletsToShotInThisAttack--;
         usedWeapon.Invoke(nameof(usedWeapon.ResetShot), timeBetweenShooting);
         if (bulletsToShotInThisAttack > 0 && usedWeapon.BulletsLeft > 0)
         {
-            Invoke(nameof(Attack), timeBetweenShooting);
+            Invoke(nameof(Shot), timeBetweenShooting);
         }
     }
 }

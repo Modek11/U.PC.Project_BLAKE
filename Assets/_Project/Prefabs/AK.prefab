@@ -114,7 +114,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7401586004226700552
 Transform:
   m_ObjectHideFlags: 0
@@ -145,18 +145,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961f286b4752ab149a0825dd6c5a6ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeBetweenShooting: 0.1
-  Spread: 3
   Range: 6
   ReloadTime: 2
-  TimeBetweenShots: 0.1
   MagazineSize: 30
-  bulletsLeft: 10
-  readyToShoot: 0
-  allowButtonHold: 1
-  attackPoint: {fileID: 7401586004311561584}
-  bulletPrefab: {fileID: 2067707786190466171, guid: 3e16fe1e040fb1d46906820603db60b3,
+  BulletsLeft: 10
+  isLastShotOver: 0
+  BulletsSpawnPoint: {fileID: 7401586004311561584}
+  BulletPrefab: {fileID: 8745238448183679230, guid: a068551a7488b474fa34d68d5f97afbe,
     type: 3}
+  allowButtonHold: 1
   _primaryAttack:
     _underlyingValue: {fileID: 76864232}
   _secondaryAttack:
@@ -173,7 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda587f63642855459c33caf66f6478d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenShooting: 0.1
+  timeBetweenShooting: 0.05
+  spread: 10
   bulletsPerTap: 1
 --- !u!1 &7401586004280705021
 GameObject:

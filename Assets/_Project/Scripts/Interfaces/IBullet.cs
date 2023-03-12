@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IAttack
+public interface IBullet
 {
-    public void Attack(Weapon weapon);
+    public void SetupBullet(float xSpread);
 }

@@ -48,15 +48,15 @@ public class Weapon : MonoBehaviour, IWeapon
     {
         if (!CanShoot(isPlayerTryingShooting)) return;
         
-        _primaryAttack.Value.Shot(this);
+        _primaryAttack.Value.Attack(this);
     }
     
     public void SecondaryAttack()
     {
         if (_secondaryAttack.Value is null) return;
-        if (CanShoot(isPlayerTryingShooting2)) return;
+        if (!CanShoot(isPlayerTryingShooting2)) return;
         
-        _secondaryAttack.Value.Shot(this);
+        _secondaryAttack.Value.Attack(this);
     }
     
     public void ResetShot()

@@ -176,18 +176,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961f286b4752ab149a0825dd6c5a6ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeBetweenShooting: 1.5
-  Spread: 3
   Range: 6
   ReloadTime: 1
-  TimeBetweenShots: 0.2
   MagazineSize: 6
-  bulletsLeft: 10
-  readyToShoot: 0
-  allowButtonHold: 0
-  attackPoint: {fileID: 2211575096222883456}
-  bulletPrefab: {fileID: 2067707786190466171, guid: 3e16fe1e040fb1d46906820603db60b3,
+  BulletsLeft: 10
+  isLastShotOver: 0
+  BulletsSpawnPoint: {fileID: 2211575096222883456}
+  BulletPrefab: {fileID: 8745238448183679230, guid: a068551a7488b474fa34d68d5f97afbe,
     type: 3}
+  allowButtonHold: 0
   _primaryAttack:
     _underlyingValue: {fileID: 2211575096773118709}
   _secondaryAttack:
@@ -205,6 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenShooting: 1.5
+  spread: 0
   bulletsPerTap: 1
 --- !u!1 &2211575096595592205
 GameObject:
