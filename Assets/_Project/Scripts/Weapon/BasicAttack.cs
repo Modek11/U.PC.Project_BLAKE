@@ -1,13 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class BasicAttack : MonoBehaviour, IAttack
 {
+    [Tooltip("Declares how often player can shoot")]
     [SerializeField] private float timeBetweenShooting;
+    [Tooltip("Declares range of bullet spawn")]
     [SerializeField] private float spread;
+    [Tooltip("Declares how many times it should shot after one button press")]
     [SerializeField] private int shotsPerTap;
+    [Tooltip("Declares how many bullets should be instantiated in one shot")]
     [SerializeField] private int bulletsPerShot = 1;
     private int bulletsToShotInThisAttack;
     private Weapon usedWeapon;

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,7 +5,9 @@ using Random = UnityEngine.Random;
 public class BasicBullet : MonoBehaviour, IBullet
 {
     [SerializeField] private float bulletSpeed;
+    [Tooltip("Time after bullet will be destroyed")]
     [SerializeField] private float destroyTime;
+    [Tooltip("How many enemies bullet should penetrate 0 = destroy at first kill")]
     [SerializeField] private int penetrateAmount;
     private Vector3 moveDirection;
     private Rigidbody rb;
@@ -29,6 +28,10 @@ public class BasicBullet : MonoBehaviour, IBullet
         rb.velocity = moveDirection + transform.forward * bulletSpeed;
     }
 
+    /// <summary>
+    /// Use it on instantiate to declare base stats which are weapon related
+    /// </summary>
+    /// <param name="xSpread">Spread range (it declares range of (-xSpread, xSpread))</param>
     public void SetupBullet(float xSpread)
     {
         //TODO: Instead of changing spawn pos, change rotation
@@ -39,7 +42,9 @@ public class BasicBullet : MonoBehaviour, IBullet
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            //TODO: Add IDamagable interface on enemies, keeping damage on bullets (even if enemies are one shot one kill) will help us in future if we will be adding destroyable elements, which will require different strength
             // collision.gameObject.GetComponent<IDamagable>().GetDamage(damage);
+            //TODO: After adding IDamagable remove this line
             Destroy(collision.gameObject);
             if (penetrateAmount > 0)
             {

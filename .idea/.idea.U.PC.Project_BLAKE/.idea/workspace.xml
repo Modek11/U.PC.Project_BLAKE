@@ -3,12 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="6a8a399b-e714-4d55-8ecf-bf01e1fcbef1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.U.PC.Project_BLAKE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.U.PC.Project_BLAKE/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Prefabs/AK.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Prefabs/AK.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Prefabs/Glock.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Prefabs/Glock.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Prefabs/Revolver.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Prefabs/Revolver.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Scenes/WeaponTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Scenes/WeaponTest.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/BasicAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/BasicAttack.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/BasicBullet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/BasicBullet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/IAttack.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/IAttack.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/Weapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/Weapon.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -21,7 +19,6 @@
     <setting file="file://$PROJECT_DIR$/Assets/_Project/Scripts/Interfaces/IBullet.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/BasicAttack.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/BasicBullet.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/IAttack.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/Weapon.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@12.1.10/Runtime/Debugging/DebugUpdater.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -82,7 +79,7 @@
       <option name="presentableId" value="Default" />
       <updated>1678053779448</updated>
       <workItem from="1678053779450" duration="689000" />
-      <workItem from="1678620107684" duration="15376000" />
+      <workItem from="1678620107684" duration="16841000" />
     </task>
     <servers />
   </component>
