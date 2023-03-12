@@ -31,6 +31,7 @@ public class BasicBullet : MonoBehaviour, IBullet
 
     public void SetupBullet(float xSpread)
     {
+        //TODO: Instead of changing spawn pos, change rotation
         moveDirection = new Vector3(Random.Range(-xSpread, xSpread), 0, 0);
     }
 

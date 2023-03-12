@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BasicAttack : MonoBehaviour, IAttack
 {
     [SerializeField] private float timeBetweenShooting;
     [SerializeField] private float spread;
-    [SerializeField] private int bulletsPerTap;
+    [SerializeField] private int shotsPerTap;
+    [SerializeField] private int bulletsPerShot = 1;
     private int bulletsToShotInThisAttack;
     private Weapon usedWeapon;
     
     public void Attack(Weapon weapon)
     {
-        bulletsToShotInThisAttack = bulletsPerTap;
+        bulletsToShotInThisAttack = shotsPerTap;
         usedWeapon = weapon;
         Shot();
     }
@@ -20,10 +22,14 @@ public class BasicAttack : MonoBehaviour, IAttack
     private void Shot()
     {
         usedWeapon.isLastShotOver = false;
-        float xSpread = Random.Range(-spread, spread);
-        //TODO: Add pooling
-        Instantiate(usedWeapon.BulletPrefab, usedWeapon.BulletsSpawnPoint.position, usedWeapon.transform.rotation).GetComponent<IBullet>().SetupBullet(xSpread);
-        usedWeapon.BulletsLeft--;
+        usedWeapon.As.PlayOneShot(usedWeapon.As.clip);
+        for (int i = 0; i < bulletsPerShot; i++)
+        {
+            if(usedWeapon.BulletsLeft == 0 ) break;
+            //TODO: Add pooling
+            Instantiate(usedWeapon.BulletPrefab, usedWeapon.BulletsSpawnPoint.position, usedWeapon.transform.rotation).GetComponent<IBullet>().SetupBullet(Random.Range(-spread, spread));
+            usedWeapon.BulletsLeft--;
+        }
         bulletsToShotInThisAttack--;
         usedWeapon.Invoke(nameof(usedWeapon.ResetShot), timeBetweenShooting);
         if (bulletsToShotInThisAttack > 0 && usedWeapon.BulletsLeft > 0)

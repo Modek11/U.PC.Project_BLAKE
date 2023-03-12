@@ -8,11 +8,8 @@
       <change beforePath="$PROJECT_DIR$/Assets/_Project/Prefabs/Revolver.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Prefabs/Revolver.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Project/Scenes/WeaponTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Scenes/WeaponTest.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/BasicAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/BasicAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/IAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/IAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/BasicBullet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/BasicBullet.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/Weapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/Weapon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Scripts/Guns/Bullet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Scripts/Guns/Bullet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +82,7 @@
       <option name="presentableId" value="Default" />
       <updated>1678053779448</updated>
       <workItem from="1678053779450" duration="689000" />
-      <workItem from="1678620107684" duration="12783000" />
+      <workItem from="1678620107684" duration="15376000" />
     </task>
     <servers />
   </component>

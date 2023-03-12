@@ -1,6 +1,8 @@
+using System;
 using AYellowpaper;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Weapon : MonoBehaviour, IWeapon
 {
     public float Range;
@@ -10,6 +12,8 @@ public class Weapon : MonoBehaviour, IWeapon
     public bool isLastShotOver;
     public Transform BulletsSpawnPoint;
     public GameObject BulletPrefab;
+    //TODO: Move it outside
+    [HideInInspector] public AudioSource As;
     
     [SerializeField] private bool allowButtonHold;
     [SerializeField] private InterfaceReference<IAttack> _primaryAttack;
@@ -18,7 +22,12 @@ public class Weapon : MonoBehaviour, IWeapon
     private bool isPlayerTryingShooting;
     private bool isPlayerTryingShooting2;
     private bool isReloading;
-    
+
+    private void Awake()
+    {
+        As = GetComponent<AudioSource>();
+    }
+
     private void Start()
     {
         BulletsLeft = MagazineSize;
