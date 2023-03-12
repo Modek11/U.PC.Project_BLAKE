@@ -551,6 +551,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AK
       objectReference: {fileID: 0}
+    - target: {fileID: 7401586004226700553, guid: 77c4cb7c3f169fc4cbd0c1d446416edb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77c4cb7c3f169fc4cbd0c1d446416edb, type: 3}
 --- !u!4 &76864230 stripped
@@ -4240,7 +4245,7 @@ PrefabInstance:
     - target: {fileID: 5319882019298209556, guid: b439379a8d4ee1f47a52087f53bbe13b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5319882019298209557, guid: b439379a8d4ee1f47a52087f53bbe13b,
         type: 3}
