@@ -2,7 +2,6 @@ using UnityEngine;
 
 using System;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph;
 
 public class WeaponsManager : MonoBehaviour
 {
@@ -34,6 +33,7 @@ public class WeaponsManager : MonoBehaviour
     private ValueTuple<WeaponDefinition, IWeapon>[] weaponItems = new ValueTuple<WeaponDefinition, IWeapon>[3] { (null, null), (null, null), (null, null) };
 
     public WeaponDefinition defaultWeapon;
+    public WeaponDefinition defaultWeapon2;
 
     private void Awake()
     {
@@ -43,6 +43,7 @@ public class WeaponsManager : MonoBehaviour
             return;
         }
         ChangeItem(defaultWeapon, 0);
+        ChangeItem(defaultWeapon2, 1);//test
 
         PlayerInputController playerInputController = GetComponent<PlayerInputController>();
         if (playerInputController != null)
@@ -69,7 +70,7 @@ public class WeaponsManager : MonoBehaviour
 
     public void Equip(int index)
     {
-        if (index < 0 || index > capacity - 1 || index == activeWeaponIndex) return;
+        if (index < 0 || index > capacity - 1) return;
         if (weaponItems[index].Item1 == null) return;
 
         if (weaponItems[activeWeaponIndex].Item2 != null)

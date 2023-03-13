@@ -13,5 +13,5 @@ public class WeaponDefinition : ScriptableObject
     
     public Quaternion rotation;
 
-    public Vector3 scale;
+    public Vector3 scale = Vector3.one;
 }
