@@ -37,7 +37,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""ChooseGun"",
+                    ""name"": ""ChangeWeapon"",
                     ""type"": ""Button"",
                     ""id"": ""89588618-a92c-4caa-be06-1554d2924c5b"",
                     ""expectedControlType"": ""Button"",
@@ -147,7 +147,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": ""Scale"",
                     ""groups"": """",
-                    ""action"": ""ChooseGun"",
+                    ""action"": ""ChangeWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -158,7 +158,18 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": ""Scale(factor=2)"",
                     ""groups"": """",
-                    ""action"": ""ChooseGun"",
+                    ""action"": ""ChangeWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4f3f4133-18c6-4056-b7b0-9e2aed949c3e"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": """",
+                    ""action"": ""ChangeWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -198,7 +209,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
-        m_Gameplay_ChooseGun = m_Gameplay.FindAction("ChooseGun", throwIfNotFound: true);
+        m_Gameplay_ChangeWeapon = m_Gameplay.FindAction("ChangeWeapon", throwIfNotFound: true);
         m_Gameplay_Shooting = m_Gameplay.FindAction("Shooting", throwIfNotFound: true);
         m_Gameplay_Reload = m_Gameplay.FindAction("Reload", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
@@ -266,7 +277,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Gameplay;
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
     private readonly InputAction m_Gameplay_Movement;
-    private readonly InputAction m_Gameplay_ChooseGun;
+    private readonly InputAction m_Gameplay_ChangeWeapon;
     private readonly InputAction m_Gameplay_Shooting;
     private readonly InputAction m_Gameplay_Reload;
     private readonly InputAction m_Gameplay_Interact;
@@ -275,7 +286,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         private @PlayerInputSystem m_Wrapper;
         public GameplayActions(@PlayerInputSystem wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
-        public InputAction @ChooseGun => m_Wrapper.m_Gameplay_ChooseGun;
+        public InputAction @ChangeWeapon => m_Wrapper.m_Gameplay_ChangeWeapon;
         public InputAction @Shooting => m_Wrapper.m_Gameplay_Shooting;
         public InputAction @Reload => m_Wrapper.m_Gameplay_Reload;
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
@@ -291,9 +302,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
-            @ChooseGun.started += instance.OnChooseGun;
-            @ChooseGun.performed += instance.OnChooseGun;
-            @ChooseGun.canceled += instance.OnChooseGun;
+            @ChangeWeapon.started += instance.OnChangeWeapon;
+            @ChangeWeapon.performed += instance.OnChangeWeapon;
+            @ChangeWeapon.canceled += instance.OnChangeWeapon;
             @Shooting.started += instance.OnShooting;
             @Shooting.performed += instance.OnShooting;
             @Shooting.canceled += instance.OnShooting;
@@ -310,9 +321,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
-            @ChooseGun.started -= instance.OnChooseGun;
-            @ChooseGun.performed -= instance.OnChooseGun;
-            @ChooseGun.canceled -= instance.OnChooseGun;
+            @ChangeWeapon.started -= instance.OnChangeWeapon;
+            @ChangeWeapon.performed -= instance.OnChangeWeapon;
+            @ChangeWeapon.canceled -= instance.OnChangeWeapon;
             @Shooting.started -= instance.OnShooting;
             @Shooting.performed -= instance.OnShooting;
             @Shooting.canceled -= instance.OnShooting;
@@ -380,7 +391,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     public interface IGameplayActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnChooseGun(InputAction.CallbackContext context);
+        void OnChangeWeapon(InputAction.CallbackContext context);
         void OnShooting(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);

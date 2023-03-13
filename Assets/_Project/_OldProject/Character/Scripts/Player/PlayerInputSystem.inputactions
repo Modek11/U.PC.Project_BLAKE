@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "ChooseGun",
+                    "name": "ChangeWeapon",
                     "type": "Button",
                     "id": "89588618-a92c-4caa-be06-1554d2924c5b",
                     "expectedControlType": "Button",
@@ -125,7 +125,7 @@
                     "interactions": "",
                     "processors": "Scale",
                     "groups": "",
-                    "action": "ChooseGun",
+                    "action": "ChangeWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -136,7 +136,18 @@
                     "interactions": "",
                     "processors": "Scale(factor=2)",
                     "groups": "",
-                    "action": "ChooseGun",
+                    "action": "ChangeWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f3f4133-18c6-4056-b7b0-9e2aed949c3e",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "Scale(factor=3)",
+                    "groups": "",
+                    "action": "ChangeWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

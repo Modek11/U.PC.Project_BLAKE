@@ -20,11 +20,11 @@ public class GunSelector : MonoBehaviour
 
     private void Update()
     {
-        _controls.Gameplay.ChooseGun.performed += ctx =>
-        {
-            _chosenGunIndex = (int)ctx.ReadValue<float>() - 1;
-            _playerShooting.ChangeGun(gunScriptableObjects[_chosenGunIndex]);
-        };
+        //_controls.Gameplay.ChooseGun.performed += ctx =>
+        //{
+        //    _chosenGunIndex = (int)ctx.ReadValue<float>() - 1;
+        //    _playerShooting.ChangeGun(gunScriptableObjects[_chosenGunIndex]);
+        //};
     }
 
     private void ResetBullets()
