@@ -10,34 +10,31 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashCooldown;
     [SerializeField] private float dashDuration;
 
+    [SerializeField] private Transform gunHandlerTransform;
 
-    private PlayerInputController playerInputController;
-
-    private Vector2 movementAxis;
-    private Vector2 mousePosition;
-    private Vector3 _playerInput;
+    private PlayerInputController _playerInputController;
+    
+    private Vector2 _movementAxis;
+    private Vector2 _mousePosition;
+    private float _angleRotationDifference;
     private Rigidbody _rigidbody;
-    
-    private Vector3 _mousePosition;
-    private Vector3 _lookDirection;
-    
+
     private float _dashCooldownCountdown;
     private float _dashDurationCountdown;
-
     private bool _dashPerformed;
 
 
     private void Awake()
     {
-        playerInputController = GetComponent<PlayerInputController>();
+        _playerInputController = GetComponent<PlayerInputController>();
         _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Start()
     {
-        playerInputController.movementEvent += MovementHandler;
-        playerInputController.rotationEvent += RotationHandler;
-        playerInputController.dashEvent += Dash;
+        _playerInputController.movementEvent += MovementHandler;
+        _playerInputController.rotationEvent += RotationHandler;
+        _playerInputController.dashEvent += Dash;
     }
 
     private void Update()
@@ -55,38 +52,48 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovementHandler(Vector2 dir)
     {
-        movementAxis = dir;
+        _movementAxis = dir;
     }
     private void RotationHandler(Vector2 dir)
     {
-        mousePosition = dir;
+        _mousePosition = dir;
     }
 
     private void MovePlayer()
     {
-        //Player movement
-        movementAxis = movementAxis.normalized;
+        _movementAxis = _movementAxis.normalized;
         
-        _rigidbody.AddForce(new Vector3(movementAxis.x,0, movementAxis.y) * (playerSpeed * 10f), ForceMode.Force);
+        _rigidbody.AddForce(new Vector3(_movementAxis.x,0, _movementAxis.y) * (playerSpeed * 10f), ForceMode.Force);
     }
     
    private void Rotation()
    {
-       //Player rotation with mouse
-       Ray rayCast = cam.ScreenPointToRay(mousePosition);
-
-       RaycastHit hit;
-
-       if (Physics.Raycast(rayCast, out hit, 100))
+       Plane playerPlane = new Plane(Vector3.up, gunHandlerTransform.position);
+       Ray ray = cam.ScreenPointToRay(_mousePosition);
+       
+       
+       if (playerPlane.Raycast(ray, out var hitDistance))
        {
-           _mousePosition = hit.point;
-       }
+           Vector3 targetPoint = ray.GetPoint(hitDistance);
+           Quaternion playerRotation = transform.rotation;
+           Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position).normalized;
+           targetRotation.x = 0;
+           targetRotation.z = 0;
 
-       var position = transform.position;
-       _lookDirection = _mousePosition - position;
-       _lookDirection.y = 0;
-        
-       transform.LookAt(position + _lookDirection,Vector3.up);
+           if (!ShouldPlayerRotate(playerRotation, targetRotation)) return;
+           transform.rotation = Quaternion.Slerp(playerRotation, targetRotation, 20f * Time.deltaTime);
+       }
+   }
+
+   private bool ShouldPlayerRotate(Quaternion playerRotation, Quaternion targetRotation)
+   {
+       //without this function, rigidbody calculating smth all the time
+       var angle = Quaternion.Angle(playerRotation, targetRotation);
+       if (_angleRotationDifference == angle) return false;
+       
+       _angleRotationDifference = angle;
+       return true;
+
    }
 
    private void Dash()

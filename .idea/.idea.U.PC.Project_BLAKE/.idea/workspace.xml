@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6a8a399b-e714-4d55-8ecf-bf01e1fcbef1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.U.PC.Project_BLAKE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.U.PC.Project_BLAKE/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Scripts/Player/PlayerInputController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Scripts/Player/PlayerInputController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Scripts/Player/PlayerInputSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Scripts/Player/PlayerInputSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Scripts/Player/PlayerInputSystem.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Scripts/Player/PlayerInputSystem.inputactions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Models/Guns/Prefabs/Rifle/Riflebullet.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Models/Guns/Prefabs/Rifle/Riflebullet.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Scripts/Player/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Scripts/Player/PlayerMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Scripts/Player/PlayerShooting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Scripts/Player/PlayerShooting.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Project/_OldProject/Main/Scene/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/_OldProject/Main/Scene/GameScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
@@ -77,7 +74,9 @@
       <option name="presentableId" value="Default" />
       <updated>1678053779448</updated>
       <workItem from="1678053779450" duration="689000" />
-      <workItem from="1678492522183" duration="7164000" />
+      <workItem from="1678492522183" duration="7519000" />
+      <workItem from="1678921301450" duration="6630000" />
+      <workItem from="1679086293839" duration="8349000" />
     </task>
     <servers />
   </component>
