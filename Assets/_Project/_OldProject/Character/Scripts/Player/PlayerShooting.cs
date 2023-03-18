@@ -101,7 +101,7 @@ public class PlayerShooting : MonoBehaviour
         if (_isReloading) return;
         if (_activeGunBulletsLeft <= 0) return;
         if (_elapsedTimeForNextBullet > 0) return;
-
+        
 
         Instantiate(_activeBulletPrefab, _gunMuzzle.position, _gunMuzzle.rotation);
 

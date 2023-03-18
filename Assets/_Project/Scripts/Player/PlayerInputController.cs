@@ -22,6 +22,7 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
     }
 
     public event Action<Vector2> movementEvent;
+    public event Action<Vector2> rotationEvent;
 
     public event Action onShootStartEvent;
     public event Action shootEvent;
@@ -30,6 +31,8 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
     public event Action<int> changeWeaponEvent;
 
     public event Action interactEvent;
+    
+    public event Action dashEvent;
 
     public void OnMovement(InputAction.CallbackContext context)
     {
@@ -68,6 +71,19 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
         if(context.performed)
         {
             interactEvent?.Invoke();
+        }
+    }
+
+    public void OnMousePosition(InputAction.CallbackContext context)
+    {
+        rotationEvent?.Invoke(context.ReadValue<Vector2>());
+    }
+
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            dashEvent?.Invoke();
         }
     }
 
