@@ -8,6 +8,10 @@
       <change beforePath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/IAttack.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/IAttack.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/Weapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/Weapon.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Models/Guns/Prefabs/Rifle/Riflebullet.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Models/Guns/Prefabs/Rifle/Riflebullet.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Scripts/Player/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Scripts/Player/PlayerMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/_OldProject/Main/Scene/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/_OldProject/Main/Scene/GameScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +84,9 @@
       <updated>1678053779448</updated>
       <workItem from="1678053779450" duration="689000" />
       <workItem from="1678620107684" duration="16841000" />
+      <workItem from="1678492522183" duration="7519000" />
+      <workItem from="1678921301450" duration="6630000" />
+      <workItem from="1679086293839" duration="8349000" />
     </task>
     <servers />
   </component>
