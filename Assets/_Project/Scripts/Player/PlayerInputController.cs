@@ -27,18 +27,24 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
     public event Action onShootStartEvent;
     public event Action shootEvent;
     public event Action onShootCancelEvent;
-
     public event Action reloadEvent;
+    public event Action<int> changeWeaponEvent;
+
     public event Action interactEvent;
+    
     public event Action dashEvent;
+
     public void OnMovement(InputAction.CallbackContext context)
     {
         movementEvent?.Invoke(context.ReadValue<Vector2>());
     }
 
-    public void OnChooseGun(InputAction.CallbackContext context)
+    public void OnChangeWeapon(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        if (context.performed)
+        {
+            changeWeaponEvent?.Invoke((int)context.ReadValue<float>() - 1);
+        }
     }
 
     public void OnShooting(InputAction.CallbackContext context)
