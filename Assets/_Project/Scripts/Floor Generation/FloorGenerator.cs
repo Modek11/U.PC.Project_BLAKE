@@ -7,7 +7,8 @@ public class FloorGenerator : MonoBehaviour
 {
     [SerializeField]
     private GameObject startingRoom;
-
+    [SerializeField]
+    private LayerMask layerMask;
     [SerializeField]
     private List<GameObject> roomPool = new List<GameObject>();
 
@@ -17,20 +18,20 @@ public class FloorGenerator : MonoBehaviour
 
     private List<GameObject> spawnedRooms = new List<GameObject>();
     // Start is called before the first frame update
-    void Start()
-    {
-        GenerateFloor();
-    }
-
-    private void GenerateFloor()
+    IEnumerator Start()
     {
         GameObject _startingRoom = Instantiate(startingRoom, Vector3.zero, Quaternion.identity);
         spawnedRooms.Add(_startingRoom);
-
-        while(roomCounter < maxRooms)
+        int tries = 0;
+        while (roomCounter < maxRooms)
         {
+            if (tries >= 10)
+            {
+                Debug.LogWarning("Broken generation due to too many tries");
+                break;
+            }
             List<GameObject> toAdd = new List<GameObject>();
-            foreach(GameObject room in spawnedRooms)
+            foreach (GameObject room in spawnedRooms)
             {
                 if (roomCounter >= maxRooms) break;
                 Room roomScript = room.GetComponent<Room>();
@@ -50,35 +51,49 @@ public class FloorGenerator : MonoBehaviour
                 newRoom.transform.position -= offset;
 
                 bool overlap = false;
-                Collider[] colliders = Physics.OverlapBox(newRoom.transform.position, newRoom.GetComponent<BoxCollider>().size/2, newRoom.transform.rotation, LayerMask.NameToLayer("RoomOverlap"));
-
-                foreach(Collider cols in colliders)
+                BoxCollider[] roomColliders = newRoom.GetComponents<BoxCollider>();
+                foreach (BoxCollider box in roomColliders)
                 {
-                    if(cols.gameObject != newRoom && cols.gameObject.GetComponent<Room>() != null)
+                    if (overlap) break;
+                    Collider[] colliders = Physics.OverlapBox(newRoom.transform.position + box.center, box.size / 2 + new Vector3(-0.05f, -0.05f, -0.05f), newRoom.transform.rotation, layerMask, QueryTriggerInteraction.Collide);
+
+                    foreach (Collider cols in colliders)
                     {
-                        overlap = true;
-                        Debug.Log("Overlapping");
-                        break;
+                        if (cols.gameObject != newRoom && cols.gameObject.GetComponent<Room>() != null && cols.gameObject != room)
+                        {
+                            overlap = true;
+                            tries++;
+                            Debug.Log("Overlapping");
+                            break;
+                        }
                     }
                 }
-
-                if(!overlap)
+                if (!overlap)
                 {
+                    tries = 0;
                     door.SetConnector(newDoor);
                     newDoor.SetConnector(door);
                     toAdd.Add(newRoom);
                     roomCounter++;
-                } else
+                }
+                else
                 {
-                    Destroy(newRoom);
+                    Debug.Log("Destroying" + newRoom.name);
+                    newRoom.SetActive(false);
                 }
 
+                yield return new WaitForFixedUpdate();
             }
-            foreach(GameObject room in toAdd)
+            foreach (GameObject room in toAdd)
             {
                 spawnedRooms.Add(room);
             }
         }
+    }
+
+    private void GenerateFloor()
+    {
+        
     }
 
     // Update is called once per frame
