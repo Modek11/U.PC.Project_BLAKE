@@ -8,7 +8,7 @@ public class DebugInteract : Interactable
     [SerializeField]
     private string DebugText;
 
-    public override void Interact()
+    public override void Interact(GameObject interacter)
     {
         Debug.Log(DebugText);
     }
