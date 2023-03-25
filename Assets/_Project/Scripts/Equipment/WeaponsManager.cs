@@ -58,11 +58,7 @@ public class WeaponsManager : MonoBehaviour
         if (index < 0 || index > capacity - 1) return false;
 
         weaponItems[index].Item1 = item;
-
-        if(activeWeaponIndex != index)
-        {
-            Equip(index);
-        }
+        Equip(index);
 
         return true;
     }
