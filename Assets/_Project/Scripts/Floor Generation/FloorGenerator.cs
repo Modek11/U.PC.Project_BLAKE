@@ -8,11 +8,11 @@ public class FloorGenerator : MonoBehaviour
     [SerializeField]
     private int seed = 0;
     [SerializeField]
+    private RoomPool roomPool;
+    [SerializeField]
     private GameObject startingRoom;
     [SerializeField]
     private LayerMask layerMask;
-    [SerializeField]
-    private List<GameObject> roomPool = new List<GameObject>();
 
     [SerializeField]
     private int maxRooms = 3;
@@ -43,7 +43,7 @@ public class FloorGenerator : MonoBehaviour
 
                 if (door.GetConnector() != null) continue;
 
-                GameObject newRoom = Instantiate(roomPool[Random.Range(0, roomPool.Count)]);
+                GameObject newRoom = Instantiate(roomPool.GetRandomRoomFromPool());
                 int randomDoor = Random.Range(0, newRoom.GetComponent<Room>().GetDoors().Length);
                 RoomConnector newDoor = newRoom.GetComponent<Room>().GetDoors()[randomDoor];
 
