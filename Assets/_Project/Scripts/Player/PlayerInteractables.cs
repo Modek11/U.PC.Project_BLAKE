@@ -72,7 +72,7 @@ public class PlayerInteractables : MonoBehaviour
         IInteractable closest = GetClosestInteractable();
         if (closest == null) return;
 
-        closest.Interact();
+        closest.Interact(gameObject);
     }
 
     //Set UI Element above Interactable

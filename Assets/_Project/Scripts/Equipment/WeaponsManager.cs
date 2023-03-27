@@ -33,7 +33,6 @@ public class WeaponsManager : MonoBehaviour
     private ValueTuple<WeaponDefinition, IWeapon>[] weaponItems = new ValueTuple<WeaponDefinition, IWeapon>[3] { (null, null), (null, null), (null, null) };
 
     public WeaponDefinition defaultWeapon;
-    public WeaponDefinition defaultWeapon2;
 
     private void Awake()
     {
@@ -43,7 +42,7 @@ public class WeaponsManager : MonoBehaviour
             return;
         }
         ChangeItem(defaultWeapon, 0);
-        ChangeItem(defaultWeapon2, 1);//test
+        Equip(0);
 
         PlayerInputController playerInputController = GetComponent<PlayerInputController>();
         if (playerInputController != null)
@@ -59,11 +58,7 @@ public class WeaponsManager : MonoBehaviour
         if (index < 0 || index > capacity - 1) return false;
 
         weaponItems[index].Item1 = item;
-
-        if(activeWeaponIndex == index)
-        {
-            Equip(index);
-        }
+        Equip(index);
 
         return true;
     }
