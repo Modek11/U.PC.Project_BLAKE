@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Emmission_Pulse
+  m_Name: Emission_Revolver_Pulse
   m_Shader: {fileID: -6465566751694194690, guid: a5672abf5697e8141830e38f3a89625c,
     type: 3}
   m_ValidKeywords: []
