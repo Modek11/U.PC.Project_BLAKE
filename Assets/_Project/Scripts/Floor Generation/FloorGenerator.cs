@@ -58,7 +58,7 @@ public class FloorGenerator : MonoBehaviour
                 foreach (BoxCollider box in roomColliders)
                 {
                     if (overlap) break;
-                    Collider[] colliders = Physics.OverlapBox(newRoom.transform.position + box.center, box.size / 2, newRoom.transform.rotation, layerMask, QueryTriggerInteraction.Collide);
+                    Collider[] colliders = Physics.OverlapBox(newRoom.transform.position + box.center, box.size / 2 + new Vector3(-0.05f, -0.05f, -0.05f), newRoom.transform.rotation, layerMask, QueryTriggerInteraction.Collide);
 
                     foreach (Collider cols in colliders)
                     {

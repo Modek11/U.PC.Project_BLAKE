@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 791343628}
   - component: {fileID: 791343627}
   m_Layer: 0
-  m_Name: Generaot
+  m_Name: Generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -267,17 +267,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5516257f0e3344382d7f5240cf9df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seed: 1
+  seed: 0
+  roomPool: {fileID: 11400000, guid: 9adf978a6628f374ab4a9bf16ef9d773, type: 2}
   startingRoom: {fileID: 6958249082703235447, guid: 98c96ee576ece6c4a9dcf0c7a59ca6ec,
     type: 3}
   layerMask:
     serializedVersion: 2
     m_Bits: 8
-  roomPool:
-  - {fileID: 6958249082703235447, guid: 98c96ee576ece6c4a9dcf0c7a59ca6ec, type: 3}
-  - {fileID: 6958249082703235447, guid: 27b14e484099c7d4b846ae1ed866e3e2, type: 3}
-  - {fileID: 6958249082703235447, guid: 570d512ede7a75449b4078cb6845314f, type: 3}
-  - {fileID: 4633057438995324548, guid: d7d94a7e8b96d1e4c9e7198d333c6df4, type: 3}
   maxRooms: 20
 --- !u!4 &791343628
 Transform:
