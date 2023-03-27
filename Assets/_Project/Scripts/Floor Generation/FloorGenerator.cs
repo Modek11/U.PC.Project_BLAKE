@@ -6,6 +6,8 @@ using UnityEngine.Rendering;
 public class FloorGenerator : MonoBehaviour
 {
     [SerializeField]
+    private int seed = 0;
+    [SerializeField]
     private GameObject startingRoom;
     [SerializeField]
     private LayerMask layerMask;
@@ -20,6 +22,7 @@ public class FloorGenerator : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        Random.InitState((seed == 0)? Random.Range(int.MinValue, int.MaxValue):seed);
         GameObject _startingRoom = Instantiate(startingRoom, Vector3.zero, Quaternion.identity);
         spawnedRooms.Add(_startingRoom);
         int tries = 0;
