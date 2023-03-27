@@ -386,11 +386,11 @@ MonoBehaviour:
   Range: 6
   ReloadTime: 1
   MagazineSize: 6
-  BulletsLeft: 10
-  isLastShotOver: 0
   BulletsSpawnPoint: {fileID: 4911671507802568297}
   BulletPrefab: {fileID: 6969907592589934767, guid: 9d1137cbb8bc7254fa284ca1f304bf0e,
     type: 3}
+  isLastShotOver: 0
+  BulletsLeft: 10
   As: {fileID: 0}
   allowButtonHold: 0
   _primaryAttack:
