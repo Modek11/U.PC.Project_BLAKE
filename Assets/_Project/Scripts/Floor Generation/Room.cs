@@ -6,6 +6,16 @@ public class Room : MonoBehaviour
 {
     [SerializeField]
     private RoomConnector[] doors;
+    [SerializeField]
+    private RandomizedRoomObject[] randomObjects;
+
+    public void InitializeRoom()
+    {
+        foreach(RandomizedRoomObject randomObject in randomObjects)
+        {
+            randomObject.InitializeRandomObject();
+        }
+    }
 
     public RoomConnector[] GetDoors()
     {

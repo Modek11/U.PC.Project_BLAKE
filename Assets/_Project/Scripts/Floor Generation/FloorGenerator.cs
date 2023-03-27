@@ -58,7 +58,7 @@ public class FloorGenerator : MonoBehaviour
                 foreach (BoxCollider box in roomColliders)
                 {
                     if (overlap) break;
-                    Collider[] colliders = Physics.OverlapBox(newRoom.transform.position + box.center, box.size / 2 + new Vector3(-0.05f, -0.05f, -0.05f), newRoom.transform.rotation, layerMask, QueryTriggerInteraction.Collide);
+                    Collider[] colliders = Physics.OverlapBox(newRoom.transform.position + box.center, box.size / 2, newRoom.transform.rotation, layerMask, QueryTriggerInteraction.Collide);
 
                     foreach (Collider cols in colliders)
                     {
@@ -82,7 +82,7 @@ public class FloorGenerator : MonoBehaviour
                 else
                 {
                     Debug.Log("Destroying" + newRoom.name);
-                    newRoom.SetActive(false);
+                    Destroy(newRoom);
                 }
 
                 yield return new WaitForFixedUpdate();
@@ -92,16 +92,11 @@ public class FloorGenerator : MonoBehaviour
                 spawnedRooms.Add(room);
             }
         }
-    }
 
-    private void GenerateFloor()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        foreach(GameObject room in spawnedRooms)
+        {
+            Room roomScript = room.GetComponent<Room>();
+            roomScript.InitializeRoom();
+        }
     }
 }

@@ -267,6 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5516257f0e3344382d7f5240cf9df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  seed: 1
   startingRoom: {fileID: 6958249082703235447, guid: 98c96ee576ece6c4a9dcf0c7a59ca6ec,
     type: 3}
   layerMask:
