@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,7 +20,7 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
     }
 
     public event Action<Vector2> movementEvent;
-    public event Action<Vector2> rotationEvent;
+    public event Action<Vector2> mousePositionEvent;
 
     public event Action onShootStartEvent;
     public event Action shootEvent;
@@ -76,7 +74,7 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
 
     public void OnMousePosition(InputAction.CallbackContext context)
     {
-        rotationEvent?.Invoke(context.ReadValue<Vector2>());
+        mousePositionEvent?.Invoke(context.ReadValue<Vector2>());
     }
 
     public void OnDash(InputAction.CallbackContext context)

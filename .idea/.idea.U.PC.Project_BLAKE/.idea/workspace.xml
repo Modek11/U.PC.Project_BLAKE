@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="6a8a399b-e714-4d55-8ecf-bf01e1fcbef1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.U.PC.Project_BLAKE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.U.PC.Project_BLAKE/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Scenes/WeaponTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Scenes/WeaponTest.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Models/Guns/Prefabs/Rifle/Riflebullet.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Models/Guns/Prefabs/Rifle/Riflebullet.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Scripts/Player/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/_OldProject/Character/Scripts/Player/PlayerMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/_OldProject/Main/Scene/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/_OldProject/Main/Scene/GameScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -11,12 +14,6 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e8a406da998549af9a2680936c7da25a159c00/45/980cf84e/Object.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Project/Scripts/Interfaces/IBullet.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/BasicAttack.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/BasicBullet.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/SniperAttack.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Project/Scripts/Weapon/Weapon.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@12.1.10/Runtime/Debugging/DebugUpdater.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -34,6 +31,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;rider.run.widget.enabled.cache&quot;: &quot;false&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -76,11 +74,9 @@
       <option name="presentableId" value="Default" />
       <updated>1678053779448</updated>
       <workItem from="1678053779450" duration="689000" />
-      <workItem from="1678620107684" duration="16841000" />
       <workItem from="1678492522183" duration="7519000" />
       <workItem from="1678921301450" duration="6630000" />
       <workItem from="1679086293839" duration="8349000" />
-      <workItem from="1679910688598" duration="3109000" />
     </task>
     <servers />
   </component>
