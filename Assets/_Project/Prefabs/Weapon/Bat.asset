@@ -19,3 +19,5 @@ MonoBehaviour:
   locationOffset: {x: 0, y: 0.47, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 1}
   scale: {x: 0.2, y: 0.7, z: 0.2}
+  pickupMesh: {fileID: -8545447256379345787, guid: 129f0ad0f238ef349aef1e050de95f49,
+    type: 3}

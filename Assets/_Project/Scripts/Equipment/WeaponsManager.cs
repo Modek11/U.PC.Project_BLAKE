@@ -57,6 +57,12 @@ public class WeaponsManager : MonoBehaviour
         if (item == null) return false;
         if (index < 0 || index > capacity - 1) return false;
 
+        if (IsWeaponValid(index))
+        {
+            Destroy(weaponItems[index].Item2.GetGameObject());
+            weaponItems[index].Item2 = null;
+        }
+
         weaponItems[index].Item1 = item;
         Equip(index);
 
@@ -68,12 +74,14 @@ public class WeaponsManager : MonoBehaviour
         if (index < 0 || index > capacity - 1) return;
         if (weaponItems[index].Item1 == null) return;
 
-        if (weaponItems[activeWeaponIndex].Item2 != null)
-        {
-            Destroy(weaponItems[activeWeaponIndex].Item2.GetGameObject());
-        }
+        SetCurrentWeaponActive(false);
+
         activeWeaponIndex = index;
-        SpawnWeapon();
+
+        if (!SetCurrentWeaponActive(true))
+        {
+            SpawnWeapon();
+        }
     }
 
     public int GetFreeIndex()
@@ -110,5 +118,29 @@ public class WeaponsManager : MonoBehaviour
         weapon.transform.localScale = weaponItems[activeWeaponIndex].Item1.scale;
 
         weaponItems[activeWeaponIndex].Item2 = weapon.GetComponent<IWeapon>();
+    }
+
+    private bool SetCurrentWeaponActive(bool newActive)
+    {
+        if (IsWeaponValid(activeWeaponIndex))
+        {
+            weaponItems[activeWeaponIndex].Item2.GetGameObject().SetActive(newActive);
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsWeaponValid(int index)
+    {
+        if (index < 0 || index > capacity - 1) return false;
+
+        return weaponItems[index].Item2 != null;
+    }
+
+    public WeaponDefinition GetWeaponDefinition(int index)
+    {
+        if (index < 0 || index > capacity - 1) return null;
+
+        return weaponItems[index].Item1;
     }
 }
