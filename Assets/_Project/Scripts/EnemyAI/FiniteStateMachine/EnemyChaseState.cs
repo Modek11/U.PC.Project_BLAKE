@@ -4,26 +4,38 @@ using UnityEngine.AI;
 public class EnemyChaseState : EnemyBaseState
 {
     private float _weaponRange = 10f;
-    private float _chaseSpeed = 8f;
+    private float _chaseSpeed = 12f;
 
-    public EnemyChaseState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef) 
+    public EnemyChaseState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef)
         : base(navMeshAgent, playerRef, enemyRef) { }
+
 
     public override void EnterState(EnemyAIManager enemy)
     {
         navMeshAgent.isStopped = false;
         navMeshAgent.ResetPath();
         navMeshAgent.speed = _chaseSpeed;
+        Debug.Log("CHASE STATE");
     }
 
     public override void UpdateState(EnemyAIManager enemy)
     {
-        navMeshAgent.SetDestination(playerRef.transform.position);
+        float distanceToPlayer = Vector3.Distance(enemyRef.transform.position, playerRef.transform.position);
 
-        if (Vector3.Distance(enemyRef.transform.position, playerRef.transform.position) <= _weaponRange)
+        if ((distanceToPlayer > _weaponRange && distanceToPlayer <= 2f * _weaponRange) 
+            || distanceToPlayer > 3f * _weaponRange || !enemy.GetStrafeBool())
+        {
+            navMeshAgent.SetDestination(playerRef.transform.position);
+        }
+
+        if (distanceToPlayer > 2f * _weaponRange && distanceToPlayer <= 3f * _weaponRange && enemy.GetStrafeBool())
+        {
+            enemy.SwitchCurrentState(enemy.StrafeState);
+        }
+
+        if (distanceToPlayer <= _weaponRange)
         {
             enemy.SwitchCurrentState(enemy.AttackState);
         }
     }
-
 }

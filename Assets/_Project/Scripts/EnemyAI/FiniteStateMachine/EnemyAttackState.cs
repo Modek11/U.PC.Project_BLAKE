@@ -17,20 +17,22 @@ public class EnemyAttackState : EnemyBaseState
 
     public override void UpdateState(EnemyAIManager enemy)
     {
-        if (Vector3.Distance(enemyRef.transform.position, playerRef.transform.position) <= _weaponRange / 2f)
+        float distanceToPlayer = Vector3.Distance(enemyRef.transform.position, playerRef.transform.position);
+        _timeToAttack += Time.time;
+
+        if (distanceToPlayer <= _weaponRange * 0.75f)
         {
             navMeshAgent.isStopped = true;
         }
 
-        if (Vector3.Distance(enemyRef.transform.position, playerRef.transform.position) > _weaponRange)
+        if (distanceToPlayer > _weaponRange)
         {
             enemy.SwitchCurrentState(enemy.ChaseState);
         }
         else
         {
-            _timeToAttack += Time.time;
 
-            if(_timeToAttack >= 1f)
+            if (_timeToAttack >= 3f) //wartoœæ zast¹piæ fireRate'm broni
             {
                 Debug.Log("ATTACK!");
                 _timeToAttack = 0;

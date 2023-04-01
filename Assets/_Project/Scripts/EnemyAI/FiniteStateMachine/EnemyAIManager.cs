@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,12 +8,14 @@ public class EnemyAIManager : MonoBehaviour
     private GameObject _playerRef;
     private GameObject _enemyRef;
     private Transform _groundCenterPoint;
+    private bool _doStrafe;
 
-    public EnemyBaseState currentState;
+    private EnemyBaseState _currentState;
 
     public EnemyPatrolState PatrolState;
     public EnemyChaseState ChaseState;
     public EnemyAttackState AttackState;
+    public EnemyStrafeState StrafeState;
 
     private void Awake()
     {
@@ -27,22 +30,59 @@ public class EnemyAIManager : MonoBehaviour
         PatrolState = new EnemyPatrolState(_navMeshAgent, _playerRef, _enemyRef, _groundCenterPoint);
         ChaseState = new EnemyChaseState(_navMeshAgent, _playerRef, _enemyRef);
         AttackState = new EnemyAttackState(_navMeshAgent, _playerRef, _enemyRef);
+        StrafeState = new EnemyStrafeState(_navMeshAgent, _playerRef, _enemyRef);
     }
 
     private void Start()
     {
-        currentState = PatrolState;
-        currentState.EnterState(this);
+        _currentState = PatrolState;
+        _currentState.EnterState(this);
     }
 
     private void Update()
     {
-        currentState.UpdateState(this);
+        _currentState.UpdateState(this);
+        FaceThePlayer();
     }
 
     public void SwitchCurrentState(EnemyBaseState state)
     {
-        currentState = state;
-        currentState.EnterState(this);
+        _currentState = state;
+
+        if (_currentState == ChaseState)
+        {
+            StartCoroutine(DrawStrafe());
+        }
+        else
+        {
+            StopCoroutine(DrawStrafe());
+        }
+
+        _currentState.EnterState(this);
+    }
+
+    private void FaceThePlayer()
+    {
+        Vector3 direction = (_playerRef.transform.position - _enemyRef.transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+
+        if (_currentState != PatrolState)
+        {
+            _enemyRef.transform.rotation = Quaternion.Slerp(_enemyRef.transform.rotation, lookRotation, Time.deltaTime * 3f);
+        }
+    }
+
+    private IEnumerator DrawStrafe()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            _doStrafe = Random.value > 0.65f ? true : false;
+        }
+    }
+
+    public bool GetStrafeBool()
+    {
+        return _doStrafe;
     }
 }
