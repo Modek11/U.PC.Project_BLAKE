@@ -33,17 +33,17 @@ public class WeaponPickup : Interactable
 
         if (weaponsManager.ChangeItem(weaponToPickup, index))
         {
-            PlayerInteractables playerInteractables = interacter.GetComponent<PlayerInteractables>();
-            if(playerInteractables != null)
-            {
-                playerInteractables.RemoveInteractable(this);
-            }
-
             if(weaponDefinition != null)
             {
                 weaponToPickup = weaponDefinition;
                 ChangeMesh(weaponDefinition.pickupMesh);
                 return;
+            }
+
+            PlayerInteractables playerInteractables = interacter.GetComponent<PlayerInteractables>();
+            if (playerInteractables != null)
+            {
+                playerInteractables.RemoveInteractable(this);
             }
             Destroy(gameObject);
         }
