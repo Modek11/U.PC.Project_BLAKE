@@ -23,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
     private float _dashDurationCountdown;
     private bool _dashPerformed;
 
-
     private void Awake()
     {
         _playerInputController = GetComponent<PlayerInputController>();
@@ -33,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         _playerInputController.movementEvent += MovementHandler;
-        _playerInputController.rotationEvent += RotationHandler;
+        _playerInputController.mousePositionEvent += MousePositionHandler;
         _playerInputController.dashEvent += Dash;
     }
 
@@ -54,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _movementAxis = dir;
     }
-    private void RotationHandler(Vector2 dir)
+    private void MousePositionHandler(Vector2 dir)
     {
         _mousePosition = dir;
     }
@@ -81,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
            targetRotation.z = 0;
 
            if (!ShouldPlayerRotate(playerRotation, targetRotation)) return;
-           transform.rotation = Quaternion.Slerp(playerRotation, targetRotation, 20f * Time.deltaTime);
+           _rigidbody.MoveRotation(Quaternion.Slerp(playerRotation, targetRotation, 20f * Time.deltaTime).normalized);
        }
    }
 

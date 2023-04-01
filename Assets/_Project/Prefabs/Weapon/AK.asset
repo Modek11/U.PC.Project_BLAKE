@@ -16,6 +16,8 @@ MonoBehaviour:
     type: 3}
   weaponName: AK
   attachSocketName: GunHandler
-  locationOffset: {x: 0, y: 0.47, z: 0}
+  locationOffset: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}
   scale: {x: 1, y: 1, z: 1}
+  pickupMesh: {fileID: -8545447256379345787, guid: 129f0ad0f238ef349aef1e050de95f49,
+    type: 3}

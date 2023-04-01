@@ -16,7 +16,7 @@ public abstract class Interactable : MonoBehaviour, IInteractable
     /// <summary>
     /// Interact with object
     /// </summary>
-    public abstract void Interact();
+    public abstract void Interact(GameObject interacter);
 
     private void OnTriggerEnter(Collider other)
     {
