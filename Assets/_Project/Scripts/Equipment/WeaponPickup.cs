@@ -1,8 +1,18 @@
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class WeaponPickup : Interactable
 {
     [SerializeField] private WeaponDefinition weaponToPickup;
+    [SerializeField] private Mesh pickupMesh;
+
+    private void Awake()
+    {
+        if(pickupMesh != null)
+        {
+            ChangeMesh(pickupMesh);
+        }
+    }
 
     public override void Interact(GameObject interacter)
     {
@@ -13,7 +23,15 @@ public class WeaponPickup : Interactable
             return;
         }
 
-        if(weaponsManager.ChangeItem(weaponToPickup, weaponsManager.ActiveWeaponIndex == 0 ? 1 : weaponsManager.ActiveWeaponIndex))
+        int index = weaponsManager.ActiveWeaponIndex == 0 ? 1 : weaponsManager.ActiveWeaponIndex;
+
+        WeaponDefinition weaponDefinition = null;
+        if(weaponsManager.IsWeaponValid(index))
+        {
+            weaponDefinition = weaponsManager.GetWeaponDefinition(weaponsManager.ActiveWeaponIndex);
+        }
+
+        if (weaponsManager.ChangeItem(weaponToPickup, index))
         {
             PlayerInteractables playerInteractables = interacter.GetComponent<PlayerInteractables>();
             if(playerInteractables != null)
@@ -21,7 +39,18 @@ public class WeaponPickup : Interactable
                 playerInteractables.RemoveInteractable(this);
             }
 
+            if(weaponDefinition != null)
+            {
+                weaponToPickup = weaponDefinition;
+                ChangeMesh(weaponDefinition.pickupMesh);
+                return;
+            }
             Destroy(gameObject);
         }
+    }
+
+    private void ChangeMesh(Mesh newMesh)
+    {
+        pickupMesh = newMesh;
     }
 }

@@ -168,11 +168,11 @@ MonoBehaviour:
   Range: 6
   ReloadTime: 1
   MagazineSize: 6
-  BulletsLeft: 10
-  isLastShotOver: 0
   BulletsSpawnPoint: {fileID: 2211575096222883456}
   BulletPrefab: {fileID: 8745238448183679230, guid: 6737c19ee0289854f924664298e930db,
     type: 3}
+  isLastShotOver: 0
+  BulletsLeft: 10
   As: {fileID: 0}
   allowButtonHold: 0
   _primaryAttack:
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda587f63642855459c33caf66f6478d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenShooting: 1.5
+  timeBetweenShooting: 1
   spread: 0
   shotsPerTap: 1
   bulletsPerShot: 1
