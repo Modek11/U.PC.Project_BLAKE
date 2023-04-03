@@ -8,6 +8,8 @@ public class Room : MonoBehaviour
     private RoomConnector[] doors;
     [SerializeField]
     private RandomizedRoomObject[] randomObjects;
+    [SerializeField]
+    private GameObject fog;
 
     public void InitializeRoom()
     {
@@ -24,5 +26,21 @@ public class Room : MonoBehaviour
     public RoomConnector[] GetDoors()
     {
         return doors;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            fog.SetActive(false);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            fog.SetActive(true);
+        }
     }
 }
