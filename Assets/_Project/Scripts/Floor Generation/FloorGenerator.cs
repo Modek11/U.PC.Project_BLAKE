@@ -18,10 +18,13 @@ public class FloorGenerator : MonoBehaviour
     private int maxRooms = 3;
     private int roomCounter = 1;
 
+    private RoomManager roomManager;
+
     private List<GameObject> spawnedRooms = new List<GameObject>();
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        roomManager = GetComponent<RoomManager>();
         Random.InitState((seed == 0)? Random.Range(int.MinValue, int.MaxValue):seed);
         GameObject _startingRoom = Instantiate(startingRoom, Vector3.zero, Quaternion.identity);
         spawnedRooms.Add(_startingRoom);
@@ -93,10 +96,17 @@ public class FloorGenerator : MonoBehaviour
             }
         }
 
-        foreach(GameObject room in spawnedRooms)
+
+        foreach (GameObject room in spawnedRooms)
         {
             Room roomScript = room.GetComponent<Room>();
-            roomScript.InitializeRoom();
+            roomScript.InitializeRoom(roomManager);
+            if(room != _startingRoom) room.SetActive(false);
         }
+        foreach(Room room in startingRoom.GetComponent<Room>().GetNeigbours())
+        {
+            room.gameObject.SetActive(true);
+        }
+        roomManager.SetActiveRoom(_startingRoom.GetComponent<Room>());
     }
 }

@@ -10,7 +10,10 @@ public class RoomConnector : MonoBehaviour
     private GameObject doorObject;
     [SerializeField]
     private GameObject wallObject;
-   public void SetConnector(RoomConnector room)
+
+
+    private Room mainRoom;
+    public void SetConnector(RoomConnector room)
     {
         connectedDoor = room;
     }
@@ -31,5 +34,16 @@ public class RoomConnector : MonoBehaviour
     public RoomConnector GetConnector()
     {
         return connectedDoor;
+    }
+
+
+    public void SetRoom(Room room)
+    {
+        mainRoom = room;
+    }
+
+    public Room GetRoom()
+    {
+        return mainRoom;
     }
 }
