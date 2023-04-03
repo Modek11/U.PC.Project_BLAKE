@@ -48,7 +48,7 @@ public class FloorGenerator : MonoBehaviour
                 RoomConnector newDoor = newRoom.GetComponent<Room>().GetDoors()[randomDoor];
 
                 Quaternion rot = Quaternion.LookRotation(-door.transform.forward);
-                newRoom.transform.rotation = rot * Quaternion.Inverse(newDoor.transform.localRotation);
+                newRoom.transform.rotation = rot * Quaternion.Inverse(newDoor.transform.rotation);
 
                 Vector3 offset = newDoor.transform.position - door.transform.position;
                 newRoom.transform.position -= offset;

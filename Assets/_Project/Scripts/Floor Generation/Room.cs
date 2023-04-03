@@ -15,6 +15,10 @@ public class Room : MonoBehaviour
         {
             randomObject.InitializeRandomObject();
         }
+        foreach(RoomConnector door in doors)
+        {
+            door.SetDoor();
+        }
     }
 
     public RoomConnector[] GetDoors()

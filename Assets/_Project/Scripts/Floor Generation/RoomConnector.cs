@@ -6,14 +6,26 @@ public class RoomConnector : MonoBehaviour
 {
     [SerializeField]
     private RoomConnector connectedDoor;
+    [SerializeField]
+    private GameObject doorObject;
+    [SerializeField]
+    private GameObject wallObject;
    public void SetConnector(RoomConnector room)
     {
         connectedDoor = room;
     }
 
-    public Transform GetTransform()
+    public void SetDoor()
     {
-        return gameObject.transform;
+        if(connectedDoor != null)
+        {
+            doorObject.SetActive(true);
+            wallObject.SetActive(false);
+        } else
+        {
+            doorObject.SetActive(false);
+            wallObject.SetActive(true);
+        }
     }
 
     public RoomConnector GetConnector()
