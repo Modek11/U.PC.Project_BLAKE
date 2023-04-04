@@ -108,5 +108,6 @@ public class FloorGenerator : MonoBehaviour
             room.gameObject.SetActive(true);
         }
         roomManager.SetActiveRoom(_startingRoom.GetComponent<Room>());
+        _startingRoom.GetComponent<Room>().SeeRoom();
     }
 }

@@ -10,9 +10,11 @@ public class Room : MonoBehaviour
     private RandomizedRoomObject[] randomObjects;
     [SerializeField]
     private GameObject fog;
-
     private RoomManager roomManager;
 
+    [Header("Minimap variables")]
+    [SerializeField]
+    private MinimapRoom minimapRoom;
 
     public void InitializeRoom(RoomManager rm)
     {
@@ -25,6 +27,11 @@ public class Room : MonoBehaviour
         {
             door.SetRoom(this);
             door.SetDoor();
+        }
+
+        if(minimapRoom != null && roomManager.GetMinimapFloor() != null)
+        {
+            minimapRoom.transform.parent = roomManager.GetMinimapFloor();
         }
     }
 
@@ -41,8 +48,14 @@ public class Room : MonoBehaviour
         }
     }
 
+    public void SeeRoom()
+    {
+        minimapRoom.ShowRoom();
+    }
+
     private void EnterRoom()
     {
+        minimapRoom.VisitRoom();
         fog.SetActive(false);
         Room activeRoom = roomManager.GetActiveRoom();
         if (activeRoom != null)
@@ -60,6 +73,7 @@ public class Room : MonoBehaviour
 
         foreach (Room room in roomsToActivate)
         {
+            room.SeeRoom();
             room.gameObject.SetActive(true);
         }
 
