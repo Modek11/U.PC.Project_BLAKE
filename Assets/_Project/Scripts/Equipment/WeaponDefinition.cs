@@ -15,5 +15,9 @@ public class WeaponDefinition : ScriptableObject
 
     public Vector3 scale = Vector3.one;
 
-    public Mesh pickupMesh;
+    public GameObject weaponGFX;
+
+    public Vector3 pickupLocationOffset = Vector3.zero;
+
+    public Quaternion pickupRotation;
 }

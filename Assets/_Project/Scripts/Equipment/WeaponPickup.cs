@@ -4,14 +4,19 @@ using UnityEngine;
 public class WeaponPickup : Interactable
 {
     [SerializeField] private WeaponDefinition weaponToPickup;
-    [SerializeField] private Mesh pickupMesh;
+    [SerializeField] private GameObject pickupGameObject;
+    [SerializeField] private float rotateForce = 12f;
+
+    private GameObject weaponGFX;
 
     private void Awake()
     {
-        if(pickupMesh != null)
-        {
-            ChangeMesh(pickupMesh);
-        }
+        weaponGFX = pickupGameObject.transform.GetChild(0).gameObject;
+    }
+
+    private void Update()
+    {
+        pickupGameObject.transform.Rotate(Vector3.up * Time.deltaTime * rotateForce);
     }
 
     public override void Interact(GameObject interacter)
@@ -36,7 +41,7 @@ public class WeaponPickup : Interactable
             if(weaponDefinition != null)
             {
                 weaponToPickup = weaponDefinition;
-                ChangeMesh(weaponDefinition.pickupMesh);
+                ChangeVisuals(weaponDefinition);
                 return;
             }
 
@@ -49,8 +54,15 @@ public class WeaponPickup : Interactable
         }
     }
 
-    private void ChangeMesh(Mesh newMesh)
+    private void ChangeVisuals(WeaponDefinition newWeapon)
     {
-        pickupMesh = newMesh;
+        if (weaponGFX != null)
+        {
+            Destroy(weaponGFX);
+        }
+
+        weaponGFX = Instantiate(newWeapon.weaponGFX, pickupGameObject.transform);
+        weaponGFX.transform.localPosition = newWeapon.pickupLocationOffset;
+        weaponGFX.transform.localRotation = newWeapon.pickupRotation;
     }
 }
