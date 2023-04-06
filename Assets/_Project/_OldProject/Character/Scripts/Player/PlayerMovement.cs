@@ -138,4 +138,9 @@ public class PlayerMovement : MonoBehaviour
        }
    }
 
+    public void SetMainCamera(Camera newCamera)
+    {
+        cam = newCamera;
+    }
+
 }

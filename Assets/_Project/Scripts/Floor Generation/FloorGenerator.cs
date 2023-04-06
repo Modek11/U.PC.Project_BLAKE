@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+[RequireComponent(typeof(FloorManager))]
 public class FloorGenerator : MonoBehaviour
 {
     [SerializeField]
@@ -19,11 +20,13 @@ public class FloorGenerator : MonoBehaviour
     private int roomCounter = 1;
 
     private RoomManager roomManager;
+    private FloorManager floorManager;
 
     private List<GameObject> spawnedRooms = new List<GameObject>();
     // Start is called before the first frame update
-    IEnumerator Start()
+    public IEnumerator GenerateFloor()
     {
+        floorManager = GetComponent<FloorManager>();
         roomManager = GetComponent<RoomManager>();
         Random.InitState((seed == 0)? Random.Range(int.MinValue, int.MaxValue):seed);
         GameObject _startingRoom = Instantiate(startingRoom, Vector3.zero, Quaternion.identity);
@@ -109,5 +112,7 @@ public class FloorGenerator : MonoBehaviour
         }
         roomManager.SetActiveRoom(_startingRoom.GetComponent<Room>());
         _startingRoom.GetComponent<Room>().SeeRoom();
+
+        floorManager.OnGenerationEnd(_startingRoom.transform.position);
     }
 }

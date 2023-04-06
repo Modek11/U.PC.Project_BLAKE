@@ -13,6 +13,7 @@ public class UIPlayerController : MonoBehaviour
     
     private void Awake()
     {
+        if(reloadingImage != null)
         reloadingGameObject.SetActive(false);
     }
 
@@ -42,6 +43,14 @@ public class UIPlayerController : MonoBehaviour
                 break;
         }
     }
-    
+    public void SetUI(PlayerUIObject ui)
+    {
+        rifleName = ui.GetRifleName();
+        magazineLeft = ui.GetMagazineLeft();
+        reloadingGameObject = ui.GetReloadingObject();
+        reloadingGameObject.SetActive(false);
+        reloadingImage = ui.GetReloadingImage();
+        noAmmoLeftGameObject = ui.GetNoAmmoLeft();
+    }
     
 }

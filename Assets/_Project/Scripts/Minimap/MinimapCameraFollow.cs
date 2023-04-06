@@ -17,4 +17,9 @@ public class MinimapCameraFollow : MonoBehaviour
             transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y + playerOffset, playerTransform.position.z);
         }
     }
+
+    public void SetPlayer(Transform playerTransform)
+    {
+        this.playerTransform = playerTransform;
+    }
 }
