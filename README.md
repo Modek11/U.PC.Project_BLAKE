@@ -22,9 +22,7 @@ Ważne!
 
 Jak pracujecie jakiś czas i poszły nowe merge do developa, warto jest sobie tego developa domergować do swojego brancha.
 
-Program do zarządania gitem, warto pobrać sobie jakiś problem a terminala używać jak się coś sypie. Ja używam SourceTree, używamy też w firmie, potężne i proste w użyciu narzędzie.
-
-Polecam używać kluczy ssh do autoryzacji, bardzo przydatna rzecz, jak chcecie tutorial z tego dajcie znać.
+Program do zarządania gitem, warto pobrać sobie jakiś problem a terminala używać jak się coś sypie. Ja używam Github desktop.
 
 # Konwencje programowania
 

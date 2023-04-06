@@ -16,8 +16,10 @@ MonoBehaviour:
     type: 3}
   weaponName: Snpier
   attachSocketName: GunHandler
-  locationOffset: {x: 0, y: 0.47, z: 0}
+  locationOffset: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}
   scale: {x: 1, y: 1, z: 1}
-  pickupMesh: {fileID: -8545447256379345787, guid: 129f0ad0f238ef349aef1e050de95f49,
+  weaponGFX: {fileID: 539712161414889713, guid: 7e0af4d7e171e6148a07c86bfa73cbee,
     type: 3}
+  pickupLocationOffset: {x: 0, y: 0, z: 0}
+  pickupRotation: {x: 0, y: 0, z: 0, w: 0}
