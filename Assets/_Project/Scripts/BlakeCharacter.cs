@@ -12,13 +12,10 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
 
         set
         {
-            if (health > 0)
+            health = value;
+            if (health < 1)
             {
-                health = value;
-                if (health < 1)
-                {
-                    Die();
-                }
+                Die();
             }
         }
     }
@@ -49,6 +46,8 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
 
     public void TakeDamage(GameObject instigator, int damage)
     {
+        if (health < 1) { return; }
+
         Debug.Log(instigator.name + " took " + damage + " damage to " + name);
         Health -= damage;
     }
