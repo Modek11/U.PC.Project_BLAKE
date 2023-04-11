@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IBullet
 {
-    public void SetupBullet(float xSpread);
+    public void SetupBullet(float xSpread, GameObject instigator);
 }

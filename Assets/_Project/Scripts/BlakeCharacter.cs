@@ -1,0 +1,55 @@
+using UnityEngine;
+
+public class BlakeCharacter : MonoBehaviour, IDamageable
+{
+    [SerializeField] private int health = 1;
+    public int Health 
+    { 
+        get
+        {
+            return health;
+        }
+
+        set
+        {
+            if (health > 0)
+            {
+                health = value;
+                if (health < 1)
+                {
+                    Die();
+                }
+            }
+        }
+    }
+
+    private Animator animator;
+
+    public delegate void OnDeath();
+    public event OnDeath onDeath;
+
+    private void Awake()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
+
+    private void Die()
+    {
+        animator.SetBool("IsAlive", false);
+
+        onDeath?.Invoke();
+
+        Invoke("DestroySelf", 5f);
+    }
+
+    private void DestroySelf()
+    {
+        Destroy(gameObject);
+    }
+
+    public void TakeDamage(GameObject instigator, int damage)
+    {
+        Debug.Log(instigator.name + " took " + damage + " damage to " + name);
+        Health -= damage;
+    }
+}

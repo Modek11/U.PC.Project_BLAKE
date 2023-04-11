@@ -3083,6 +3083,7 @@ GameObject:
   - component: {fileID: 5545414051132038906}
   - component: {fileID: 5545414051132038907}
   - component: {fileID: 5545414051132038904}
+  - component: {fileID: 4224448683965087072}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -3215,6 +3216,19 @@ MonoBehaviour:
   attachSockets:
   - {fileID: 3772505426422216949}
   defaultWeapon: {fileID: 11400000, guid: ba6d981959989e54081af014222d2c3f, type: 2}
+--- !u!114 &4224448683965087072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8608387976418621433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2130668da6cd9554db76e6fdee589017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
 --- !u!1 &8871600578562275924
 GameObject:
   m_ObjectHideFlags: 0
