@@ -19,5 +19,7 @@ MonoBehaviour:
   locationOffset: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}
   scale: {x: 1, y: 1, z: 1}
-  pickupMesh: {fileID: -8545447256379345787, guid: 129f0ad0f238ef349aef1e050de95f49,
+  weaponGFX: {fileID: 296156443889256378, guid: af2522d929ba0ec4eab11a3835c86b8b,
     type: 3}
+  pickupLocationOffset: {x: 0, y: 0, z: 0}
+  pickupRotation: {x: 0, y: 0, z: 0, w: 0}
