@@ -52,7 +52,7 @@ public class EnemyStrafeState : EnemyBaseState
             enemy.SwitchCurrentState(enemy.AttackState);
         }
 
-        if (distanceToPlayer < 2f * _weaponRange || distanceToPlayer > 3f * _weaponRange)
+        if (distanceToPlayer < 1.5f * _weaponRange || distanceToPlayer > 2.5f * _weaponRange)
         {
             enemy.SwitchCurrentState(enemy.ChaseState);
         }

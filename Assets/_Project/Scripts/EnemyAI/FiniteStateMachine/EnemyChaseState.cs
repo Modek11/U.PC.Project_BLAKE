@@ -22,13 +22,13 @@ public class EnemyChaseState : EnemyBaseState
     {
         float distanceToPlayer = Vector3.Distance(enemyRef.transform.position, playerRef.transform.position);
 
-        if ((distanceToPlayer > _weaponRange && distanceToPlayer <= 2f * _weaponRange) 
-            || distanceToPlayer > 3f * _weaponRange || !enemy.GetStrafeBool())
+        if ((distanceToPlayer > _weaponRange && distanceToPlayer <= 1.5f * _weaponRange) 
+            || distanceToPlayer > 2.5f * _weaponRange || !enemy.GetStrafeBool())
         {
             navMeshAgent.SetDestination(playerRef.transform.position);
         }
 
-        if (distanceToPlayer > 2f * _weaponRange && distanceToPlayer <= 3f * _weaponRange && enemy.GetStrafeBool())
+        if (distanceToPlayer > 1.5f * _weaponRange && distanceToPlayer <= 2.5f * _weaponRange && enemy.GetStrafeBool())
         {
             enemy.SwitchCurrentState(enemy.StrafeState);
         }

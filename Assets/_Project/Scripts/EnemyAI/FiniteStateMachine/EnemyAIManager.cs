@@ -7,7 +7,6 @@ public class EnemyAIManager : MonoBehaviour
     private NavMeshAgent _navMeshAgent;
     private GameObject _playerRef;
     private GameObject _enemyRef;
-    private Transform _groundCenterPoint;
     private bool _doStrafe;
 
     private EnemyBaseState _currentState;
@@ -17,17 +16,18 @@ public class EnemyAIManager : MonoBehaviour
     public EnemyAttackState AttackState;
     public EnemyStrafeState StrafeState;
 
+    public Waypoints waypoints;
+
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _playerRef = GameObject.FindGameObjectWithTag("Player");
         _enemyRef = gameObject;
-        _groundCenterPoint = GameObject.Find("Floor").transform;
     }
 
     private void OnEnable()
     {
-        PatrolState = new EnemyPatrolState(_navMeshAgent, _playerRef, _enemyRef, _groundCenterPoint);
+        PatrolState = new EnemyPatrolState(_navMeshAgent, _playerRef, _enemyRef);
         ChaseState = new EnemyChaseState(_navMeshAgent, _playerRef, _enemyRef);
         AttackState = new EnemyAttackState(_navMeshAgent, _playerRef, _enemyRef);
         StrafeState = new EnemyStrafeState(_navMeshAgent, _playerRef, _enemyRef);
