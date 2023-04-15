@@ -3,16 +3,17 @@ using UnityEngine.AI;
 
 public class EnemyPatrolState : EnemyBaseState
 {
-    private float _walkSpeed = 5f;
-    private int _waypointIndex = 0;
+    private float _walkSpeed;
+    private int _waypointIndex;
 
     private EnemyFOV _enemyFOV;
 
-    public EnemyPatrolState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef) 
-        : base(navMeshAgent, playerRef, enemyRef) 
+    public EnemyPatrolState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef, GameObject weaponRef) 
+        : base(navMeshAgent, playerRef, enemyRef, weaponRef) 
     {
-        
         _enemyFOV = enemyRef.GetComponent<EnemyFOV>();
+        _walkSpeed = 5f;
+        _waypointIndex = 0;
     }
 
     public override void EnterState(EnemyAIManager enemy)
@@ -22,23 +23,24 @@ public class EnemyPatrolState : EnemyBaseState
 
     public override void UpdateState(EnemyAIManager enemy)
     {
-
-        if (_waypointIndex < enemy.waypoints.GetCount())
+        if (enemy.waypoints != null)
         {
-            Vector3 patrolPosition = enemy.waypoints.GetWaypointPosition(_waypointIndex);
-            MoveToPosition(patrolPosition);
-
-            if (Vector3.Distance(enemyRef.transform.position, patrolPosition) < .1f)
+            if (_waypointIndex < enemy.waypoints.GetCount())
             {
-                _waypointIndex++;
-            }
-                
-        }
-        else
-        {
-            _waypointIndex = 0;
-        }
+                Vector3 patrolPosition = enemy.waypoints.GetWaypointPosition(_waypointIndex);
+                MoveToPosition(patrolPosition);
 
+                if (Vector3.Distance(enemyRef.transform.position, patrolPosition) < .1f)
+                {
+                    _waypointIndex++;
+                }
+
+            }
+            else
+            {
+                _waypointIndex = 0;
+            }
+        }
 
         if (_enemyFOV.canSeePlayer)
         {

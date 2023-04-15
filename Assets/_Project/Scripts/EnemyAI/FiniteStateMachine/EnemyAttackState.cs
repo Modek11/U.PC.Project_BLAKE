@@ -3,32 +3,43 @@ using UnityEngine.AI;
 
 public class EnemyAttackState : EnemyBaseState
 {
-    private float _weaponRange = 10f;
+    private float _weaponRange;
 
     private float _timeToAttack;
-    private IWeapon _weaponReference;
-    private IAttack _enemyAttack;
+    private float _attackDelay;
 
-    public EnemyAttackState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef) 
-        : base(navMeshAgent, playerRef, enemyRef) 
+    private IWeapon _weaponInterface;
+    private Weapon _weaponScript;
+
+
+    public EnemyAttackState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef, GameObject weaponRef) 
+        : base(navMeshAgent, playerRef, enemyRef, weaponRef) 
     {
-        _weaponReference = enemyRef.transform.GetComponentInChildren<Weapon>();
-        _timeToAttack = 5;
+        _weaponScript = weaponRef.GetComponent<Weapon>();
+        _weaponInterface = _weaponScript;
+
+        _weaponRange = 3f * _weaponScript.Range;
+
+        _attackDelay = _weaponScript.GetCurrentWeaponFireRate();
+        _timeToAttack = _attackDelay;
     }
 
     public override void EnterState(EnemyAIManager enemy)
     {
         Debug.Log("SWITCHED TO ATTACK STATE");
-        
-        //navMeshAgent.isStopped = true;
     }
 
     public override void UpdateState(EnemyAIManager enemy)
     {
+        if (playerRef == null)
+        {
+            return;
+        }
+
         float distanceToPlayer = Vector3.Distance(enemyRef.transform.position, playerRef.transform.position);
         _timeToAttack += Time.deltaTime;
 
-        if (distanceToPlayer <= _weaponRange * 0.75f)
+        if (distanceToPlayer <= _weaponRange * 0.6f)
         {
             navMeshAgent.isStopped = true;
         }
@@ -39,9 +50,9 @@ public class EnemyAttackState : EnemyBaseState
         }
         else
         {
-            if (_timeToAttack > 5f) //wartoœæ zast¹piæ fireRate'm broni
+            if (_timeToAttack > _attackDelay) //wartoœæ zast¹piæ fireRate'm broni
             {
-                _weaponReference.PrimaryAttack();
+                _weaponInterface.PrimaryAttack();
                 Debug.Log("Shots fired");
                 _timeToAttack = 0;
             }

@@ -5,4 +5,6 @@ using UnityEngine;
 public interface IAttack
 {
     public void Attack(Weapon weapon);
+
+    public float ReturnFireRate();
 }

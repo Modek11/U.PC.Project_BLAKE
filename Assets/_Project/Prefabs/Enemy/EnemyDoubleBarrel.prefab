@@ -7,6 +7,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4250661716291628405, guid: 20caf66ddd7209d4291d40715d756be9,
+        type: 3}
+      propertyPath: weaponRef
+      value: 
+      objectReference: {fileID: 3743808909478535148}
     - target: {fileID: 7446312994107534779, guid: 20caf66ddd7209d4291d40715d756be9,
         type: 3}
       propertyPath: m_Name
@@ -142,5 +147,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4911671507717690898, guid: d59ad31d5e825164385713c41e42f342,
+        type: 3}
+      propertyPath: MagazineSize
+      value: 9999
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d59ad31d5e825164385713c41e42f342, type: 3}
+--- !u!1 &3743808909478535148 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4911671507717690896, guid: d59ad31d5e825164385713c41e42f342,
+    type: 3}
+  m_PrefabInstance: {fileID: 8637179956268534268}
+  m_PrefabAsset: {fileID: 0}

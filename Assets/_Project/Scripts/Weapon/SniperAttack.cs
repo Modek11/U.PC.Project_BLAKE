@@ -51,4 +51,9 @@ public class SniperAttack : MonoBehaviour, IAttack
     {
         movementAxis = dir;
     }
+
+    public float ReturnFireRate()
+    {
+        throw new System.NotImplementedException();
+    }
 }
