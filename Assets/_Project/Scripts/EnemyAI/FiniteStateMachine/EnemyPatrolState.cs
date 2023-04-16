@@ -3,46 +3,48 @@ using UnityEngine.AI;
 
 public class EnemyPatrolState : EnemyBaseState
 {
-    private float _randomPointRange = 100.0f;
-    private float _walkSpeed = 5f;
-
-    private Transform _groundCenterPoint;
+    private float _walkSpeed;
+    private int _waypointIndex;
 
     private EnemyFOV _enemyFOV;
 
-    public EnemyPatrolState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef, Transform groundCenterPoint) 
-        : base(navMeshAgent, playerRef, enemyRef) 
+    public EnemyPatrolState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef, GameObject weaponRef) 
+        : base(navMeshAgent, playerRef, enemyRef, weaponRef) 
     {
-        _groundCenterPoint = groundCenterPoint;
+        _enemyFOV = enemyRef.GetComponent<EnemyFOV>();
+        _walkSpeed = 5f;
+        _waypointIndex = 0;
     }
 
     public override void EnterState(EnemyAIManager enemy)
     {
-        _enemyFOV = enemyRef.GetComponent<EnemyFOV>();
         navMeshAgent.speed = _walkSpeed;
     }
 
     public override void UpdateState(EnemyAIManager enemy)
     {
-        SetRandomPosition(_groundCenterPoint.position, _randomPointRange);
+        if (enemy.waypoints != null)
+        {
+            if (_waypointIndex < enemy.waypoints.GetCount())
+            {
+                Vector3 patrolPosition = enemy.waypoints.GetWaypointPosition(_waypointIndex);
+                MoveToPosition(patrolPosition);
+
+                if (Vector3.Distance(enemyRef.transform.position, patrolPosition) < .1f)
+                {
+                    _waypointIndex++;
+                }
+
+            }
+            else
+            {
+                _waypointIndex = 0;
+            }
+        }
 
         if (_enemyFOV.canSeePlayer)
         {
             enemy.SwitchCurrentState(enemy.ChaseState);
-        }
-    }
-
-    private void SetRandomPosition(Vector3 center, float range)
-    {
-        for (int i = 0; i < 30; i++)
-        {
-            Vector3 randomPoint = center + Random.insideUnitSphere * range;
-            NavMeshHit hit;
-
-            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
-            {
-                MoveToPosition(hit.position);
-            }
         }
     }
 

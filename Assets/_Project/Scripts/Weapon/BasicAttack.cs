@@ -20,6 +20,11 @@ public class BasicAttack : MonoBehaviour, IAttack
         Shot();
     }
 
+    public float ReturnFireRate()
+    {
+        return timeBetweenShooting;
+    }
+
     private void Shot()
     {
         usedWeapon.isLastShotOver = false;

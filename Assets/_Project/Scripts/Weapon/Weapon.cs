@@ -39,6 +39,11 @@ public class Weapon : MonoBehaviour, IWeapon
         if (!CanShoot()) return;
         _primaryAttack.Value.Attack(this);
     }
+
+    public float GetCurrentWeaponFireRate()
+    {
+        return _primaryAttack.Value.ReturnFireRate();
+    }
     
     public void SecondaryAttack()
     {

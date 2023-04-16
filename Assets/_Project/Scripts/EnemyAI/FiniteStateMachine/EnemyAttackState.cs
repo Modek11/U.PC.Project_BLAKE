@@ -3,36 +3,58 @@ using UnityEngine.AI;
 
 public class EnemyAttackState : EnemyBaseState
 {
-    private float _weaponRange = 10f;
-    private float _timeToAttack;
+    private float _weaponRange;
 
-    public EnemyAttackState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef) 
-        : base(navMeshAgent, playerRef, enemyRef) { }
+    private float _timeToAttack;
+    private float _attackDelay;
+
+    private IWeapon _weaponInterface;
+    private Weapon _weaponScript;
+
+
+    public EnemyAttackState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef, GameObject weaponRef) 
+        : base(navMeshAgent, playerRef, enemyRef, weaponRef) 
+    {
+        _weaponScript = weaponRef.GetComponent<Weapon>();
+        _weaponInterface = _weaponScript;
+
+        _weaponRange = 3f * _weaponScript.Range;
+
+        _attackDelay = _weaponScript.GetCurrentWeaponFireRate();
+        _timeToAttack = _attackDelay;
+    }
 
     public override void EnterState(EnemyAIManager enemy)
     {
         Debug.Log("SWITCHED TO ATTACK STATE");
-        //navMeshAgent.isStopped = true;
+        navMeshAgent.SetDestination(playerRef.transform.position + Random.insideUnitSphere * _weaponRange);
     }
 
     public override void UpdateState(EnemyAIManager enemy)
     {
-        if (Vector3.Distance(enemyRef.transform.position, playerRef.transform.position) <= _weaponRange / 2f)
+        if (playerRef == null)
+        {
+            return;
+        }
+
+        float distanceToPlayer = Vector3.Distance(enemyRef.transform.position, playerRef.transform.position);
+        _timeToAttack += Time.deltaTime;
+
+        if (distanceToPlayer <= _weaponRange * 0.6f)
         {
             navMeshAgent.isStopped = true;
         }
 
-        if (Vector3.Distance(enemyRef.transform.position, playerRef.transform.position) > _weaponRange)
+        if (distanceToPlayer > _weaponRange)
         {
             enemy.SwitchCurrentState(enemy.ChaseState);
         }
         else
         {
-            _timeToAttack += Time.time;
-
-            if(_timeToAttack >= 1f)
+            if (_timeToAttack > _attackDelay) //wartoœæ zast¹piæ fireRate'm broni
             {
-                Debug.Log("ATTACK!");
+                _weaponInterface.PrimaryAttack();
+                Debug.Log("Shots fired");
                 _timeToAttack = 0;
             }
         }

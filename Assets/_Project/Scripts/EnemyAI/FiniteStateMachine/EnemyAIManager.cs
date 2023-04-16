@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,43 +7,63 @@ public class EnemyAIManager : MonoBehaviour
     private NavMeshAgent _navMeshAgent;
     private GameObject _playerRef;
     private GameObject _enemyRef;
-    private Transform _groundCenterPoint;
+    [SerializeField] private GameObject weaponRef;
 
-    public EnemyBaseState currentState;
+    private EnemyBaseState _currentState;
 
     public EnemyPatrolState PatrolState;
     public EnemyChaseState ChaseState;
     public EnemyAttackState AttackState;
+    public EnemyStrafeState StrafeState;
+
+    public Waypoints waypoints;
 
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _playerRef = GameObject.FindGameObjectWithTag("Player");
         _enemyRef = gameObject;
-        _groundCenterPoint = GameObject.Find("Floor").transform;
     }
 
     private void OnEnable()
     {
-        PatrolState = new EnemyPatrolState(_navMeshAgent, _playerRef, _enemyRef, _groundCenterPoint);
-        ChaseState = new EnemyChaseState(_navMeshAgent, _playerRef, _enemyRef);
-        AttackState = new EnemyAttackState(_navMeshAgent, _playerRef, _enemyRef);
+        PatrolState = new EnemyPatrolState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
+        ChaseState = new EnemyChaseState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
+        AttackState = new EnemyAttackState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
+        StrafeState = new EnemyStrafeState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
     }
 
     private void Start()
     {
-        currentState = PatrolState;
-        currentState.EnterState(this);
+        _currentState = PatrolState;
+        _currentState.EnterState(this);
     }
 
     private void Update()
     {
-        currentState.UpdateState(this);
+        _currentState.UpdateState(this);
+        FaceThePlayer();
     }
 
     public void SwitchCurrentState(EnemyBaseState state)
     {
-        currentState = state;
-        currentState.EnterState(this);
+        _currentState = state;
+        _currentState.EnterState(this);
+    }
+
+    private void FaceThePlayer()
+    {
+        if (_playerRef == null)
+        {
+            return;
+        }
+
+        Vector3 direction = (_playerRef.transform.position - _enemyRef.transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+
+        if (_currentState != PatrolState)
+        {
+            _enemyRef.transform.rotation = Quaternion.Slerp(_enemyRef.transform.rotation, lookRotation, Time.deltaTime * 3f);
+        }
     }
 }
