@@ -6,6 +6,8 @@ public class EnemyChaseState : EnemyBaseState
     private float _weaponRange;
     private float _chaseSpeed;
 
+    private Vector3 targetPositionOffset;
+
     public EnemyChaseState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef, GameObject weaponRef)
         : base(navMeshAgent, playerRef, enemyRef, weaponRef) 
     {
@@ -20,6 +22,8 @@ public class EnemyChaseState : EnemyBaseState
 
         navMeshAgent.ResetPath();
         navMeshAgent.speed = _chaseSpeed;
+        targetPositionOffset = GetTargetPositionOffset();
+
         Debug.Log("CHASE STATE");
     }
 
@@ -32,14 +36,9 @@ public class EnemyChaseState : EnemyBaseState
 
         float distanceToPlayer = Vector3.Distance(enemyRef.transform.position, playerRef.transform.position);
 
-        if (distanceToPlayer > 1.1f * _weaponRange)
+        if (distanceToPlayer > _weaponRange)
         {
-            navMeshAgent.SetDestination(playerRef.transform.position);
-        }
-
-        if ((distanceToPlayer > _weaponRange && distanceToPlayer <= 1.1f * _weaponRange))
-        {
-            navMeshAgent.SetDestination(playerRef.transform.position + Random.insideUnitSphere * _weaponRange);
+            navMeshAgent.SetDestination(playerRef.transform.position + targetPositionOffset);
         }
 
         /*
@@ -59,5 +58,13 @@ public class EnemyChaseState : EnemyBaseState
         {
             enemy.SwitchCurrentState(enemy.AttackState);
         }
+    }
+
+    private Vector3 GetTargetPositionOffset()
+    {
+        Vector3 offset = Random.insideUnitSphere * 5f;
+        offset = new Vector3(offset.x, 0, offset.z);
+
+        return offset;
     }
 }

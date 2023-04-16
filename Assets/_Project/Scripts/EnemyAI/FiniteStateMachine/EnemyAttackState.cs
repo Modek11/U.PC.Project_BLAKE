@@ -27,6 +27,7 @@ public class EnemyAttackState : EnemyBaseState
     public override void EnterState(EnemyAIManager enemy)
     {
         Debug.Log("SWITCHED TO ATTACK STATE");
+        navMeshAgent.SetDestination(playerRef.transform.position + Random.insideUnitSphere * _weaponRange);
     }
 
     public override void UpdateState(EnemyAIManager enemy)
