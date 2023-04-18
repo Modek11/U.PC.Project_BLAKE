@@ -17,8 +17,14 @@ TagManager:
   - Bullet
   - Player
   - Obstacle
+  - Enemy
   - 
   - 
+<<<<<<< HEAD
+=======
+  - 
+  - 
+>>>>>>> develop
   - Minimap
   - 
   - 

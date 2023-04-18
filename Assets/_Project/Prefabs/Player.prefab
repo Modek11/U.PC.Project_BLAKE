@@ -1702,6 +1702,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3772505427568618154}
+  - component: {fileID: 2163410565736031503}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -1727,6 +1728,26 @@ Transform:
   m_Father: {fileID: 8952298361853881667}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2163410565736031503
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3772505427568618157}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 2d226e59912d0014fbf2646ed5c4b916, type: 3}
+  m_Controller: {fileID: 9100000, guid: e0c3f29b51f4f8346b38d92e84a8dc3d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &3893400913785948164
 GameObject:
   m_ObjectHideFlags: 0
@@ -3194,6 +3215,19 @@ MonoBehaviour:
   attachSockets:
   - {fileID: 3772505426422216949}
   defaultWeapon: {fileID: 11400000, guid: ba6d981959989e54081af014222d2c3f, type: 2}
+--- !u!114 &4224448683965087072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8608387976418621433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2130668da6cd9554db76e6fdee589017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
 --- !u!1 &8871600578562275924
 GameObject:
   m_ObjectHideFlags: 0
