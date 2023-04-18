@@ -148,9 +148,6 @@ public class PlayerMovement : MonoBehaviour
     {
         cam = newCamera;
     }
-
-<<<<<<< HEAD
-=======
     float CalculateDirection()
     {
 	    if (_rigidbody.velocity != Vector3.zero)
@@ -171,5 +168,4 @@ public class PlayerMovement : MonoBehaviour
 
 	    return 0f;
     }
->>>>>>> develop
 }
