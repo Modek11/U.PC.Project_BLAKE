@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 3309503159135514013}
   - component: {fileID: 6662416213786733057}
   - component: {fileID: 4193483499945525788}
-  m_Layer: 11
+  m_Layer: 14
   m_Name: MinimapFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1837,7 +1837,7 @@ Transform:
   m_GameObject: {fileID: 6958249082703235447}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.657403, y: -1.4059024, z: -2.7393067}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7202868572057161343}
@@ -1885,8 +1885,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10, y: 4, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Size: {x: 10.276996, y: 4, z: 10.277}
+  m_Center: {x: -0.0034900336, y: 2, z: 0}
 --- !u!1 &7095370648359695158
 GameObject:
   m_ObjectHideFlags: 0

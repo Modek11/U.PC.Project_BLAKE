@@ -15,6 +15,11 @@ public class EnemyFOV : MonoBehaviour
 
     private void Awake()
     {
+        FindPlayer();
+    }
+
+    public void FindPlayer()
+    {
         playerRef = GameObject.FindGameObjectWithTag("Player");
     }
 

@@ -78,6 +78,7 @@ public class PlayerInteractables : MonoBehaviour
     //Set UI Element above Interactable
     private void SetUI()
     {
+        if (interactUI == null) return;
         IInteractable closest = GetClosestInteractable();
         if (closest == null)
         {

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.AI.Navigation;
+using System;
 
 public class Room : MonoBehaviour
 {
@@ -16,9 +18,24 @@ public class Room : MonoBehaviour
     [SerializeField]
     private MinimapRoom minimapRoom;
 
+    [Header("Spawning Enemies")]
+    [SerializeField]
+    private List<EnemySpawner> spawners = new List<EnemySpawner>();
+    [SerializeField]
+    private List<GameObject> spawnedEnemies;
+
+    [Serializable]
+    public struct EnemySpawner
+    {
+        public Transform EnemySpawnPoint;
+        public GameObject EnemyToSpawn;
+        public Waypoints EnemyWaypoints;
+    }
+
     public void InitializeRoom(RoomManager rm)
     {
         roomManager = rm;
+        spawnedEnemies = new List<GameObject>();
         foreach(RandomizedRoomObject randomObject in randomObjects)
         {
             randomObject.InitializeRandomObject();
@@ -33,6 +50,22 @@ public class Room : MonoBehaviour
         {
             minimapRoom.transform.parent = roomManager.GetMinimapFloor();
         }
+
+        //Build NavMesh
+        NavMeshSurface[] surfaces = GetComponentsInChildren<NavMeshSurface>();
+        foreach(NavMeshSurface surface in surfaces)
+        {
+            surface.BuildNavMesh();
+        }
+
+        //Spawn enemies
+        foreach(EnemySpawner enemy in spawners)
+        {
+            GameObject spawnedEnemy = Instantiate(enemy.EnemyToSpawn.gameObject, enemy.EnemySpawnPoint.transform.position, enemy.EnemySpawnPoint.rotation, this.transform);
+            spawnedEnemy.GetComponent<EnemyAIManager>().SetWaypoints(enemy.EnemyWaypoints);
+            spawnedEnemies.Add(spawnedEnemy);
+        }
+        
     }
 
     public RoomConnector[] GetDoors()
@@ -78,6 +111,13 @@ public class Room : MonoBehaviour
         }
 
         roomManager.SetActiveRoom(this);
+
+        foreach(GameObject enemy in spawnedEnemies)
+        {
+            if (enemy == null) continue;
+            enemy.GetComponent<EnemyAIManager>().UpdatePlayerRef();
+            enemy.GetComponent<EnemyFOV>().FindPlayer();
+        }
     }
 
     private void ExitRoom()

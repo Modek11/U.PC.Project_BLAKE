@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 9084103628866338115}
   - component: {fileID: 6507016263893337417}
   - component: {fileID: 768782095879763725}
-  m_Layer: 11
+  m_Layer: 14
   m_Name: PlayerArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3083,6 +3083,7 @@ GameObject:
   - component: {fileID: 5545414051132038906}
   - component: {fileID: 5545414051132038907}
   - component: {fileID: 5545414051132038904}
+  - component: {fileID: 4224448683965087072}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player

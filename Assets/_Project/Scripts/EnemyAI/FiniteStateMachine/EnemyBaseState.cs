@@ -16,6 +16,10 @@ public abstract class EnemyBaseState
         this.weaponRef = weaponRef;
     }
     
+    public virtual void ChangePlayerRef(GameObject playerRef)
+    {
+        this.playerRef = playerRef;
+    }
 
     public abstract void EnterState(EnemyAIManager enemy);
     public abstract void UpdateState(EnemyAIManager enemy);

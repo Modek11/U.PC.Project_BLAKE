@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +19,9 @@ public class EnemyAIManager : MonoBehaviour
 
     public Waypoints waypoints;
 
+    [SerializeField]
+    private List<EnemyBaseState> states = new List<EnemyBaseState>();
+
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -28,9 +32,17 @@ public class EnemyAIManager : MonoBehaviour
     private void OnEnable()
     {
         PatrolState = new EnemyPatrolState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
+        states.Add(PatrolState);
+
         ChaseState = new EnemyChaseState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
+        states.Add(ChaseState);
+
         AttackState = new EnemyAttackState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
+        states.Add(AttackState);
+
         StrafeState = new EnemyStrafeState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
+        states.Add(StrafeState);
+
     }
 
     private void Start()
@@ -45,10 +57,24 @@ public class EnemyAIManager : MonoBehaviour
         FaceThePlayer();
     }
 
+    public void UpdatePlayerRef()
+    {
+        _playerRef = GameObject.FindGameObjectWithTag("Player");
+        foreach(EnemyBaseState state in states)
+        {
+            state.ChangePlayerRef(_playerRef);
+        }
+    }
+
     public void SwitchCurrentState(EnemyBaseState state)
     {
         _currentState = state;
         _currentState.EnterState(this);
+    }
+
+    public void SetWaypoints(Waypoints waypoints)
+    {
+        this.waypoints = waypoints;
     }
 
     private void FaceThePlayer()
