@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 373849825145379941}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.76, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7450699668249303467}
   m_RootOrder: 1
@@ -163,6 +163,7 @@ MonoBehaviour:
   connectedDoor: {fileID: 0}
   doorObject: {fileID: 2511101907871570994}
   wallObject: {fileID: 8232469141821342570}
+  door: {fileID: 8107468801648928565}
 --- !u!1 &677446410939441974
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,6 +176,7 @@ GameObject:
   - component: {fileID: 8847057552313512581}
   - component: {fileID: 6365720299164705875}
   - component: {fileID: 5858832382328377588}
+  - component: {fileID: 7703110389072759894}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -260,6 +262,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7703110389072759894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677446410939441974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cbf5d4f8885d5d499bdc253c034649d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closedMat: {fileID: 2100000, guid: dd5b9cefac3cc7748b0bbbf8ad36a042, type: 2}
+  openMat: {fileID: 2100000, guid: 1f72c9a012fd7024c94ac5f4ed0bf421, type: 2}
 --- !u!1 &994294760354476418
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,6 +674,7 @@ GameObject:
   - component: {fileID: 337928310681833642}
   - component: {fileID: 301830025134386704}
   - component: {fileID: 476851905056433790}
+  - component: {fileID: 8107468801648928565}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -743,6 +760,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8107468801648928565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2511101907871570994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cbf5d4f8885d5d499bdc253c034649d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closedMat: {fileID: 2100000, guid: dd5b9cefac3cc7748b0bbbf8ad36a042, type: 2}
+  openMat: {fileID: 2100000, guid: 1f72c9a012fd7024c94ac5f4ed0bf421, type: 2}
 --- !u!1 &3461258477518833096
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,6 +1052,7 @@ MonoBehaviour:
   connectedDoor: {fileID: 0}
   doorObject: {fileID: 677446410939441974}
   wallObject: {fileID: 6416856373335887568}
+  door: {fileID: 7703110389072759894}
 --- !u!1 &4383231914288380972
 GameObject:
   m_ObjectHideFlags: 0
@@ -1373,6 +1405,8 @@ MonoBehaviour:
   - {fileID: 4363206918492759241}
   spawners: []
   spawnedEnemies: []
+  isInitialized: 0
+  isBeaten: 0
 --- !u!1 &7279595188957797697
 GameObject:
   m_ObjectHideFlags: 0

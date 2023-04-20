@@ -21,11 +21,15 @@ public class Room : MonoBehaviour
     [SerializeField]
     private BoxCollider[] overlapColliders;
 
-    [Header("Spawning Enemies")]
+    [Header("Enemies")]
     [SerializeField]
     private List<EnemySpawner> spawners = new List<EnemySpawner>();
     [SerializeField]
     private List<GameObject> spawnedEnemies;
+    [SerializeField]
+    private bool isInitialized = false;
+    [SerializeField]
+    private bool isBeaten = false;
 
     [Serializable]
     public struct EnemySpawner
@@ -68,7 +72,19 @@ public class Room : MonoBehaviour
             spawnedEnemy.GetComponent<EnemyAIManager>().SetWaypoints(enemy.EnemyWaypoints);
             spawnedEnemies.Add(spawnedEnemy);
         }
-        
+
+        foreach (RoomConnector roomConnector in doors)
+        {
+            roomConnector.OpenDoor();
+        }
+
+        if (spawnedEnemies.Count == 0)
+        {
+            isBeaten = true;
+
+        }
+        isInitialized = true;
+
     }
 
     public RoomConnector[] GetDoors()
@@ -121,6 +137,53 @@ public class Room : MonoBehaviour
             if (enemy == null) continue;
             enemy.GetComponent<EnemyAIManager>().UpdatePlayerRef();
             enemy.GetComponent<EnemyFOV>().FindPlayer();
+        }
+
+        if(!isBeaten)
+        {
+            foreach(RoomConnector roomConnector in doors)
+            {
+                roomConnector.CloseDoor();
+            }
+        }
+
+        Invoke("DebugKill", 5f);
+    }
+
+    #region Debug bo nie mam jak zabiæ przeciwników XD
+
+    private void DebugKill()
+    {
+        foreach(GameObject enemy in spawnedEnemies)
+        {
+            enemy.GetComponent<BlakeCharacter>().Die();
+        }
+    }
+    #endregion
+
+    private void Update()
+    {
+        if(!isBeaten && isInitialized)
+        {
+            if(spawnedEnemies.Count == 0)
+            {
+                isBeaten = true;
+                foreach (RoomConnector roomConnector in doors)
+                {
+                    roomConnector.OpenDoor();
+                }
+            }
+        }
+
+        if(spawnedEnemies.Count > 0)
+        {
+            for(int i = spawnedEnemies.Count -1; i >= 0; i--)
+            {
+                if (spawnedEnemies[i] == null)
+                {
+                    spawnedEnemies.RemoveAt(i);
+                }
+            }
         }
     }
 

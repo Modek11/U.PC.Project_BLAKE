@@ -30,7 +30,7 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
         animator = GetComponentInChildren<Animator>();
     }
 
-    private void Die()
+    public void Die()
     {
         animator.SetBool("IsAlive", false);
 
