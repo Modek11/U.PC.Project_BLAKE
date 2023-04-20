@@ -18,6 +18,9 @@ public class Room : MonoBehaviour
     [SerializeField]
     private MinimapRoom minimapRoom;
 
+    [SerializeField]
+    private BoxCollider[] overlapColliders;
+
     [Header("Spawning Enemies")]
     [SerializeField]
     private List<EnemySpawner> spawners = new List<EnemySpawner>();
@@ -73,23 +76,24 @@ public class Room : MonoBehaviour
         return doors;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Player"))
-        {
-            EnterRoom();
-        }
-    }
-
     public void SeeRoom()
     {
         minimapRoom.ShowRoom();
     }
 
-    private void EnterRoom()
+    public void DisableFog()
+    {
+        fog.SetActive(false);
+    }
+
+    public void EnableFog()
+    {
+        fog.SetActive(true);
+    }
+
+    public void EnterRoom()
     {
         minimapRoom.VisitRoom();
-        fog.SetActive(false);
         Room activeRoom = roomManager.GetActiveRoom();
         if (activeRoom != null)
         {
@@ -120,37 +124,15 @@ public class Room : MonoBehaviour
         }
     }
 
-    private void ExitRoom()
+    public void ExitRoom()
     {
-        fog.SetActive(true);
         if(roomManager.GetActiveRoom() == this)
         {
             roomManager.SetActiveRoom(null);
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if(other.CompareTag("Player"))
-        {
-            if(roomManager.GetActiveRoom() != this)
-            {
-                ExitRoom();
-            }
-            if (roomManager.GetActiveRoom() == null)
-            {
-                EnterRoom();
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            ExitRoom();
-        }
-    }
+    
 
     public List<Room> GetNeigbours()
     {
@@ -163,6 +145,16 @@ public class Room : MonoBehaviour
             neigbours.Add(neighbour.GetRoom());
         }
         return neigbours;
+    }
+
+    public BoxCollider[] GetOverlapColliders()
+    {
+        return overlapColliders;
+    }
+
+    public RoomManager GetRoomManager()
+    {
+        return roomManager;
     }
 
 }
