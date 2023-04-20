@@ -10,18 +10,18 @@ public class EnemyStrafeState : EnemyBaseState
     private Transform strafeLeft;
     private bool strafeToRight;
 
-    public EnemyStrafeState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef, GameObject weaponRef)
-        : base(navMeshAgent, playerRef, enemyRef, weaponRef) 
+    public EnemyStrafeState(NavMeshAgent navMeshAgent, EnemyAIManager aIManager)
+        : base(navMeshAgent, aIManager) 
     {
-        strafeRight = enemyRef.transform.Find("StrafeRight");
-        strafeLeft = enemyRef.transform.Find("StrafeLeft");
+        strafeRight = aiManager.GetEnemyRef().transform.Find("StrafeRight");
+        strafeLeft = aiManager.transform.Find("StrafeLeft");
         strafeToRight = Random.value > 0.5f ? true : false;
 
-        _weaponRange = 3f * weaponRef.GetComponent<Weapon>().Range;
+        _weaponRange = 3f * aiManager.GetWeaponRef().GetComponent<Weapon>().Range;
         _strafeSpeed = 8f;
     }
 
-    public override void EnterState(EnemyAIManager enemy)
+    public override void EnterState()
     {
         Debug.Log("STRAFE STATE");
         navMeshAgent.isStopped = false;
@@ -39,29 +39,29 @@ public class EnemyStrafeState : EnemyBaseState
         strafeToRight = !strafeToRight;
     }
 
-    public override void UpdateState(EnemyAIManager enemy)
+    public override void UpdateState()
     {
-        if (playerRef == null)
+        if (aiManager.GetPlayerRef() == null)
         {
             return;
         }
 
-        float distanceToPlayer = Vector3.Distance(enemyRef.transform.position, playerRef.transform.position);
+        float distanceToPlayer = Vector3.Distance(aiManager.GetEnemyRef().transform.position, aiManager.GetPlayerRef().transform.position);
 
         if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            enemy.SwitchCurrentState(enemy.StrafeState);
+            aiManager.SwitchCurrentState(aiManager.StrafeState);
             Debug.Log("STRAFING");
         }
 
         if (distanceToPlayer <= _weaponRange)
         {
-            enemy.SwitchCurrentState(enemy.AttackState);
+            aiManager.SwitchCurrentState(aiManager.AttackState);
         }
 
         if (distanceToPlayer < 1.5f * _weaponRange || distanceToPlayer > 2.5f * _weaponRange)
         {
-            enemy.SwitchCurrentState(enemy.ChaseState);
+            aiManager.SwitchCurrentState(aiManager.ChaseState);
         }
     }
 }

@@ -8,15 +8,15 @@ public class EnemyChaseState : EnemyBaseState
 
     private Vector3 targetPositionOffset;
 
-    public EnemyChaseState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef, GameObject weaponRef)
-        : base(navMeshAgent, playerRef, enemyRef, weaponRef) 
+    public EnemyChaseState(NavMeshAgent navMeshAgent, EnemyAIManager aIManager)
+        : base(navMeshAgent, aIManager) 
     {
-        _weaponRange = 3f * weaponRef.GetComponent<Weapon>().Range; 
+        _weaponRange = 3f * aiManager.GetWeaponRef().GetComponent<Weapon>().Range; 
         _chaseSpeed = 12f;
     }
 
 
-    public override void EnterState(EnemyAIManager enemy)
+    public override void EnterState()
     {
         navMeshAgent.isStopped = false;
 
@@ -27,18 +27,18 @@ public class EnemyChaseState : EnemyBaseState
         Debug.Log("CHASE STATE");
     }
 
-    public override void UpdateState(EnemyAIManager enemy)
+    public override void UpdateState()
     {
-        if (playerRef == null)
+        if (aiManager.GetPlayerRef() == null)
         {
             return;
         }
 
-        float distanceToPlayer = Vector3.Distance(enemyRef.transform.position, playerRef.transform.position);
+        float distanceToPlayer = Vector3.Distance(aiManager.GetEnemyRef().transform.position, aiManager.GetPlayerRef().transform.position);
 
         if (distanceToPlayer > _weaponRange)
         {
-            navMeshAgent.SetDestination(playerRef.transform.position + targetPositionOffset);
+            navMeshAgent.SetDestination(aiManager.GetPlayerRef().transform.position + targetPositionOffset);
         }
 
         /*
@@ -56,7 +56,7 @@ public class EnemyChaseState : EnemyBaseState
 
         if (distanceToPlayer <= _weaponRange)
         {
-            enemy.SwitchCurrentState(enemy.AttackState);
+            aiManager.SwitchCurrentState(aiManager.AttackState);
         }
     }
 

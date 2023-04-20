@@ -19,8 +19,6 @@ public class EnemyAIManager : MonoBehaviour
 
     public Waypoints waypoints;
 
-    [SerializeField]
-    private List<EnemyBaseState> states = new List<EnemyBaseState>();
 
     private void Awake()
     {
@@ -31,45 +29,37 @@ public class EnemyAIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        PatrolState = new EnemyPatrolState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
-        states.Add(PatrolState);
+        PatrolState = new EnemyPatrolState(_navMeshAgent, this);
 
-        ChaseState = new EnemyChaseState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
-        states.Add(ChaseState);
+        ChaseState = new EnemyChaseState(_navMeshAgent, this);
 
-        AttackState = new EnemyAttackState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
-        states.Add(AttackState);
+        AttackState = new EnemyAttackState(_navMeshAgent, this);
 
-        StrafeState = new EnemyStrafeState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
-        states.Add(StrafeState);
+        StrafeState = new EnemyStrafeState(_navMeshAgent, this);
 
     }
 
     private void Start()
     {
         _currentState = PatrolState;
-        _currentState.EnterState(this);
+        _currentState.EnterState();
     }
 
     private void Update()
     {
-        _currentState.UpdateState(this);
+        _currentState.UpdateState();
         FaceThePlayer();
     }
 
     public void UpdatePlayerRef()
     {
         _playerRef = GameObject.FindGameObjectWithTag("Player");
-        foreach(EnemyBaseState state in states)
-        {
-            state.ChangePlayerRef(_playerRef);
-        }
     }
 
     public void SwitchCurrentState(EnemyBaseState state)
     {
         _currentState = state;
-        _currentState.EnterState(this);
+        _currentState.EnterState();
     }
 
     public void SetWaypoints(Waypoints waypoints)
@@ -91,5 +81,20 @@ public class EnemyAIManager : MonoBehaviour
         {
             _enemyRef.transform.rotation = Quaternion.Slerp(_enemyRef.transform.rotation, lookRotation, Time.deltaTime * 3f);
         }
+    }
+
+    public GameObject GetPlayerRef()
+    {
+        return _playerRef;
+    }
+
+    public GameObject GetEnemyRef()
+    {
+        return _enemyRef;
+    }
+
+    public GameObject GetWeaponRef()
+    {
+        return weaponRef;
     }
 }
