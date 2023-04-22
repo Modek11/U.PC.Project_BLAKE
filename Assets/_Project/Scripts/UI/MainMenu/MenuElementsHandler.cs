@@ -28,4 +28,5 @@ public class MenuElementsHandler : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
     }
+    
 }
