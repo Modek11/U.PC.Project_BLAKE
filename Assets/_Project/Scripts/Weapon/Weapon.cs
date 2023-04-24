@@ -20,6 +20,8 @@ public class Weapon : MonoBehaviour, IWeapon
     [SerializeField] private InterfaceReference<IAttack> _primaryAttack;
     [Tooltip("Attack which will be triggered on RMB, it's not required")]
     [SerializeField] private InterfaceReference<IAttack> _secondaryAttack;
+    [Header("Varabiables to pass")]
+    [SerializeField] private WeaponDefinition weaponDefinition;
 
     private bool isReloading;
 
@@ -84,5 +86,15 @@ public class Weapon : MonoBehaviour, IWeapon
     private void OnValidate()
     {
         Assert.IsNotNull(_primaryAttack.Value);
+    }
+
+    public void SetMagazineSize(int size)
+    {
+        MagazineSize = size;
+    }
+
+    public WeaponDefinition GetWeaponDefinition()
+    {
+        return weaponDefinition;
     }
 }

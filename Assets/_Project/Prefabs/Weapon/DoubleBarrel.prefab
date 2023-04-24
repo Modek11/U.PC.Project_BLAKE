@@ -61,6 +61,7 @@ MonoBehaviour:
     _underlyingValue: {fileID: 4911671509393515036}
   _secondaryAttack:
     _underlyingValue: {fileID: 0}
+  weaponDefinition: {fileID: 11400000, guid: cdc2618dfa837c346a3dd1fc0d02ce9b, type: 2}
 --- !u!114 &4911671509393515036
 MonoBehaviour:
   m_ObjectHideFlags: 0

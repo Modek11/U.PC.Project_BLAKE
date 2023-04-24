@@ -3,6 +3,7 @@ using UnityEngine;
 public class BlakeCharacter : MonoBehaviour, IDamageable
 {
     [SerializeField] private int health = 1;
+    protected bool isDead = false;
     public int Health 
     { 
         get
@@ -30,21 +31,23 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
         animator = GetComponentInChildren<Animator>();
     }
 
-    public void Die()
+    public virtual void Die()
     {
-        animator.SetBool("IsAlive", false);
+        if (isDead) return;
+        isDead = true;
+        //animator.SetBool("IsAlive", false);
 
         onDeath?.Invoke();
 
         Invoke("DestroySelf", 5f);
     }
 
-    private void DestroySelf()
+    protected virtual void DestroySelf()
     {
         Destroy(gameObject);
     }
 
-    public void TakeDamage(GameObject instigator, int damage)
+    public virtual void TakeDamage(GameObject instigator, int damage)
     {
         if (health < 1) { return; }
 
