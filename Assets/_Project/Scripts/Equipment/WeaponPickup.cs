@@ -11,7 +11,7 @@ public class WeaponPickup : Interactable
 
     private void Awake()
     {
-        weaponGFX = pickupGameObject.transform.GetChild(0).gameObject;
+        weaponGFX = Instantiate(weaponToPickup.weaponGFX, pickupGameObject.transform.position, pickupGameObject.transform.rotation, pickupGameObject.transform);
     }
 
     private void Update()
