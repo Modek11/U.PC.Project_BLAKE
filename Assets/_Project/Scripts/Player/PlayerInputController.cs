@@ -27,10 +27,9 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
     public event Action onShootCancelEvent;
     public event Action reloadEvent;
     public event Action<int> changeWeaponEvent;
-
     public event Action interactEvent;
-    
     public event Action dashEvent;
+    public event Action escapeButtonEvent;
 
     public void OnMovement(InputAction.CallbackContext context)
     {
@@ -82,6 +81,14 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
         if(context.performed)
         {
             dashEvent?.Invoke();
+        }
+    }
+
+    public void OnEscapeButton(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            escapeButtonEvent?.Invoke();
         }
     }
 

@@ -89,6 +89,15 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EscapeButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""f625dbf4-8aa0-4535-a591-ae45331c073d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -234,6 +243,17 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""982e5bbc-7d72-4a31-bc76-70e4c76d7959"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EscapeButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -255,6 +275,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_MousePosition = m_Gameplay.FindAction("MousePosition", throwIfNotFound: true);
         m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
+        m_Gameplay_EscapeButton = m_Gameplay.FindAction("EscapeButton", throwIfNotFound: true);
         // Loading
         m_Loading = asset.FindActionMap("Loading", throwIfNotFound: true);
     }
@@ -325,6 +346,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_MousePosition;
     private readonly InputAction m_Gameplay_Dash;
+    private readonly InputAction m_Gameplay_EscapeButton;
     public struct GameplayActions
     {
         private @PlayerInputSystem m_Wrapper;
@@ -336,6 +358,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @MousePosition => m_Wrapper.m_Gameplay_MousePosition;
         public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
+        public InputAction @EscapeButton => m_Wrapper.m_Gameplay_EscapeButton;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -366,6 +389,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @EscapeButton.started += instance.OnEscapeButton;
+            @EscapeButton.performed += instance.OnEscapeButton;
+            @EscapeButton.canceled += instance.OnEscapeButton;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -391,6 +417,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @EscapeButton.started -= instance.OnEscapeButton;
+            @EscapeButton.performed -= instance.OnEscapeButton;
+            @EscapeButton.canceled -= instance.OnEscapeButton;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -455,6 +484,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnEscapeButton(InputAction.CallbackContext context);
     }
     public interface ILoadingActions
     {
