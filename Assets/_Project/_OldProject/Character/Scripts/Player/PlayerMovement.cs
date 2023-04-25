@@ -23,13 +23,10 @@ public class PlayerMovement : MonoBehaviour
     private float _dashDurationCountdown;
     private bool _dashPerformed;
 
-    private Animator animator;
-
     private void Awake()
     {
         _playerInputController = GetComponent<PlayerInputController>();
         _rigidbody = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -43,9 +40,6 @@ public class PlayerMovement : MonoBehaviour
     {
         Rotation();
         DashCountdown();
-
-        animator.SetFloat("Direction", CalculateDirection());
-        animator.SetFloat("Speed", _rigidbody.velocity.magnitude);
     }
 
 
@@ -147,25 +141,5 @@ public class PlayerMovement : MonoBehaviour
     public void SetMainCamera(Camera newCamera)
     {
         cam = newCamera;
-    }
-    float CalculateDirection()
-    {
-	    if (_rigidbody.velocity != Vector3.zero)
-	    {
-            Vector3 NormalizedVel = _rigidbody.velocity.normalized;
-
-            float ForwardCosAngle = Vector3.Dot(transform.forward, NormalizedVel);
-            float ForwardDeltaDegree = Mathf.Acos(ForwardCosAngle) * Mathf.Rad2Deg;
-
-            float RightCosAngle = Vector3.Dot(transform.right, NormalizedVel);
-		    if (RightCosAngle < 0)
-		    {
-			    ForwardDeltaDegree *= -1;
-		    }
-
-            return ForwardDeltaDegree;
-	    }
-
-	    return 0f;
     }
 }
