@@ -8,16 +8,17 @@ public class Bat : MonoBehaviour, IWeapon
 
     public void PrimaryAttack()
     {
-        RaycastHit hit;
-        if(Physics.SphereCast(transform.position, spereCastRadius, transform.forward, out hit))//, maxDistance, layerMask))
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position, spereCastRadius, transform.forward, maxDistance, layerMask);//, maxDistance, layerMask))
+        foreach (RaycastHit hit in hits)
         {
             Debug.Log(hit.transform.gameObject.name);
             IDamageable damageable = hit.transform.GetComponent<IDamageable>();
-            if(damageable != null)
+            if (damageable != null)
             {
                 damageable.TakeDamage(transform.parent.gameObject, 1);
             }
         }
+        
     }
 
     public void Reload()
