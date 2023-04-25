@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.AI.Navigation;
+using System;
 
 public class Room : MonoBehaviour
 {
@@ -16,9 +18,31 @@ public class Room : MonoBehaviour
     [SerializeField]
     private MinimapRoom minimapRoom;
 
+    [SerializeField]
+    private BoxCollider[] overlapColliders;
+
+    [Header("Enemies")]
+    [SerializeField]
+    private List<EnemySpawner> spawners = new List<EnemySpawner>();
+    [SerializeField]
+    private List<GameObject> spawnedEnemies;
+    [SerializeField]
+    private bool isInitialized = false;
+    [SerializeField]
+    private bool isBeaten = false;
+
+    [Serializable]
+    public struct EnemySpawner
+    {
+        public Transform EnemySpawnPoint;
+        public GameObject EnemyToSpawn;
+        public Waypoints EnemyWaypoints;
+    }
+
     public void InitializeRoom(RoomManager rm)
     {
         roomManager = rm;
+        spawnedEnemies = new List<GameObject>();
         foreach(RandomizedRoomObject randomObject in randomObjects)
         {
             randomObject.InitializeRandomObject();
@@ -33,6 +57,34 @@ public class Room : MonoBehaviour
         {
             minimapRoom.transform.parent = roomManager.GetMinimapFloor();
         }
+
+        //Build NavMesh
+        NavMeshSurface[] surfaces = GetComponentsInChildren<NavMeshSurface>();
+        foreach(NavMeshSurface surface in surfaces)
+        {
+            surface.BuildNavMesh();
+        }
+
+        //Spawn enemies
+        foreach(EnemySpawner enemy in spawners)
+        {
+            GameObject spawnedEnemy = Instantiate(enemy.EnemyToSpawn.gameObject, enemy.EnemySpawnPoint.transform.position, enemy.EnemySpawnPoint.rotation, this.transform);
+            spawnedEnemy.GetComponent<EnemyAIManager>().SetWaypoints(enemy.EnemyWaypoints);
+            spawnedEnemies.Add(spawnedEnemy);
+        }
+
+        foreach (RoomConnector roomConnector in doors)
+        {
+            roomConnector.OpenDoor();
+        }
+
+        if (spawnedEnemies.Count == 0)
+        {
+            isBeaten = true;
+
+        }
+        isInitialized = true;
+
     }
 
     public RoomConnector[] GetDoors()
@@ -40,23 +92,24 @@ public class Room : MonoBehaviour
         return doors;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Player"))
-        {
-            EnterRoom();
-        }
-    }
-
     public void SeeRoom()
     {
         minimapRoom.ShowRoom();
     }
 
-    private void EnterRoom()
+    public void DisableFog()
+    {
+        fog.SetActive(false);
+    }
+
+    public void EnableFog()
+    {
+        fog.SetActive(true);
+    }
+
+    public void EnterRoom()
     {
         minimapRoom.VisitRoom();
-        fog.SetActive(false);
         Room activeRoom = roomManager.GetActiveRoom();
         if (activeRoom != null)
         {
@@ -78,39 +131,71 @@ public class Room : MonoBehaviour
         }
 
         roomManager.SetActiveRoom(this);
+
+        foreach(GameObject enemy in spawnedEnemies)
+        {
+            if (enemy == null) continue;
+            enemy.GetComponent<EnemyAIManager>().UpdatePlayerRef();
+            enemy.GetComponent<EnemyFOV>().FindPlayer();
+        }
+
+        if(!isBeaten)
+        {
+            foreach(RoomConnector roomConnector in doors)
+            {
+                roomConnector.CloseDoor();
+            }
+        }
+
+        Invoke("DebugKill", 5f);
     }
 
-    private void ExitRoom()
+    #region Debug bo nie mam jak zabiæ przeciwników XD
+
+    private void DebugKill()
     {
-        fog.SetActive(true);
+        foreach(GameObject enemy in spawnedEnemies)
+        {
+            enemy.GetComponent<BlakeCharacter>().Die();
+        }
+    }
+    #endregion
+
+    private void Update()
+    {
+        if(!isBeaten && isInitialized)
+        {
+            if(spawnedEnemies.Count == 0)
+            {
+                isBeaten = true;
+                foreach (RoomConnector roomConnector in doors)
+                {
+                    roomConnector.OpenDoor();
+                }
+            }
+        }
+
+        if(spawnedEnemies.Count > 0)
+        {
+            for(int i = spawnedEnemies.Count -1; i >= 0; i--)
+            {
+                if (spawnedEnemies[i] == null)
+                {
+                    spawnedEnemies.RemoveAt(i);
+                }
+            }
+        }
+    }
+
+    public void ExitRoom()
+    {
         if(roomManager.GetActiveRoom() == this)
         {
             roomManager.SetActiveRoom(null);
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if(other.CompareTag("Player"))
-        {
-            if(roomManager.GetActiveRoom() != this)
-            {
-                ExitRoom();
-            }
-            if (roomManager.GetActiveRoom() == null)
-            {
-                EnterRoom();
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            ExitRoom();
-        }
-    }
+    
 
     public List<Room> GetNeigbours()
     {
@@ -123,6 +208,16 @@ public class Room : MonoBehaviour
             neigbours.Add(neighbour.GetRoom());
         }
         return neigbours;
+    }
+
+    public BoxCollider[] GetOverlapColliders()
+    {
+        return overlapColliders;
+    }
+
+    public RoomManager GetRoomManager()
+    {
+        return roomManager;
     }
 
 }

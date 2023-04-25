@@ -138,7 +138,7 @@ PrefabInstance:
     - target: {fileID: 7478649078521535363, guid: 937f6125761fadc4abee1023b0ea40f9,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 511
+      value: 1023
       objectReference: {fileID: 0}
     - target: {fileID: 7478649078521535364, guid: 937f6125761fadc4abee1023b0ea40f9,
         type: 3}
@@ -410,7 +410,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 18432
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: b5264d46fe87eea44af06f9781aec086, type: 2}
   m_TargetDisplay: 0
@@ -538,16 +538,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VirtualCamera
-      objectReference: {fileID: 0}
-    - target: {fileID: 3792045546653812229, guid: 53f2b00a162a66a49b5664d40319a492,
-        type: 3}
-      propertyPath: m_Follow
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3792045546653812229, guid: 53f2b00a162a66a49b5664d40319a492,
-        type: 3}
-      propertyPath: m_LookAt
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3792045546653812230, guid: 53f2b00a162a66a49b5664d40319a492,
         type: 3}

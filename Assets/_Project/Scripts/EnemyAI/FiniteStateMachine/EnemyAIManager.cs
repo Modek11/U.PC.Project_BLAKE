@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +19,7 @@ public class EnemyAIManager : MonoBehaviour
 
     public Waypoints waypoints;
 
+
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -27,28 +29,42 @@ public class EnemyAIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        PatrolState = new EnemyPatrolState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
-        ChaseState = new EnemyChaseState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
-        AttackState = new EnemyAttackState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
-        StrafeState = new EnemyStrafeState(_navMeshAgent, _playerRef, _enemyRef, weaponRef);
+        PatrolState = new EnemyPatrolState(_navMeshAgent, this);
+
+        ChaseState = new EnemyChaseState(_navMeshAgent, this);
+
+        AttackState = new EnemyAttackState(_navMeshAgent, this);
+
+        StrafeState = new EnemyStrafeState(_navMeshAgent, this);
+
     }
 
     private void Start()
     {
         _currentState = PatrolState;
-        _currentState.EnterState(this);
+        _currentState.EnterState();
     }
 
     private void Update()
     {
-        _currentState.UpdateState(this);
+        _currentState.UpdateState();
         FaceThePlayer();
+    }
+
+    public void UpdatePlayerRef()
+    {
+        _playerRef = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void SwitchCurrentState(EnemyBaseState state)
     {
         _currentState = state;
-        _currentState.EnterState(this);
+        _currentState.EnterState();
+    }
+
+    public void SetWaypoints(Waypoints waypoints)
+    {
+        this.waypoints = waypoints;
     }
 
     private void FaceThePlayer()
@@ -65,5 +81,20 @@ public class EnemyAIManager : MonoBehaviour
         {
             _enemyRef.transform.rotation = Quaternion.Slerp(_enemyRef.transform.rotation, lookRotation, Time.deltaTime * 3f);
         }
+    }
+
+    public GameObject GetPlayerRef()
+    {
+        return _playerRef;
+    }
+
+    public GameObject GetEnemyRef()
+    {
+        return _enemyRef;
+    }
+
+    public GameObject GetWeaponRef()
+    {
+        return weaponRef;
     }
 }

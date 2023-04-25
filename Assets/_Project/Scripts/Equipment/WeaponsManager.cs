@@ -48,6 +48,7 @@ public class WeaponsManager : MonoBehaviour
         if (playerInputController != null)
         {
             playerInputController.changeWeaponEvent += Equip;
+            playerInputController.shootEvent += ShootWeapon;
         }
     }
 
@@ -82,6 +83,11 @@ public class WeaponsManager : MonoBehaviour
         {
             SpawnWeapon();
         }
+    }
+
+    public void ShootWeapon()
+    {
+        weaponItems[activeWeaponIndex].Item2.PrimaryAttack();
     }
 
     public int GetFreeIndex()
