@@ -117,8 +117,8 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
+    m_Bits: 1015
+  m_UseGeometry: 1
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
@@ -662,7 +662,6 @@ GameObject:
   - component: {fileID: 7675378188536690647}
   - component: {fileID: 3037243561106681713}
   - component: {fileID: 926171703509111906}
-  - component: {fileID: 4929172532565157239}
   m_Layer: 0
   m_Name: Fog
   m_TagString: Untagged
@@ -735,20 +734,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4929172532565157239
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2764134488830983332}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2774015937583806536
 GameObject:
   m_ObjectHideFlags: 0
@@ -2307,6 +2292,7 @@ GameObject:
   - component: {fileID: 3641849940049933794}
   - component: {fileID: 2832304946988959354}
   - component: {fileID: 3866749726677408785}
+  - component: {fileID: 2994627931440048761}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -2393,6 +2379,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!208 &2994627931440048761
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6955595106816922919}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &7630749331545928621
 GameObject:
   m_ObjectHideFlags: 0
