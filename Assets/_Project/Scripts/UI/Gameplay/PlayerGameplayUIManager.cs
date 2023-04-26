@@ -1,14 +1,11 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(PlayerInputController))]
 public class PlayerGameplayUIManager : MonoBehaviour
 {
     [SerializeField] private FloorManager _floorManager;
     [SerializeField] private MinimapCameraFollow minimapCamera;
-    //[SerializeField] private PlayerUIObject playerUI;
     [Space]
     [SerializeField] private TextMeshProUGUI weaponName;
     [SerializeField] private TextMeshProUGUI bulletsLeft;
@@ -41,8 +38,6 @@ public class PlayerGameplayUIManager : MonoBehaviour
         }
         
         minimapCamera.SetPlayer(playerTransform);
-        //playerTransform.GetComponent<UIPlayerController>().SetUI(playerUI);
-        //minimapCamera.SetPlayer(playerTransform);
         
         playerInteractables = player.GetComponent<PlayerInteractables>();
         playerInteractables.SetInteractUIReference(interactUI);
