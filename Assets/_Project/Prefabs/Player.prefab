@@ -3079,9 +3079,8 @@ GameObject:
   - component: {fileID: 2705163418616812370}
   - component: {fileID: 3603913724159535985}
   - component: {fileID: 5545414051132038897}
-  - component: {fileID: 5545414051132038909}
-  - component: {fileID: 5545414051132038906}
   - component: {fileID: 5545414051132038907}
+  - component: {fileID: 4151773349220175101}
   - component: {fileID: 5545414051132038904}
   - component: {fileID: 4224448683965087072}
   m_Layer: 7
@@ -3153,42 +3152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2159499b039ad94b9fbf234fd33ea24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
   playerSpeed: 15
   dashForce: 2
   dashCooldown: 1.5
   dashDuration: 0.25
   gunHandlerTransform: {fileID: 3772505426422216946}
---- !u!114 &5545414051132038909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8608387976418621433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9747a68180cded045ba31846528b4a36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rifleName: {fileID: 0}
-  magazineLeft: {fileID: 0}
-  reloadingGameObject: {fileID: 0}
-  reloadingImage: {fileID: 0}
-  noAmmoLeftGameObject: {fileID: 0}
---- !u!114 &5545414051132038906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8608387976418621433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cdb5d565c5af9946b400702e20dd17f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactUI: {fileID: 0}
 --- !u!114 &5545414051132038907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3201,6 +3169,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b64ed9092cca9ac42a6140927d1bb94d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4151773349220175101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8608387976418621433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cdb5d565c5af9946b400702e20dd17f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactUI: {fileID: 0}
 --- !u!114 &5545414051132038904
 MonoBehaviour:
   m_ObjectHideFlags: 0
