@@ -59,14 +59,6 @@ public class Weapon : MonoBehaviour, IWeapon
         isLastShotOver = true;
     }
     
-    public void Reload()
-    {
-        if (!(BulletsLeft < MagazineSize) || isReloading) return;
-        
-        isReloading = true;
-        Invoke(nameof(FinishReload), ReloadTime);
-    }
-    
     public GameObject GetGameObject()
     {
         return gameObject;
@@ -75,12 +67,6 @@ public class Weapon : MonoBehaviour, IWeapon
     private bool CanShoot()
     {
         return isLastShotOver && !isReloading && BulletsLeft > 0;
-    }
-    
-    private void FinishReload()
-    {
-        isReloading = false;
-        BulletsLeft = MagazineSize;
     }
 
     private void OnValidate()

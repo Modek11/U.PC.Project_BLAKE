@@ -25,7 +25,6 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
     public event Action onShootStartEvent;
     public event Action shootEvent;
     public event Action onShootCancelEvent;
-    public event Action reloadEvent;
     public event Action<int> changeWeaponEvent;
 
     public event Action interactEvent;
@@ -53,14 +52,6 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
         if(context.performed)
         {
             shootEvent?.Invoke();
-        }
-    }
-
-    public void OnReload(InputAction.CallbackContext context)
-    {
-        if(context.performed)
-        {
-            reloadEvent?.Invoke();
         }
     }
 
