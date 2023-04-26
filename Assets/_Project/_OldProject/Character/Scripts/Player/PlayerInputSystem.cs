@@ -55,15 +55,6 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Reload"",
-                    ""type"": ""Button"",
-                    ""id"": ""7a7202f9-c4d3-4ec1-8866-a610388bd228"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""1d2ee412-7877-418e-9be5-d2eb10d213db"",
@@ -193,17 +184,6 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e9944994-584d-434c-b3fd-dacb7b4dd4ac"",
-                    ""path"": ""<Keyboard>/r"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Reload"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""a0729abd-fe7c-4b4b-838b-f7ec4e048597"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
@@ -251,7 +231,6 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
         m_Gameplay_ChangeWeapon = m_Gameplay.FindAction("ChangeWeapon", throwIfNotFound: true);
         m_Gameplay_Shooting = m_Gameplay.FindAction("Shooting", throwIfNotFound: true);
-        m_Gameplay_Reload = m_Gameplay.FindAction("Reload", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_MousePosition = m_Gameplay.FindAction("MousePosition", throwIfNotFound: true);
         m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
@@ -321,7 +300,6 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Movement;
     private readonly InputAction m_Gameplay_ChangeWeapon;
     private readonly InputAction m_Gameplay_Shooting;
-    private readonly InputAction m_Gameplay_Reload;
     private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_MousePosition;
     private readonly InputAction m_Gameplay_Dash;
@@ -332,7 +310,6 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
         public InputAction @ChangeWeapon => m_Wrapper.m_Gameplay_ChangeWeapon;
         public InputAction @Shooting => m_Wrapper.m_Gameplay_Shooting;
-        public InputAction @Reload => m_Wrapper.m_Gameplay_Reload;
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @MousePosition => m_Wrapper.m_Gameplay_MousePosition;
         public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
@@ -354,9 +331,6 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Shooting.started += instance.OnShooting;
             @Shooting.performed += instance.OnShooting;
             @Shooting.canceled += instance.OnShooting;
-            @Reload.started += instance.OnReload;
-            @Reload.performed += instance.OnReload;
-            @Reload.canceled += instance.OnReload;
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
@@ -379,9 +353,6 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Shooting.started -= instance.OnShooting;
             @Shooting.performed -= instance.OnShooting;
             @Shooting.canceled -= instance.OnShooting;
-            @Reload.started -= instance.OnReload;
-            @Reload.performed -= instance.OnReload;
-            @Reload.canceled -= instance.OnReload;
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
@@ -451,7 +422,6 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnChangeWeapon(InputAction.CallbackContext context);
         void OnShooting(InputAction.CallbackContext context);
-        void OnReload(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
