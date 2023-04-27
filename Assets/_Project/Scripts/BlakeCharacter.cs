@@ -21,22 +21,18 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
         }
     }
 
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
     public delegate void OnDeath();
     public event OnDeath onDeath;
-
-    private void Awake()
-    {
-        animator = GetComponentInChildren<Animator>();
-    }
 
     public virtual void Die()
     {
         if (isDead) return;
         isDead = true;
-        //animator.SetBool("IsAlive", false);
+        animator.SetBool("IsAlive", false);
 
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         onDeath?.Invoke();
 
         Invoke("DestroySelf", 5f);

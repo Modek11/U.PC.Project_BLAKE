@@ -43,6 +43,14 @@ public class EnemyAIManager : MonoBehaviour
     {
         _currentState = PatrolState;
         _currentState.EnterState();
+
+        if(TryGetComponent(out BlakeCharacter blakeCharacter))
+        {
+            blakeCharacter.onDeath += () =>
+            {
+                enabled = false;
+            };
+        }
     }
 
     private void Update()

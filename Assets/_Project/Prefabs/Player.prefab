@@ -3230,6 +3230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1
+  animator: {fileID: 2163410565736031503}
 --- !u!114 &6888458789769641710
 MonoBehaviour:
   m_ObjectHideFlags: 0
