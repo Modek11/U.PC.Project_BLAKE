@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 3077252354996775150}
   - component: {fileID: 2584845723702579843}
   - component: {fileID: 8945000990863372136}
+  - component: {fileID: 6766926428431642512}
+  - component: {fileID: 1036689358092768756}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Untagged
@@ -213,3 +215,42 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!320 &6766926428431642512
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6770924938227727370}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 45feb0f7f866dad4dbfeb27dfa769a9c, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 7363005673021019350, guid: 45feb0f7f866dad4dbfeb27dfa769a9c, type: 2}
+    value: {fileID: 1036689358092768756}
+  m_ExposedReferences:
+    m_References: []
+--- !u!95 &1036689358092768756
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6770924938227727370}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
