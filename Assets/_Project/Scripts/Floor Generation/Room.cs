@@ -146,20 +146,7 @@ public class Room : MonoBehaviour
                 roomConnector.CloseDoor();
             }
         }
-
-        Invoke("DebugKill", 5f);
     }
-
-    #region Debug bo nie mam jak zabiæ przeciwników XD
-
-    private void DebugKill()
-    {
-        foreach(GameObject enemy in spawnedEnemies)
-        {
-            enemy.GetComponent<BlakeCharacter>().Die();
-        }
-    }
-    #endregion
 
     private void Update()
     {

@@ -33,7 +33,7 @@ public class WeaponPickup : Interactable
         WeaponDefinition weaponDefinition = null;
         if(weaponsManager.IsWeaponValid(index))
         {
-            weaponDefinition = weaponsManager.GetWeaponDefinition(weaponsManager.ActiveWeaponIndex);
+            weaponDefinition = weaponsManager.GetWeaponDefinition(index);
         }
 
         if (weaponsManager.ChangeItem(weaponToPickup, index))

@@ -236,6 +236,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3194443941187315569, guid: e02126aae2951bf4b9b740ef58abdbcf,
         type: 3}
+      propertyPath: maxRooms
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3194443941187315569, guid: e02126aae2951bf4b9b740ef58abdbcf,
+        type: 3}
       propertyPath: roomPool
       value: 
       objectReference: {fileID: 11400000, guid: 739b4917b7ea7f14fb321eb8878c9e1f,
