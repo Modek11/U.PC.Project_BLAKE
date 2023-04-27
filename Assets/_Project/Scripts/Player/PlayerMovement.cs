@@ -61,8 +61,10 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         _movementAxis = _movementAxis.normalized;
+        Vector3 direction = new Vector3(_movementAxis.x, 0, _movementAxis.y);
+        Vector3 isometricDirection = direction.ToIsometric();
         
-        _rigidbody.AddForce(new Vector3(_movementAxis.x,0, _movementAxis.y) * (playerSpeed * 10f), ForceMode.Force);
+        _rigidbody.AddForce(isometricDirection * (playerSpeed * 10f), ForceMode.Force);
     }
     
    private void Rotation()
