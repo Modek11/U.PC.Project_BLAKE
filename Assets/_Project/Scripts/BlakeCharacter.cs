@@ -39,7 +39,7 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
 
         onDeath?.Invoke();
 
-        Invoke("DestroySelf", 0.15f);
+        Invoke("DestroySelf", 5f);
     }
 
     protected virtual void DestroySelf()
