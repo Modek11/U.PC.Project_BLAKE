@@ -7,7 +7,6 @@ public class Weapon : MonoBehaviour, IWeapon
 {
     //TODO: Implement range
     public float Range;
-    public float ReloadTime;
     public int MagazineSize;
     public Transform BulletsSpawnPoint;
     public GameObject BulletPrefab;
@@ -22,12 +21,12 @@ public class Weapon : MonoBehaviour, IWeapon
     [SerializeField] private InterfaceReference<IAttack> _secondaryAttack;
     [Header("Varabiables to pass")]
     [SerializeField] private WeaponDefinition weaponDefinition;
-
-    private bool isReloading;
+    private Rigidbody _ownerRigidbody;
 
     private void Awake()
     {
         As = GetComponent<AudioSource>();
+        _ownerRigidbody = GetComponentInParent<Rigidbody>();
     }
 
     private void Start()
@@ -63,10 +62,15 @@ public class Weapon : MonoBehaviour, IWeapon
     {
         return gameObject;
     }
-    
+
+    public Rigidbody GetRigidbodyOfWeaponOwner()
+    {
+        return _ownerRigidbody;
+    }
+
     private bool CanShoot()
     {
-        return isLastShotOver && !isReloading && BulletsLeft > 0;
+        return isLastShotOver && BulletsLeft > 0;
     }
 
     private void OnValidate()
