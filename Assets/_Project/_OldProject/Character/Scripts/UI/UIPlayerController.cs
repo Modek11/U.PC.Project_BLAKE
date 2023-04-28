@@ -14,7 +14,7 @@ public class UIPlayerController : MonoBehaviour
     private void Awake()
     {
         if(reloadingImage != null)
-        reloadingGameObject.SetActive(false);
+            reloadingGameObject.SetActive(false);
     }
 
     public void GunNameUI(string nameToDisplay)
