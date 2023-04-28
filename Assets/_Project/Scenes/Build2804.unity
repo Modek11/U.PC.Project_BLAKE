@@ -135,22 +135,28 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1519965347}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1019859136}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1290672971 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2796331565636850671, guid: 7c2cdef5fc23bd9438d6f780062a1097,
+--- !u!1 &1019859136 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3792045546653812228, guid: 53f2b00a162a66a49b5664d40319a492,
     type: 3}
-  m_PrefabInstance: {fileID: 1561340897}
+  m_PrefabInstance: {fileID: 1519965347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1422814106 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3194443941187315572, guid: e02126aae2951bf4b9b740ef58abdbcf,
+    type: 3}
+  m_PrefabInstance: {fileID: 1522004984}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca36ddf22a0ae314bba8a854907c2fe8, type: 3}
+  m_Script: {fileID: 11500000, guid: c8c42993414f4354c8ba99f2b9d613fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1519965347
@@ -270,7 +276,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerUI
       value: 
-      objectReference: {fileID: 1290672971}
+      objectReference: {fileID: 0}
     - target: {fileID: 3194443941187315572, guid: e02126aae2951bf4b9b740ef58abdbcf,
         type: 3}
       propertyPath: mainCamera
@@ -286,6 +292,17 @@ PrefabInstance:
       propertyPath: minimapCamera
       value: 
       objectReference: {fileID: 1776758605}
+    - target: {fileID: 3194443941187315572, guid: e02126aae2951bf4b9b740ef58abdbcf,
+        type: 3}
+      propertyPath: cameraFollowPrefab
+      value: 
+      objectReference: {fileID: 7704305018567902486, guid: da1813ffbcc83fa46900af03c123eb57,
+        type: 3}
+    - target: {fileID: 3194443941187315572, guid: e02126aae2951bf4b9b740ef58abdbcf,
+        type: 3}
+      propertyPath: virtualCameraPrefab
+      value: 
+      objectReference: {fileID: 1019859136}
     - target: {fileID: 3194443941187315574, guid: e02126aae2951bf4b9b740ef58abdbcf,
         type: 3}
       propertyPath: m_RootOrder
@@ -350,6 +367,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 652477922, guid: 7c2cdef5fc23bd9438d6f780062a1097, type: 3}
+      propertyPath: _floorManager
+      value: 
+      objectReference: {fileID: 1422814106}
+    - target: {fileID: 652477922, guid: 7c2cdef5fc23bd9438d6f780062a1097, type: 3}
+      propertyPath: minimapCamera
+      value: 
+      objectReference: {fileID: 1776758605}
     - target: {fileID: 3016559246145053178, guid: 7c2cdef5fc23bd9438d6f780062a1097,
         type: 3}
       propertyPath: m_Name
