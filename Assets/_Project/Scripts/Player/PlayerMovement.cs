@@ -1,9 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputController))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Camera cam;
+    private Camera cam;
     
     [SerializeField] private float playerSpeed;
     [SerializeField] private float dashForce;
@@ -27,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _playerInputController = GetComponent<PlayerInputController>();
         _rigidbody = GetComponent<Rigidbody>();
+
+        StartCoroutine(SetMainCamera());
     }
 
     private void Start()
@@ -140,8 +143,13 @@ public class PlayerMovement : MonoBehaviour
        }
    }
 
-    public void SetMainCamera(Camera newCamera)
-    {
-        cam = newCamera;
-    }
+   private IEnumerator SetMainCamera()
+   {
+       while (Camera.main == null)
+       {
+           yield return new WaitForSeconds(0.1f);
+       }
+
+       cam = Camera.main;
+   }
 }

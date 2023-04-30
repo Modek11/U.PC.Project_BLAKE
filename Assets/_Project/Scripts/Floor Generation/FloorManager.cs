@@ -1,23 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEngine;
+using System;
 using Cinemachine;
+using UnityEngine;
 
 [RequireComponent(typeof(FloorGenerator))]
 public class FloorManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject playerPrefab;
-    [SerializeField]
-    private Camera mainCamera;
-    [SerializeField]
-    private CinemachineVirtualCamera cvPlayerCam;
-    [SerializeField]
-    private MinimapCameraFollow minimapCamera;
-    [SerializeField]
-    private PlayerUIObject playerUI;
+    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject virtualCameraPrefab;
+    [SerializeField] private GameObject cameraFollowPrefab;
+
     private FloorGenerator floorGenerator;
+    private GameObject player;
+    private CinemachineVirtualCamera virtualCamera;
+    private GameObject cameraFollow;
+    
+    
+    public event Action<Transform> FloorGeneratorEnd;
+    
 
     private void Awake()
     {
@@ -29,13 +28,15 @@ public class FloorManager : MonoBehaviour
         StartCoroutine(floorGenerator.GenerateFloor());
     }
 
-    public void OnGenerationEnd(Vector3 playerSpawnPosition)
+    public void OnFloorGeneratorEnd(Transform startingRoomTransform)
     {
-        GameObject player = Instantiate(playerPrefab, playerSpawnPosition, Quaternion.identity);
-        player.GetComponent<PlayerMovement>().SetMainCamera(mainCamera);
-        minimapCamera.SetPlayer(player.transform);
-        player.GetComponent<UIPlayerController>().SetUI(playerUI);
-        cvPlayerCam.Follow = player.transform;
-        cvPlayerCam.LookAt = player.transform;
+        player = Instantiate(playerPrefab, startingRoomTransform.position, Quaternion.identity);
+        virtualCamera = Instantiate(virtualCameraPrefab).GetComponent<CinemachineVirtualCamera>();
+        cameraFollow = Instantiate(cameraFollowPrefab);
+        
+        virtualCamera.Follow = cameraFollow.transform;
+        cameraFollow.GetComponent<CameraFollowScript>().SetPlayerReference(player.transform);
+        
+        FloorGeneratorEnd?.Invoke(player.transform);
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,16 +11,16 @@ public class PlayerInteractables : MonoBehaviour
     [SerializeField]
     private GameObject interactUI;
     
-    private PlayerInputController inputSystem;
+    private PlayerInputController playerInputController;
 
     private void Awake()
     {
-        inputSystem = GetComponent<PlayerInputController>();
+        playerInputController = GetComponent<PlayerInputController>();
     }
 
     private void Start()
     {
-        inputSystem.interactEvent += Interact;
+        playerInputController.interactEvent += Interact;
     }
 
     /// <summary>
@@ -89,5 +88,10 @@ public class PlayerInteractables : MonoBehaviour
         interactUI.SetActive(true);
         interactUI.transform.position = closest.GetPositionForUI();
         interactUI.transform.LookAt(Camera.main.transform);
+    }
+
+    public void SetInteractUIReference(GameObject interactUIReference)
+    {
+        interactUI = interactUIReference;
     }
 }

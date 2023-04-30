@@ -3,7 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInputController))]
 public class CameraFollowScript : MonoBehaviour
 {
-    [SerializeField] private Transform playerPrefab;
     [SerializeField] private bool followPlayerWithMouseOffset = true;
     [SerializeField] private bool smoothCameraMovement = true;
 
@@ -12,6 +11,7 @@ public class CameraFollowScript : MonoBehaviour
     [Range(1,50)]
     [SerializeField] private float maxDistanceFromPlayer = 25;
     
+    private Transform playerTransform;
     
     private Vector3 playerPos;
     private Vector2 _mousePosition;
@@ -41,13 +41,13 @@ public class CameraFollowScript : MonoBehaviour
         }
         else
         {
-            transform.position = playerPrefab.position;
+            transform.position = playerTransform.position;
         }
     }
 
     private void FollowPlayerWithMouseOffset()
     {
-        playerPos = playerPrefab.position;
+        playerPos = playerTransform.position;
         GetMousePositionWorldPoint();
 
         float distance = Vector3.Distance(playerPos, _mousePositionWorldPoint);
@@ -84,5 +84,10 @@ public class CameraFollowScript : MonoBehaviour
         {
             _mousePositionWorldPoint = ray.GetPoint(hitDistance);
         }
+    }
+
+    public void SetPlayerReference(Transform player)
+    {
+        playerTransform = player;
     }
 }
