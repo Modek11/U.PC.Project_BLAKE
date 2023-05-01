@@ -9,9 +9,9 @@ public class WeaponPickup : Interactable
 
     private GameObject weaponGFX;
 
-    private void Awake()
+    private void Start()
     {
-        weaponGFX = pickupGameObject.transform.GetChild(0).gameObject;
+        weaponGFX = Instantiate(weaponToPickup.weaponGFX, pickupGameObject.transform.position, pickupGameObject.transform.rotation, pickupGameObject.transform);
     }
 
     private void Update()
@@ -33,7 +33,7 @@ public class WeaponPickup : Interactable
         WeaponDefinition weaponDefinition = null;
         if(weaponsManager.IsWeaponValid(index))
         {
-            weaponDefinition = weaponsManager.GetWeaponDefinition(weaponsManager.ActiveWeaponIndex);
+            weaponDefinition = weaponsManager.GetWeaponDefinition(index);
         }
 
         if (weaponsManager.ChangeItem(weaponToPickup, index))
@@ -64,5 +64,10 @@ public class WeaponPickup : Interactable
         weaponGFX = Instantiate(newWeapon.weaponGFX, pickupGameObject.transform);
         weaponGFX.transform.localPosition = newWeapon.pickupLocationOffset;
         weaponGFX.transform.localRotation = newWeapon.pickupRotation;
+    }
+
+    public void SetWeaponDefinition(WeaponDefinition wd)
+    {
+        weaponToPickup = wd;
     }
 }

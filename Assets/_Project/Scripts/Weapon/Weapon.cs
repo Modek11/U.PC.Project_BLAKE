@@ -7,7 +7,6 @@ public class Weapon : MonoBehaviour, IWeapon
 {
     //TODO: Implement range
     public float Range;
-    public float ReloadTime;
     public int MagazineSize;
     public Transform BulletsSpawnPoint;
     public GameObject BulletPrefab;
@@ -20,12 +19,14 @@ public class Weapon : MonoBehaviour, IWeapon
     [SerializeField] private InterfaceReference<IAttack> _primaryAttack;
     [Tooltip("Attack which will be triggered on RMB, it's not required")]
     [SerializeField] private InterfaceReference<IAttack> _secondaryAttack;
-
-    private bool isReloading;
+    [Header("Varabiables to pass")]
+    [SerializeField] private WeaponDefinition weaponDefinition;
+    private Rigidbody _ownerRigidbody;
 
     private void Awake()
     {
         As = GetComponent<AudioSource>();
+        _ownerRigidbody = GetComponentInParent<Rigidbody>();
     }
 
     private void Start()
@@ -57,32 +58,33 @@ public class Weapon : MonoBehaviour, IWeapon
         isLastShotOver = true;
     }
     
-    public void Reload()
-    {
-        if (!(BulletsLeft < MagazineSize) || isReloading) return;
-        
-        isReloading = true;
-        Invoke(nameof(FinishReload), ReloadTime);
-    }
-    
     public GameObject GetGameObject()
     {
         return gameObject;
     }
-    
+
+    public Rigidbody GetRigidbodyOfWeaponOwner()
+    {
+        return _ownerRigidbody;
+    }
+
     private bool CanShoot()
     {
-        return isLastShotOver && !isReloading && BulletsLeft > 0;
-    }
-    
-    private void FinishReload()
-    {
-        isReloading = false;
-        BulletsLeft = MagazineSize;
+        return isLastShotOver && BulletsLeft > 0;
     }
 
     private void OnValidate()
     {
         Assert.IsNotNull(_primaryAttack.Value);
+    }
+
+    public void SetMagazineSize(int size)
+    {
+        MagazineSize = size;
+    }
+
+    public WeaponDefinition GetWeaponDefinition()
+    {
+        return weaponDefinition;
     }
 }

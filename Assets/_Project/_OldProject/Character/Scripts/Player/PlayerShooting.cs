@@ -45,7 +45,6 @@ public class PlayerShooting : MonoBehaviour
 
     private void Start()
     {
-        inputSystem.reloadEvent += StartReload;
         inputSystem.onShootStartEvent += OnShootHeld;
         inputSystem.onShootCancelEvent += OnShootCanceled;
     }
@@ -112,25 +111,26 @@ public class PlayerShooting : MonoBehaviour
 
     }
 
-    private void StartReload()
-    {
-        if (_isReloading) return;
-        StartCoroutine(Reload());
-    }
+    
+    //private void StartReload()
+    //{
+    //    if (_isReloading) return;
+    //    StartCoroutine(Reload());
+    //}
 
-    private IEnumerator Reload()
-    {
-        if (_activeGunBulletsLeft == _activeGunMagazineSize) yield break;
+    //private IEnumerator Reload()
+    //{
+    //    if (_activeGunBulletsLeft == _activeGunMagazineSize) yield break;
         
         
-        _isReloading = true;
-        yield return new WaitForSeconds(_reloadTime);
-        _activeGunBulletsLeft = _activeGunMagazineSize;
-        _isReloading = false;
+    //    _isReloading = true;
+    //    yield return new WaitForSeconds(_reloadTime);
+    //    _activeGunBulletsLeft = _activeGunMagazineSize;
+    //    _isReloading = false;
         
-        _uiController.MagazineSizeUI(_activeGunBulletsLeft,_activeGunMagazineSize);
+    //    _uiController.MagazineSizeUI(_activeGunBulletsLeft,_activeGunMagazineSize);
 
-    }
+    //}
 
     private void OnDestroy()
     {

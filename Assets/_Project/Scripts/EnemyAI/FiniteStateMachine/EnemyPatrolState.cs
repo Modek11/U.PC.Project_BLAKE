@@ -8,29 +8,29 @@ public class EnemyPatrolState : EnemyBaseState
 
     private EnemyFOV _enemyFOV;
 
-    public EnemyPatrolState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef, GameObject weaponRef) 
-        : base(navMeshAgent, playerRef, enemyRef, weaponRef) 
+    public EnemyPatrolState(NavMeshAgent navMeshAgent, EnemyAIManager aIManager) 
+        : base(navMeshAgent, aIManager) 
     {
-        _enemyFOV = enemyRef.GetComponent<EnemyFOV>();
+        _enemyFOV = aiManager.GetEnemyRef().GetComponent<EnemyFOV>();
         _walkSpeed = 5f;
         _waypointIndex = 0;
     }
 
-    public override void EnterState(EnemyAIManager enemy)
+    public override void EnterState()
     {
         navMeshAgent.speed = _walkSpeed;
     }
 
-    public override void UpdateState(EnemyAIManager enemy)
+    public override void UpdateState()
     {
-        if (enemy.waypoints != null)
+        if (aiManager.waypoints != null)
         {
-            if (_waypointIndex < enemy.waypoints.GetCount())
+            if (_waypointIndex < aiManager.waypoints.GetCount())
             {
-                Vector3 patrolPosition = enemy.waypoints.GetWaypointPosition(_waypointIndex);
+                Vector3 patrolPosition = aiManager.waypoints.GetWaypointPosition(_waypointIndex);
                 MoveToPosition(patrolPosition);
 
-                if (Vector3.Distance(enemyRef.transform.position, patrolPosition) < .1f)
+                if (Vector3.Distance(aiManager.transform.position, patrolPosition) < .1f)
                 {
                     _waypointIndex++;
                 }
@@ -44,7 +44,7 @@ public class EnemyPatrolState : EnemyBaseState
 
         if (_enemyFOV.canSeePlayer)
         {
-            enemy.SwitchCurrentState(enemy.ChaseState);
+            aiManager.SwitchCurrentState(aiManager.ChaseState);
         }
     }
 

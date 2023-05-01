@@ -60,7 +60,7 @@ public class FloorGenerator : MonoBehaviour
                 newRoom.transform.position -= offset;
 
                 bool overlap = false;
-                BoxCollider[] roomColliders = newRoom.GetComponents<BoxCollider>();
+                BoxCollider[] roomColliders = newRoom.GetComponent<Room>().GetOverlapColliders();
                 foreach (BoxCollider box in roomColliders)
                 {
                     if (overlap) break;
@@ -113,6 +113,6 @@ public class FloorGenerator : MonoBehaviour
         roomManager.SetActiveRoom(_startingRoom.GetComponent<Room>());
         _startingRoom.GetComponent<Room>().SeeRoom();
 
-        floorManager.OnGenerationEnd(_startingRoom.transform.position);
+        floorManager.OnFloorGeneratorEnd(_startingRoom.transform);
     }
 }

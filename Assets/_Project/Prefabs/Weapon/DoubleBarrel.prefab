@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4911671507717690896}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.114, y: 2.497, z: 1.001}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -57,11 +57,11 @@ MonoBehaviour:
   isLastShotOver: 0
   BulletsLeft: 10
   As: {fileID: 0}
-  allowButtonHold: 0
   _primaryAttack:
     _underlyingValue: {fileID: 4911671509393515036}
   _secondaryAttack:
     _underlyingValue: {fileID: 0}
+  weaponDefinition: {fileID: 11400000, guid: cdc2618dfa837c346a3dd1fc0d02ce9b, type: 2}
 --- !u!114 &4911671509393515036
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -511,7 +511,8 @@ GameObject:
   - component: {fileID: 3016559246145053183}
   - component: {fileID: 3016559246145053180}
   - component: {fileID: 3016559246145053181}
-  - component: {fileID: 2796331565636850671}
+  - component: {fileID: 652477922}
+  - component: {fileID: 8493035622169028242}
   m_Layer: 5
   m_Name: PlayerUI (Canvas)
   m_TagString: Untagged
@@ -605,7 +606,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2796331565636850671
+--- !u!114 &652477922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -614,14 +615,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 3016559246145053178}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca36ddf22a0ae314bba8a854907c2fe8, type: 3}
+  m_Script: {fileID: 11500000, guid: ea7da7e2362e9f043ab4738024d6e331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rifleName: {fileID: 3016559246463915900}
-  magazineLeft: {fileID: 3016559246193241867}
-  reloadingGameObject: {fileID: 3016559245580638759}
-  reloadingImage: {fileID: 3016559245555776954}
-  noAmmoLeftGameObject: {fileID: 3016559245263938662}
+  _floorManager: {fileID: 0}
+  minimapCamera: {fileID: 0}
+  weaponName: {fileID: 3016559246463915900}
+  bulletsLeft: {fileID: 3016559246193241867}
+--- !u!114 &8493035622169028242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3016559246145053178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b64ed9092cca9ac42a6140927d1bb94d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3016559246193241865
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,7 +646,7 @@ GameObject:
   - component: {fileID: 3016559246193241866}
   - component: {fileID: 3016559246193241867}
   m_Layer: 5
-  m_Name: Bullets Amount
+  m_Name: Bullets Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -769,7 +781,7 @@ GameObject:
   - component: {fileID: 3016559246463915903}
   - component: {fileID: 3016559246463915900}
   m_Layer: 5
-  m_Name: Rifle Name
+  m_Name: Weapon Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

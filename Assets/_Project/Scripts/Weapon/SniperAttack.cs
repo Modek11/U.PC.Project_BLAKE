@@ -8,28 +8,14 @@ public class SniperAttack : MonoBehaviour, IAttack
     [Tooltip("Declares range of bullet spawn, while player is moving")]
     [SerializeField] private float spread;
     private Weapon usedWeapon;
-    private PlayerInputController playerInputController;
-    private Vector2 movementAxis;
+    private Rigidbody _ownerRigidbodyRef;
 
     //TODO: Change this if we'll have reference manager
-    private void Awake()
-    {
-        playerInputController = FindObjectOfType<PlayerInputController>();
-    }
-
-    private void OnEnable()
-    {
-        playerInputController.movementEvent += OnMovementEvent;
-    }
-
-    private void OnDisable()
-    {
-        playerInputController.movementEvent -= OnMovementEvent;
-    }
-
+    
     public void Attack(Weapon weapon)
     {
         usedWeapon = weapon;
+        _ownerRigidbodyRef = usedWeapon.GetRigidbodyOfWeaponOwner();
         Shot();
     }
     
@@ -39,7 +25,8 @@ public class SniperAttack : MonoBehaviour, IAttack
         usedWeapon.As.PlayOneShot(usedWeapon.As.clip);
         
         //Choose spread depending on player's controls
-        float chosenSpread = movementAxis == Vector2.zero ? 0 : Random.Range(-spread, spread);
+        float chosenSpread = _ownerRigidbodyRef.velocity == Vector3.zero ? 0 : Random.Range(-spread, spread);
+        Debug.Log(chosenSpread);
         
         Instantiate(usedWeapon.BulletPrefab, usedWeapon.BulletsSpawnPoint.position, usedWeapon.transform.rotation).GetComponent<IBullet>().SetupBullet(chosenSpread, usedWeapon.transform.parent.gameObject);
         
@@ -47,13 +34,8 @@ public class SniperAttack : MonoBehaviour, IAttack
         usedWeapon.Invoke(nameof(usedWeapon.ResetShot), timeBetweenShooting);
     }
 
-    private void OnMovementEvent(Vector2 dir)
-    {
-        movementAxis = dir;
-    }
-
     public float ReturnFireRate()
     {
-        throw new System.NotImplementedException();
+        return timeBetweenShooting;
     }
 }

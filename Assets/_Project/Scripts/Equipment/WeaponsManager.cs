@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class WeaponsManager : MonoBehaviour
 {
+    public event Action changeWeaponEvent;
+    
     [SerializeField] private List<GameObject> attachSockets = new List<GameObject>();
 
     private int capacity = 2;
@@ -48,6 +50,7 @@ public class WeaponsManager : MonoBehaviour
         if (playerInputController != null)
         {
             playerInputController.changeWeaponEvent += Equip;
+            playerInputController.shootEvent += ShootWeapon;
         }
     }
 
@@ -82,6 +85,13 @@ public class WeaponsManager : MonoBehaviour
         {
             SpawnWeapon();
         }
+        
+        changeWeaponEvent?.Invoke();
+    }
+
+    public void ShootWeapon()
+    {
+        weaponItems[activeWeaponIndex].Item2.PrimaryAttack();
     }
 
     public int GetFreeIndex()
@@ -142,5 +152,12 @@ public class WeaponsManager : MonoBehaviour
         if (index < 0 || index > capacity - 1) return null;
 
         return weaponItems[index].Item1;
+    }
+    
+    public IWeapon GetIWeapon(int index)
+    {
+        if (index < 0 || index > capacity - 1) return null;
+
+        return weaponItems[index].Item2;
     }
 }

@@ -4,19 +4,14 @@ using UnityEngine.AI;
 public abstract class EnemyBaseState
 {
     protected NavMeshAgent navMeshAgent;
-    protected GameObject playerRef;
-    protected GameObject enemyRef;
-    protected GameObject weaponRef;
+    protected EnemyAIManager aiManager;
 
-    public EnemyBaseState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef, GameObject weaponRef)
+    public EnemyBaseState(NavMeshAgent navMeshAgent, EnemyAIManager aIManager)
     {
         this.navMeshAgent = navMeshAgent;
-        this.playerRef = playerRef;
-        this.enemyRef = enemyRef;
-        this.weaponRef = weaponRef;
+        this.aiManager = aIManager;
     }
-    
 
-    public abstract void EnterState(EnemyAIManager enemy);
-    public abstract void UpdateState(EnemyAIManager enemy);
+    public abstract void EnterState();
+    public abstract void UpdateState();
 }

@@ -1,9 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputController))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Camera cam;
+    private Camera cam;
     
     [SerializeField] private float playerSpeed;
     [SerializeField] private float dashForce;
@@ -23,13 +24,12 @@ public class PlayerMovement : MonoBehaviour
     private float _dashDurationCountdown;
     private bool _dashPerformed;
 
-    private Animator animator;
-
     private void Awake()
     {
         _playerInputController = GetComponent<PlayerInputController>();
         _rigidbody = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
+
+        StartCoroutine(SetMainCamera());
     }
 
     private void Start()
@@ -43,9 +43,6 @@ public class PlayerMovement : MonoBehaviour
     {
         Rotation();
         DashCountdown();
-
-        animator.SetFloat("Direction", CalculateDirection());
-        animator.SetFloat("Speed", _rigidbody.velocity.magnitude);
     }
 
 
@@ -67,8 +64,10 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         _movementAxis = _movementAxis.normalized;
+        Vector3 direction = new Vector3(_movementAxis.x, 0, _movementAxis.y);
+        Vector3 isometricDirection = direction.ToIsometric();
         
-        _rigidbody.AddForce(new Vector3(_movementAxis.x,0, _movementAxis.y) * (playerSpeed * 10f), ForceMode.Force);
+        _rigidbody.AddForce(isometricDirection * (playerSpeed * 10f), ForceMode.Force);
     }
     
    private void Rotation()
@@ -144,29 +143,13 @@ public class PlayerMovement : MonoBehaviour
        }
    }
 
-    public void SetMainCamera(Camera newCamera)
-    {
-        cam = newCamera;
-    }
+   private IEnumerator SetMainCamera()
+   {
+       while (Camera.main == null)
+       {
+           yield return new WaitForSeconds(0.1f);
+       }
 
-    float CalculateDirection()
-    {
-	    if (_rigidbody.velocity != Vector3.zero)
-	    {
-            Vector3 NormalizedVel = _rigidbody.velocity.normalized;
-
-            float ForwardCosAngle = Vector3.Dot(transform.forward, NormalizedVel);
-            float ForwardDeltaDegree = Mathf.Acos(ForwardCosAngle) * Mathf.Rad2Deg;
-
-            float RightCosAngle = Vector3.Dot(transform.right, NormalizedVel);
-		    if (RightCosAngle < 0)
-		    {
-			    ForwardDeltaDegree *= -1;
-		    }
-
-            return ForwardDeltaDegree;
-	    }
-
-	    return 0f;
-    }
+       cam = Camera.main;
+   }
 }

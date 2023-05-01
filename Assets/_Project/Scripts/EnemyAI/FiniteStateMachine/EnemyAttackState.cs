@@ -12,10 +12,10 @@ public class EnemyAttackState : EnemyBaseState
     private Weapon _weaponScript;
 
 
-    public EnemyAttackState(NavMeshAgent navMeshAgent, GameObject playerRef, GameObject enemyRef, GameObject weaponRef) 
-        : base(navMeshAgent, playerRef, enemyRef, weaponRef) 
+    public EnemyAttackState(NavMeshAgent navMeshAgent, EnemyAIManager aIManager) 
+        : base(navMeshAgent, aIManager) 
     {
-        _weaponScript = weaponRef.GetComponent<Weapon>();
+        _weaponScript = aiManager.GetWeaponRef().GetComponent<Weapon>();
         _weaponInterface = _weaponScript;
 
         _weaponRange = 3f * _weaponScript.Range;
@@ -24,20 +24,20 @@ public class EnemyAttackState : EnemyBaseState
         _timeToAttack = _attackDelay;
     }
 
-    public override void EnterState(EnemyAIManager enemy)
+    public override void EnterState()
     {
         Debug.Log("SWITCHED TO ATTACK STATE");
-        navMeshAgent.SetDestination(playerRef.transform.position + Random.insideUnitSphere * _weaponRange);
+        navMeshAgent.SetDestination(aiManager.GetPlayerRef().transform.position + Random.insideUnitSphere * _weaponRange);
     }
 
-    public override void UpdateState(EnemyAIManager enemy)
+    public override void UpdateState()
     {
-        if (playerRef == null)
+        if (aiManager.GetPlayerRef() == null)
         {
             return;
         }
 
-        float distanceToPlayer = Vector3.Distance(enemyRef.transform.position, playerRef.transform.position);
+        float distanceToPlayer = Vector3.Distance(aiManager.GetEnemyRef().transform.position, aiManager.GetPlayerRef().transform.position);
         _timeToAttack += Time.deltaTime;
 
         if (distanceToPlayer <= _weaponRange * 0.6f)
@@ -47,7 +47,7 @@ public class EnemyAttackState : EnemyBaseState
 
         if (distanceToPlayer > _weaponRange)
         {
-            enemy.SwitchCurrentState(enemy.ChaseState);
+            aiManager.SwitchCurrentState(aiManager.ChaseState);
         }
         else
         {

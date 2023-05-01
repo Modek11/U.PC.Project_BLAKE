@@ -219,17 +219,17 @@ MonoBehaviour:
   Range: 6
   ReloadTime: 2
   MagazineSize: 30
-  BulletsLeft: 10
-  isLastShotOver: 0
   BulletsSpawnPoint: {fileID: 7401586004311561584}
   BulletPrefab: {fileID: 8745238448183679230, guid: a068551a7488b474fa34d68d5f97afbe,
     type: 3}
+  isLastShotOver: 0
+  BulletsLeft: 10
   As: {fileID: 0}
-  allowButtonHold: 1
   _primaryAttack:
     _underlyingValue: {fileID: 76864232}
   _secondaryAttack:
     _underlyingValue: {fileID: 0}
+  weaponDefinition: {fileID: 11400000, guid: 19c1a32b1bc1109468e8be4e59aa5d1b, type: 2}
 --- !u!114 &76864232
 MonoBehaviour:
   m_ObjectHideFlags: 0

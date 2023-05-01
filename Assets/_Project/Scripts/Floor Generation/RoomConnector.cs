@@ -10,9 +10,11 @@ public class RoomConnector : MonoBehaviour
     private GameObject doorObject;
     [SerializeField]
     private GameObject wallObject;
-
+    [SerializeField]
+    private Door door;
 
     private Room mainRoom;
+    private bool isActive = false;
     public void SetConnector(RoomConnector room)
     {
         connectedDoor = room;
@@ -20,15 +22,30 @@ public class RoomConnector : MonoBehaviour
 
     public void SetDoor()
     {
-        if(connectedDoor != null)
+        if (connectedDoor != null)
         {
             doorObject.SetActive(true);
+            isActive = true;
             wallObject.SetActive(false);
-        } else
+        }
+        else
         {
             doorObject.SetActive(false);
+            isActive = false;
             wallObject.SetActive(true);
         }
+    }
+
+    public void OpenDoor()
+    {
+        if (!isActive) return;
+        door.OpenDoor();
+    }
+
+    public void CloseDoor()
+    {
+        if (!isActive) return;
+        door.CloseDoor();
     }
 
     public RoomConnector GetConnector()
