@@ -9,7 +9,6 @@ public class BasicBullet : MonoBehaviour, IBullet
     [SerializeField] private float destroyTime;
     [Tooltip("How many enemies bullet should penetrate 0 = destroy at first kill")]
     [SerializeField] private int penetrateAmount;
-    private Vector3 moveDirection;
     private Rigidbody rb;
 
     public GameObject _instigator;

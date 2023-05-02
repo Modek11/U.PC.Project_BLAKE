@@ -14,12 +14,13 @@ public class Bat : MonoBehaviour, IWeapon
         playableDirector = GetComponent<PlayableDirector>();
     }
 
-    public void PrimaryAttack()
+    public bool PrimaryAttack()
     {
-        if (playableDirector.state == PlayState.Playing) return;
+        if (playableDirector.state == PlayState.Playing) return false;
 
         playableDirector.Play();
         Invoke("MakeRaycast", 0.27f); // XD  
+        return true;
     }
 
     private void MakeRaycast()

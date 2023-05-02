@@ -24,7 +24,6 @@ public class PlayerGameplayUIManager : MonoBehaviour
     private void Start()
     {
         _floorManager.FloorGeneratorEnd += FloorManagerOnFloorGeneratorEnd;
-        playerInputController.shootEvent += BulletsLeftUI;
     }
 
     private void FloorManagerOnFloorGeneratorEnd(Transform playerTransform)
@@ -33,6 +32,8 @@ public class PlayerGameplayUIManager : MonoBehaviour
         {
             player = playerTransform.gameObject;
             _weaponsManager = player.GetComponent<WeaponsManager>();
+            _weaponsManager.onSuccessfulShotEvent += RefreshUI;
+            _weaponsManager.onPlayerPickupWeaponEvent += RefreshUI;
             _weaponsManager.changeWeaponEvent += RefreshUI;
             RefreshUI();
         }

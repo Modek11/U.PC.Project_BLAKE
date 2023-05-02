@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour, IWeapon
     public Transform BulletsSpawnPoint;
     public GameObject BulletPrefab;
     [HideInInspector] public bool isLastShotOver;
-    [HideInInspector] public int BulletsLeft = 10;
+    public int BulletsLeft = 10;
     //TODO: Move it outside
     [HideInInspector] public AudioSource As;
     [Header("Attacks")]
@@ -27,18 +27,18 @@ public class Weapon : MonoBehaviour, IWeapon
     {
         As = GetComponent<AudioSource>();
         _ownerRigidbody = GetComponentInParent<Rigidbody>();
+        BulletsLeft = MagazineSize;
     }
 
     private void Start()
     {
-        BulletsLeft = MagazineSize;
         isLastShotOver = true;
     }
 
-    public void PrimaryAttack()
+    public bool PrimaryAttack()
     {
-        if (!CanShoot()) return;
-        _primaryAttack.Value.Attack(this);
+        if (!CanShoot()) return false;
+        return _primaryAttack.Value.Attack(this);
     }
 
     public float GetCurrentWeaponFireRate()
