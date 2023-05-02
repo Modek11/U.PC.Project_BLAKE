@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInputController))]
 public class CameraFollowScript : MonoBehaviour
 {
     [SerializeField] private bool followPlayerWithMouseOffset = true;
@@ -24,12 +23,12 @@ public class CameraFollowScript : MonoBehaviour
 
     private void Awake()
     {
-        _playerInputController = GetComponent<PlayerInputController>();
         _cam = Camera.main;
     }
 
     private void Start()
     {
+        _playerInputController = playerTransform.GetComponent<PlayerInputController>();
         _playerInputController.mousePositionEvent += MousePositionHandler;
     }
 
