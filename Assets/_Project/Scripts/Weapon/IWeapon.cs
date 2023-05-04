@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IWeapon
 {
-    public void PrimaryAttack();
+    public bool PrimaryAttack();
 
     public GameObject GetGameObject();
 }

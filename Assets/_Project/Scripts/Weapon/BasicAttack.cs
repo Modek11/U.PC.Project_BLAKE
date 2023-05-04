@@ -13,11 +13,12 @@ public class BasicAttack : MonoBehaviour, IAttack
     private int bulletsToShotInThisAttack;
     private Weapon usedWeapon;
     
-    public void Attack(Weapon weapon)
+    public bool Attack(Weapon weapon)
     {
         bulletsToShotInThisAttack = shotsPerTap;
         usedWeapon = weapon;
-        Shot();
+        usedWeapon.As.PlayOneShot(usedWeapon.As.clip);
+        return Shot();
     }
 
     public float ReturnFireRate()
@@ -25,23 +26,38 @@ public class BasicAttack : MonoBehaviour, IAttack
         return timeBetweenShooting;
     }
 
-    private void Shot()
+    private bool Shot()
     {
         usedWeapon.isLastShotOver = false;
-        usedWeapon.As.PlayOneShot(usedWeapon.As.clip);
         for (int i = 0; i < bulletsPerShot; i++)
         {
-            if(usedWeapon.BulletsLeft == 0 ) break;
+            if(usedWeapon.BulletsLeft == 0 ) return false;
             //TODO: Add pooling
             var bullet = Instantiate(usedWeapon.BulletPrefab, usedWeapon.BulletsSpawnPoint.position, usedWeapon.transform.rotation);
             bullet.GetComponent<IBullet>().SetupBullet(Random.Range(-spread, spread), usedWeapon.transform.parent.gameObject, usedWeapon.Range);
+
+            //makes spread goes both sides
+            if (bulletsPerShot <= 1)
+            {
+                bullet.GetComponent<IBullet>().SetupBullet(Random.Range(-spread, spread), usedWeapon.transform.parent.gameObject);
+
+            }
+            else
+            {
+                if (i % 2 == 0)
+                {
+                    bullet.GetComponent<IBullet>().SetupBullet(Random.Range(-spread, 0), usedWeapon.transform.parent.gameObject);
+                }
+                else
+                {
+                    bullet.GetComponent<IBullet>().SetupBullet(Random.Range(0, spread), usedWeapon.transform.parent.gameObject);
+
+                }
+            }
             usedWeapon.BulletsLeft--;
         }
-        bulletsToShotInThisAttack--;
+        //bulletsToShotInThisAttack--;
         usedWeapon.Invoke(nameof(usedWeapon.ResetShot), timeBetweenShooting);
-        if (bulletsToShotInThisAttack > 0 && usedWeapon.BulletsLeft > 0)
-        {
-            Invoke(nameof(Shot), timeBetweenShooting);
-        }
+        return true;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(BlakeCharacter))]
 public class EnemyAIManager : MonoBehaviour
 {
     private NavMeshAgent _navMeshAgent;
@@ -25,6 +26,14 @@ public class EnemyAIManager : MonoBehaviour
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _playerRef = GameObject.FindGameObjectWithTag("Player");
         _enemyRef = gameObject;
+        GetComponent<BlakeCharacter>().onDeath += Die;
+    }
+
+    private void Die()
+    {
+        this.enabled = false;
+        _navMeshAgent.isStopped = true;
+        //_navMeshAgent.enabled = false;
     }
 
     private void OnEnable()
@@ -44,13 +53,6 @@ public class EnemyAIManager : MonoBehaviour
         _currentState = PatrolState;
         _currentState.EnterState();
 
-        if(TryGetComponent(out BlakeCharacter blakeCharacter))
-        {
-            blakeCharacter.onDeath += () =>
-            {
-                enabled = false;
-            };
-        }
     }
 
     private void Update()

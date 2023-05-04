@@ -12,14 +12,14 @@ public class SniperAttack : MonoBehaviour, IAttack
 
     //TODO: Change this if we'll have reference manager
     
-    public void Attack(Weapon weapon)
+    public bool Attack(Weapon weapon)
     {
         usedWeapon = weapon;
         _ownerRigidbodyRef = usedWeapon.GetRigidbodyOfWeaponOwner();
-        Shot();
+        return Shot();
     }
     
-    private void Shot()
+    private bool Shot()
     {
         usedWeapon.isLastShotOver = false;
         usedWeapon.As.PlayOneShot(usedWeapon.As.clip);
@@ -31,6 +31,7 @@ public class SniperAttack : MonoBehaviour, IAttack
         
         usedWeapon.BulletsLeft--;
         usedWeapon.Invoke(nameof(usedWeapon.ResetShot), timeBetweenShooting);
+        return true;
     }
 
     public float ReturnFireRate()

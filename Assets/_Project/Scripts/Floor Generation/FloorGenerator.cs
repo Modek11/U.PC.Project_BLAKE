@@ -68,7 +68,7 @@ public class FloorGenerator : MonoBehaviour
 
                     foreach (Collider cols in colliders)
                     {
-                        if (cols.gameObject != newRoom && cols.gameObject.GetComponent<Room>() != null && cols.gameObject != room)
+                        if (cols.gameObject != newRoom && cols.gameObject.GetComponent<RoomOverlapTrigger>() != null && cols.gameObject != room)
                         {
                             overlap = true;
                             tries++;

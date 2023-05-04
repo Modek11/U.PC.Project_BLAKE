@@ -6,7 +6,9 @@ using System.Collections.Generic;
 public class WeaponsManager : MonoBehaviour
 {
     public event Action changeWeaponEvent;
-    
+    public event Action onPlayerPickupWeaponEvent;
+    public event Action onSuccessfulShotEvent;
+
     [SerializeField] private List<GameObject> attachSockets = new List<GameObject>();
 
     private int capacity = 2;
@@ -36,6 +38,8 @@ public class WeaponsManager : MonoBehaviour
 
     public WeaponDefinition defaultWeapon;
 
+    PlayerInputController playerInputController;
+
     private void Awake()
     {
         if (defaultWeapon == null)
@@ -46,7 +50,7 @@ public class WeaponsManager : MonoBehaviour
         ChangeItem(defaultWeapon, 0);
         Equip(0);
 
-        PlayerInputController playerInputController = GetComponent<PlayerInputController>();
+        playerInputController = GetComponent<PlayerInputController>();
         if (playerInputController != null)
         {
             playerInputController.changeWeaponEvent += Equip;
@@ -68,7 +72,7 @@ public class WeaponsManager : MonoBehaviour
 
         weaponItems[index].Item1 = item;
         Equip(index);
-
+        onPlayerPickupWeaponEvent?.Invoke();
         return true;
     }
 
@@ -91,7 +95,10 @@ public class WeaponsManager : MonoBehaviour
 
     public void ShootWeapon()
     {
-        weaponItems[activeWeaponIndex].Item2.PrimaryAttack();
+        if(weaponItems[activeWeaponIndex].Item2.PrimaryAttack())
+        {
+            onSuccessfulShotEvent?.Invoke();
+        }
     }
 
     public int GetFreeIndex()
