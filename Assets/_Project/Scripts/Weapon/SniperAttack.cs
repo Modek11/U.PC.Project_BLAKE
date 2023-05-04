@@ -26,9 +26,8 @@ public class SniperAttack : MonoBehaviour, IAttack
         
         //Choose spread depending on player's controls
         float chosenSpread = _ownerRigidbodyRef.velocity == Vector3.zero ? 0 : Random.Range(-spread, spread);
-        Debug.Log(chosenSpread);
         
-        Instantiate(usedWeapon.BulletPrefab, usedWeapon.BulletsSpawnPoint.position, usedWeapon.transform.rotation).GetComponent<IBullet>().SetupBullet(chosenSpread, usedWeapon.transform.parent.gameObject);
+        Instantiate(usedWeapon.BulletPrefab, usedWeapon.BulletsSpawnPoint.position, usedWeapon.transform.rotation).GetComponent<IBullet>().SetupBullet(chosenSpread, usedWeapon.transform.parent.gameObject, usedWeapon.Range);
         
         usedWeapon.BulletsLeft--;
         usedWeapon.Invoke(nameof(usedWeapon.ResetShot), timeBetweenShooting);
