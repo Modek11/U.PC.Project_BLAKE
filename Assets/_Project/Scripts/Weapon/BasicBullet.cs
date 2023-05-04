@@ -19,11 +19,6 @@ public class BasicBullet : MonoBehaviour, IBullet
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Start()
-    {
-        Destroy(gameObject, destroyTime);
-    }
-    
     //TODO: Add magic function handler
     private void Update()
     {
@@ -34,11 +29,13 @@ public class BasicBullet : MonoBehaviour, IBullet
     /// Use it on instantiate to declare base stats which are weapon related
     /// </summary>
     /// <param name="xSpread">Spread range (it declares range of (-xSpread, xSpread))</param>
-    public void SetupBullet(float xSpread, GameObject instigator)
+    public void SetupBullet(float xSpread, GameObject instigator, float range)
     {
+        destroyTime = range / bulletSpeed;
         //TODO: Instead of changing spawn pos, change rotation
         moveDirection = new Vector3(Random.Range(-xSpread, xSpread), 0, 0);
         _instigator = instigator;
+        Destroy(gameObject, destroyTime);
     }
 
     private void OnCollisionEnter(Collision collision)
