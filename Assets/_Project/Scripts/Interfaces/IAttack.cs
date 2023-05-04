@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IAttack
 {
-    public void Attack(Weapon weapon);
+    public bool Attack(Weapon weapon);
 
     public float ReturnFireRate();
 }

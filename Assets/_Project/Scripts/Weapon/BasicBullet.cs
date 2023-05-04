@@ -9,7 +9,6 @@ public class BasicBullet : MonoBehaviour, IBullet
     [SerializeField] private float destroyTime;
     [Tooltip("How many enemies bullet should penetrate 0 = destroy at first kill")]
     [SerializeField] private int penetrateAmount;
-    private Vector3 moveDirection;
     private Rigidbody rb;
 
     public GameObject _instigator;
@@ -27,7 +26,7 @@ public class BasicBullet : MonoBehaviour, IBullet
     //TODO: Add magic function handler
     private void Update()
     {
-        rb.velocity = moveDirection + transform.forward * bulletSpeed;
+        rb.velocity = transform.forward * bulletSpeed;
     }
 
     /// <summary>
@@ -37,7 +36,7 @@ public class BasicBullet : MonoBehaviour, IBullet
     public void SetupBullet(float xSpread, GameObject instigator)
     {
         //TODO: Instead of changing spawn pos, change rotation
-        moveDirection = new Vector3(Random.Range(-xSpread, xSpread), 0, 0);
+        transform.eulerAngles = new Vector3(0, Random.Range(transform.eulerAngles.y-xSpread, transform.eulerAngles.y+xSpread), 0);
         _instigator = instigator;
     }
 
