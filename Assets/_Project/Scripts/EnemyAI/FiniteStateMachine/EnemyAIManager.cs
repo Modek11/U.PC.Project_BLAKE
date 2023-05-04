@@ -33,7 +33,7 @@ public class EnemyAIManager : MonoBehaviour
     {
         this.enabled = false;
         _navMeshAgent.isStopped = true;
-        _navMeshAgent.enabled = false;
+        //_navMeshAgent.enabled = false;
     }
 
     private void OnEnable()
