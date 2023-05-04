@@ -34,23 +34,22 @@ public class BasicAttack : MonoBehaviour, IAttack
             if(usedWeapon.BulletsLeft == 0 ) return false;
             //TODO: Add pooling
             var bullet = Instantiate(usedWeapon.BulletPrefab, usedWeapon.BulletsSpawnPoint.position, usedWeapon.transform.rotation);
-            bullet.GetComponent<IBullet>().SetupBullet(Random.Range(-spread, spread), usedWeapon.transform.parent.gameObject, usedWeapon.Range);
 
             //makes spread goes both sides
             if (bulletsPerShot <= 1)
             {
-                bullet.GetComponent<IBullet>().SetupBullet(Random.Range(-spread, spread), usedWeapon.transform.parent.gameObject);
+                bullet.GetComponent<IBullet>().SetupBullet(Random.Range(-spread, spread), usedWeapon.transform.parent.gameObject, usedWeapon.Range);
 
             }
             else
             {
                 if (i % 2 == 0)
                 {
-                    bullet.GetComponent<IBullet>().SetupBullet(Random.Range(-spread, 0), usedWeapon.transform.parent.gameObject);
+                    bullet.GetComponent<IBullet>().SetupBullet(Random.Range(-spread, 0), usedWeapon.transform.parent.gameObject, usedWeapon.Range);
                 }
                 else
                 {
-                    bullet.GetComponent<IBullet>().SetupBullet(Random.Range(0, spread), usedWeapon.transform.parent.gameObject);
+                    bullet.GetComponent<IBullet>().SetupBullet(Random.Range(0, spread), usedWeapon.transform.parent.gameObject, usedWeapon.Range);
 
                 }
             }
