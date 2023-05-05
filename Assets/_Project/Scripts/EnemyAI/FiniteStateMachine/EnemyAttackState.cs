@@ -12,7 +12,7 @@ public class EnemyAttackState : EnemyBaseState
     private Weapon _weaponScript;
 
     private EnemyFOV _enemyFOV;
-    private Vector3 targetPositionOffset;
+    private Vector3 _targetPositionOffset;
 
 
     public EnemyAttackState(NavMeshAgent navMeshAgent, EnemyAIManager aIManager) 
@@ -24,7 +24,7 @@ public class EnemyAttackState : EnemyBaseState
         _weaponRange = _weaponScript.Range;
 
         _attackDelay = _weaponScript.GetCurrentWeaponFireRate();
-        _timeToAttack = _attackDelay;
+        _timeToAttack = 0.5f * _attackDelay;
 
         _enemyFOV = aiManager.GetEnemyRef().GetComponent<EnemyFOV>();
     }
@@ -32,7 +32,7 @@ public class EnemyAttackState : EnemyBaseState
     public override void EnterState()
     {
         Debug.Log("SWITCHED TO ATTACK STATE");
-        targetPositionOffset = GetTargetPositionOffset();
+        _targetPositionOffset = GetTargetPositionOffset();
     }
 
     public override void UpdateState()
@@ -45,9 +45,9 @@ public class EnemyAttackState : EnemyBaseState
         float distanceToPlayer = Vector3.Distance(aiManager.GetEnemyRef().transform.position, aiManager.GetPlayerRef().transform.position);
         _timeToAttack += Time.deltaTime;
 
-        navMeshAgent.SetDestination(aiManager.GetPlayerRef().transform.position + targetPositionOffset);
+        navMeshAgent.SetDestination(aiManager.GetPlayerRef().transform.position + _targetPositionOffset);
 
-        if (distanceToPlayer <= _weaponRange * 0.5f)
+        if (distanceToPlayer <= _weaponRange * 0.3f)
         {
             navMeshAgent.isStopped = true;
         }
