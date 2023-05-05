@@ -163,11 +163,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961f286b4752ab149a0825dd6c5a6ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Range: 6
-  ReloadTime: 1
+  Range: 25
   MagazineSize: 15
   BulletsSpawnPoint: {fileID: 7102642101703529464}
-  BulletPrefab: {fileID: 8745238448183679230, guid: a068551a7488b474fa34d68d5f97afbe,
+  BulletPrefab: {fileID: 8745238448183679230, guid: 840b6a6b89ca7344da4b0ad530514ca7,
     type: 3}
   isLastShotOver: 0
   BulletsLeft: 10
@@ -189,8 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda587f63642855459c33caf66f6478d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenShooting: 2
-  spread: 30
+  timeBetweenShooting: 1.5
+  spread: 25
   shotsPerTap: 1
   bulletsPerShot: 5
 --- !u!82 &8410761408337805822

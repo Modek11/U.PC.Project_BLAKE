@@ -128,9 +128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e9c69312a933b24f804423e01b03f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 20
+  bulletSpeed: 70
   destroyTime: 4
   penetrateAmount: 1
+  _instigator: {fileID: 0}
 --- !u!96 &-1506205009848016853
 TrailRenderer:
   serializedVersion: 2

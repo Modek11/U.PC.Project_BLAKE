@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8745238448183679225}
   - component: {fileID: -6823175348981436745}
   m_Layer: 6
-  m_Name: Bullet
+  m_Name: ShotgunBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,9 +128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e9c69312a933b24f804423e01b03f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 30
+  bulletSpeed: 50
   destroyTime: 4
   penetrateAmount: 0
+  _instigator: {fileID: 0}
 --- !u!96 &-6823175348981436745
 TrailRenderer:
   serializedVersion: 2
