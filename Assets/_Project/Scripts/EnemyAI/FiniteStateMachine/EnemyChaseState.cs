@@ -11,7 +11,7 @@ public class EnemyChaseState : EnemyBaseState
     public EnemyChaseState(NavMeshAgent navMeshAgent, EnemyAIManager aIManager)
         : base(navMeshAgent, aIManager) 
     {
-        _weaponRange = 3f * aiManager.GetWeaponRef().GetComponent<Weapon>().Range; 
+        _weaponRange = aiManager.GetWeaponRef().GetComponent<Weapon>().Range; 
         _chaseSpeed = 12f;
     }
 
@@ -36,10 +36,7 @@ public class EnemyChaseState : EnemyBaseState
 
         float distanceToPlayer = Vector3.Distance(aiManager.GetEnemyRef().transform.position, aiManager.GetPlayerRef().transform.position);
 
-        if (distanceToPlayer > _weaponRange)
-        {
-            navMeshAgent.SetDestination(aiManager.GetPlayerRef().transform.position + targetPositionOffset);
-        }
+        navMeshAgent.SetDestination(aiManager.GetPlayerRef().transform.position + targetPositionOffset);
 
         /*
         if ((distanceToPlayer > _weaponRange && distanceToPlayer <= 1.5f * _weaponRange) 

@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2770575390965718625}
     m_Modifications:
+    - target: {fileID: 1896440285, guid: b439379a8d4ee1f47a52087f53bbe13b, type: 3}
+      propertyPath: timeBetweenShooting
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 5319882019298209556, guid: b439379a8d4ee1f47a52087f53bbe13b,
         type: 3}
       propertyPath: m_Name
@@ -67,6 +71,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5319882019298209558, guid: b439379a8d4ee1f47a52087f53bbe13b,
+        type: 3}
+      propertyPath: BulletPrefab
+      value: 
+      objectReference: {fileID: 8745238448183679230, guid: f9cd9a2728488a34c8594dd64a47dd00,
+        type: 3}
     - target: {fileID: 5319882019298209558, guid: b439379a8d4ee1f47a52087f53bbe13b,
         type: 3}
       propertyPath: MagazineSize

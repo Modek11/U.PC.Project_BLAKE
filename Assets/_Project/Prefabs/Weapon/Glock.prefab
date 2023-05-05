@@ -180,8 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961f286b4752ab149a0825dd6c5a6ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Range: 6
-  ReloadTime: 1
+  Range: 30
   MagazineSize: 15
   BulletsSpawnPoint: {fileID: 5319882019081080685}
   BulletPrefab: {fileID: 8745238448183679230, guid: a068551a7488b474fa34d68d5f97afbe,
@@ -206,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda587f63642855459c33caf66f6478d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenShooting: 0.3
+  timeBetweenShooting: 0.55
   spread: 8
   shotsPerTap: 1
   bulletsPerShot: 1
