@@ -11,6 +11,9 @@ public class EnemyAttackState : EnemyBaseState
     private IWeapon _weaponInterface;
     private Weapon _weaponScript;
 
+    private EnemyFOV _enemyFOV;
+    private Vector3 targetPositionOffset;
+
 
     public EnemyAttackState(NavMeshAgent navMeshAgent, EnemyAIManager aIManager) 
         : base(navMeshAgent, aIManager) 
@@ -18,16 +21,18 @@ public class EnemyAttackState : EnemyBaseState
         _weaponScript = aiManager.GetWeaponRef().GetComponent<Weapon>();
         _weaponInterface = _weaponScript;
 
-        _weaponRange = 3f * _weaponScript.Range;
+        _weaponRange = _weaponScript.Range;
 
         _attackDelay = _weaponScript.GetCurrentWeaponFireRate();
         _timeToAttack = _attackDelay;
+
+        _enemyFOV = aiManager.GetEnemyRef().GetComponent<EnemyFOV>();
     }
 
     public override void EnterState()
     {
         Debug.Log("SWITCHED TO ATTACK STATE");
-        navMeshAgent.SetDestination(aiManager.GetPlayerRef().transform.position + Random.insideUnitSphere * _weaponRange);
+        targetPositionOffset = GetTargetPositionOffset();
     }
 
     public override void UpdateState()
@@ -40,7 +45,9 @@ public class EnemyAttackState : EnemyBaseState
         float distanceToPlayer = Vector3.Distance(aiManager.GetEnemyRef().transform.position, aiManager.GetPlayerRef().transform.position);
         _timeToAttack += Time.deltaTime;
 
-        if (distanceToPlayer <= _weaponRange * 0.6f)
+        navMeshAgent.SetDestination(aiManager.GetPlayerRef().transform.position + targetPositionOffset);
+
+        if (distanceToPlayer <= _weaponRange * 0.5f)
         {
             navMeshAgent.isStopped = true;
         }
@@ -51,12 +58,20 @@ public class EnemyAttackState : EnemyBaseState
         }
         else
         {
-            if (_timeToAttack > _attackDelay) //wartoœæ zast¹piæ fireRate'm broni
+            if (_timeToAttack > _attackDelay && _enemyFOV.canSeePlayer)
             {
                 _weaponInterface.PrimaryAttack();
                 Debug.Log("Shots fired");
                 _timeToAttack = 0;
             }
         }
+    }
+
+    private Vector3 GetTargetPositionOffset()
+    {
+        Vector3 offset = Random.insideUnitSphere * 5f;
+        offset = new Vector3(offset.x, 0, offset.z);
+
+        return offset;
     }
 }
