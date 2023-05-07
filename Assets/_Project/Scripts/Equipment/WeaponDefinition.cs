@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -9,6 +10,9 @@ public class WeaponDefinition : ScriptableObject
     public string weaponName;
 
     public int magazineSize;
+
+    [Range(0f, 1f)]
+    public float dropRate = 0.6f;
 
     public string attachSocketName;
 
