@@ -9,7 +9,7 @@ public class BasicAttack : MonoBehaviour, IAttack
     [Tooltip("Declares how many times it should shot after one button press")]
     [SerializeField] private int shotsPerTap;
     [Tooltip("Declares how many bullets should be instantiated in one shot")]
-    [SerializeField] private int bulletsPerShot = 1;
+    [SerializeField] public int bulletsPerShot = 1;
     private int bulletsToShotInThisAttack;
     private Weapon usedWeapon;
     

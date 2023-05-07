@@ -63,6 +63,15 @@ public class Weapon : MonoBehaviour, IWeapon
 
     public void SetAmmo(int newAmmo)
     {
+        BasicAttack ba = _primaryAttack.Value as BasicAttack;
+        if(ba != null)
+        {
+            if(newAmmo % ba.bulletsPerShot != 0)
+            {
+                newAmmo += ba.bulletsPerShot - (newAmmo % ba.bulletsPerShot);
+            }
+        }
+
         BulletsLeft = newAmmo;
     }
 
