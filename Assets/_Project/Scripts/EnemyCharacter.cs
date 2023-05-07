@@ -16,6 +16,8 @@ public class EnemyCharacter : BlakeCharacter
         GameObject weaponPickupObject = Instantiate(weaponPickup, transform.position, Quaternion.identity);
 
         WeaponDefinition randomWeapon = WeaponsMagazine.GetRandomWeapon();
-        weaponPickupObject.GetComponent<WeaponPickup>().SetWeaponDefinition(randomWeapon != null ? randomWeapon : ai.GetWeaponRef().GetComponent<Weapon>().GetWeaponDefinition());
+        WeaponPickup weaponPickupScript = weaponPickupObject.GetComponent<WeaponPickup>();
+        weaponPickupScript.SetWeaponDefinition(randomWeapon != null ? randomWeapon : ai.GetWeaponRef().GetComponent<Weapon>().GetWeaponDefinition());
+        weaponPickupScript.ammo = WeaponsMagazine.GetRandomWeaponAmmo(randomWeapon);
     }
 }

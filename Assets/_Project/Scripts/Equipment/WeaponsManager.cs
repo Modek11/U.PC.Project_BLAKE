@@ -217,8 +217,15 @@ public static class WeaponsMagazine //XD
 
     public static WeaponDefinition GetRandomWeapon()
     {
-        WeaponDefinition randomWeapon = weapons[UnityEngine.Random.Range(0, weapons.Count - 1)];
+        WeaponDefinition randomWeapon = weapons[UnityEngine.Random.Range(0, weapons.Count)];
         Debug.Log("Random weapom: " + randomWeapon.name);
         return randomWeapon;
+    }
+
+    public static int GetRandomWeaponAmmo(WeaponDefinition weapon)
+    {
+        int randomWeaponAmmo = UnityEngine.Random.Range(weapon.magazineSize / 2, weapon.magazineSize + 1);
+        Debug.Log("Random ammo for " + weapon.name + " weapon: " + randomWeaponAmmo);
+        return randomWeaponAmmo;
     }
 }

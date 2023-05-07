@@ -7,11 +7,11 @@ public class Weapon : MonoBehaviour, IWeapon
 {
     //TODO: Implement range
     public float Range;
-    public int MagazineSize;
+    private int MagazineSize;
     public Transform BulletsSpawnPoint;
     public GameObject BulletPrefab;
     [HideInInspector] public bool isLastShotOver;
-    public int BulletsLeft = 10;
+    [HideInInspector] public int BulletsLeft = 10;
     //TODO: Move it outside
     [HideInInspector] public AudioSource As;
     [Header("Attacks")]
@@ -27,6 +27,8 @@ public class Weapon : MonoBehaviour, IWeapon
     {
         As = GetComponent<AudioSource>();
         _ownerRigidbody = GetComponentInParent<Rigidbody>();
+
+        MagazineSize = weaponDefinition.magazineSize;
         BulletsLeft = MagazineSize;
     }
 
