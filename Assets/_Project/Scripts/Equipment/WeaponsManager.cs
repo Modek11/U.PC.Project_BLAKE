@@ -2,6 +2,7 @@ using UnityEngine;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class WeaponsManager : MonoBehaviour
 {
@@ -56,6 +57,8 @@ public class WeaponsManager : MonoBehaviour
             playerInputController.changeWeaponEvent += Equip;
             playerInputController.shootEvent += ShootWeapon;
         }
+
+        WeaponsMagazine.Init();
     }
 
     //Use to add or replace item
@@ -170,5 +173,52 @@ public class WeaponsManager : MonoBehaviour
         if (index < 0 || index > capacity - 1) return null;
 
         return weaponItems[index].Item2;
+    }
+}
+
+public static class WeaponsMagazine //XD
+{
+    static List<WeaponDefinition> weapons;
+    static bool Inited = false;
+
+    public static void Init()
+    {
+        if (Inited) return;
+
+        weapons = Resources.LoadAll<WeaponDefinition>("Weapons").ToList();
+        
+        int katanaIndex = -1;
+        int batIndex = -1;
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            if (weapons[i].name == "Katana")
+            {
+                katanaIndex = i;
+            }
+            if (weapons[i].name == "Bat")
+            {
+                batIndex = i;
+            }
+        }
+        if (katanaIndex == -1 || batIndex == -1) return;
+
+        weapons.RemoveAt(katanaIndex);
+        weapons.RemoveAt(batIndex);
+
+        string weaponsText = weapons[0].name;
+        for (int i = 1; i < weapons.Count; i++)
+        {
+            weaponsText += ", " + weapons[i].name;
+        }
+        Debug.Log("Weapons count: " + weapons.Count + " - " + weaponsText);
+
+        Inited = true;
+    }
+
+    public static WeaponDefinition GetRandomWeapon()
+    {
+        WeaponDefinition randomWeapon = weapons[UnityEngine.Random.Range(0, weapons.Count - 1)];
+        Debug.Log("Random weapom: " + randomWeapon.name);
+        return randomWeapon;
     }
 }
