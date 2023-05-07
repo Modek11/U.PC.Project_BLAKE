@@ -7,6 +7,7 @@ public class WeaponPickup : Interactable
     [SerializeField] private GameObject pickupGameObject;
     [SerializeField] private float rotateForce = 12f;
 
+    public int ammo = -1;
     private GameObject weaponGFX;
 
     private void Start()
@@ -36,11 +37,27 @@ public class WeaponPickup : Interactable
             weaponDefinition = weaponsManager.GetWeaponDefinition(index);
         }
 
+        int bulletsLeft = 0;
+
+        IWeapon oldWeapon = weaponsManager.GetIWeapon(index);
+        if (oldWeapon != null)
+        {
+            bulletsLeft = oldWeapon.GetGameObject().GetComponent<Weapon>().BulletsLeft;
+        }
+
         if (weaponsManager.ChangeItem(weaponToPickup, index))
         {
-            if(weaponDefinition != null)
+            if (ammo != -1)
+            {
+                weaponsManager.GetIWeapon(index).SetAmmo(ammo);
+            }
+
+            weaponsManager.OnPlayerPickupWeapon();
+
+            if (weaponDefinition != null)
             {
                 weaponToPickup = weaponDefinition;
+                ammo = bulletsLeft;
                 ChangeVisuals(weaponDefinition);
                 return;
             }

@@ -57,7 +57,12 @@ public class Weapon : MonoBehaviour, IWeapon
     {
         isLastShotOver = true;
     }
-    
+
+    public void SetAmmo(int newAmmo)
+    {
+        BulletsLeft = newAmmo;
+    }
+
     public GameObject GetGameObject()
     {
         return gameObject;

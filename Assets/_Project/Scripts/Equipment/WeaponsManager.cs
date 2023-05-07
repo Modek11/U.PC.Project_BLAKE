@@ -72,7 +72,6 @@ public class WeaponsManager : MonoBehaviour
 
         weaponItems[index].Item1 = item;
         Equip(index);
-        onPlayerPickupWeaponEvent?.Invoke();
         return true;
     }
 
@@ -99,6 +98,11 @@ public class WeaponsManager : MonoBehaviour
         {
             onSuccessfulShotEvent?.Invoke();
         }
+    }
+
+    public void OnPlayerPickupWeapon()
+    {
+        onPlayerPickupWeaponEvent?.Invoke();
     }
 
     public int GetFreeIndex()

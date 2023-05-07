@@ -47,4 +47,8 @@ public class Bat : MonoBehaviour, IWeapon
         return gameObject;
     }
 
+    public void SetAmmo(int newAmmo)
+    {
+
+    }
 }
