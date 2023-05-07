@@ -53,7 +53,7 @@ public class BasicAttack : MonoBehaviour, IAttack
 
                 }
             }
-            usedWeapon.BulletsLeft--;
+            if (!usedWeapon.infinityAmmo) usedWeapon.BulletsLeft--;
         }
         //bulletsToShotInThisAttack--;
         usedWeapon.Invoke(nameof(usedWeapon.ResetShot), timeBetweenShooting);

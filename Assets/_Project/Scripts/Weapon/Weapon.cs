@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour, IWeapon
     //TODO: Implement range
     public float Range;
     private int MagazineSize;
+    public bool infinityAmmo = false;
     public Transform BulletsSpawnPoint;
     public GameObject BulletPrefab;
     [HideInInspector] public bool isLastShotOver;
@@ -77,7 +78,7 @@ public class Weapon : MonoBehaviour, IWeapon
 
     private bool CanShoot()
     {
-        return isLastShotOver && BulletsLeft > 0;
+        return (isLastShotOver && BulletsLeft > 0);
     }
 
     private void OnValidate()
