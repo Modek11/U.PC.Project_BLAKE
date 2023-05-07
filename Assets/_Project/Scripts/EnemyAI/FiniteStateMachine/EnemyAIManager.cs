@@ -9,6 +9,7 @@ public class EnemyAIManager : MonoBehaviour
     private NavMeshAgent _navMeshAgent;
     private GameObject _playerRef;
     private GameObject _enemyRef;
+    private Animator _animator;
     [SerializeField] private GameObject weaponRef;
 
     private EnemyBaseState _currentState;
@@ -26,6 +27,7 @@ public class EnemyAIManager : MonoBehaviour
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _playerRef = GameObject.FindGameObjectWithTag("Player");
         _enemyRef = gameObject;
+        _animator = GetComponent<Animator>();
         GetComponent<BlakeCharacter>().onDeath += Die;
     }
 
@@ -59,6 +61,9 @@ public class EnemyAIManager : MonoBehaviour
     {
         _currentState.UpdateState();
         FaceThePlayer();
+
+        _animator.SetFloat("Direction", BlakeAnimatorHelper.CalculateDirection(_navMeshAgent.velocity, transform));
+        _animator.SetFloat("Speed", _navMeshAgent.velocity.magnitude);
     }
 
     public void UpdatePlayerRef()

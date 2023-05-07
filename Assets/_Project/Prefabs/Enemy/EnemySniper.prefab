@@ -23,6 +23,11 @@ PrefabInstance:
       propertyPath: MagazineSize
       value: 9999
       objectReference: {fileID: 0}
+    - target: {fileID: 8623244368148286621, guid: 419325c1d82cb204cb136d7467339420,
+        type: 3}
+      propertyPath: infinityAmmo
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8623244368148286622, guid: 419325c1d82cb204cb136d7467339420,
         type: 3}
       propertyPath: m_RootOrder

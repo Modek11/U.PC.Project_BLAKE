@@ -42,8 +42,11 @@ public class BasicBullet : MonoBehaviour, IBullet
         IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
         if (damageable != null && collision.gameObject != _instigator)
         {
-            //TODO: Add IDamagable interface on enemies, keeping damage on bullets (even if enemies are one shot one kill) will help us in future if we will be adding destroyable elements, which will require different strength
-            damageable.TakeDamage(_instigator, 1/*damage*/);
+            if (damageable.CanTakeDamage(_instigator))
+            {
+                //TODO: Add IDamagable interface on enemies, keeping damage on bullets (even if enemies are one shot one kill) will help us in future if we will be adding destroyable elements, which will require different strength
+                damageable.TakeDamage(_instigator, 1/*damage*/);
+            }
 
             if (penetrateAmount > 0)
             {

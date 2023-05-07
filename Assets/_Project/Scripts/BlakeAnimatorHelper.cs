@@ -1,41 +1,17 @@
 using UnityEngine;
 
-public class BlakeAnimatorHelper : MonoBehaviour
+public static class BlakeAnimatorHelper
 {
-    [SerializeField] private Rigidbody _rigidbody;
-    [SerializeField] private Animator animator;
-
-    private void Awake()
+    static public float CalculateDirection(Vector3 inVelocity, Transform inTransform)
     {
-        if(_rigidbody == null)
+        if (inVelocity != Vector3.zero)
         {
-            Debug.LogError("Rigidbody is not valid");
-            enabled = false;
-        }
+            Vector3 NormalizedVel = inVelocity.normalized;
 
-        if (animator == null)
-        {
-            Debug.LogError("Animator is not valid");
-            enabled = false;
-        }
-    }
-
-    void Update()
-    {
-        animator.SetFloat("Direction", CalculateDirection());
-        animator.SetFloat("Speed", _rigidbody.velocity.magnitude);
-    }
-
-    float CalculateDirection()
-    {
-        if (_rigidbody.velocity != Vector3.zero)
-        {
-            Vector3 NormalizedVel = _rigidbody.velocity.normalized;
-
-            float ForwardCosAngle = Vector3.Dot(transform.forward, NormalizedVel);
+            float ForwardCosAngle = Vector3.Dot(inTransform.forward, NormalizedVel);
             float ForwardDeltaDegree = Mathf.Acos(ForwardCosAngle) * Mathf.Rad2Deg;
 
-            float RightCosAngle = Vector3.Dot(transform.right, NormalizedVel);
+            float RightCosAngle = Vector3.Dot(inTransform.right, NormalizedVel);
             if (RightCosAngle < 0)
             {
                 ForwardDeltaDegree *= -1;

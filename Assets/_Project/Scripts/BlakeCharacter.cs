@@ -51,4 +51,15 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
         Debug.Log(instigator.name + " took " + damage + " damage to " + name);
         Health -= damage;
     }
+
+    public virtual bool CanTakeDamage(GameObject instigator)
+    {
+        BlakeCharacter other = instigator.GetComponent<BlakeCharacter>();
+        if(other != null)
+        {
+            return isPlayer != other.isPlayer;
+        }
+
+        return true;
+    }
 }

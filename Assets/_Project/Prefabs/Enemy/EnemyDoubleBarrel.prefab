@@ -163,6 +163,11 @@ PrefabInstance:
       propertyPath: MagazineSize
       value: 9999
       objectReference: {fileID: 0}
+    - target: {fileID: 4911671507717690898, guid: d59ad31d5e825164385713c41e42f342,
+        type: 3}
+      propertyPath: infinityAmmo
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4911671509393515036, guid: d59ad31d5e825164385713c41e42f342,
         type: 3}
       propertyPath: timeBetweenShooting
