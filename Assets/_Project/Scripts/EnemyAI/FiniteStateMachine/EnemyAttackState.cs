@@ -18,13 +18,28 @@ public class EnemyAttackState : EnemyBaseState
     public EnemyAttackState(NavMeshAgent navMeshAgent, EnemyAIManager aIManager) 
         : base(navMeshAgent, aIManager) 
     {
+        if (aiManager.GetWeaponRef().name == "Baton")
+        {
+            _weaponInterface = aiManager.GetWeaponRef().GetComponent<Bat>();
+            _weaponRange = 2f * aiManager.GetWeaponRef().GetComponent<Bat>().GetRange();
+        }
+        else
+        {
+            _weaponScript = aiManager.GetWeaponRef().GetComponent<Weapon>();
+            _weaponInterface = _weaponScript;
+            _weaponRange = aiManager.GetWeaponRef().GetComponent<Weapon>().Range;
+            _attackDelay = _weaponScript.GetCurrentWeaponFireRate();
+            _timeToAttack = 0.5f * _attackDelay;
+        }
+
+        /*
         _weaponScript = aiManager.GetWeaponRef().GetComponent<Weapon>();
         _weaponInterface = _weaponScript;
 
-        _weaponRange = _weaponScript.Range;
+        _weaponRange = _weaponScript.Range;*/
 
-        _attackDelay = _weaponScript.GetCurrentWeaponFireRate();
-        _timeToAttack = 0.5f * _attackDelay;
+        //_attackDelay = _weaponScript.GetCurrentWeaponFireRate();
+        //_timeToAttack = 0.5f * _attackDelay;
 
         _enemyFOV = aiManager.GetEnemyRef().GetComponent<EnemyFOV>();
     }
@@ -69,8 +84,13 @@ public class EnemyAttackState : EnemyBaseState
 
     private Vector3 GetTargetPositionOffset()
     {
-        Vector3 offset = Random.insideUnitSphere * 5f;
-        offset = new Vector3(offset.x, 0, offset.z);
+        Vector3 offset = Vector3.zero;
+
+        if (aiManager.GetWeaponRef().name != "Baton")
+        {
+            offset = Random.insideUnitSphere * 5f;
+            offset = new Vector3(offset.x, 0, offset.z);
+        }
 
         return offset;
     }

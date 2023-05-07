@@ -3,8 +3,8 @@ using UnityEngine.Playables;
 
 public class Bat : MonoBehaviour, IWeapon
 {
-    [SerializeField] private float spereCastRadius = 1.0f;
-    [SerializeField] private float maxDistance = 1.0f;
+    [SerializeField] private float spereCastRadius;
+    [SerializeField] private float maxDistance;
     [SerializeField] private LayerMask layerMask;
 
     private PlayableDirector playableDirector;
@@ -47,4 +47,8 @@ public class Bat : MonoBehaviour, IWeapon
         return gameObject;
     }
 
+    public float GetRange()
+    {
+        return maxDistance;
+    }
 }

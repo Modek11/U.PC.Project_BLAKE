@@ -44,7 +44,7 @@ public class EnemyAIManager : MonoBehaviour
 
         AttackState = new EnemyAttackState(_navMeshAgent, this);
 
-        StrafeState = new EnemyStrafeState(_navMeshAgent, this);
+        //StrafeState = new EnemyStrafeState(_navMeshAgent, this);
 
     }
 
