@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponPrefab: {fileID: 4911671507717690896, guid: d59ad31d5e825164385713c41e42f342,
     type: 3}
   weaponName: Double Barrel
+  magazineSize: 6
   attachSocketName: GunHandler
   locationOffset: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}

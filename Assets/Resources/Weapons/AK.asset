@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponPrefab: {fileID: 7401586004226700553, guid: 77c4cb7c3f169fc4cbd0c1d446416edb,
     type: 3}
   weaponName: AK
+  magazineSize: 30
   attachSocketName: GunHandler
   locationOffset: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}

@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponPrefab: {fileID: 8623244368148286623, guid: 419325c1d82cb204cb136d7467339420,
     type: 3}
   weaponName: Sniper
+  magazineSize: 15
   attachSocketName: GunHandler
   locationOffset: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}

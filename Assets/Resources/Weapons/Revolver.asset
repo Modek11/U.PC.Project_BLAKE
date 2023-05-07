@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponPrefab: {fileID: 2211575096574099193, guid: 7bafbe8de9e5c224f9c91487d46efe98,
     type: 3}
   weaponName: Revolver
+  magazineSize: 6
   attachSocketName: GunHandler
   locationOffset: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}
