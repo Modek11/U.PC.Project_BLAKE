@@ -16,7 +16,7 @@ public static class BlakeAnimatorHelper
             {
                 ForwardDeltaDegree *= -1;
             }
-
+            if(float.IsNaN(ForwardDeltaDegree)) { return 0f; }
             return ForwardDeltaDegree;
         }
 
