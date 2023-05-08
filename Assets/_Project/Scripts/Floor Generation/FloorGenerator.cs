@@ -90,7 +90,8 @@ public class FloorGenerator : MonoBehaviour
                     toAdd.Add(newRoom);
                     roomCounter++;
 
-                    SceneHandler.Instance.roomsGenerated++;
+                    if (SceneHandler.Instance != null)
+                        SceneHandler.Instance.roomsGenerated++;
                 }
                 else
                 {
