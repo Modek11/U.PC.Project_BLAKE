@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
+    private const string mainMenu = "MainMenu";
     private const string loadingScene = "LoadingScene";
     private const string build1005 = "Build1005";
     public static SceneHandler Instance { get; private set; }
@@ -35,6 +36,11 @@ public class SceneHandler : MonoBehaviour
     public void LoadGame()
     {
         Debug.Log("loadgame");
+    }
+
+    public void LoadMainMenu()
+    {
+        StartCoroutine(LoadNewSceneAdditive(mainMenu));
     }
 
     public void QuitGame()
