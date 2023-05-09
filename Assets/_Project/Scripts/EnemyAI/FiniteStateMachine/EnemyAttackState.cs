@@ -9,7 +9,6 @@ public class EnemyAttackState : EnemyBaseState
     private float _attackDelay;
 
     private IWeapon _weaponInterface;
-    private Weapon _weaponScript;
 
     private EnemyFOV _enemyFOV;
     private Vector3 _targetPositionOffset;
@@ -18,28 +17,11 @@ public class EnemyAttackState : EnemyBaseState
     public EnemyAttackState(NavMeshAgent navMeshAgent, EnemyAIManager aIManager) 
         : base(navMeshAgent, aIManager) 
     {
-        if (aiManager.GetWeaponRef().name == "Baton")
-        {
-            _weaponInterface = aiManager.GetWeaponRef().GetComponent<Bat>();
-            _weaponRange = 2f * aiManager.GetWeaponRef().GetComponent<Bat>().GetRange();
-        }
-        else
-        {
-            _weaponScript = aiManager.GetWeaponRef().GetComponent<Weapon>();
-            _weaponInterface = _weaponScript;
-            _weaponRange = aiManager.GetWeaponRef().GetComponent<Weapon>().Range;
-            _attackDelay = _weaponScript.GetCurrentWeaponFireRate();
-            _timeToAttack = 0.5f * _attackDelay;
-        }
+        _weaponInterface = aiManager.GetWeaponRef().GetComponent<IWeapon>();
 
-        /*
-        _weaponScript = aiManager.GetWeaponRef().GetComponent<Weapon>();
-        _weaponInterface = _weaponScript;
-
-        _weaponRange = _weaponScript.Range;*/
-
-        //_attackDelay = _weaponScript.GetCurrentWeaponFireRate();
-        //_timeToAttack = 0.5f * _attackDelay;
+        _weaponRange = _weaponInterface.GetWeaponRange();
+        _attackDelay = _weaponInterface.GetWeaponFireRate();
+        _timeToAttack = 0.5f * _attackDelay;
 
         _enemyFOV = aiManager.GetEnemyRef().GetComponent<EnemyFOV>();
     }

@@ -6,6 +6,7 @@ public class Bat : MonoBehaviour, IWeapon
     [SerializeField] private float spereCastRadius;
     [SerializeField] private float maxDistance;
     [SerializeField] private LayerMask layerMask;
+    [SerializeField] private float attackSpeed;
 
     private PlayableDirector playableDirector;
 
@@ -47,8 +48,13 @@ public class Bat : MonoBehaviour, IWeapon
         return gameObject;
     }
 
-    public float GetRange()
+    public float GetWeaponRange()
     {
         return maxDistance;
+    }
+
+    public float GetWeaponFireRate()
+    {
+        return attackSpeed;
     }
 }
