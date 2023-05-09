@@ -10,7 +10,8 @@ public class MenuElementsHandler : MonoBehaviour
 
     public void NewGameNormalDifficulty()
     {
-        Debug.LogWarning("New Game Normal Difficulty has no implementation!");
+        SceneHandler.Instance.StartNewGame();
+        //Debug.LogWarning("New Game Normal Difficulty has no implementation!");
     }
     
     public void NewGameHardDifficulty()
@@ -21,12 +22,7 @@ public class MenuElementsHandler : MonoBehaviour
     
     public void QuitButton()
     {
-        Application.Quit();
-        
-        
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
+        SceneHandler.Instance.QuitGame();
     }
     
 }
