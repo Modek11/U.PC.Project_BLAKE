@@ -16,10 +16,10 @@ public class PausedGameController : MonoBehaviour
 
     private void Start()
     {
-        _playerInputController.escapeButtonEvent += PauseGame;
+        _playerInputController.escapeButtonEvent += EscapeButtonHandler;
     }
 
-    public void PauseGame()
+    public void EscapeButtonHandler()
     {
         _gamePaused = !_gamePaused;
         

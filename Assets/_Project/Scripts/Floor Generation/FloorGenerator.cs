@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(FloorManager))]
 public class FloorGenerator : MonoBehaviour
@@ -25,12 +26,6 @@ public class FloorGenerator : MonoBehaviour
     // Start is called before the first frame update
     public IEnumerator GenerateFloor()
     {
-        if (SceneHandler.Instance != null)
-        {
-            SceneHandler.Instance.roomsToGenerate = maxRooms - 1;
-            while (!SceneHandler.Instance.isSceneLoadedProperly) yield return null;
-        }
-        
         floorManager = GetComponent<FloorManager>();
         roomManager = GetComponent<RoomManager>();
         Random.InitState((seed == 0)? Random.Range(int.MinValue, int.MaxValue):seed);
@@ -89,9 +84,6 @@ public class FloorGenerator : MonoBehaviour
                     newDoor.SetConnector(door);
                     toAdd.Add(newRoom);
                     roomCounter++;
-
-                    if (SceneHandler.Instance != null)
-                        SceneHandler.Instance.roomsGenerated++;
                 }
                 else
                 {
