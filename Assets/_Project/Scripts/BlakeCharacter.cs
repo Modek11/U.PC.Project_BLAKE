@@ -1,11 +1,10 @@
-using UnityEngine; 
+using UnityEngine;
 
 public class BlakeCharacter : MonoBehaviour, IDamageable
 {
     [SerializeField] private int health = 1;
     [SerializeField] private bool isPlayer;
     protected bool isDead = false;
-    protected Vector3 respawnPos;
     public int Health 
     { 
         get
@@ -27,8 +26,6 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
 
     public delegate void OnDeath();
     public event OnDeath onDeath;
-    public delegate void OnRespawn();
-    public event OnRespawn onRespawn;
 
     public virtual void Die()
     {
@@ -40,11 +37,6 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
         onDeath?.Invoke();
 
         if (!isPlayer) Invoke("DestroySelf", 5f);
-
-        if(isPlayer)
-        {
-            Invoke("Respawn", 5f);
-        }
     }
 
     protected virtual void DestroySelf()
@@ -69,25 +61,5 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
         }
 
         return true;
-    }
-
-    public void SetRespawnPosition(Vector3 position)
-    {
-        respawnPos = position;
-    }
-    public Vector3 GetRespawnPosition()
-    {
-        return respawnPos;
-    }
-
-    private void Respawn()
-    {
-        onRespawn?.Invoke();
-        isDead = false;
-        animator.SetBool("IsAlive", true);
-        transform.position = respawnPos;
-        GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionX;
-        GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionZ;
-        health = 1;
     }
 }

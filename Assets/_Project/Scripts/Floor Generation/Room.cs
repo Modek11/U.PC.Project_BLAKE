@@ -31,10 +31,6 @@ public class Room : MonoBehaviour
     [SerializeField]
     private bool isBeaten = false;
 
-    [SerializeField]
-    private Transform spawnPoint;
-    private GameObject player;
-
     [Serializable]
     public struct EnemySpawner
     {
@@ -90,7 +86,6 @@ public class Room : MonoBehaviour
         isInitialized = true;
 
     }
-
 
     public RoomConnector[] GetDoors()
     {
@@ -150,41 +145,6 @@ public class Room : MonoBehaviour
             {
                 roomConnector.CloseDoor();
             }
-        } else if (isBeaten && player != null)
-        {
-            player.GetComponent<BlakeCharacter>().SetRespawnPosition(GetSpawnPointPosition());
-        }
-    }
-
-    public void SetPlayer(GameObject _player)
-    {
-        player = _player;
-        player.GetComponent<BlakeCharacter>().onRespawn += ResetRoom;
-
-    }
-
-    private void ResetRoom()
-    {
-        if (roomManager.GetActiveRoom() != this) return;
-        foreach (RoomConnector roomConnector in doors)
-        {
-            roomConnector.OpenDoor();
-        }
-        minimapRoom.ForgetRoom();
-
-        foreach(GameObject enemy in spawnedEnemies)
-        {
-            enemy.GetComponent<EnemyAIManager>().SwitchCurrentState(enemy.GetComponent<EnemyAIManager>().PatrolState);
-        }
-        Invoke("ResetEnemies", 0.5f);
-    }
-
-
-    private void ResetEnemies()
-    {
-        foreach (GameObject enemy in spawnedEnemies)
-        {
-            enemy.GetComponent<EnemyAIManager>().SwitchCurrentState(enemy.GetComponent<EnemyAIManager>().PatrolState);
         }
     }
 
@@ -198,10 +158,6 @@ public class Room : MonoBehaviour
                 foreach (RoomConnector roomConnector in doors)
                 {
                     roomConnector.OpenDoor();
-                }
-                if(player != null)
-                {
-                    player.GetComponent<BlakeCharacter>().SetRespawnPosition(GetSpawnPointPosition());
                 }
             }
         }
@@ -223,12 +179,10 @@ public class Room : MonoBehaviour
         if(roomManager.GetActiveRoom() == this)
         {
             roomManager.SetActiveRoom(null);
-
         }
-
     }
 
-
+    
 
     public List<Room> GetNeigbours()
     {
@@ -251,11 +205,6 @@ public class Room : MonoBehaviour
     public RoomManager GetRoomManager()
     {
         return roomManager;
-    }
-
-    public Vector3 GetSpawnPointPosition()
-    {
-        return spawnPoint.position;
     }
 
 }

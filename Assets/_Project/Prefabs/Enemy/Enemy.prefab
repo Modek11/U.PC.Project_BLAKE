@@ -2742,7 +2742,7 @@ MonoBehaviour:
     m_Bits: 128
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 256
   canSeePlayer: 0
 --- !u!114 &6426853079096780474
 MonoBehaviour:
