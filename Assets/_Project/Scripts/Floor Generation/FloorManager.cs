@@ -15,7 +15,7 @@ public class FloorManager : MonoBehaviour
     private GameObject cameraFollow;
     
     
-    public event Action<Transform,Transform> FloorGeneratorEnd;
+    public event Action<Transform> FloorGeneratorEnd;
     
 
     private void Awake()
@@ -37,6 +37,6 @@ public class FloorManager : MonoBehaviour
         virtualCamera.Follow = cameraFollow.transform;
         cameraFollow.GetComponent<CameraFollowScript>().SetPlayerReference(player.transform);
         
-        FloorGeneratorEnd?.Invoke(player.transform,cameraFollow.transform);
+        FloorGeneratorEnd?.Invoke(player.transform);
     }
 }

@@ -26,7 +26,7 @@ public class PlayerGameplayUIManager : MonoBehaviour
         _floorManager.FloorGeneratorEnd += FloorManagerOnFloorGeneratorEnd;
     }
 
-    private void FloorManagerOnFloorGeneratorEnd(Transform playerTransform, Transform cameraFollowTransform)
+    private void FloorManagerOnFloorGeneratorEnd(Transform playerTransform)
     {
         if (player == null || _weaponsManager == null)
         {

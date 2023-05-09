@@ -18,6 +18,7 @@ public class RoomTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             parent.EnterRoom();
+            parent.SetPlayer(other.gameObject);
         }
     }
 

@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
         _playerInputController.mousePositionEvent += MousePositionHandler;
         _playerInputController.dashEvent += Dash;
         GetComponent<BlakeCharacter>().onDeath += Die;
+        GetComponent<BlakeCharacter>().onRespawn += Respawn;
     }
 
     private void Update()
@@ -153,6 +154,12 @@ public class PlayerMovement : MonoBehaviour
     {
         _playerInputController.enabled = false;
         this.enabled = false;
+    }
+
+    private void Respawn()
+    {
+        _playerInputController.enabled = true;
+        this.enabled = true;
     }
 
    private IEnumerator SetMainCamera()
