@@ -6,8 +6,9 @@ public class CylinderStretcher : MonoBehaviour
     private Transform playerTransform;
     private Transform mainCameraTransform;
     private Transform cameraFollowTransform;
-    
     private Vector3 initialScale;
+
+    private bool referencesSet = false;
 
     private void Start()
     {
@@ -20,10 +21,12 @@ public class CylinderStretcher : MonoBehaviour
         this.playerTransform = playerTransform;
         this.cameraFollowTransform = cameraFollowTransform;
         mainCameraTransform = Camera.main.transform;
+        referencesSet = true;
     }
 
     void Update()
     {
+        if (!referencesSet) return;
         if (!playerTransform.hasChanged || !mainCameraTransform.hasChanged) return;
 
 
