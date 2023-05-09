@@ -91,6 +91,7 @@ public class Room : MonoBehaviour
 
     }
 
+
     public RoomConnector[] GetDoors()
     {
         return doors;
@@ -170,6 +171,21 @@ public class Room : MonoBehaviour
             roomConnector.OpenDoor();
         }
         minimapRoom.ForgetRoom();
+
+        foreach(GameObject enemy in spawnedEnemies)
+        {
+            enemy.GetComponent<EnemyAIManager>().SwitchCurrentState(enemy.GetComponent<EnemyAIManager>().PatrolState);
+        }
+        Invoke("ResetEnemies", 0.5f);
+    }
+
+
+    private void ResetEnemies()
+    {
+        foreach (GameObject enemy in spawnedEnemies)
+        {
+            enemy.GetComponent<EnemyAIManager>().SwitchCurrentState(enemy.GetComponent<EnemyAIManager>().PatrolState);
+        }
     }
 
     private void Update()
