@@ -46,6 +46,15 @@ public class MinimapRoom : MonoBehaviour
         }
     }
 
+    public void ForgetRoom()
+    {
+        if(state == RoomState.Visited)
+        {
+            state = RoomState.NotVisited;
+            ChangeMaterial(minimapNotVisited);
+        }
+    }
+
     private void ChangeMaterial(Material mat)
     {
         foreach(MeshRenderer meshRenderer in meshRenderers)
