@@ -77,7 +77,15 @@ public class SceneHandler : MonoBehaviour
         
         
         SceneManager.UnloadSceneAsync(loadingScene);
+        ResetValues();
+    }
+
+    private void ResetValues()
+    {
         loadingProgress = 0;
+        roomsGenerated = 0;
+        roomsToGenerate = 0;
+        Time.timeScale = 1;
     }
 
 
