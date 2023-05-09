@@ -14,18 +14,21 @@ public class EnemyCharacter : BlakeCharacter
     {
         base.DestroySelf();
 
-        WeaponDefinition weaponDef = ai.GetWeaponRef().GetComponent<Weapon>().GetWeaponDefinition();
+        WeaponDefinition weaponDef = ai.GetWeaponRef().GetComponent<Weapon>()?.GetWeaponDefinition();
 
-        float drop = Random.Range(0f, 1f);
-        Debug.Log("Drop chance: " + drop + " | Treshold: " + weaponDef.dropRate);
-        if (drop <= weaponDef.dropRate)
+        if (weaponDef != null)
         {
-            GameObject weaponPickupObject = Instantiate(weaponPickup, transform.position, Quaternion.identity);
+            float drop = Random.Range(0f, 1f);
+            Debug.Log("Drop chance: " + drop + " | Treshold: " + weaponDef.dropRate);
+            if (drop <= weaponDef.dropRate)
+            {
+                GameObject weaponPickupObject = Instantiate(weaponPickup, transform.position, Quaternion.identity);
 
-            //WeaponDefinition randomWeapon = WeaponsMagazine.GetRandomWeapon();
-            WeaponPickup weaponPickupScript = weaponPickupObject.GetComponent<WeaponPickup>();
-            weaponPickupScript.SetWeaponDefinition(weaponDef);
-            weaponPickupScript.ammo = WeaponsMagazine.GetRandomWeaponAmmo(weaponDef);
+                //WeaponDefinition randomWeapon = WeaponsMagazine.GetRandomWeapon();
+                WeaponPickup weaponPickupScript = weaponPickupObject.GetComponent<WeaponPickup>();
+                weaponPickupScript.SetWeaponDefinition(weaponDef);
+                weaponPickupScript.ammo = WeaponsMagazine.GetRandomWeaponAmmo(weaponDef);
+            }
         }
     }
 }
