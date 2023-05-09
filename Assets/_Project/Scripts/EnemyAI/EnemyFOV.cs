@@ -41,7 +41,7 @@ public class EnemyFOV : MonoBehaviour
             {
                 float distanceToTarget = Vector3.Distance(transform.position + new Vector3(0, 0.5f, 0), target.position);
 
-                if (!Physics.Raycast(transform.position+ new Vector3(0,0.5f,0), directionToTarget, distanceToTarget, obstacleMask))
+                if (!Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), directionToTarget, distanceToTarget, obstacleMask))
                     canSeePlayer = true;
                 else
                     canSeePlayer = false;
