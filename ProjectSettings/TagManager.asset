@@ -7,7 +7,6 @@ TagManager:
   - Sensor
   - Enemy
   - Bullet
-  - Wall
   layers:
   - Default
   - TransparentFX
@@ -24,6 +23,9 @@ TagManager:
   - 
   - 
   - Minimap
+  - 
+  - 
+  - 
   - 
   - 
   - 
