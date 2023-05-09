@@ -74,8 +74,8 @@ public class SceneHandler : MonoBehaviour
             loadingProgress = Mathf.Clamp01((roomsGenerated / roomsToGenerate) / .9f);
             yield return null;
         }
-        
-        
+
+        yield return new WaitForSecondsRealtime(0.3f);
         SceneManager.UnloadSceneAsync(loadingScene);
         ResetValues();
     }
