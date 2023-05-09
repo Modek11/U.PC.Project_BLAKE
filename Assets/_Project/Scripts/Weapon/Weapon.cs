@@ -44,7 +44,7 @@ public class Weapon : MonoBehaviour, IWeapon
         return _primaryAttack.Value.Attack(this);
     }
 
-    public float GetCurrentWeaponFireRate()
+    public float GetWeaponFireRate()
     {
         return _primaryAttack.Value.ReturnFireRate();
     }
@@ -103,5 +103,10 @@ public class Weapon : MonoBehaviour, IWeapon
     public WeaponDefinition GetWeaponDefinition()
     {
         return weaponDefinition;
+    }
+
+    public float GetWeaponRange()
+    {
+        return Range;
     }
 }

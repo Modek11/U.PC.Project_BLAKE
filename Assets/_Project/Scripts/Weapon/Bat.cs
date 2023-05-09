@@ -3,9 +3,10 @@ using UnityEngine.Playables;
 
 public class Bat : MonoBehaviour, IWeapon
 {
-    [SerializeField] private float spereCastRadius = 1.0f;
-    [SerializeField] private float maxDistance = 1.0f;
+    [SerializeField] private float spereCastRadius;
+    [SerializeField] private float maxDistance;
     [SerializeField] private LayerMask layerMask;
+    [SerializeField] private float attackSpeed;
 
     private PlayableDirector playableDirector;
 
@@ -45,6 +46,16 @@ public class Bat : MonoBehaviour, IWeapon
     public GameObject GetGameObject()
     {
         return gameObject;
+    }
+
+    public float GetWeaponRange()
+    {
+        return maxDistance;
+    }
+
+    public float GetWeaponFireRate()
+    {
+        return attackSpeed;
     }
 
     public void SetAmmo(int newAmmo)
