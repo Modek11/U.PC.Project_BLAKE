@@ -6,12 +6,16 @@ public class EnemyChaseState : EnemyBaseState
     private float _weaponRange;
     private float _chaseSpeed;
 
+    private IWeapon _weaponInterface;
+
     private Vector3 targetPositionOffset;
 
     public EnemyChaseState(NavMeshAgent navMeshAgent, EnemyAIManager aIManager)
         : base(navMeshAgent, aIManager) 
     {
-        _weaponRange = aiManager.GetWeaponRef().GetComponent<Weapon>().Range; 
+        _weaponInterface = aiManager.GetWeaponRef().GetComponent<IWeapon>();
+        _weaponRange = _weaponInterface.GetWeaponRange();
+         
         _chaseSpeed = 12f;
     }
 
@@ -59,8 +63,13 @@ public class EnemyChaseState : EnemyBaseState
 
     private Vector3 GetTargetPositionOffset()
     {
-        Vector3 offset = Random.insideUnitSphere * 5f;
-        offset = new Vector3(offset.x, 0, offset.z);
+        Vector3 offset = Vector3.zero;
+
+        if (aiManager.GetWeaponRef().name != "Baton")
+        {
+            offset = Random.insideUnitSphere * 5f;
+            offset = new Vector3(offset.x, 0, offset.z);
+        }
 
         return offset;
     }

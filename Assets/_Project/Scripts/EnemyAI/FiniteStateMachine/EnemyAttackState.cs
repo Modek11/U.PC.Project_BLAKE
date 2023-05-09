@@ -9,7 +9,6 @@ public class EnemyAttackState : EnemyBaseState
     private float _attackDelay;
 
     private IWeapon _weaponInterface;
-    private Weapon _weaponScript;
 
     private EnemyFOV _enemyFOV;
     private Vector3 _targetPositionOffset;
@@ -18,12 +17,10 @@ public class EnemyAttackState : EnemyBaseState
     public EnemyAttackState(NavMeshAgent navMeshAgent, EnemyAIManager aIManager) 
         : base(navMeshAgent, aIManager) 
     {
-        _weaponScript = aiManager.GetWeaponRef().GetComponent<Weapon>();
-        _weaponInterface = _weaponScript;
+        _weaponInterface = aiManager.GetWeaponRef().GetComponent<IWeapon>();
 
-        _weaponRange = _weaponScript.Range;
-
-        _attackDelay = _weaponScript.GetCurrentWeaponFireRate();
+        _weaponRange = _weaponInterface.GetWeaponRange();
+        _attackDelay = _weaponInterface.GetWeaponFireRate();
         _timeToAttack = 0.5f * _attackDelay;
 
         _enemyFOV = aiManager.GetEnemyRef().GetComponent<EnemyFOV>();
@@ -69,8 +66,13 @@ public class EnemyAttackState : EnemyBaseState
 
     private Vector3 GetTargetPositionOffset()
     {
-        Vector3 offset = Random.insideUnitSphere * 5f;
-        offset = new Vector3(offset.x, 0, offset.z);
+        Vector3 offset = Vector3.zero;
+
+        if (aiManager.GetWeaponRef().name != "Baton")
+        {
+            offset = Random.insideUnitSphere * 5f;
+            offset = new Vector3(offset.x, 0, offset.z);
+        }
 
         return offset;
     }
