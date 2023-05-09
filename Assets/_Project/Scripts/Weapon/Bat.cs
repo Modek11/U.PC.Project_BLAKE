@@ -57,4 +57,9 @@ public class Bat : MonoBehaviour, IWeapon
     {
         return attackSpeed;
     }
+
+    public void SetAmmo(int newAmmo)
+    {
+
+    }
 }

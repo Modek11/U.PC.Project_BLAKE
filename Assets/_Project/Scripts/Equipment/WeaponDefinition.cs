@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [CreateAssetMenu(fileName = "Weapon definition", menuName = "Project BLAKE/Weapon")]
 public class WeaponDefinition : ScriptableObject
@@ -6,6 +8,11 @@ public class WeaponDefinition : ScriptableObject
     public GameObject weaponPrefab;
 
     public string weaponName;
+
+    public int magazineSize;
+
+    [Range(0f, 1f)]
+    public float dropRate = 0.6f;
 
     public string attachSocketName;
 

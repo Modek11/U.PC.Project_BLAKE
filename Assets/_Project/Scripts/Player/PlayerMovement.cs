@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _mousePosition;
     private float _angleRotationDifference;
     private Rigidbody _rigidbody;
+    private Animator _animator;
 
     private float _dashCooldownCountdown;
     private float _dashDurationCountdown;
@@ -28,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _playerInputController = GetComponent<PlayerInputController>();
         _rigidbody = GetComponent<Rigidbody>();
+        _animator = GetComponentInChildren<Animator>();
 
         StartCoroutine(SetMainCamera());
     }
@@ -44,6 +46,9 @@ public class PlayerMovement : MonoBehaviour
     {
         Rotation();
         DashCountdown();
+
+        _animator.SetFloat("Direction", BlakeAnimatorHelper.CalculateDirection(_rigidbody.velocity, transform));
+        _animator.SetFloat("Speed", _rigidbody.velocity.magnitude);
     }
 
 

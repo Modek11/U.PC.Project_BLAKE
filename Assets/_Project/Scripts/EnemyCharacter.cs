@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyCharacter : BlakeCharacter
@@ -8,7 +6,6 @@ public class EnemyCharacter : BlakeCharacter
     [SerializeField]
     private GameObject weaponPickup;
 
-
     private void Awake()
     {
         ai = GetComponent<EnemyAIManager>();
@@ -16,7 +13,19 @@ public class EnemyCharacter : BlakeCharacter
     protected override void DestroySelf()
     {
         base.DestroySelf();
-        GameObject weaponPickupObject = Instantiate(weaponPickup, transform.position, Quaternion.identity);
-        weaponPickupObject.GetComponent<WeaponPickup>().SetWeaponDefinition(ai.GetWeaponRef().GetComponent<Weapon>().GetWeaponDefinition());
+
+        WeaponDefinition weaponDef = ai.GetWeaponRef().GetComponent<Weapon>().GetWeaponDefinition();
+
+        float drop = Random.Range(0f, 1f);
+        Debug.Log("Drop chance: " + drop + " | Treshold: " + weaponDef.dropRate);
+        if (drop <= weaponDef.dropRate)
+        {
+            GameObject weaponPickupObject = Instantiate(weaponPickup, transform.position, Quaternion.identity);
+
+            //WeaponDefinition randomWeapon = WeaponsMagazine.GetRandomWeapon();
+            WeaponPickup weaponPickupScript = weaponPickupObject.GetComponent<WeaponPickup>();
+            weaponPickupScript.SetWeaponDefinition(weaponDef);
+            weaponPickupScript.ammo = WeaponsMagazine.GetRandomWeaponAmmo(weaponDef);
+        }
     }
 }

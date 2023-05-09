@@ -29,7 +29,7 @@ public class SniperAttack : MonoBehaviour, IAttack
         
         Instantiate(usedWeapon.BulletPrefab, usedWeapon.BulletsSpawnPoint.position, usedWeapon.transform.rotation).GetComponent<IBullet>().SetupBullet(chosenSpread, usedWeapon.transform.parent.gameObject, usedWeapon.Range);
         
-        usedWeapon.BulletsLeft--;
+        if (!usedWeapon.infinityAmmo) usedWeapon.BulletsLeft--;
         usedWeapon.Invoke(nameof(usedWeapon.ResetShot), timeBetweenShooting);
         return true;
     }
