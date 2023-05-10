@@ -68,6 +68,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 128
+  attackSpeed: 0
 --- !u!82 &8945000990863372136
 AudioSource:
   m_ObjectHideFlags: 0
@@ -213,17 +214,17 @@ PrefabInstance:
     - target: {fileID: 3509494620538105026, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3509494620538105026, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3509494620538105026, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3509494620538105026, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
         type: 3}
@@ -303,6 +304,11 @@ PrefabInstance:
     - target: {fileID: 7711348059265503512, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8286161483879497642, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
