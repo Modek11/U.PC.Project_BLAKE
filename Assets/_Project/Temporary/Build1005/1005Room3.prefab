@@ -524,6 +524,37 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!1 &1977246412756918337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3778265897359008725}
+  m_Layer: 0
+  m_Name: SpawnPoint (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3778265897359008725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977246412756918337}
+  m_LocalRotation: {x: -0, y: 0.70416176, z: -0, w: 0.7100397}
+  m_LocalPosition: {x: -23.5, y: 0, z: -1.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3158391710016045176}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 89.524, z: 0}
 --- !u!1 &2353140811356244221
 GameObject:
   m_ObjectHideFlags: 0
@@ -1897,6 +1928,37 @@ Transform:
   m_Father: {fileID: 5954302000871459060}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!1 &6365896974406016627
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3517716741079023033}
+  m_Layer: 0
+  m_Name: SpawnPoint (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3517716741079023033
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6365896974406016627}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -3.38, y: 0, z: 13}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3158391710016045176}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &6946353482987180458
 GameObject:
   m_ObjectHideFlags: 0
@@ -2530,7 +2592,7 @@ GameObject:
   - component: {fileID: 3158391710016045176}
   - component: {fileID: 5336381131879314063}
   m_Layer: 0
-  m_Name: Room3
+  m_Name: 1005Room3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2555,6 +2617,8 @@ Transform:
   - {fileID: 3703616803593896174}
   - {fileID: 3371749855851270403}
   - {fileID: 4602771071350910347}
+  - {fileID: 3778265897359008725}
+  - {fileID: 3517716741079023033}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2583,6 +2647,14 @@ MonoBehaviour:
     EnemyToSpawn: {fileID: 1388155279320507081, guid: 2d2abc49ce71d294f98a0efabd6c60b4,
       type: 3}
     EnemyWaypoints: {fileID: 3446470458761176253}
+  - EnemySpawnPoint: {fileID: 3778265897359008725}
+    EnemyToSpawn: {fileID: 3549530385972934099, guid: 9a46dccb19d071643821c8a77a9735d5,
+      type: 3}
+    EnemyWaypoints: {fileID: 0}
+  - EnemySpawnPoint: {fileID: 3517716741079023033}
+    EnemyToSpawn: {fileID: 3549530385972934099, guid: 9a46dccb19d071643821c8a77a9735d5,
+      type: 3}
+    EnemyWaypoints: {fileID: 0}
   spawnedEnemies: []
   isInitialized: 0
   isBeaten: 0

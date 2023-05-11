@@ -172,6 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6041966008548309468}
   - component: {fileID: 3683822003887083528}
+  - component: {fileID: 8059598911574212076}
   m_Layer: 9
   m_Name: Character
   m_TagString: Untagged
@@ -311,6 +312,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0000019669533, y: 0.20190728, z: 0.058439434}
     m_Extent: {x: 1.8100114, y: 1.9633304, z: 0.41059288}
   m_DirtyAABB: 0
+--- !u!114 &8059598911574212076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 485506402880554416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineWidth: 2.5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &663207935279227878
 GameObject:
   m_ObjectHideFlags: 0
@@ -2742,7 +2761,7 @@ MonoBehaviour:
     m_Bits: 128
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 256
   canSeePlayer: 0
 --- !u!114 &6426853079096780474
 MonoBehaviour:
