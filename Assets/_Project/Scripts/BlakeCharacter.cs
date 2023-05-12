@@ -39,16 +39,21 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
         isDead = true;
         if(!isPlayer) //only for DD we should only animate enemies
             animator.SetBool("IsAlive", false);
-        explosionParticleInstantiated = Instantiate(explosionParticle,transform.position,quaternion.identity);
-        gameObject.SetActive(false);
+        
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         GetComponent<CapsuleCollider>().enabled = false;
         onDeath?.Invoke();
 
-        if(isPlayer)
+        if (isPlayer)
+        {
+            explosionParticleInstantiated = Instantiate(explosionParticle,transform.position,quaternion.identity);//DD
+            gameObject.SetActive(false); //DD
             Invoke("Respawn", 2f);
+        }
         else
+        {
             Invoke("DestroySelf", 2f);
+        }
     }
 
     protected virtual void DestroySelf()
