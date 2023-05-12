@@ -19,6 +19,8 @@ public class Room : MonoBehaviour
 
     [SerializeField]
     private BoxCollider[] overlapColliders;
+    private List<RoomTrigger> triggers = new List<RoomTrigger>();
+    private List<RoomOverlapTrigger> fogTriggers = new List<RoomOverlapTrigger>();
 
     [Header("Enemies")]
     [SerializeField]
@@ -110,16 +112,19 @@ public class Room : MonoBehaviour
 
     public void DisableFog()
     {
+        if (IsPlayerInsideFog()) return;
         fog.SetActive(false);
     }
 
     public void EnableFog()
     {
+        if (IsPlayerInsideFog()) return;
         fog.SetActive(true);
     }
 
     public void EnterRoom()
     {
+        if (IsPlayerInside()) return;
         minimapRoom.VisitRoom();
         Room activeRoom = roomManager.GetActiveRoom();
         if (activeRoom != null)
@@ -227,12 +232,13 @@ public class Room : MonoBehaviour
 
     public void ExitRoom()
     {
+        if (IsPlayerInside()) return;
         if(roomManager.GetActiveRoom() == this)
         {
             roomManager.SetActiveRoom(null);
 
         }
-
+        
     }
 
 
@@ -250,6 +256,34 @@ public class Room : MonoBehaviour
         return neigbours;
     }
 
+    public bool IsPlayerInside()
+    {
+        foreach(RoomTrigger rt in triggers)
+        {
+            if(rt.IsPlayerInside()) return true;
+        }
+        return false;
+    }
+
+    public bool IsPlayerInsideFog()
+    {
+        foreach (RoomOverlapTrigger rt in fogTriggers)
+        {
+            if (rt.IsPlayerInside()) return true;
+        }
+        return false;
+    }
+
+    public void AddTrigger(RoomTrigger rt)
+    {
+        triggers.Add(rt);
+    }
+
+    public void AddFogTrigger(RoomOverlapTrigger rt)
+    {
+        fogTriggers.Add(rt);
+    }
+
     public BoxCollider[] GetOverlapColliders()
     {
         return overlapColliders;
@@ -262,7 +296,11 @@ public class Room : MonoBehaviour
 
     public Vector3 GetSpawnPointPosition()
     {
-        return spawnPoint.position;
+        if (spawnPoint != null)
+        {
+            return spawnPoint.position;
+        }
+        else return transform.position;
     }
 
 }

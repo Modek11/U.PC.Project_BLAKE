@@ -5,22 +5,34 @@ using UnityEngine;
 public class RoomOverlapTrigger : MonoBehaviour
 {
     private Room parent;
+    private bool playerInside = false;
+
     // Start is called before the first frame update
     void Awake()
     {
         parent = GetComponentInParent<Room>();
+        parent.AddFogTrigger(this);
 
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
-        parent.DisableFog();
+        if (other.CompareTag("Player"))
+        {
+            parent.DisableFog();
+            playerInside = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.CompareTag("Player"))
+
+        playerInside = false;
+        if (other.CompareTag("Player"))
         parent.EnableFog();
+    }
+    public bool IsPlayerInside()
+    {
+        return playerInside;
     }
 }
