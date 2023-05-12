@@ -7,6 +7,7 @@ public class SniperAttack : MonoBehaviour, IAttack
     [SerializeField] private float timeBetweenShooting;
     [Tooltip("Declares range of bullet spawn, while player is moving")]
     [SerializeField] private float spread;
+    [SerializeField] private float spreadTreshold = 5f;
     private Weapon usedWeapon;
     private Rigidbody _ownerRigidbodyRef;
 
@@ -23,9 +24,9 @@ public class SniperAttack : MonoBehaviour, IAttack
     {
         usedWeapon.isLastShotOver = false;
         usedWeapon.As.PlayOneShot(usedWeapon.As.clip);
-        
+
         //Choose spread depending on player's controls
-        float chosenSpread = _ownerRigidbodyRef.velocity == Vector3.zero ? 0 : Random.Range(-spread, spread);
+        float chosenSpread = _ownerRigidbodyRef.velocity.magnitude <= spreadTreshold ? 0 : Random.Range(-spread, spread);
         
         Instantiate(usedWeapon.BulletPrefab, usedWeapon.BulletsSpawnPoint.position, usedWeapon.transform.rotation).GetComponent<IBullet>().SetupBullet(chosenSpread, usedWeapon.transform.parent.gameObject, usedWeapon.Range);
         
