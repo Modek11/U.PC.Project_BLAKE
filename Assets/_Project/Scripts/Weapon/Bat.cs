@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -9,6 +10,12 @@ public class Bat : MonoBehaviour, IWeapon
     [SerializeField] private float attackSpeed;
 
     private PlayableDirector playableDirector;
+
+    private void OnDisable()
+    {
+        transform.localRotation = quaternion.identity;
+        playableDirector.Stop();
+    }
 
     private void Awake()
     {
