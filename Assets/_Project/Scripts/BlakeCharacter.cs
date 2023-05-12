@@ -40,12 +40,10 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
         GetComponent<CapsuleCollider>().enabled = false;
         onDeath?.Invoke();
 
-        if (!isPlayer) Invoke("DestroySelf", 5f);
-
         if(isPlayer)
-        {
             Invoke("Respawn", 5f);
-        }
+        else
+            Invoke("DestroySelf", 2f);
     }
 
     protected virtual void DestroySelf()
