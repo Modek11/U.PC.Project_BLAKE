@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(FloorGenerator))]
 public class FloorManager : MonoBehaviour
 {
+    public event Action<Transform,Transform> FloorGeneratorEnd;
+    
+    
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject virtualCameraPrefab;
     [SerializeField] private GameObject cameraFollowPrefab;
@@ -13,9 +16,6 @@ public class FloorManager : MonoBehaviour
     private GameObject player;
     private CinemachineVirtualCamera virtualCamera;
     private GameObject cameraFollow;
-    
-    
-    public event Action<Transform,Transform> FloorGeneratorEnd;
     
 
     private void Awake()
