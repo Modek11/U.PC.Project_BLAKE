@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 3194443941187315569}
   - component: {fileID: 3194443941187315575}
   - component: {fileID: 3194443941187315572}
+  - component: {fileID: 6510461153009398080}
   m_Layer: 0
   m_Name: FloorManager
   m_TagString: Untagged
@@ -117,3 +118,15 @@ MonoBehaviour:
     type: 3}
   cameraFollowPrefab: {fileID: 7704305018567902486, guid: da1813ffbcc83fa46900af03c123eb57,
     type: 3}
+--- !u!114 &6510461153009398080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3194443941187315568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39fb254f2044910469eb156ac026d24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
