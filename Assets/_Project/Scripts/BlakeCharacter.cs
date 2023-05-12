@@ -37,6 +37,7 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
         animator.SetBool("IsAlive", false);
 
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        GetComponent<CapsuleCollider>().enabled = false;
         onDeath?.Invoke();
 
         if (!isPlayer) Invoke("DestroySelf", 5f);
@@ -88,6 +89,7 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
         transform.position = respawnPos;
         GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionX;
         GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionZ;
+        GetComponent<CapsuleCollider>().enabled = true;
         health = 1;
     }
 }
