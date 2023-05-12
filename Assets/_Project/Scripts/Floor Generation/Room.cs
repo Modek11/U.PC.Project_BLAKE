@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.AI.Navigation;
@@ -35,12 +34,19 @@ public class Room : MonoBehaviour
     private Transform spawnPoint;
     private GameObject player;
 
+    private RoomsDoneCounter roomsDoneCounter;
+
     [Serializable]
     public struct EnemySpawner
     {
         public Transform EnemySpawnPoint;
         public GameObject EnemyToSpawn;
         public Waypoints EnemyWaypoints;
+    }
+
+    private void Awake()
+    {
+        roomsDoneCounter = FindObjectOfType<RoomsDoneCounter>();
     }
 
     public void InitializeRoom(RoomManager rm)
@@ -195,6 +201,7 @@ public class Room : MonoBehaviour
             if(spawnedEnemies.Count == 0)
             {
                 isBeaten = true;
+                roomsDoneCounter.AddBeatenRoom();
                 foreach (RoomConnector roomConnector in doors)
                 {
                     roomConnector.OpenDoor();

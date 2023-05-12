@@ -22,7 +22,12 @@ public class FloorGenerator : MonoBehaviour
     private FloorManager floorManager;
 
     private List<GameObject> spawnedRooms = new List<GameObject>();
-    // Start is called before the first frame update
+    
+    public int GetIntRoomsInitialized()
+    {
+        return maxRooms;
+    }
+    
     public IEnumerator GenerateFloor()
     {
         if (SceneHandler.Instance != null)

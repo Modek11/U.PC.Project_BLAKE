@@ -6,21 +6,17 @@ public class PlayerGameplayUIManager : MonoBehaviour
 {
     [SerializeField] private FloorManager _floorManager;
     [SerializeField] private MinimapCameraFollow minimapCamera;
+    [SerializeField] private RoomsDoneCounter roomsDoneCounter;
     [Space]
     [SerializeField] private TextMeshProUGUI weaponName;
     [SerializeField] private TextMeshProUGUI bulletsLeft;
+    [SerializeField] private TextMeshProUGUI roomsCounter;
     [SerializeField] private GameObject interactUI;
 
     private GameObject player;
     private WeaponsManager _weaponsManager;
-    private PlayerInputController playerInputController;
     private PlayerInteractables playerInteractables;
-
-    private void Awake()
-    {
-        playerInputController = GetComponent<PlayerInputController>();
-    }
-
+    
     private void Start()
     {
         _floorManager.FloorGeneratorEnd += FloorManagerOnFloorGeneratorEnd;
@@ -44,12 +40,16 @@ public class PlayerGameplayUIManager : MonoBehaviour
         playerInteractables.SetInteractUIReference(interactUI);
     }
 
+    private void Update()
+    {
+        RoomsCounterUI();
+    }
+
     private void RefreshUI()
     {
         WeaponNameUI();
         BulletsLeftUI();
     }
-    
 
     private void WeaponNameUI()
     {
@@ -67,6 +67,11 @@ public class PlayerGameplayUIManager : MonoBehaviour
             Weapon weapon = _weaponsManager.GetIWeapon(_weaponsManager.ActiveWeaponIndex).GetGameObject().GetComponent<Weapon>();
             bulletsLeft.text = weapon.BulletsLeft.ToString();
         }
+    }
+    
+    private void RoomsCounterUI()
+    {
+        roomsCounter.text = $"Rooms Beaten : {roomsDoneCounter.RoomsBeaten}/{roomsDoneCounter.RoomsInitialized}";
     }
     
 }
