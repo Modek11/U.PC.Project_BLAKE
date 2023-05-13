@@ -28,9 +28,9 @@ public class FloorManager : MonoBehaviour
         StartCoroutine(floorGenerator.GenerateFloor());
     }
 
-    public void OnFloorGeneratorEnd(Transform startingRoomTransform)
+    public void OnFloorGeneratorEnd(Vector3 startingRoomTransform)
     {
-        player = Instantiate(playerPrefab, startingRoomTransform.position, Quaternion.identity);
+        player = Instantiate(playerPrefab, startingRoomTransform, Quaternion.identity);
         virtualCamera = Instantiate(virtualCameraPrefab).GetComponent<CinemachineVirtualCamera>();
         cameraFollow = Instantiate(cameraFollowPrefab);
         

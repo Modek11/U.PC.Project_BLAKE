@@ -7,9 +7,11 @@ public class RoomTrigger : MonoBehaviour
 {
     private Room parent;
     private RoomManager roomManager;
+    private bool playerInside = false;
     private void Awake()
     {
         parent = GetComponentInParent<Room>();
+        parent.AddTrigger(this);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -17,8 +19,9 @@ public class RoomTrigger : MonoBehaviour
         if (roomManager == null) roomManager = parent.GetRoomManager();
         if (other.CompareTag("Player"))
         {
-            parent.EnterRoom();
             parent.SetPlayer(other.gameObject);
+            parent.EnterRoom();
+            playerInside = true;
         }
     }
 
@@ -40,9 +43,15 @@ public class RoomTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        playerInside = false;
         if (other.CompareTag("Player"))
         {
             parent.ExitRoom();
         }
+    }
+
+    public bool IsPlayerInside()
+    {
+        return playerInside;
     }
 }
