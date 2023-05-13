@@ -38,7 +38,9 @@ public class FloorGenerator : MonoBehaviour
         
         floorManager = GetComponent<FloorManager>();
         roomManager = GetComponent<RoomManager>();
-        Random.InitState((seed == 0)? Random.Range(int.MinValue, int.MaxValue):seed);
+        seed = (seed == 0) ? Random.Range(int.MinValue, int.MaxValue) : seed;
+        Random.InitState(seed);
+        Debug.Log("Using seed: " + seed);
         GameObject _startingRoom = Instantiate(startingRoom, Vector3.zero, Quaternion.identity);
         spawnedRooms.Add(_startingRoom);
         int tries = 0;
@@ -126,6 +128,6 @@ public class FloorGenerator : MonoBehaviour
         roomManager.SetActiveRoom(_startingRoom.GetComponent<Room>());
         _startingRoom.GetComponent<Room>().SeeRoom();
 
-        floorManager.OnFloorGeneratorEnd(_startingRoom.transform);
+        floorManager.OnFloorGeneratorEnd(_startingRoom.GetComponent<Room>().GetSpawnPointPosition());
     }
 }

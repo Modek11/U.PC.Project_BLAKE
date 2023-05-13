@@ -26,7 +26,7 @@ public class Room : MonoBehaviour
     [SerializeField]
     private List<EnemySpawner> spawners = new List<EnemySpawner>();
     [SerializeField]
-    private List<GameObject> spawnedEnemies;
+    private List<GameObject> spawnedEnemies = new List<GameObject>();
     [SerializeField]
     private bool isInitialized = false;
     [SerializeField]
@@ -187,6 +187,7 @@ public class Room : MonoBehaviour
         {
             enemy.GetComponent<EnemyAIManager>().SwitchCurrentState(enemy.GetComponent<EnemyAIManager>().PatrolState);
         }
+        ResetEnemies();
         Invoke("ResetEnemies", 0.5f);
     }
 
@@ -227,6 +228,11 @@ public class Room : MonoBehaviour
                     spawnedEnemies.RemoveAt(i);
                 }
             }
+        }
+
+        if(!isBeaten && roomManager.GetActiveRoom() == this && !IsPlayerInside() && spawnedEnemies.Count > 0)
+        {
+            ResetRoom();
         }
     }
 
