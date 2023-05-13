@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda587f63642855459c33caf66f6478d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenShooting: 1.5
+  timeBetweenShooting: 1.05
   spread: 25
   shotsPerTap: 1
   bulletsPerShot: 5
