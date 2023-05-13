@@ -161,7 +161,8 @@ public class Room : MonoBehaviour
             {
                 roomConnector.CloseDoor();
             }
-        } else if (isBeaten && player != null)
+        }
+        if (isBeaten && player != null)
         {
             player.GetComponent<BlakeCharacter>().SetRespawnPosition(GetSpawnPointPosition());
         }
@@ -187,7 +188,6 @@ public class Room : MonoBehaviour
         {
             enemy.GetComponent<EnemyAIManager>().SwitchCurrentState(enemy.GetComponent<EnemyAIManager>().PatrolState);
         }
-        ResetEnemies();
         Invoke("ResetEnemies", 0.5f);
     }
 
@@ -230,9 +230,12 @@ public class Room : MonoBehaviour
             }
         }
 
-        if(!isBeaten && roomManager.GetActiveRoom() == this && !IsPlayerInside() && spawnedEnemies.Count > 0)
+        if (roomManager != null)
         {
-            ResetRoom();
+            if (!isBeaten && roomManager.GetActiveRoom() == this && (!IsPlayerInside() && !IsPlayerInsideFog()) && spawnedEnemies.Count > 0)
+            {
+                ResetRoom();
+            }
         }
     }
 

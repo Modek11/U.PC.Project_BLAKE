@@ -19,8 +19,8 @@ public class RoomTrigger : MonoBehaviour
         if (roomManager == null) roomManager = parent.GetRoomManager();
         if (other.CompareTag("Player"))
         {
-            parent.EnterRoom();
             parent.SetPlayer(other.gameObject);
+            parent.EnterRoom();
             playerInside = true;
         }
     }

@@ -18,6 +18,7 @@ public class EnemyPatrolState : EnemyBaseState
 
     public override void EnterState()
     {
+        navMeshAgent.SetDestination(aiManager.transform.position);
         navMeshAgent.speed = _walkSpeed;
         Debug.Log("Entering Patrol");
     }
