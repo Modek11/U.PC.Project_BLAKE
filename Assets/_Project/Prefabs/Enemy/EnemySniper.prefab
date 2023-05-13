@@ -12,6 +12,11 @@ PrefabInstance:
       propertyPath: timeBetweenShooting
       value: 1.6
       objectReference: {fileID: 0}
+    - target: {fileID: 2312739331461147798, guid: 419325c1d82cb204cb136d7467339420,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8623244368148286621, guid: 419325c1d82cb204cb136d7467339420,
         type: 3}
       propertyPath: BulletPrefab
