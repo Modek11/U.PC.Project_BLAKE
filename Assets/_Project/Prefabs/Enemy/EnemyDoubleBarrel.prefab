@@ -173,6 +173,11 @@ PrefabInstance:
       propertyPath: timeBetweenShooting
       value: 1.85
       objectReference: {fileID: 0}
+    - target: {fileID: 6519776831135678729, guid: d59ad31d5e825164385713c41e42f342,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d59ad31d5e825164385713c41e42f342, type: 3}
 --- !u!1 &3743808909478535148 stripped
