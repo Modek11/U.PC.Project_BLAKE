@@ -52,8 +52,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Intensity: 10
-    - _PulseTime: 5
+    - _Intensity: 3
+    - _PulseTime: 20
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors: []
