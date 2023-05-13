@@ -1,9 +1,12 @@
+using Unity.Mathematics;
 using UnityEngine; 
 
 public class BlakeCharacter : MonoBehaviour, IDamageable
 {
     [SerializeField] private int health = 1;
     [SerializeField] private bool isPlayer;
+    [SerializeField] private GameObject explosionParticle;
+    private GameObject explosionParticleInstantiated;
     protected bool isDead = false;
     protected Vector3 respawnPos;
     public int Health 
@@ -34,16 +37,22 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
     {
         if (isDead) return;
         isDead = true;
-        animator.SetBool("IsAlive", false);
-
+        if(!isPlayer) //only for DD we should only animate enemies
+            animator.SetBool("IsAlive", false);
+        
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        GetComponent<CapsuleCollider>().enabled = false;
         onDeath?.Invoke();
 
-        if (!isPlayer) Invoke("DestroySelf", 5f);
-
-        if(isPlayer)
+        if (isPlayer)
         {
-            Invoke("Respawn", 5f);
+            explosionParticleInstantiated = Instantiate(explosionParticle,transform.position,quaternion.identity);//DD
+            gameObject.SetActive(false); //DD
+            Invoke("Respawn", 2f);
+        }
+        else
+        {
+            Invoke("DestroySelf", 2f);
         }
     }
 
@@ -84,10 +93,13 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
     {
         onRespawn?.Invoke();
         isDead = false;
-        animator.SetBool("IsAlive", true);
+        //animator.SetBool("IsAlive", true); //only for DD we should only animate enemies
+        Destroy(explosionParticleInstantiated);
         transform.position = respawnPos;
+        gameObject.SetActive(true);
         GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionX;
         GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionZ;
+        GetComponent<CapsuleCollider>().enabled = true;
         health = 1;
     }
 }
