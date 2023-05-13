@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda587f63642855459c33caf66f6478d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenShooting: 0.9
+  timeBetweenShooting: 0.65
   spread: 0
   shotsPerTap: 1
   bulletsPerShot: 1
