@@ -3137,10 +3137,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.75
+  m_Radius: 0.49877307
   m_Height: 3.5
   m_Direction: 1
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Center: {x: -0.000030308962, y: 2, z: 0}
 --- !u!114 &5545414051132038897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3153,7 +3153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2159499b039ad94b9fbf234fd33ea24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 15
+  playerSpeed: 12
   dashForce: 2
   dashCooldown: 1.5
   dashDuration: 0.25
