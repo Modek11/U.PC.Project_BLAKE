@@ -13,15 +13,21 @@ public class PlayerGameplayUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI roomsCounter;
     [SerializeField] private TextMeshProUGUI healthLeft;
     [SerializeField] private GameObject interactUI;
+    [SerializeField] private GameObject mapUI;
 
+    private PlayerInputController playerInputController;
     private GameObject player;
     private WeaponsManager _weaponsManager;
     private PlayerInteractables playerInteractables;
     private BlakeCharacter blakeCharacter;
+
+    private bool isMapShown = false;
     
     private void Start()
     {
         _floorManager.FloorGeneratorEnd += FloorManagerOnFloorGeneratorEnd;
+        playerInputController = GetComponent<PlayerInputController>();
+        playerInputController.mapEvent += PlayerInputControllerOnmapEvent;
     }
 
     private void FloorManagerOnFloorGeneratorEnd(Transform playerTransform, Transform cameraFollowTransform)
@@ -41,6 +47,12 @@ public class PlayerGameplayUIManager : MonoBehaviour
         playerInteractables = player.GetComponent<PlayerInteractables>();
         blakeCharacter = player.GetComponent<BlakeCharacter>();
         playerInteractables.SetInteractUIReference(interactUI);
+    }
+    
+    private void PlayerInputControllerOnmapEvent()
+    {
+        isMapShown = !isMapShown;
+        mapUI.SetActive(isMapShown);
     }
 
     private void Update()
