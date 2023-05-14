@@ -6,7 +6,7 @@ public class SceneHandler : MonoBehaviour
 {
     private const string mainMenu = "MainMenu";
     private const string loadingScene = "LoadingScene";
-    private const string build1005 = "Build1005";
+    private const string build1505 = "Build1505";
     public static SceneHandler Instance { get; private set; }
 
     [HideInInspector] public float loadingProgress;
@@ -30,7 +30,7 @@ public class SceneHandler : MonoBehaviour
     }
     public void StartNewGame()
     {
-        StartCoroutine(LoadNewSceneAdditive(build1005));
+        StartCoroutine(LoadNewSceneAdditive(build1505));
     }
 
     public void LoadGame()
