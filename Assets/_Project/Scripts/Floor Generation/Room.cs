@@ -189,7 +189,16 @@ public class Room : MonoBehaviour
         }
         minimapRoom.ForgetRoom();
 
-        foreach(GameObject enemy in spawnedEnemies)
+        foreach(RoomTrigger rt in triggers)
+        {
+            rt.Reset();
+        }
+
+        foreach (RoomOverlapTrigger rt in fogTriggers)
+        {
+            rt.Reset();
+        }
+        foreach (GameObject enemy in spawnedEnemies)
         {
             enemy.GetComponent<EnemyAIManager>().SwitchCurrentState(enemy.GetComponent<EnemyAIManager>().PatrolState);
         }

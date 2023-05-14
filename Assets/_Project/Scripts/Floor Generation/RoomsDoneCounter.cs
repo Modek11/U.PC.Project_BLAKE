@@ -13,7 +13,7 @@ public class RoomsDoneCounter : MonoBehaviour
 
     private void Start()
     {
-        RoomsInitialized = floorGenerator.GetIntRoomsInitialized() - 1;
+        RoomsInitialized = floorGenerator.GetIntRoomsInitialized();
     }
 
     public void AddBeatenRoom()
