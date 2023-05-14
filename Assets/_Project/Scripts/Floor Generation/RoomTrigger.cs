@@ -27,18 +27,6 @@ public class RoomTrigger : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-
-        if (other.CompareTag("Player"))
-        {
-            if (roomManager.GetActiveRoom() != this)
-            {
-                parent.ExitRoom();
-            }
-            if (roomManager.GetActiveRoom() == null)
-            {
-                parent.EnterRoom();
-            }
-        }
     }
 
     private void OnTriggerExit(Collider other)
