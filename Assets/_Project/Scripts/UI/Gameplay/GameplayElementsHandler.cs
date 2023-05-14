@@ -11,6 +11,11 @@ public class GameplayElementsHandler : MonoBehaviour
     {
         SceneHandler.Instance.StartNewGame();
     }
+
+    public void ClosePausedGameCanvas()
+    {
+        GameHandler.Instance.ClosePausedGameCanvas();
+    }
     
     
 }

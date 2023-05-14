@@ -3,8 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInputController))]
 public class PausedGameController : MonoBehaviour
 {
-    [SerializeField] private GameObject pausedGameCanvas;
-    
     private PlayerInputController _playerInputController;
     private bool _gamePaused = false;
     
@@ -25,12 +23,12 @@ public class PausedGameController : MonoBehaviour
         
         if (_gamePaused)
         {
-            pausedGameCanvas.SetActive(true);
+            GameHandler.Instance.PlayerPause();
             Time.timeScale = 0f;
         }
         else
         {
-            pausedGameCanvas.SetActive(false);
+            GameHandler.Instance.ClosePausedGameCanvas();
             Time.timeScale = 1f;
         }
     }
