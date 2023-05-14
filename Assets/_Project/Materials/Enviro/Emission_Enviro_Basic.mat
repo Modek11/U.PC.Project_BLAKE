@@ -52,11 +52,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Intensity: 20
-    - _PulseTime: 5
+    - _Intensity: 3
+    - _PulseTime: 10
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Synchronized: 0
     m_Colors:
-    - _LightRange: {r: 0.8, g: 1, b: 0, a: 0}
+    - _LightRange: {r: 0, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
