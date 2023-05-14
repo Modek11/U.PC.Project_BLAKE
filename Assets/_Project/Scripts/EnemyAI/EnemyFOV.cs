@@ -23,7 +23,7 @@ public class EnemyFOV : MonoBehaviour
         playerRef = GameObject.FindGameObjectWithTag("Player");
     }
 
-    private void Start()
+    private void OnEnable()
     {
         StartCoroutine(FOVRoutine());
     }
@@ -41,7 +41,7 @@ public class EnemyFOV : MonoBehaviour
             {
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
-                if (!Physics.Raycast(transform.position + new Vector3(0, 1.5f, 0), directionToTarget, distanceToTarget, obstacleMask))
+                if (!Physics.Raycast(transform.position + new Vector3(0, 3f, 0), directionToTarget, distanceToTarget, obstacleMask))
                     canSeePlayer = true;
                 else
                     canSeePlayer = false;
