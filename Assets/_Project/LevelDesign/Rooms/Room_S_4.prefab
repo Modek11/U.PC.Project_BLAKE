@@ -373,7 +373,7 @@ MonoBehaviour:
   overlapColliders:
   - {fileID: 6793073233717809516}
   spawners:
-  - EnemySpawnPoint: {fileID: 8046066608486955490}
+  - EnemySpawnPoint: {fileID: 7806573364780892508}
     EnemyToSpawn: {fileID: 7463283202204918306, guid: 72e3d36c4afa3ae4394d61f6431778e6,
       type: 3}
     EnemyWaypoints: {fileID: 4882349816251614834}
@@ -381,7 +381,7 @@ MonoBehaviour:
     EnemyToSpawn: {fileID: 6307588684404596222, guid: c39a1e88f2046a14fbbf3ea135e436dc,
       type: 3}
     EnemyWaypoints: {fileID: 5628850938457098634}
-  - EnemySpawnPoint: {fileID: 1247978979838981435}
+  - EnemySpawnPoint: {fileID: 5870296486199792053}
     EnemyToSpawn: {fileID: 3549530385972934099, guid: 9a46dccb19d071643821c8a77a9735d5,
       type: 3}
     EnemyWaypoints: {fileID: 4910271182619048197}
@@ -644,7 +644,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 285778419830590236}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.86, y: 4.155, z: -6.34}
+  m_LocalPosition: {x: -19.86, y: 4.108, z: -6.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -904,7 +904,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2293938810715103344}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.89, y: 4.144, z: 18.036999}
+  m_LocalPosition: {x: -4.89, y: 4.102, z: 18.036999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1099,7 +1099,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2795325887995347238}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.86, y: 4.14, z: -18.157}
+  m_LocalPosition: {x: -19.86, y: 4.088, z: -18.157}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1857,7 +1857,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5122332894178709085}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.89, y: 4.143, z: 6.22}
+  m_LocalPosition: {x: -4.89, y: 4.119, z: 6.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2299,7 +2299,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6283170312097624464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.86, y: 4.2, z: 5.86}
+  m_LocalPosition: {x: -19.86, y: 4.105, z: 5.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2587,7 +2587,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7021997167741505527}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.86, y: 4.102, z: 17.677}
+  m_LocalPosition: {x: -19.86, y: 4.066, z: 17.677}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2787,8 +2787,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints:
-  - {fileID: 8046066608486955490}
   - {fileID: 7806573364780892508}
+  - {fileID: 8046066608486955490}
 --- !u!1 &7300305340291089564
 GameObject:
   m_ObjectHideFlags: 0
@@ -3390,8 +3390,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints:
-  - {fileID: 1247978979838981435}
   - {fileID: 5870296486199792053}
+  - {fileID: 1247978979838981435}
 --- !u!1001 &12574551847654192
 PrefabInstance:
   m_ObjectHideFlags: 0
