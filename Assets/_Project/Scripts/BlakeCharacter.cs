@@ -7,6 +7,8 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
     [SerializeField] private bool isPlayer;
     [SerializeField] private GameObject explosionParticle;
     private GameObject explosionParticleInstantiated;
+    private int defaultHealth;
+    private float onDamageTakenCounter;
     protected bool isDead = false;
     protected Vector3 respawnPos;
     public int Health 
@@ -32,6 +34,21 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
     public event OnDeath onDeath;
     public delegate void OnRespawn();
     public event OnRespawn onRespawn;
+
+    private void Awake()
+    {
+        if (!isPlayer) return;
+        defaultHealth = SceneHandler.Instance.isNormalDifficulty ? 3 : 1;
+        health = defaultHealth;
+    }
+
+    private void Update()
+    {
+        if (onDamageTakenCounter > 0)
+        {
+            onDamageTakenCounter -= Time.deltaTime;
+        }
+    }
 
     public virtual void Die()
     {
@@ -63,10 +80,12 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
 
     public virtual void TakeDamage(GameObject instigator, int damage)
     {
+        if (onDamageTakenCounter > 0) return;
         if (health < 1) { return; }
 
         Debug.Log(instigator.name + " took " + damage + " damage to " + name);
         Health -= damage;
+        onDamageTakenCounter = .5f;
     }
 
     public virtual bool CanTakeDamage(GameObject instigator)
@@ -100,6 +119,6 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
         GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionX;
         GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionZ;
         GetComponent<CapsuleCollider>().enabled = true;
-        health = 1;
+        health = defaultHealth;
     }
 }
