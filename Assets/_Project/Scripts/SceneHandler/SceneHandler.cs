@@ -15,6 +15,7 @@ public class SceneHandler : MonoBehaviour
 
     [HideInInspector] public float roomsGenerated = 0;
     [HideInInspector] public float roomsToGenerate = 0;
+    [HideInInspector] public bool isNormalDifficulty = true; //only for DD purposes
     
     private void Awake() 
     { 

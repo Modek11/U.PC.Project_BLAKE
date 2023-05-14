@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class MenuElementsHandler : MonoBehaviour
@@ -11,12 +10,15 @@ public class MenuElementsHandler : MonoBehaviour
     public void NewGameNormalDifficulty()
     {
         SceneHandler.Instance.StartNewGame();
+        SceneHandler.Instance.isNormalDifficulty = true;
         //Debug.LogWarning("New Game Normal Difficulty has no implementation!");
     }
     
     public void NewGameHardDifficulty()
     {
-        Debug.LogWarning("New Game Hard Difficulty has no implementation!");
+        SceneHandler.Instance.StartNewGame();
+        SceneHandler.Instance.isNormalDifficulty = false;
+        //Debug.LogWarning("New Game Hard Difficulty has no implementation!");
     }
     
     

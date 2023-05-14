@@ -11,11 +11,13 @@ public class PlayerGameplayUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI weaponName;
     [SerializeField] private TextMeshProUGUI bulletsLeft;
     [SerializeField] private TextMeshProUGUI roomsCounter;
+    [SerializeField] private TextMeshProUGUI healthLeft;
     [SerializeField] private GameObject interactUI;
 
     private GameObject player;
     private WeaponsManager _weaponsManager;
     private PlayerInteractables playerInteractables;
+    private BlakeCharacter blakeCharacter;
     
     private void Start()
     {
@@ -37,12 +39,16 @@ public class PlayerGameplayUIManager : MonoBehaviour
         minimapCamera.SetPlayer(playerTransform);
         
         playerInteractables = player.GetComponent<PlayerInteractables>();
+        blakeCharacter = player.GetComponent<BlakeCharacter>();
         playerInteractables.SetInteractUIReference(interactUI);
     }
 
     private void Update()
     {
+        if (blakeCharacter is null) return;
+        //Create events which updates those values only when they're changed 
         RoomsCounterUI();
+        HealthLeftUI();
     }
 
     private void RefreshUI()
@@ -72,6 +78,11 @@ public class PlayerGameplayUIManager : MonoBehaviour
     private void RoomsCounterUI()
     {
         roomsCounter.text = $"Rooms Beaten : {roomsDoneCounter.RoomsBeaten}/{roomsDoneCounter.RoomsInitialized}";
+    }
+
+    private void HealthLeftUI()
+    {
+        healthLeft.text = blakeCharacter.Health.ToString();
     }
     
 }
