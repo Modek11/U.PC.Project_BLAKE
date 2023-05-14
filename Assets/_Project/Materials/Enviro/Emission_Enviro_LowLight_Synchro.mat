@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Emission_Enviro_Light_Shade
+  m_Name: Emission_Enviro_LowLight_Synchro
   m_Shader: {fileID: -6465566751694194690, guid: a5672abf5697e8141830e38f3a89625c,
     type: 3}
   m_ValidKeywords: []
@@ -52,11 +52,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Intensity: 20
+    - _Intensity: 1
     - _PulseTime: 5
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Synchronized: 0
+    - _Synchronized: 1
     m_Colors:
-    - _LightRange: {r: 0.8, g: 1, b: 0, a: 0}
+    - _LightRange: {r: 0.4, g: 0.5, b: 0, a: 0}
   m_BuildTextureStacks: []
