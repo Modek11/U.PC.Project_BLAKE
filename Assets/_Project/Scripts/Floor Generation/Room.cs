@@ -92,11 +92,16 @@ public class Room : MonoBehaviour
 
         if (spawnedEnemies.Count == 0)
         {
-            isBeaten = true;
-
+            BeatLevel();
         }
         isInitialized = true;
 
+    }
+
+    public void BeatLevel()
+    {
+        roomsDoneCounter.AddBeatenRoom();
+        isBeaten = true;
     }
 
 
@@ -206,8 +211,7 @@ public class Room : MonoBehaviour
         {
             if(spawnedEnemies.Count == 0)
             {
-                isBeaten = true;
-                roomsDoneCounter.AddBeatenRoom();
+                BeatLevel();
                 foreach (RoomConnector roomConnector in doors)
                 {
                     roomConnector.OpenDoor();
