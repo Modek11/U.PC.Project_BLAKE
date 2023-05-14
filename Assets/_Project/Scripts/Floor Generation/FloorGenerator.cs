@@ -22,6 +22,7 @@ public class FloorGenerator : MonoBehaviour
     private FloorManager floorManager;
 
     private List<GameObject> spawnedRooms = new List<GameObject>();
+    private GameObject map;
     
     public int GetIntRoomsInitialized()
     {
@@ -38,6 +39,11 @@ public class FloorGenerator : MonoBehaviour
         
         floorManager = GetComponent<FloorManager>();
         roomManager = GetComponent<RoomManager>();
+
+        //Creating empty objects for easier search
+        map = new GameObject("Map");
+        GameObject triggersObject = new GameObject("Triggers");
+
         seed = (seed == 0) ? Random.Range(int.MinValue, int.MaxValue) : seed;
         Random.InitState(seed);
         Debug.Log("Using seed: " + seed);
@@ -46,7 +52,7 @@ public class FloorGenerator : MonoBehaviour
         int tries = 0;
         while (roomCounter < maxRooms)
         {
-            if (tries >= 10)
+            if (tries >= 50)
             {
                 Debug.LogWarning("Broken generation due to too many tries");
                 break;
@@ -76,7 +82,7 @@ public class FloorGenerator : MonoBehaviour
                 foreach (BoxCollider box in roomColliders)
                 {
                     if (overlap) break;
-                    Collider[] colliders = Physics.OverlapBox(newRoom.transform.position + box.center, box.size / 2 + new Vector3(-0.05f, -0.05f, -0.05f), newRoom.transform.rotation, layerMask, QueryTriggerInteraction.Collide);
+                    Collider[] colliders = Physics.OverlapBox(newRoom.transform.TransformPoint(box.center), box.size / 2, newRoom.transform.rotation, layerMask, QueryTriggerInteraction.Collide);
 
                     foreach (Collider cols in colliders)
                     {
@@ -95,6 +101,7 @@ public class FloorGenerator : MonoBehaviour
                     door.SetConnector(newDoor);
                     newDoor.SetConnector(door);
                     toAdd.Add(newRoom);
+                    newRoom.transform.parent = map.transform;
                     roomCounter++;
 
                     if (SceneHandler.Instance != null)
@@ -119,6 +126,11 @@ public class FloorGenerator : MonoBehaviour
         {
             Room roomScript = room.GetComponent<Room>();
             roomScript.InitializeRoom(roomManager);
+            RoomTrigger[] triggers = room.GetComponentsInChildren<RoomTrigger>();
+            foreach(RoomTrigger trigger in triggers)
+            {
+                trigger.transform.parent = triggersObject.transform;
+            }
             if(room != _startingRoom) room.SetActive(false);
         }
         foreach(Room room in startingRoom.GetComponent<Room>().GetNeigbours())
@@ -129,5 +141,10 @@ public class FloorGenerator : MonoBehaviour
         _startingRoom.GetComponent<Room>().SeeRoom();
 
         floorManager.OnFloorGeneratorEnd(_startingRoom.GetComponent<Room>().GetSpawnPointPosition());
+    }
+
+    public GameObject GetMapObject()
+    {
+        return map;
     }
 }

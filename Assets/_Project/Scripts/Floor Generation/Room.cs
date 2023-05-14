@@ -92,11 +92,16 @@ public class Room : MonoBehaviour
 
         if (spawnedEnemies.Count == 0)
         {
-            isBeaten = true;
-
+            BeatLevel();
         }
         isInitialized = true;
 
+    }
+
+    public void BeatLevel()
+    {
+        roomsDoneCounter.AddBeatenRoom();
+        isBeaten = true;
     }
 
 
@@ -127,7 +132,7 @@ public class Room : MonoBehaviour
         if (IsPlayerInside()) return;
         minimapRoom.VisitRoom();
         Room activeRoom = roomManager.GetActiveRoom();
-        if (activeRoom != null)
+        if (activeRoom != null && activeRoom != this)
         {
             List<Room> roomsToDisable = activeRoom.GetNeigbours();
             if (roomsToDisable.Contains(this)) roomsToDisable.Remove(this);
@@ -206,8 +211,7 @@ public class Room : MonoBehaviour
         {
             if(spawnedEnemies.Count == 0)
             {
-                isBeaten = true;
-                roomsDoneCounter.AddBeatenRoom();
+                BeatLevel();
                 foreach (RoomConnector roomConnector in doors)
                 {
                     roomConnector.OpenDoor();
@@ -242,11 +246,11 @@ public class Room : MonoBehaviour
     public void ExitRoom()
     {
         if (IsPlayerInside()) return;
-        if(roomManager.GetActiveRoom() == this)
+        /*if(roomManager.GetActiveRoom() == this)
         {
             roomManager.SetActiveRoom(null);
 
-        }
+        }*/
         
     }
 
