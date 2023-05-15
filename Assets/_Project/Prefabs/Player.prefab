@@ -3140,7 +3140,7 @@ CapsuleCollider:
   m_Radius: 0.49877307
   m_Height: 3.5
   m_Direction: 1
-  m_Center: {x: -0.000030308962, y: 2, z: 0}
+  m_Center: {x: -0.000030308962, y: 2.3, z: 0}
 --- !u!114 &5545414051132038897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3357,7 +3357,7 @@ PrefabInstance:
     - target: {fileID: 5504133953575378245, guid: 9de12f8bc2362b74191b6672821fccaa,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.31
       objectReference: {fileID: 0}
     - target: {fileID: 5504133953575378245, guid: 9de12f8bc2362b74191b6672821fccaa,
         type: 3}

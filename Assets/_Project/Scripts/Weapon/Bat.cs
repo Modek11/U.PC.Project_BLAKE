@@ -10,6 +10,7 @@ public class Bat : MonoBehaviour, IWeapon
     [SerializeField] private float attackSpeed;
 
     private PlayableDirector playableDirector;
+    private AudioSource _audioSource;
 
     private void OnDisable()
     {
@@ -20,6 +21,7 @@ public class Bat : MonoBehaviour, IWeapon
     private void Awake()
     {
         playableDirector = GetComponent<PlayableDirector>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public bool PrimaryAttack()
@@ -27,6 +29,7 @@ public class Bat : MonoBehaviour, IWeapon
         if (playableDirector.state == PlayState.Playing) return false;
 
         playableDirector.Play();
+        _audioSource.Play();
         Invoke("MakeRaycast", 0.27f); // XD  
         return true;
     }
