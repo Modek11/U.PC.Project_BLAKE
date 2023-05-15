@@ -89,11 +89,6 @@ public class Room : MonoBehaviour
         {
             roomConnector.OpenDoor();
         }
-
-        if (spawnedEnemies.Count == 0)
-        {
-            BeatLevel();
-        }
         isInitialized = true;
 
     }
@@ -160,11 +155,20 @@ public class Room : MonoBehaviour
             enemy.GetComponent<EnemyFOV>().FindPlayer();
         }
 
-        if(!isBeaten)
+        
+
+        if (!isBeaten)
         {
-            foreach(RoomConnector roomConnector in doors)
+            if (spawnedEnemies.Count == 0)
             {
-                roomConnector.CloseDoor();
+                BeatLevel();
+            }
+            else
+            {
+                foreach (RoomConnector roomConnector in doors)
+                {
+                    roomConnector.CloseDoor();
+                }
             }
         }
         if (isBeaten && player != null)
