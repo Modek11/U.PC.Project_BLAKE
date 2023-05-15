@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 //using UnityEditor.EditorTools;
 using UnityEngine;
 
@@ -31,9 +32,9 @@ public class RoomTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        playerInside = false;
         if (other.CompareTag("Player"))
         {
+            playerInside = false;
             parent.ExitRoom();
         }
     }
@@ -41,5 +42,10 @@ public class RoomTrigger : MonoBehaviour
     public bool IsPlayerInside()
     {
         return playerInside;
+    }
+
+    public void Reset()
+    {
+        playerInside = false;
     }
 }

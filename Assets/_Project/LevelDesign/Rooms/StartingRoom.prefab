@@ -289,6 +289,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartingRoom
       objectReference: {fileID: 0}
+    - target: {fileID: 2261534694031701190, guid: 0e862de4eaf97ea4f84b687cb0a2d908,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764802847613795203, guid: 0e862de4eaf97ea4f84b687cb0a2d908,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4969279834100107180, guid: 0e862de4eaf97ea4f84b687cb0a2d908,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992307915693193790, guid: 0e862de4eaf97ea4f84b687cb0a2d908,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8020210768947020082, guid: 0e862de4eaf97ea4f84b687cb0a2d908,
+        type: 3}
+      propertyPath: spawners.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e862de4eaf97ea4f84b687cb0a2d908, type: 3}
 --- !u!4 &5737354855109563076 stripped

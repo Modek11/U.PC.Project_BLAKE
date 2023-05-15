@@ -35,4 +35,11 @@ public class RoomOverlapTrigger : MonoBehaviour
     {
         return playerInside;
     }
+
+    public void Reset()
+    {
+        playerInside = false;
+        parent.EnableFog();
+
+    }
 }

@@ -325,7 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineColor: {r: 0.36862746, g: 0.36862746, b: 0.36862746, a: 0.3882353}
   outlineWidth: 2.5
   precomputeOutline: 0
   bakeKeys: []
@@ -2777,6 +2777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1
   isPlayer: 0
+  explosionParticle: {fileID: 0}
   animator: {fileID: 4250661716291628411}
   weaponPickup: {fileID: 2250193661021338515, guid: 533ffb6a79d6ba94ca899689f9df94f3,
     type: 3}
