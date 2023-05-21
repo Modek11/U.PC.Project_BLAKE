@@ -1,7 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine; 
 
-public class BlakeCharacter : MonoBehaviour, IDamageable
+public abstract class BlakeCharacter : MonoBehaviour, IDamageable
 {
     [SerializeField] protected int health = 1;
     public int Health
