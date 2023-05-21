@@ -3,44 +3,33 @@ using UnityEngine;
 
 public class BlakeCharacter : MonoBehaviour, IDamageable
 {
-    [SerializeField] private int health = 1;
-    [SerializeField] private bool isPlayer;
-    [SerializeField] private GameObject explosionParticle;
-    private GameObject explosionParticleInstantiated;
-    private int defaultHealth;
-    private float onDamageTakenCounter;
-    protected bool isDead = false;
-    protected Vector3 respawnPos;
-    public int Health 
-    { 
-        get
-        {
-            return health;
-        }
-
+    [SerializeField] protected int health = 1;
+    public int Health
+    {
+        get => health;
         set
         {
             health = value;
-            if (health < 1)
+            if (health < 1 && !isDead)
             {
                 Die();
             }
         }
     }
 
-    [SerializeField] private Animator animator;
+    [SerializeField] protected GameObject explosionParticle;
+    [SerializeField] protected Animator animator;
+
+    protected GameObject explosionParticleInstantiated;
+    protected int defaultHealth;
+    protected float onDamageTakenCounter;
+    protected bool isDead = false;
+    protected Vector3 respawnPos;
 
     public delegate void OnDeath();
     public event OnDeath onDeath;
     public delegate void OnRespawn();
     public event OnRespawn onRespawn;
-
-    private void Awake()
-    {
-        if (!isPlayer) return;
-        defaultHealth = SceneHandler.Instance.isNormalDifficulty ? 3 : 1;
-        health = defaultHealth;
-    }
 
     private void Update()
     {
@@ -52,25 +41,11 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
 
     public virtual void Die()
     {
-        if (isDead) return;
         isDead = true;
-        if(!isPlayer) //only for DD we should only animate enemies
-            animator.SetBool("IsAlive", false);
         
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         GetComponent<CapsuleCollider>().enabled = false;
         onDeath?.Invoke();
-
-        if (isPlayer)
-        {
-            explosionParticleInstantiated = Instantiate(explosionParticle,transform.position,quaternion.identity);//DD
-            gameObject.SetActive(false); //DD
-            Invoke("Respawn", 2f);
-        }
-        else
-        {
-            Invoke("DestroySelf", 2f);
-        }
     }
 
     protected virtual void DestroySelf()
@@ -93,7 +68,7 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
         BlakeCharacter other = instigator.GetComponent<BlakeCharacter>();
         if(other != null)
         {
-            return isPlayer != other.isPlayer;
+            return GetType() != other.GetType();
         }
 
         return true;
@@ -103,12 +78,13 @@ public class BlakeCharacter : MonoBehaviour, IDamageable
     {
         respawnPos = position;
     }
+
     public Vector3 GetRespawnPosition()
     {
         return respawnPos;
     }
 
-    private void Respawn()
+    protected void Respawn()
     {
         onRespawn?.Invoke();
         isDead = false;

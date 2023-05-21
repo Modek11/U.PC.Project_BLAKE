@@ -10,6 +10,15 @@ public class EnemyCharacter : BlakeCharacter
     {
         ai = GetComponent<EnemyAIManager>();
     }
+
+    public override void Die()
+    {
+        animator.SetBool("IsAlive", false);
+        Invoke("DestroySelf", 2f);
+
+        base.Die();
+    }
+
     protected override void DestroySelf()
     {
         base.DestroySelf();
