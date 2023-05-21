@@ -42,7 +42,7 @@ public class WeaponPickup : Interactable
         IWeapon oldWeapon = weaponsManager.GetIWeapon(index);
         if (oldWeapon != null)
         {
-            bulletsLeft = oldWeapon.GetGameObject().GetComponent<Weapon>().BulletsLeft;
+            bulletsLeft = oldWeapon.GetWeapon().GetComponent<Weapon>().BulletsLeft;
         }
 
         if (weaponsManager.ChangeItem(weaponToPickup, index))

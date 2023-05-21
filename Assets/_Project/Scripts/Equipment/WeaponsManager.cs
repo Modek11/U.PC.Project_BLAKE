@@ -26,7 +26,7 @@ public class WeaponsManager : MonoBehaviour
             }
             else if (weaponItems[2].Item2 != null)
             {
-                Destroy(weaponItems[2].Item2.GetGameObject()); 
+                Destroy(weaponItems[2].Item2.GetWeapon()); 
             }
             weaponItems[2] = (null, null);
         }
@@ -69,7 +69,7 @@ public class WeaponsManager : MonoBehaviour
 
         if (IsWeaponValid(index))
         {
-            Destroy(weaponItems[index].Item2.GetGameObject());
+            Destroy(weaponItems[index].Item2.GetWeapon());
             weaponItems[index].Item2 = null;
         }
 
@@ -93,6 +93,20 @@ public class WeaponsManager : MonoBehaviour
         }
         
         changeWeaponEvent?.Invoke();
+    }
+
+    public void DestroyWeapon(int index)
+    {
+        if (index < 0 || index > capacity - 1) return;
+
+        if (IsWeaponValid(index))
+        {
+            Destroy(weaponItems[index].Item2.GetWeapon());
+            weaponItems[index].Item2 = null;
+            weaponItems[index].Item1 = null;
+
+            Equip(0);
+        }
     }
 
     public void ShootWeapon()
@@ -141,6 +155,11 @@ public class WeaponsManager : MonoBehaviour
         var weapon = Instantiate(weaponItems[activeWeaponIndex].Item1.weaponPrefab, spawnLocation, spawnRotation, transform);
         weapon.transform.localScale = weaponItems[activeWeaponIndex].Item1.scale;
 
+        if(weapon.TryGetComponent(out Weapon weaponComp))
+        {
+            weaponComp.SetOwner(gameObject);
+        }
+
         weaponItems[activeWeaponIndex].Item2 = weapon.GetComponent<IWeapon>();
     }
 
@@ -148,7 +167,7 @@ public class WeaponsManager : MonoBehaviour
     {
         if (IsWeaponValid(activeWeaponIndex))
         {
-            weaponItems[activeWeaponIndex].Item2.GetGameObject().SetActive(newActive);
+            weaponItems[activeWeaponIndex].Item2.GetWeapon().SetActive(newActive);
             return true;
         }
         return false;

@@ -82,7 +82,7 @@ public class PlayerGameplayUIManager : MonoBehaviour
         }
         else
         {
-            Weapon weapon = _weaponsManager.GetIWeapon(_weaponsManager.ActiveWeaponIndex).GetGameObject().GetComponent<Weapon>();
+            Weapon weapon = _weaponsManager.GetIWeapon(_weaponsManager.ActiveWeaponIndex).GetWeapon().GetComponent<Weapon>();
             bulletsLeft.text = weapon.BulletsLeft.ToString();
         }
     }

@@ -5,14 +5,34 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(AudioSource))]
 public class Weapon : MonoBehaviour, IWeapon
 {
+    private GameObject owner;
+
     //TODO: Implement range
     public float Range;
     private int MagazineSize;
     public bool infinityAmmo = false;
     public Transform BulletsSpawnPoint;
     public GameObject BulletPrefab;
+    private bool outOfAmmo = false;
+    private int bulletsLeft = 0;
+    public int BulletsLeft
+    {
+        get => bulletsLeft;
+        set
+        {
+            if (bulletsLeft != value)
+            {
+                bulletsLeft = value;
+
+                if(bulletsLeft <= 0)
+                {
+                    outOfAmmo = true;
+                }
+            }
+        }
+    }
+
     [HideInInspector] public bool isLastShotOver;
-    [HideInInspector] public int BulletsLeft = 10;
     //TODO: Move it outside
     [HideInInspector] public AudioSource As;
     [Header("Attacks")]
@@ -61,6 +81,11 @@ public class Weapon : MonoBehaviour, IWeapon
         isLastShotOver = true;
     }
 
+    public void SetOwner(GameObject inOwner)
+    {
+        owner = inOwner;
+    }
+
     public void SetAmmo(int newAmmo)
     {
         BasicAttack ba = _primaryAttack.Value as BasicAttack;
@@ -75,7 +100,7 @@ public class Weapon : MonoBehaviour, IWeapon
         BulletsLeft = newAmmo;
     }
 
-    public GameObject GetGameObject()
+    public GameObject GetWeapon()
     {
         return gameObject;
     }
@@ -87,7 +112,19 @@ public class Weapon : MonoBehaviour, IWeapon
 
     private bool CanShoot()
     {
-        return (isLastShotOver && BulletsLeft > 0);
+        if(outOfAmmo)
+        {
+            if (owner != null)
+            {
+                if(owner.TryGetComponent(out WeaponsManager weaponsManager))
+                {
+                    weaponsManager.DestroyWeapon(weaponsManager.ActiveWeaponIndex);
+                }
+            }
+            return false;
+        }
+
+        return isLastShotOver;
     }
 
     private void OnValidate()

@@ -50,7 +50,7 @@ public class Bat : MonoBehaviour, IWeapon
         
     }
 
-    public GameObject GetGameObject()
+    public GameObject GetWeapon()
     {
         return gameObject;
     }
