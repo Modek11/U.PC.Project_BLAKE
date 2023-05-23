@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerInputController))]
 public class PlayerGameplayUIManager : MonoBehaviour
@@ -14,12 +15,14 @@ public class PlayerGameplayUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthLeft;
     [SerializeField] private GameObject interactUI;
     [SerializeField] private GameObject mapUI;
+    [SerializeField] private GameObject dashCooldownUI;
 
     private PlayerInputController playerInputController;
     private GameObject player;
     private WeaponsManager _weaponsManager;
     private PlayerInteractables playerInteractables;
     private BlakeCharacter blakeCharacter;
+    private PlayerMovement _playerMovement;
 
     private bool isMapShown = false;
     
@@ -45,8 +48,11 @@ public class PlayerGameplayUIManager : MonoBehaviour
         minimapCamera.SetPlayer(playerTransform);
         
         playerInteractables = player.GetComponent<PlayerInteractables>();
+        _playerMovement = player.GetComponent<PlayerMovement>();
         blakeCharacter = player.GetComponent<BlakeCharacter>();
+
         playerInteractables.SetInteractUIReference(interactUI);
+        _playerMovement.SetDashCooldownUIReference(dashCooldownUI);
     }
     
     private void PlayerInputControllerOnmapEvent()

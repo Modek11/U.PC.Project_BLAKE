@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerInputController))]
 public class PlayerMovement : MonoBehaviour
@@ -24,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     private float _dashCooldownCountdown;
     private float _dashDurationCountdown;
     private bool _dashPerformed;
+    private GameObject _dashCooldownUI;
+    private Image _cooldownImage;
 
     private void Awake()
     {
@@ -140,10 +143,19 @@ public class PlayerMovement : MonoBehaviour
        if (_dashCooldownCountdown > 0)
        {
            _dashCooldownCountdown -= Time.deltaTime;
+           _cooldownImage.fillAmount += Time.deltaTime;
+           _dashCooldownUI.transform.position = _rigidbody.transform.position + Vector3.up * 0.6f;
+           _dashCooldownUI.transform.LookAt(Camera.main.transform);
+       }
+       else
+       {
+           _dashCooldownUI.SetActive(false);
+           _cooldownImage.fillAmount = 0;
        }
 
        if (_dashPerformed)
        {
+           _dashCooldownUI.SetActive(true);
            _dashDurationCountdown = dashDuration;
            _dashCooldownCountdown = dashCooldown;
            _dashPerformed = false;
@@ -153,6 +165,7 @@ public class PlayerMovement : MonoBehaviour
     private void Die()
     {
         _playerInputController.enabled = false;
+        _dashCooldownUI.SetActive(false);
         this.enabled = false;
     }
 
@@ -171,4 +184,10 @@ public class PlayerMovement : MonoBehaviour
 
        cam = Camera.main;
    }
+
+    public void SetDashCooldownUIReference(GameObject dashCooldownUIReference)
+    {
+        _dashCooldownUI = dashCooldownUIReference;
+        _cooldownImage = _dashCooldownUI.transform.GetChild(1).GetComponent<Image>();
+    }
 }
