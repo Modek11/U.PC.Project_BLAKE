@@ -98,6 +98,15 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextPreviousWeapon"",
+                    ""type"": ""Value"",
+                    ""id"": ""608b4004-03c7-4b5d-9ff8-c48606eddbae"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": ""Clamp(min=-1,max=1)"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -254,6 +263,28 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Map"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3514126c-ac73-4118-a1a6-e4feb6addbc0"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=-1)"",
+                    ""groups"": """",
+                    ""action"": ""NextPreviousWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""355b66b3-8ce7-4299-92b7-4ccbd30e0c1b"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextPreviousWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -276,6 +307,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         m_Gameplay_MousePosition = m_Gameplay.FindAction("MousePosition", throwIfNotFound: true);
         m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
         m_Gameplay_EscapeButton = m_Gameplay.FindAction("EscapeButton", throwIfNotFound: true);
+        m_Gameplay_NextPreviousWeapon = m_Gameplay.FindAction("NextPreviousWeapon", throwIfNotFound: true);
         // Loading
         m_Loading = asset.FindActionMap("Loading", throwIfNotFound: true);
     }
@@ -347,6 +379,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_MousePosition;
     private readonly InputAction m_Gameplay_Dash;
     private readonly InputAction m_Gameplay_EscapeButton;
+    private readonly InputAction m_Gameplay_NextPreviousWeapon;
     public struct GameplayActions
     {
         private @PlayerInputSystem m_Wrapper;
@@ -359,6 +392,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         public InputAction @MousePosition => m_Wrapper.m_Gameplay_MousePosition;
         public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
         public InputAction @EscapeButton => m_Wrapper.m_Gameplay_EscapeButton;
+        public InputAction @NextPreviousWeapon => m_Wrapper.m_Gameplay_NextPreviousWeapon;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -392,6 +426,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @EscapeButton.started += instance.OnEscapeButton;
             @EscapeButton.performed += instance.OnEscapeButton;
             @EscapeButton.canceled += instance.OnEscapeButton;
+            @NextPreviousWeapon.started += instance.OnNextPreviousWeapon;
+            @NextPreviousWeapon.performed += instance.OnNextPreviousWeapon;
+            @NextPreviousWeapon.canceled += instance.OnNextPreviousWeapon;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -420,6 +457,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @EscapeButton.started -= instance.OnEscapeButton;
             @EscapeButton.performed -= instance.OnEscapeButton;
             @EscapeButton.canceled -= instance.OnEscapeButton;
+            @NextPreviousWeapon.started -= instance.OnNextPreviousWeapon;
+            @NextPreviousWeapon.performed -= instance.OnNextPreviousWeapon;
+            @NextPreviousWeapon.canceled -= instance.OnNextPreviousWeapon;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -485,6 +525,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         void OnMousePosition(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnEscapeButton(InputAction.CallbackContext context);
+        void OnNextPreviousWeapon(InputAction.CallbackContext context);
     }
     public interface ILoadingActions
     {

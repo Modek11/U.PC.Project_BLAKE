@@ -55,6 +55,7 @@ public class WeaponsManager : MonoBehaviour
         if (playerInputController != null)
         {
             playerInputController.changeWeaponEvent += Equip;
+            playerInputController.nextPreviousWeaponEvent += NextPreviousWeapon;
             playerInputController.shootEvent += ShootWeapon;
         }
 
@@ -107,6 +108,16 @@ public class WeaponsManager : MonoBehaviour
 
             Equip(0);
         }
+    }
+
+    public void NextPreviousWeapon(int value)
+    {
+        int index = activeWeaponIndex + value;
+
+        index = index < 0 ? capacity - 1 : index;
+        index = index >= capacity ? 0 : index;
+
+        Equip(index);
     }
 
     public void ShootWeapon()

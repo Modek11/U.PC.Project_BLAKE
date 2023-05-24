@@ -26,10 +26,14 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
     public event Action shootEvent;
     public event Action onShootCancelEvent;
     public event Action<int> changeWeaponEvent;
+    public event Action<int> nextPreviousWeaponEvent;
     public event Action interactEvent;
     public event Action mapEvent; 
     public event Action dashEvent;
     public event Action escapeButtonEvent;
+
+    bool scrolledUp = false;
+    bool scrolledDown = false;
 
     public void OnMovement(InputAction.CallbackContext context)
     {
@@ -101,4 +105,32 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
     {
         inputSystem.Disable();
     }
+
+    public void OnNextPreviousWeapon(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            int value = (int)context.ReadValue<float>();
+
+            if (value > 0)
+            {
+                if (scrolledUp) return;
+                scrolledUp = true;
+                Invoke("ResetScrolledUp", 0.3f);
+            }
+            else if (value < 0)
+            {
+                if (scrolledDown) return;
+                scrolledDown = true;
+                Invoke("ResetScrolledDown", 0.3f);
+            }
+            else return;
+
+            Debug.Log("JANAJNJA: " + value);
+            nextPreviousWeaponEvent?.Invoke(value);
+        }
+    }
+
+    public void ResetScrolledUp() => scrolledUp = false;
+    public void ResetScrolledDown() => scrolledDown = false;
 }
