@@ -13,7 +13,7 @@ public class EnemyCharacter : BlakeCharacter
 
     public override void Die()
     {
-        animator.SetBool("IsAlive", false);
+        //animator.SetBool("IsAlive", false);
         Invoke("DestroySelf", 2f);
 
         base.Die();
