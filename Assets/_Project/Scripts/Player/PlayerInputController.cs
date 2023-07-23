@@ -27,7 +27,8 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
     public event Action onShootCancelEvent;
     public event Action<int> changeWeaponEvent;
     public event Action interactEvent;
-    public event Action mapEvent; 
+    public event Action onMapPressEvent; 
+    public event Action onMapReleaseEvent;
     public event Action dashEvent;
     public event Action escapeButtonEvent;
 
@@ -65,9 +66,13 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
 
     public void OnMap(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if (context.started)
         {
-            mapEvent?.Invoke();
+            onMapPressEvent?.Invoke();
+        }
+        else if (context.canceled)
+        {
+            onMapReleaseEvent?.Invoke();
         }
     }
 
