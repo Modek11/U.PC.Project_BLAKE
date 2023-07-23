@@ -14,6 +14,7 @@ public class EnemyCharacter : BlakeCharacter
     public override void Die()
     {
         //animator.SetBool("IsAlive", false);
+        explosionParticleInstantiated = Instantiate(explosionParticle, transform.position, Quaternion.identity);
         Invoke("DestroySelf", 2f);
 
         base.Die();
@@ -22,6 +23,7 @@ public class EnemyCharacter : BlakeCharacter
     protected override void DestroySelf()
     {
         base.DestroySelf();
+        Destroy(explosionParticleInstantiated);
 
         WeaponDefinition weaponDef = ai.GetWeaponRef().GetComponent<Weapon>()?.GetWeaponDefinition();
 

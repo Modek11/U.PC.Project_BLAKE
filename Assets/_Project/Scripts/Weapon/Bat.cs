@@ -40,7 +40,7 @@ public class Bat : MonoBehaviour, IWeapon
         foreach (RaycastHit hit in hits)
         {
             Debug.Log(hit.transform.gameObject.name);
-            IDamageable damageable = hit.transform.GetComponent<IDamageable>();
+            IDamageable damageable = hit.transform.GetComponentInParent<IDamageable>();
             if (damageable != null)
             {
                 damageable.TakeDamage(transform.parent.gameObject, 1);
