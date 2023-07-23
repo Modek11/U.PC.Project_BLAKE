@@ -77,13 +77,7 @@ public class Room : MonoBehaviour
             surface.BuildNavMesh();
         }
 
-        //Spawn enemies
-        foreach(EnemySpawner enemy in spawners)
-        {
-            GameObject spawnedEnemy = Instantiate(enemy.EnemyToSpawn.gameObject, enemy.EnemySpawnPoint.transform.position, enemy.EnemySpawnPoint.rotation, this.transform);
-            spawnedEnemy.GetComponent<EnemyAIManager>().SetWaypoints(enemy.EnemyWaypoints);
-            spawnedEnemies.Add(spawnedEnemy);
-        }
+        SpawnEnemies();
 
         foreach (RoomConnector roomConnector in doors)
         {
@@ -91,6 +85,17 @@ public class Room : MonoBehaviour
         }
         isInitialized = true;
 
+    }
+
+    private void SpawnEnemies()
+    {
+        //Spawn enemies
+        foreach (EnemySpawner enemy in spawners)
+        {
+            GameObject spawnedEnemy = Instantiate(enemy.EnemyToSpawn.gameObject, enemy.EnemySpawnPoint.transform.position, enemy.EnemySpawnPoint.rotation, this.transform);
+            spawnedEnemy.GetComponent<EnemyAIManager>().SetWaypoints(enemy.EnemyWaypoints);
+            spawnedEnemies.Add(spawnedEnemy);
+        }
     }
 
     public void BeatLevel()
@@ -202,10 +207,6 @@ public class Room : MonoBehaviour
         {
             rt.Reset();
         }
-        foreach (GameObject enemy in spawnedEnemies)
-        {
-            enemy.GetComponent<EnemyAIManager>().SwitchCurrentState(enemy.GetComponent<EnemyAIManager>().PatrolState);
-        }
         Invoke("ResetEnemies", 0.5f);
     }
 
@@ -214,13 +215,15 @@ public class Room : MonoBehaviour
     {
         foreach (GameObject enemy in spawnedEnemies)
         {
-            enemy.GetComponent<EnemyAIManager>().SwitchCurrentState(enemy.GetComponent<EnemyAIManager>().PatrolState);
+            Destroy(enemy);
         }
+        spawnedEnemies.Clear();
+        SpawnEnemies();
     }
 
     private void Update()
     {
-        if(!isBeaten && isInitialized)
+        if(!isBeaten && isInitialized && (IsPlayerInsideFog() || IsPlayerInside()))
         {
             if(spawnedEnemies.Count == 0)
             {
