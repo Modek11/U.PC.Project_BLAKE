@@ -43,8 +43,8 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
     {
         isDead = true;
         
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        GetComponent<CapsuleCollider>().enabled = false;
+        //GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        //GetComponent<CapsuleCollider>().enabled = false;
         onDeath?.Invoke();
     }
 
@@ -92,8 +92,8 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         Destroy(explosionParticleInstantiated);
         transform.position = respawnPos;
         gameObject.SetActive(true);
-        GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionX;
-        GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionZ;
+        //GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionX;
+        //GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionZ;
         GetComponent<CapsuleCollider>().enabled = true;
         health = defaultHealth;
     }

@@ -39,7 +39,7 @@ public class BasicBullet : MonoBehaviour, IBullet
 
     private void OnCollisionEnter(Collision collision)
     {
-        IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
+        IDamageable damageable = collision.gameObject.GetComponentInParent<IDamageable>();
         if (damageable != null && collision.gameObject != _instigator)
         {
             if (damageable.CanTakeDamage(_instigator))
