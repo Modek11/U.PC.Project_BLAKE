@@ -102,6 +102,7 @@ public class Room : MonoBehaviour
     {
         roomsDoneCounter.AddBeatenRoom();
         isBeaten = true;
+        minimapRoom.CompleteRoom();
     }
 
 

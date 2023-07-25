@@ -9,6 +9,7 @@ public class MinimapRoom : MonoBehaviour
     {
         Unseen,
         NotVisited,
+        Visiting,
         Visited
     }
 
@@ -16,6 +17,8 @@ public class MinimapRoom : MonoBehaviour
     private Material minimapUnseen;
     [SerializeField]
     private Material minimapNotVisited;
+    [SerializeField]
+    private Material minimapVisiting;
     [SerializeField]
     private Material minimapVisited;
 
@@ -41,18 +44,21 @@ public class MinimapRoom : MonoBehaviour
     {
         if(state == RoomState.NotVisited)
         {
+            state = RoomState.Visiting;
+            ChangeMaterial(minimapVisiting);
+        }
+    }
+
+    public void CompleteRoom()
+    {
             state = RoomState.Visited;
             ChangeMaterial(minimapVisited);
-        }
     }
 
     public void ForgetRoom()
     {
-        if(state == RoomState.Visited)
-        {
             state = RoomState.NotVisited;
             ChangeMaterial(minimapNotVisited);
-        }
     }
 
     private void ChangeMaterial(Material mat)

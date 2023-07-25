@@ -30,7 +30,8 @@ public class PlayerGameplayUIManager : MonoBehaviour
     {
         _floorManager.FloorGeneratorEnd += FloorManagerOnFloorGeneratorEnd;
         playerInputController = GetComponent<PlayerInputController>();
-        playerInputController.mapEvent += PlayerInputControllerOnmapEvent;
+        playerInputController.onMapPressEvent += ShowMap;
+        playerInputController.onMapReleaseEvent += HideMap;
     }
 
     private void FloorManagerOnFloorGeneratorEnd(Transform playerTransform, Transform cameraFollowTransform)
@@ -55,10 +56,14 @@ public class PlayerGameplayUIManager : MonoBehaviour
         _playerMovement.SetDashCooldownUIReference(dashCooldownUI);
     }
     
-    private void PlayerInputControllerOnmapEvent()
+    private void ShowMap()
     {
-        isMapShown = !isMapShown;
-        mapUI.SetActive(isMapShown);
+        mapUI.SetActive(true);
+    }
+
+    private void HideMap()
+    {
+        mapUI.SetActive(false);
     }
 
     private void Update()

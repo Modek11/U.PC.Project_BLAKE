@@ -9,6 +9,7 @@ public class MechanicalDoor : Door
 
     private void Awake()
     {
+        if(animator == null)
         animator = GetComponent<Animator>();
     }
     public override void OpenDoor()
