@@ -76,7 +76,6 @@ public class FloorGenerator : MonoBehaviour
 
                 Vector3 offset = newDoor.transform.position - door.transform.position;
                 newRoom.transform.position -= offset;
-
                 bool overlap = false;
                 BoxCollider[] roomColliders = newRoom.GetComponent<Room>().GetOverlapColliders();
                 foreach (BoxCollider box in roomColliders)
@@ -90,7 +89,7 @@ public class FloorGenerator : MonoBehaviour
                         {
                             overlap = true;
                             tries++;
-                            Debug.Log("Overlapping");
+                            Debug.Log("Overlapping at " + room.name);
                             break;
                         }
                     }

@@ -33,7 +33,7 @@ public class EnemyPatrolState : EnemyBaseState
                 Vector3 patrolPosition = aiManager.waypoints.GetWaypointPosition(_waypointIndex);
                 MoveToPosition(patrolPosition);
 
-                if (Vector3.Distance(aiManager.transform.position, patrolPosition) < .1f)
+                if (Vector3.Distance(aiManager.transform.position, patrolPosition) < .5f)
                 {
                     _waypointIndex++;
                 }
