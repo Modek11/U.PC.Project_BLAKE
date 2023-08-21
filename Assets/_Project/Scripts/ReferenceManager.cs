@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class BLAKE : MonoBehaviour
+public class ReferenceManager : MonoBehaviour
 {
-    private static BLAKE Instance;
+    private static ReferenceManager Instance;
 
     private BlakeHeroCharacter _hero;
     public static BlakeHeroCharacter Hero

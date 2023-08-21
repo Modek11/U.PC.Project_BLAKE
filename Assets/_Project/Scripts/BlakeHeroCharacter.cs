@@ -4,7 +4,7 @@ public class BlakeHeroCharacter : BlakeCharacter
 {
     private void Awake()
     {
-        BLAKE.Hero = this;
+        ReferenceManager.Hero = this;
 
         defaultHealth = SceneHandler.Instance.isNormalDifficulty ? 3 : 1;
         health = defaultHealth;
