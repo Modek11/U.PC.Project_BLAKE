@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(PlayerInputController))]
 public class PlayerMovement : MonoBehaviour
 {
     private Camera cam;
@@ -14,8 +13,6 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform gunHandlerTransform;
 
-    private PlayerInputController _playerInputController;
-    
     private Vector2 _movementAxis;
     private Vector2 _mousePosition;
     private float _angleRotationDifference;
@@ -30,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        _playerInputController = GetComponent<PlayerInputController>();
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponentInChildren<Animator>();
 
@@ -39,9 +35,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        _playerInputController.movementEvent += MovementHandler;
-        _playerInputController.mousePositionEvent += MousePositionHandler;
-        _playerInputController.dashEvent += Dash;
+        ReferenceManager.PlayerInputController.movementEvent += MovementHandler;
+        ReferenceManager.PlayerInputController.mousePositionEvent += MousePositionHandler;
+        ReferenceManager.PlayerInputController.dashEvent += Dash;
         GetComponent<BlakeCharacter>().onDeath += Die;
         GetComponent<BlakeCharacter>().onRespawn += Respawn;
     }
@@ -164,14 +160,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Die()
     {
-        _playerInputController.enabled = false;
+        ReferenceManager.PlayerInputController.enabled = false;
         _dashCooldownUI.SetActive(false);
         this.enabled = false;
     }
 
     private void Respawn()
     {
-        _playerInputController.enabled = true;
+        ReferenceManager.PlayerInputController.enabled = true;
         this.enabled = true;
     }
 

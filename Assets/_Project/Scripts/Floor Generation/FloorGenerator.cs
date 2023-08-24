@@ -31,10 +31,10 @@ public class FloorGenerator : MonoBehaviour
     
     public IEnumerator GenerateFloor()
     {
-        if (SceneHandler.Instance != null)
+        if (ReferenceManager.SceneHandler != null)
         {
-            SceneHandler.Instance.roomsToGenerate = maxRooms - 1;
-            while (!SceneHandler.Instance.isSceneLoadedProperly) yield return null;
+            ReferenceManager.SceneHandler.roomsToGenerate = maxRooms - 1;
+            while (!ReferenceManager.SceneHandler.isSceneLoadedProperly) yield return null;
         }
         
         floorManager = GetComponent<FloorManager>();
@@ -103,8 +103,8 @@ public class FloorGenerator : MonoBehaviour
                     newRoom.transform.parent = map.transform;
                     roomCounter++;
 
-                    if (SceneHandler.Instance != null)
-                        SceneHandler.Instance.roomsGenerated++;
+                    if (ReferenceManager.SceneHandler != null)
+                        ReferenceManager.SceneHandler.roomsGenerated++;
                 }
                 else
                 {

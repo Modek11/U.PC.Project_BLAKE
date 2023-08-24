@@ -9,22 +9,22 @@ public class MenuElementsHandler : MonoBehaviour
 
     public void NewGameNormalDifficulty()
     {
-        SceneHandler.Instance.StartNewGame();
-        SceneHandler.Instance.isNormalDifficulty = true;
+        ReferenceManager.SceneHandler.StartNewGame();
+        ReferenceManager.SceneHandler.isNormalDifficulty = true;
         //Debug.LogWarning("New Game Normal Difficulty has no implementation!");
     }
     
     public void NewGameHardDifficulty()
     {
-        SceneHandler.Instance.StartNewGame();
-        SceneHandler.Instance.isNormalDifficulty = false;
+        ReferenceManager.SceneHandler.StartNewGame();
+        ReferenceManager.SceneHandler.isNormalDifficulty = false;
         //Debug.LogWarning("New Game Hard Difficulty has no implementation!");
     }
     
     
     public void QuitButton()
     {
-        SceneHandler.Instance.QuitGame();
+        ReferenceManager.SceneHandler.QuitGame();
     }
     
 }

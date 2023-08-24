@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInputController))]
 public class PlayerInteractables : MonoBehaviour
 {
     //List of Interactable objects nearby
@@ -10,17 +9,10 @@ public class PlayerInteractables : MonoBehaviour
     //Object of UI to show above
     [SerializeField]
     private GameObject interactUI;
-    
-    private PlayerInputController playerInputController;
-
-    private void Awake()
-    {
-        playerInputController = GetComponent<PlayerInputController>();
-    }
 
     private void Start()
     {
-        playerInputController.interactEvent += Interact;
+        ReferenceManager.PlayerInputController.interactEvent += Interact;
     }
 
     /// <summary>

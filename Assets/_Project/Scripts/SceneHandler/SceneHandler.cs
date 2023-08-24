@@ -7,7 +7,6 @@ public class SceneHandler : MonoBehaviour
     private const string mainMenu = "MainMenu";
     private const string loadingScene = "LoadingScene";
     private const string build1505 = "Build1505";
-    public static SceneHandler Instance { get; private set; }
 
     [HideInInspector] public float loadingProgress;
     
@@ -17,16 +16,16 @@ public class SceneHandler : MonoBehaviour
     [HideInInspector] public float roomsToGenerate = 0;
     [HideInInspector] public bool isNormalDifficulty = true; //only for DD purposes
     
-    private void Awake() 
-    { 
-        if (Instance != null && Instance != this) 
+    private void Awake()
+    {
+        if (ReferenceManager.SceneHandler != null && ReferenceManager.SceneHandler != this) 
         { 
             Destroy(this); 
         } 
         else 
         { 
-            Instance = this; 
-            DontDestroyOnLoad(Instance);
+            ReferenceManager.SceneHandler = this; 
+            DontDestroyOnLoad(ReferenceManager.SceneHandler);
         }
     }
     public void StartNewGame()

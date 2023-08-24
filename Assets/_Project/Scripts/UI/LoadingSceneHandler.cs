@@ -6,6 +6,6 @@ public class LoadingSceneHandler : MonoBehaviour
     [SerializeField] private Image progressBar;
     private void Update()
     {
-        progressBar.fillAmount = SceneHandler.Instance.loadingProgress;
+        progressBar.fillAmount = ReferenceManager.SceneHandler.loadingProgress;
     }
 }

@@ -1,8 +1,6 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-[RequireComponent(typeof(PlayerInputController))]
 public class PlayerGameplayUIManager : MonoBehaviour
 {
     [SerializeField] private FloorManager _floorManager;
@@ -16,8 +14,7 @@ public class PlayerGameplayUIManager : MonoBehaviour
     [SerializeField] private GameObject interactUI;
     [SerializeField] private GameObject mapUI;
     [SerializeField] private GameObject dashCooldownUI;
-
-    private PlayerInputController playerInputController;
+    
     private GameObject player;
     private WeaponsManager _weaponsManager;
     private PlayerInteractables playerInteractables;
@@ -29,9 +26,8 @@ public class PlayerGameplayUIManager : MonoBehaviour
     private void Start()
     {
         _floorManager.FloorGeneratorEnd += FloorManagerOnFloorGeneratorEnd;
-        playerInputController = GetComponent<PlayerInputController>();
-        playerInputController.onMapPressEvent += ShowMap;
-        playerInputController.onMapReleaseEvent += HideMap;
+        ReferenceManager.PlayerInputController.onMapPressEvent += ShowMap;
+        ReferenceManager.PlayerInputController.onMapReleaseEvent += HideMap;
     }
 
     private void FloorManagerOnFloorGeneratorEnd(Transform playerTransform, Transform cameraFollowTransform)

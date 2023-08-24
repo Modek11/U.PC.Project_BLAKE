@@ -4,12 +4,12 @@ public class GameplayElementsHandler : MonoBehaviour
 {
     public void LeaveToMainMenu()
     {
-        SceneHandler.Instance.LoadMainMenu();
+        ReferenceManager.SceneHandler.LoadMainMenu();
     }
 
     public void PlayAgain()
     {
-        SceneHandler.Instance.StartNewGame();
+        ReferenceManager.SceneHandler.StartNewGame();
     }
 
     public void ClosePausedGameCanvas()
