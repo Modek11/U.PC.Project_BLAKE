@@ -20,7 +20,7 @@ public class SceneHandler : MonoBehaviour
     {
         if (ReferenceManager.SceneHandler != null && ReferenceManager.SceneHandler != this) 
         { 
-            Destroy(this); 
+            Destroy(gameObject); 
         } 
         else 
         { 
