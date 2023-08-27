@@ -2,28 +2,51 @@ using UnityEngine;
 
 public class ReferenceManager : MonoBehaviour
 {
-    private static ReferenceManager Instance;
+    private static ReferenceManager instance;
+    private BlakeHeroCharacter blakeHeroCharacter;
+    private PlayerInputController playerInputController;
+    private SceneHandler sceneHandler;
 
-    private BlakeHeroCharacter _hero;
-    public static BlakeHeroCharacter Hero
+    public static BlakeHeroCharacter BlakeHeroCharacter
     {
-        get => Instance != null ? Instance._hero : null;
+        get => instance != null ? instance.blakeHeroCharacter : null;
         set
         {
-            if (Instance == null) return;
-            Instance._hero = value;
+            if (instance == null) return;
+            instance.blakeHeroCharacter = value;
+        }
+    }
+    
+    public static PlayerInputController PlayerInputController
+    {
+        get => instance != null ? instance.playerInputController : null;
+        set
+        {
+            if (instance == null) return;
+            instance.playerInputController = value;
+        }
+    }
+    
+    public static SceneHandler SceneHandler
+    {
+        get => instance != null ? instance.sceneHandler : null;
+        set
+        {
+            if (instance == null) return;
+            instance.sceneHandler = value;
         }
     }
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (instance != null && instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
-            Instance = this;
+            instance = this;
+            DontDestroyOnLoad(instance);
         }
     }
 }

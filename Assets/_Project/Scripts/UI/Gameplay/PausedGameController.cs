@@ -1,20 +1,13 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInputController))]
 public class PausedGameController : MonoBehaviour
 {
-    private PlayerInputController _playerInputController;
     private bool _gamePaused = false;
     
 
-    private void Awake()
-    {
-        _playerInputController = GetComponent<PlayerInputController>();
-    }
-
     private void Start()
     {
-        _playerInputController.escapeButtonEvent += PauseGame;
+        ReferenceManager.PlayerInputController.escapeButtonEvent += PauseGame;
     }
 
     public void PauseGame()

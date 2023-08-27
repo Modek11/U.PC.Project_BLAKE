@@ -39,8 +39,6 @@ public class WeaponsManager : MonoBehaviour
 
     public WeaponDefinition defaultWeapon;
 
-    PlayerInputController playerInputController;
-
     private void Awake()
     {
         if (defaultWeapon == null)
@@ -50,12 +48,11 @@ public class WeaponsManager : MonoBehaviour
         }
         ChangeItem(defaultWeapon, 0);
         Equip(0);
-
-        playerInputController = GetComponent<PlayerInputController>();
-        if (playerInputController != null)
+        
+        if (ReferenceManager.PlayerInputController != null)
         {
-            playerInputController.changeWeaponEvent += Equip;
-            playerInputController.shootEvent += ShootWeapon;
+            ReferenceManager.PlayerInputController.changeWeaponEvent += Equip;
+            ReferenceManager.PlayerInputController.shootEvent += ShootWeapon;
         }
 
         WeaponsMagazine.Init();

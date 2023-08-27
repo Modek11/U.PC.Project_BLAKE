@@ -10,6 +10,7 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
         inputSystem = new PlayerInputSystem();
         inputSystem.Gameplay.SetCallbacks(this);
         SetUpControls();
+        ReferenceManager.PlayerInputController = this;
     }
 
     void SetUpControls()
