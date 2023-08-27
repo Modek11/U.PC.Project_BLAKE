@@ -2,53 +2,51 @@ using UnityEngine;
 
 public class ReferenceManager : MonoBehaviour
 {
-    private static ReferenceManager Instance;
-
+    private static ReferenceManager instance;
     private BlakeHeroCharacter blakeHeroCharacter;
     private PlayerInputController playerInputController;
     private SceneHandler sceneHandler;
+
     public static BlakeHeroCharacter BlakeHeroCharacter
     {
-        get => Instance != null ? Instance.blakeHeroCharacter : null;
+        get => instance != null ? instance.blakeHeroCharacter : null;
         set
         {
-            if (Instance == null) return;
-            Instance.blakeHeroCharacter = value;
+            if (instance == null) return;
+            instance.blakeHeroCharacter = value;
         }
     }
     
     public static PlayerInputController PlayerInputController
     {
-        get => Instance != null ? Instance.playerInputController : null;
+        get => instance != null ? instance.playerInputController : null;
         set
         {
-            if (Instance == null) return;
-            Instance.playerInputController = value;
+            if (instance == null) return;
+            instance.playerInputController = value;
         }
     }
     
     public static SceneHandler SceneHandler
     {
-        get => Instance != null ? Instance.sceneHandler : null;
+        get => instance != null ? instance.sceneHandler : null;
         set
         {
-            if (Instance == null) return;
-            Instance.sceneHandler = value;
+            if (instance == null) return;
+            instance.sceneHandler = value;
         }
     }
-    
-    
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
-            Instance = this;
-            DontDestroyOnLoad(Instance);
+            instance = this;
+            DontDestroyOnLoad(instance);
         }
     }
 }
