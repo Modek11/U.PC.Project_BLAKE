@@ -38,8 +38,8 @@ public class PlayerMovement : MonoBehaviour
         ReferenceManager.PlayerInputController.movementEvent += MovementHandler;
         ReferenceManager.PlayerInputController.mousePositionEvent += MousePositionHandler;
         ReferenceManager.PlayerInputController.dashEvent += Dash;
-        GetComponent<BlakeCharacter>().onDeath += Die;
-        GetComponent<BlakeCharacter>().onRespawn += Respawn;
+        ReferenceManager.BlakeHeroCharacter.onDeath += Die;
+        ReferenceManager.BlakeHeroCharacter.onRespawn += Respawn;
     }
 
     private void Update()

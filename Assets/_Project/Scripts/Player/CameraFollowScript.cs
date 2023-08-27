@@ -18,8 +18,6 @@ public class CameraFollowScript : MonoBehaviour
     private Camera _cam;
 
     private Vector3 velocity = Vector3.zero;
-    
-    private PlayerInputController _playerInputController;
 
     private void Awake()
     {
@@ -28,8 +26,7 @@ public class CameraFollowScript : MonoBehaviour
 
     private void Start()
     {
-        _playerInputController = playerTransform.GetComponent<PlayerInputController>();
-        _playerInputController.mousePositionEvent += MousePositionHandler;
+        ReferenceManager.PlayerInputController.mousePositionEvent += MousePositionHandler;
     }
 
     private void LateUpdate()
