@@ -6,6 +6,7 @@ public class ReferenceManager : MonoBehaviour
     private BlakeHeroCharacter blakeHeroCharacter;
     private PlayerInputController playerInputController;
     private SceneHandler sceneHandler;
+    private MessageRouter messageRouter = new();
 
     public static BlakeHeroCharacter BlakeHeroCharacter
     {
@@ -36,6 +37,8 @@ public class ReferenceManager : MonoBehaviour
             instance.sceneHandler = value;
         }
     }
+
+    public static MessageRouter MessageRouter => instance != null ? instance.messageRouter : null;
 
     private void Awake()
     {
