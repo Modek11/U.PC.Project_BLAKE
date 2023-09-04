@@ -2,18 +2,21 @@ Naming and code style tips for C# scripting in Unity: https://unity.com/how-to/n
 
 // EXAMPLE: Public and private variables
 <pre><code class='language-cs'>
+// inspector visible vars should be on top
 public float DamageMultiplier = 1.5f;
 public float MaxHealth;
 public bool IsInvincible;
+
+[SerializeField, Header("Equipment"), Tooltip("Sword")]
+private GameObject sword;
+
+[SerializeField]
+private GameObject bag;
 
 // don't use prefixes
 private bool isDead;
 private float currentHealth;
 
-[SerializeField]
-private GameObject sword;
-
-// parameters
 public void InflictDamage(float damage, bool isSpecialDamage)
 {
     // local variable

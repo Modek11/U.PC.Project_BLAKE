@@ -32,16 +32,22 @@ public class Weapon : MonoBehaviour, IWeapon
         }
     }
 
-    [HideInInspector] public bool isLastShotOver;
+    [HideInInspector]
+    public bool isLastShotOver;
+
     //TODO: Move it outside
-    [HideInInspector] public AudioSource As;
-    [Header("Attacks")]
-    [Tooltip("Attack which will be triggered on LMB")]
-    [SerializeField] private InterfaceReference<IAttack> _primaryAttack;
-    [Tooltip("Attack which will be triggered on RMB, it's not required")]
-    [SerializeField] private InterfaceReference<IAttack> _secondaryAttack;
-    [Header("Varabiables to pass")]
-    [SerializeField] private WeaponDefinition weaponDefinition;
+    [HideInInspector]
+    public AudioSource As;
+
+    [SerializeField, Header("Attacks"), Tooltip("Attack which will be triggered on LMB")]
+    private InterfaceReference<IAttack> _primaryAttack;
+
+    [SerializeField, Tooltip("Attack which will be triggered on RMB, it's not required")]
+    private InterfaceReference<IAttack> _secondaryAttack;
+
+    [SerializeField, Header("Varabiables to pass")]
+    private WeaponDefinition weaponDefinition;
+
     private Rigidbody _ownerRigidbody;
 
     private void Awake()

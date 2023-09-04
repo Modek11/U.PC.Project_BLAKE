@@ -7,15 +7,19 @@ public class FloorGenerator : MonoBehaviour
 {
     [SerializeField]
     private int seed = 0;
+
     [SerializeField]
     private RoomPool roomPool;
+
     [SerializeField]
     private GameObject startingRoom;
+
     [SerializeField]
     private LayerMask layerMask;
 
     [SerializeField]
     private int maxRooms = 3;
+
     private int roomCounter = 1;
 
     private RoomManager roomManager;

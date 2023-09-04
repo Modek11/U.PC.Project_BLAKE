@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayActions
 {
     private PlayerInputSystem inputSystem;
+
     private void Awake()
     {
         inputSystem = new PlayerInputSystem();

@@ -6,7 +6,9 @@ public class RandomizedRoomObject : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] randomizedObjects;
+
     private bool isSpawned = false;
+
     public void InitializeRandomObject()
     {
         if(!isSpawned)

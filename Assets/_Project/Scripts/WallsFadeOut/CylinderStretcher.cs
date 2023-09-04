@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class CylinderStretcher : MonoBehaviour
 {
-    [SerializeField] private FloorManager floorManager;
+    [SerializeField]
+    private FloorManager floorManager;
+
     private Transform playerTransform;
     private Transform mainCameraTransform;
     private Transform cameraFollowTransform;

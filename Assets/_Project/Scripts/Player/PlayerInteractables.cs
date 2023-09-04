@@ -6,6 +6,7 @@ public class PlayerInteractables : MonoBehaviour
     //List of Interactable objects nearby
     [SerializeField]
     private List<IInteractable> interactables = new List<IInteractable>();
+
     //Object of UI to show above
     [SerializeField]
     private GameObject interactUI;

@@ -6,14 +6,18 @@ public class DebugDoor : Door
 {
     [SerializeField]
     private Material closedMat;
+
     [SerializeField]
     private Material openMat;
+
     private MeshRenderer meshRenderer;
+
     private void Start()
     {
         meshRenderer = GetComponent<MeshRenderer>();
         OpenDoor();
     }
+
     public override void OpenDoor()
     {
         if(meshRenderer != null)

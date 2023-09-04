@@ -8,11 +8,21 @@ using UnityEngine.Serialization;
 
 public class OptionsHandler : MonoBehaviour
 {
-    [SerializeField] private TMP_Dropdown resolutionsDropdown;
-    [SerializeField] private TextMeshProUGUI fullScreenValueText;
-    [SerializeField] private TextMeshProUGUI masterVolumeValueText;
-    [SerializeField] private TextMeshProUGUI musicVolumeValueText;
-    [SerializeField] private TextMeshProUGUI sfxVolumeValueText;
+    [SerializeField]
+    private TMP_Dropdown resolutionsDropdown;
+
+    [SerializeField]
+    private TextMeshProUGUI fullScreenValueText;
+
+    [SerializeField]
+    private TextMeshProUGUI masterVolumeValueText;
+
+    [SerializeField]
+    private TextMeshProUGUI musicVolumeValueText;
+
+    [SerializeField]
+    private TextMeshProUGUI sfxVolumeValueText;
+
     public void Start()
     {
         SetResolutions();

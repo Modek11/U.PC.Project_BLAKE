@@ -8,13 +8,20 @@ public class SceneHandler : MonoBehaviour
     private const string loadingScene = "LoadingScene";
     private const string build1505 = "Build1505";
 
-    [HideInInspector] public float loadingProgress;
+    [HideInInspector]
+    public float loadingProgress;
     
-    [HideInInspector] public bool isSceneLoadedProperly = true;
+    [HideInInspector] 
+    public bool isSceneLoadedProperly = true;
 
-    [HideInInspector] public float roomsGenerated = 0;
-    [HideInInspector] public float roomsToGenerate = 0;
-    [HideInInspector] public bool isNormalDifficulty = true; //only for DD purposes
+    [HideInInspector] 
+    public float roomsGenerated = 0;
+
+    [HideInInspector]
+    public float roomsToGenerate = 0;
+
+    [HideInInspector]
+    public bool isNormalDifficulty = true; //only for DD purposes
     
     private void Awake()
     {
@@ -28,6 +35,7 @@ public class SceneHandler : MonoBehaviour
             DontDestroyOnLoad(ReferenceManager.SceneHandler);
         }
     }
+
     public void StartNewGame()
     {
         StartCoroutine(LoadNewSceneAdditive(build1505));
@@ -87,8 +95,4 @@ public class SceneHandler : MonoBehaviour
         roomsToGenerate = 0;
         Time.timeScale = 1;
     }
-
-
-
-    
 }

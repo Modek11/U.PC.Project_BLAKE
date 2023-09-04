@@ -9,6 +9,7 @@ public class RoomTrigger : MonoBehaviour
     private Room parent;
     private RoomManager roomManager;
     private bool playerInside = false;
+
     private void Awake()
     {
         parent = GetComponentInParent<Room>();

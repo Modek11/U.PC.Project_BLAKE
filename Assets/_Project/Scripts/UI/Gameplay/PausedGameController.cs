@@ -4,7 +4,6 @@ public class PausedGameController : MonoBehaviour
 {
     private bool _gamePaused = false;
     
-
     private void Start()
     {
         ReferenceManager.PlayerInputController.escapeButtonEvent += PauseGame;

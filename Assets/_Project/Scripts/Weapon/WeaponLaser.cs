@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class WeaponLaser : MonoBehaviour
 {
-    [SerializeField] private Transform _attackPointTransform;
+    [SerializeField]
+    private Transform _attackPointTransform;
 
     private IWeapon _weaponInterface;
     private LineRenderer _lineRenderer;

@@ -3,8 +3,11 @@ using UnityEngine.AI;
 
 public class RagdollController : MonoBehaviour
 {
-    [SerializeField] private Animator animator;
-    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] 
+    private Animator animator;
+
+    [SerializeField] 
+    private NavMeshAgent agent;
     
     private Collider[] _ragdollColliders;
     private Rigidbody[] _ragdollRigidbodies;

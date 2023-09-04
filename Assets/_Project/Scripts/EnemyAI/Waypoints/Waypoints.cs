@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class Waypoints : MonoBehaviour
 {
-	[SerializeField] private List<Transform> waypoints;
+	[SerializeField] 
+	private List<Transform> waypoints;
+
 	private int _waypointsCount;
 
 	private void Start()

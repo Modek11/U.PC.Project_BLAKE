@@ -4,10 +4,17 @@ using UnityEngine.Playables;
 
 public class Bat : MonoBehaviour, IWeapon
 {
-    [SerializeField] private float spereCastRadius;
-    [SerializeField] private float maxDistance;
-    [SerializeField] private LayerMask layerMask;
-    [SerializeField] private float attackSpeed;
+    [SerializeField] 
+    private float spereCastRadius;
+
+    [SerializeField] 
+    private float maxDistance;
+
+    [SerializeField] 
+    private LayerMask layerMask;
+
+    [SerializeField] 
+    private float attackSpeed;
 
     private PlayableDirector playableDirector;
     private AudioSource _audioSource;

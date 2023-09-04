@@ -3,8 +3,11 @@ using UnityEngine.UI;
 
 public class ButtonNavigationHandler : MonoBehaviour
 {
-    [SerializeField] private GameObject gameObjectToClose;
-    [SerializeField] private GameObject gameObjectToOpen;
+    [SerializeField]
+    private GameObject gameObjectToClose;
+
+    [SerializeField]
+    private GameObject gameObjectToOpen;
     
     private Button _button;
 

@@ -6,15 +6,19 @@ public class RoomConnector : MonoBehaviour
 {
     [SerializeField]
     private RoomConnector connectedDoor;
+
     [SerializeField]
     private GameObject doorObject;
+
     [SerializeField]
     private GameObject wallObject;
+
     [SerializeField]
     private Door door;
 
     private Room mainRoom;
     private bool isActive = false;
+
     public void SetConnector(RoomConnector room)
     {
         connectedDoor = room;

@@ -4,11 +4,13 @@ using UnityEngine.AI;
 [RequireComponent(typeof(BlakeCharacter))]
 public class EnemyAIManager : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject weaponRef;
+
     private NavMeshAgent _navMeshAgent;
     private GameObject _playerRef;
     private GameObject _enemyRef;
     private Animator _animator;
-    [SerializeField] private GameObject weaponRef;
 
     private EnemyBaseState _currentState;
 

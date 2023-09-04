@@ -7,35 +7,39 @@ public class Room : MonoBehaviour
 {
     [SerializeField]
     private RoomConnector[] doors;
+
     [SerializeField]
     private RandomizedRoomObject[] randomObjects;
+
     [SerializeField]
     private GameObject fog;
+
     private RoomManager roomManager;
 
-    [Header("Minimap variables")]
-    [SerializeField]
+    [SerializeField, Header("Minimap variables")]
     private MinimapRoom minimapRoom;
 
     [SerializeField]
     private BoxCollider[] overlapColliders;
-    private List<RoomTrigger> triggers = new List<RoomTrigger>();
-    private List<RoomOverlapTrigger> fogTriggers = new List<RoomOverlapTrigger>();
 
-    [Header("Enemies")]
-    [SerializeField]
+    [SerializeField, Header("Enemies")]
     private List<EnemySpawner> spawners = new List<EnemySpawner>();
+
     [SerializeField]
     private List<GameObject> spawnedEnemies = new List<GameObject>();
+
     [SerializeField]
     private bool isInitialized = false;
+
     [SerializeField]
     private bool isBeaten = false;
 
     [SerializeField]
     private Transform spawnPoint;
-    private GameObject player;
 
+    private GameObject player;
+    private List<RoomTrigger> triggers = new List<RoomTrigger>();
+    private List<RoomOverlapTrigger> fogTriggers = new List<RoomOverlapTrigger>();
     private RoomsDoneCounter roomsDoneCounter;
 
     [Serializable]

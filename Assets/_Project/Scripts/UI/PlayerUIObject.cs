@@ -6,11 +6,20 @@ using UnityEngine.UI;
 
 public class PlayerUIObject : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI rifleName;
-    [SerializeField] private TextMeshProUGUI magazineLeft;
-    [SerializeField] private GameObject reloadingGameObject;
-    [SerializeField] private Image reloadingImage;
-    [SerializeField] private TextMeshProUGUI noAmmoLeftGameObject;
+    [SerializeField] 
+    private TextMeshProUGUI rifleName;
+
+    [SerializeField] 
+    private TextMeshProUGUI magazineLeft;
+
+    [SerializeField]
+    private GameObject reloadingGameObject;
+
+    [SerializeField]
+    private Image reloadingImage;
+
+    [SerializeField] 
+    private TextMeshProUGUI noAmmoLeftGameObject;
 
     public TextMeshProUGUI GetRifleName()
     {

@@ -3,7 +3,9 @@ using UnityEngine;
 
 public abstract class BlakeCharacter : MonoBehaviour, IDamageable
 {
-    [SerializeField] protected int health = 1;
+    [SerializeField]
+    protected int health = 1;
+
     public int Health
     {
         get => health;
@@ -17,8 +19,11 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         }
     }
 
-    [SerializeField] protected GameObject explosionParticle;
-    [SerializeField] protected Animator animator;
+    [SerializeField] 
+    protected GameObject explosionParticle;
+
+    [SerializeField] 
+    protected Animator animator;
 
     protected GameObject explosionParticleInstantiated;
     protected int defaultHealth;

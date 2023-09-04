@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class EnemyCharacter : BlakeCharacter
 {
-    private EnemyAIManager ai;
     [SerializeField]
     private GameObject weaponPickup;
+
+    private EnemyAIManager ai;
 
     private void Awake()
     {

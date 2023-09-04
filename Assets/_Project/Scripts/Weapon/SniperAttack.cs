@@ -3,11 +3,15 @@ using Random = UnityEngine.Random;
 
 public class SniperAttack : MonoBehaviour, IAttack
 {
-    [Tooltip("Declares how often player can shoot")]
-    [SerializeField] private float timeBetweenShooting;
-    [Tooltip("Declares range of bullet spawn, while player is moving")]
-    [SerializeField] private float spread;
-    [SerializeField] private float spreadTreshold = 5f;
+    [SerializeField, Tooltip("Declares how often player can shoot")]
+    private float timeBetweenShooting;
+
+    [SerializeField, Tooltip("Declares range of bullet spawn, while player is moving")]
+    private float spread;
+
+    [SerializeField] 
+    private float spreadTreshold = 5f;
+
     private Weapon usedWeapon;
     private Rigidbody _ownerRigidbodyRef;
 

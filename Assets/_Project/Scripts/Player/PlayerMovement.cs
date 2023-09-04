@@ -4,15 +4,22 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] 
+    private float playerSpeed;
+
+    [SerializeField]
+    private float dashForce;
+
+    [SerializeField]
+    private float dashCooldown;
+
+    [SerializeField]
+    private float dashDuration;
+
+    [SerializeField] 
+    private Transform gunHandlerTransform;
+
     private Camera cam;
-    
-    [SerializeField] private float playerSpeed;
-    [SerializeField] private float dashForce;
-    [SerializeField] private float dashCooldown;
-    [SerializeField] private float dashDuration;
-
-    [SerializeField] private Transform gunHandlerTransform;
-
     private Vector2 _movementAxis;
     private Vector2 _mousePosition;
     private float _angleRotationDifference;

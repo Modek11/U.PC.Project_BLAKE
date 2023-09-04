@@ -3,17 +3,35 @@ using UnityEngine;
 
 public class PlayerGameplayUIManager : MonoBehaviour
 {
-    [SerializeField] private FloorManager _floorManager;
-    [SerializeField] private MinimapCameraFollow minimapCamera;
-    [SerializeField] private RoomsDoneCounter roomsDoneCounter;
-    [Space]
-    [SerializeField] private TextMeshProUGUI weaponName;
-    [SerializeField] private TextMeshProUGUI bulletsLeft;
-    [SerializeField] private TextMeshProUGUI roomsCounter;
-    [SerializeField] private TextMeshProUGUI healthLeft;
-    [SerializeField] private GameObject interactUI;
-    [SerializeField] private GameObject mapUI;
-    [SerializeField] private GameObject dashCooldownUI;
+    [SerializeField]
+    private FloorManager _floorManager;
+
+    [SerializeField] 
+    private MinimapCameraFollow minimapCamera;
+
+    [SerializeField] 
+    private RoomsDoneCounter roomsDoneCounter;
+
+    [SerializeField, Space]
+    private TextMeshProUGUI weaponName;
+
+    [SerializeField]
+    private TextMeshProUGUI bulletsLeft;
+
+    [SerializeField]
+    private TextMeshProUGUI roomsCounter;
+
+    [SerializeField]
+    private TextMeshProUGUI healthLeft;
+
+    [SerializeField] 
+    private GameObject interactUI;
+
+    [SerializeField]
+    private GameObject mapUI;
+
+    [SerializeField] 
+    private GameObject dashCooldownUI;
     
     private GameObject player;
     private WeaponsManager _weaponsManager;
@@ -21,7 +39,7 @@ public class PlayerGameplayUIManager : MonoBehaviour
     private BlakeCharacter blakeCharacter;
     private PlayerMovement _playerMovement;
 
-    private bool isMapShown = false;
+    //private bool isMapShown = false;
     
     private void Start()
     {

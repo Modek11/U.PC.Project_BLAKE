@@ -6,6 +6,7 @@ public class MinimapCameraFollow : MonoBehaviour
 {
     [SerializeField]
     private Transform playerTransform;
+
     [SerializeField]
     private float playerOffset = 10f;
 

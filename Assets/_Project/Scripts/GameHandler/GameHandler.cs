@@ -4,7 +4,8 @@ public class GameHandler : MonoBehaviour
 {
     public static GameHandler Instance { get; private set; }
 
-    [SerializeField] private GameObject pausedGameCanvas;
+    [SerializeField]
+    private GameObject pausedGameCanvas;
 
     private void Awake()
     {

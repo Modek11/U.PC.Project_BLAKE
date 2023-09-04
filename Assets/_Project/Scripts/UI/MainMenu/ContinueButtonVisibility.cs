@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class ContinueButtonVisibility : MonoBehaviour
 {
-    [SerializeField] private GameObject blankSpacing;
-    [SerializeField] private GameObject continueButton;
+    [SerializeField]
+    private GameObject blankSpacing;
+
+    [SerializeField]
+    private GameObject continueButton;
     
     private bool _playerHasUnfinishedGame = false;
 

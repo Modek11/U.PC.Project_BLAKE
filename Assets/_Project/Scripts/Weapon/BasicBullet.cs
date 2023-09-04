@@ -4,11 +4,15 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(Rigidbody))]
 public class BasicBullet : MonoBehaviour, IBullet
 {
-    [SerializeField] private float bulletSpeed;
-    [Tooltip("Time after bullet will be destroyed")]
-    [SerializeField] private float destroyTime;
-    [Tooltip("How many enemies bullet should penetrate 0 = destroy at first kill")]
-    [SerializeField] private int penetrateAmount;
+    [SerializeField]
+    private float bulletSpeed;
+
+    [SerializeField, Tooltip("Time after bullet will be destroyed")]
+    private float destroyTime;
+
+    [SerializeField, Tooltip("How many enemies bullet should penetrate 0 = destroy at first hit")]
+    private int penetrateAmount;
+
     private Rigidbody rb;
 
     public GameObject _instigator;

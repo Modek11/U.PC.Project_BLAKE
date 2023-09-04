@@ -16,6 +16,4 @@ public class GameplayElementsHandler : MonoBehaviour
     {
         GameHandler.Instance.ClosePausedGameCanvas();
     }
-    
-    
 }

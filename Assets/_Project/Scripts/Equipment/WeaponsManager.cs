@@ -6,11 +6,12 @@ using System.Linq;
 
 public class WeaponsManager : MonoBehaviour
 {
+    [SerializeField]
+    private List<GameObject> attachSockets = new List<GameObject>();
+
     public event Action changeWeaponEvent;
     public event Action onPlayerPickupWeaponEvent;
     public event Action onSuccessfulShotEvent;
-
-    [SerializeField] private List<GameObject> attachSockets = new List<GameObject>();
 
     private int capacity = 2;
     public int Capacity

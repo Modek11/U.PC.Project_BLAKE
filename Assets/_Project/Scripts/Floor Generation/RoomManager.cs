@@ -5,6 +5,7 @@ using UnityEngine;
 public class RoomManager : MonoBehaviour
 {
     private Room activeRoom;
+
     [SerializeField]
     private Transform minimapFloor;
 

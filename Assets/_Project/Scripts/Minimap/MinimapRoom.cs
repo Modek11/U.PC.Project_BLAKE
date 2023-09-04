@@ -15,10 +15,13 @@ public class MinimapRoom : MonoBehaviour
 
     [SerializeField]
     private Material minimapUnseen;
+
     [SerializeField]
     private Material minimapNotVisited;
+
     [SerializeField]
     private Material minimapVisiting;
+
     [SerializeField]
     private Material minimapVisited;
 

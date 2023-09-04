@@ -3,9 +3,14 @@ using UnityEngine;
 
 public class WeaponPickup : Interactable
 {
-    [SerializeField] private WeaponDefinition weaponToPickup;
-    [SerializeField] private GameObject pickupGameObject;
-    [SerializeField] private float rotateForce = 12f;
+    [SerializeField] 
+    private WeaponDefinition weaponToPickup;
+
+    [SerializeField] 
+    private GameObject pickupGameObject;
+
+    [SerializeField] 
+    private float rotateForce = 12f;
 
     public int ammo = -1;
     private GameObject weaponGFX;

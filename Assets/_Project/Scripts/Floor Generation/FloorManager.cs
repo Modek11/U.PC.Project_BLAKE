@@ -7,10 +7,14 @@ public class FloorManager : MonoBehaviour
 {
     public event Action<Transform,Transform> FloorGeneratorEnd;
     
-    
-    [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private GameObject virtualCameraPrefab;
-    [SerializeField] private GameObject cameraFollowPrefab;
+    [SerializeField]
+    private GameObject playerPrefab;
+
+    [SerializeField]
+    private GameObject virtualCameraPrefab;
+
+    [SerializeField] 
+    private GameObject cameraFollowPrefab;
 
     private FloorGenerator floorGenerator;
     private GameObject player;
