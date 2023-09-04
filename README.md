@@ -10,6 +10,9 @@ public bool IsInvincible;
 private bool isDead;
 private float currentHealth;
 
+[SerializeField]
+GameObject sword;
+
 // parameters
 public void InflictDamage(float damage, bool isSpecialDamage)
 {
@@ -20,6 +23,18 @@ public void InflictDamage(float damage, bool isSpecialDamage)
     if (isSpecialDamage)
     {
     	totalDamage *= DamageMultiplier;
+    }
+}
+
+// null checks
+public void Attack()
+{
+    if(sword == null) return;
+
+    //instead of
+    if(sword != null
+    {
+        //...
     }
 }
 </code></pre>
