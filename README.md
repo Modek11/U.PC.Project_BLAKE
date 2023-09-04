@@ -11,7 +11,7 @@ private bool isDead;
 private float currentHealth;
 
 [SerializeField]
-GameObject sword;
+private GameObject sword;
 
 // parameters
 public void InflictDamage(float damage, bool isSpecialDamage)
@@ -26,15 +26,23 @@ public void InflictDamage(float damage, bool isSpecialDamage)
     }
 }
 
-// null checks
+// avoid nested if statements
 public void Attack()
 {
     if(sword == null) return;
 
-    //instead of
-    if(sword != null
+    if(sword.durability > 0f)
     {
         //...
+    }
+
+    //instead of
+    if(sword != null)
+    {
+        if(sword.durability > 0f)
+        {
+            //...
+        }
     }
 }
 </code></pre>
