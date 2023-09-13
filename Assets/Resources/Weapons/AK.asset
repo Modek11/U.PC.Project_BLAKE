@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a982e479cb5e0ef4e9da5465e69574b3, type: 3}
+  m_Name: AK
+  m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 7401586004226700553, guid: 77c4cb7c3f169fc4cbd0c1d446416edb,
+    type: 3}
+  weaponName: AK
+  magazineSize: 30
+  attachSocketName: GunHandler
+  locationOffset: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0, w: 0}
+  scale: {x: 1, y: 1, z: 1}
+  weaponGFX: {fileID: 5910270999838478548, guid: 0943b93d3984d8e4b80bc04d8ee71647,
+    type: 3}
+  pickupLocationOffset: {x: 0, y: 0, z: 0}
+  pickupRotation: {x: 0, y: 0, z: 0, w: 0}

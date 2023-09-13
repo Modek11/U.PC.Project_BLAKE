@@ -3,23 +3,27 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Sensor
+  - Enemy
+  - Bullet
+  - Wall
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - RoomOverlap
   - Water
   - UI
+  - Bullet
+  - Player
+  - Obstacle
+  - Enemy
+  - EnemyPOVBlock
+  - Floor
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Minimap
   - 
   - 
   - 

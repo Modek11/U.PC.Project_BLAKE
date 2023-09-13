@@ -1,0 +1,52 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+//using UnityEditor.EditorTools;
+using UnityEngine;
+
+public class RoomTrigger : MonoBehaviour
+{
+    private Room parent;
+    private RoomManager roomManager;
+    private bool playerInside = false;
+
+    private void Awake()
+    {
+        parent = GetComponentInParent<Room>();
+        parent.AddTrigger(this);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (roomManager == null) roomManager = parent.GetRoomManager();
+        if (other.CompareTag("Player"))
+        {
+            parent.SetPlayer(other.gameObject);
+            parent.EnterRoom();
+            playerInside = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInside = false;
+            parent.ExitRoom();
+        }
+    }
+
+    public bool IsPlayerInside()
+    {
+        return playerInside;
+    }
+
+    public void Reset()
+    {
+        playerInside = false;
+    }
+}

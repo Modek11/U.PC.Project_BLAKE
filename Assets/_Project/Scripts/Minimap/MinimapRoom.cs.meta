@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e7642e6692acc93459b9ecdeb7b3352b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - minimapUnseen: {fileID: 2100000, guid: ad6ebfd514b34cc45a4006d46c8b10bc, type: 2}
+  - minimapNotVisited: {fileID: 2100000, guid: 6cc7b06aec1548c4aa1c5d6aee3100af, type: 2}
+  - minimapVisiting: {fileID: 2100000, guid: a7f32e5e111df224ebe8b86f7ff53f42, type: 2}
+  - minimapVisited: {fileID: 2100000, guid: 33999adafc446f944ab7bdfa6b374395, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

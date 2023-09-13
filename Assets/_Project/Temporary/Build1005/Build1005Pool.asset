@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aac6368008f71cc469eb16fde59f9888, type: 3}
+  m_Name: Build1005Pool
+  m_EditorClassIdentifier: 
+  room:
+  - {fileID: 2432045642382663715, guid: ea13b4dbe208e774d8b71dc5a101696b, type: 3}
+  - {fileID: 5805902258553648630, guid: 4c26c7d8c5e7d1b4b83def9b28f7b99d, type: 3}
+  - {fileID: 7942425148094776192, guid: e9918477bdf7b694c96fec702a10068f, type: 3}
