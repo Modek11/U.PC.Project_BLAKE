@@ -18,6 +18,7 @@ namespace MBT
 
         void Update()
         {
+            monoBehaviourTree.Test();
             monoBehaviourTree.Tick();
         }
 

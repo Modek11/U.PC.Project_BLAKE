@@ -1,5 +1,8 @@
+using MBT;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using static EnemyFOV;
 
 [RequireComponent(typeof(BlakeCharacter))]
 public class EnemyAIManager : MonoBehaviour
@@ -7,12 +10,17 @@ public class EnemyAIManager : MonoBehaviour
     [SerializeField]
     private GameObject weaponRef;
 
-    private NavMeshAgent _navMeshAgent;
+    [HideInInspector]
+    public NavMeshAgent navMeshAgent;
+
     private GameObject _playerRef;
     private GameObject _enemyRef;
     private Animator _animator;
 
     private EnemyBaseState _currentState;
+
+    public CombatStateReference combatStateReference;
+    public BoolReference hasLineOfSightReference;
 
     public EnemyPatrolState PatrolState;
     public EnemyChaseState ChaseState;
@@ -24,27 +32,29 @@ public class EnemyAIManager : MonoBehaviour
 
     private void Awake()
     {
-        _navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
         _playerRef = GameObject.FindGameObjectWithTag("Player");
         _enemyRef = gameObject;
         _animator = GetComponent<Animator>();
         GetComponent<BlakeCharacter>().onDeath += Die;
+        GetComponent<EnemyFOV>().onCanSeePlayerChanged += OnCanSeePlayerChanged;
     }
 
     private void Die()
     {
         this.enabled = false;
-        _navMeshAgent.isStopped = true;
+        navMeshAgent.isStopped = true;
+        GetComponent<MBTExecutor>().enabled = false;
         //_navMeshAgent.enabled = false;
     }
 
     private void OnEnable()
     {
-        PatrolState = new EnemyPatrolState(_navMeshAgent, this);
+        PatrolState = new EnemyPatrolState(navMeshAgent, this);
 
-        ChaseState = new EnemyChaseState(_navMeshAgent, this);
+        ChaseState = new EnemyChaseState(navMeshAgent, this);
 
-        AttackState = new EnemyAttackState(_navMeshAgent, this);
+        AttackState = new EnemyAttackState(navMeshAgent, this);
 
         //StrafeState = new EnemyStrafeState(_navMeshAgent, this);
 
@@ -52,18 +62,17 @@ public class EnemyAIManager : MonoBehaviour
 
     private void Start()
     {
-        _currentState = PatrolState;
-        _currentState.EnterState();
-
+        //_currentState = PatrolState;
+        //_currentState.EnterState();
     }
 
     private void Update()
     {
-        _currentState.UpdateState();
+        //_currentState.UpdateState();
         FaceThePlayer();
 
-        _animator.SetFloat("Direction", BlakeAnimatorHelper.CalculateDirection(_navMeshAgent.velocity, transform));
-        _animator.SetFloat("Speed", _navMeshAgent.velocity.magnitude);
+        _animator.SetFloat("Direction", BlakeAnimatorHelper.CalculateDirection(navMeshAgent.velocity, transform));
+        _animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
     }
 
     public void UpdatePlayerRef()
@@ -92,10 +101,32 @@ public class EnemyAIManager : MonoBehaviour
         Vector3 direction = (_playerRef.transform.position - _enemyRef.transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
 
-        if (_currentState != PatrolState)
+        if (combatStateReference.GetVariable().Value != CombatState.Patrol)
         {
             _enemyRef.transform.rotation = Quaternion.Slerp(_enemyRef.transform.rotation, lookRotation, Time.deltaTime * 3f);
         }
+    }
+
+    private void OnCanSeePlayerChanged(bool newCanSeePlayer)
+    {
+        hasLineOfSightReference.Value = newCanSeePlayer;
+        if (newCanSeePlayer)
+        {
+            combatStateReference.GetVariable().Value = CombatState.Chase;
+            if (IsInvoking("ClearPlayerFocus"))
+            {
+                CancelInvoke("ClearPlayerFocus");
+            }
+        }
+        else
+        {
+            Invoke("ClearPlayerFocus", 6f);
+        }
+    }
+
+    private void ClearPlayerFocus()
+    {
+        combatStateReference.GetVariable().Value = CombatState.Patrol;
     }
 
     public GameObject GetPlayerRef()

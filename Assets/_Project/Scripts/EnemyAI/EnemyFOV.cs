@@ -13,6 +13,9 @@ public class EnemyFOV : MonoBehaviour
 
     public bool canSeePlayer;
 
+    public delegate void OnCanSeePlayerChanged(bool newCanSeePlayer);
+    public event OnCanSeePlayerChanged onCanSeePlayerChanged;
+
     private void Awake()
     {
         FindPlayer();
@@ -42,17 +45,21 @@ public class EnemyFOV : MonoBehaviour
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
                 if (!Physics.Raycast(transform.position + new Vector3(0, 3f, 0), directionToTarget, distanceToTarget, obstacleMask))
-                    canSeePlayer = true;
-                else
-                    canSeePlayer = false;
-
+                {
+                    if (!canSeePlayer)
+                    {
+                        canSeePlayer = true;
+                        onCanSeePlayerChanged.Invoke(canSeePlayer);
+                    }
+                    return;
+                }
             }
-            else
-                canSeePlayer = false;
-
         }
-        else if (canSeePlayer)
+        if (canSeePlayer)
+        {
             canSeePlayer = false;
+            onCanSeePlayerChanged.Invoke(canSeePlayer);
+        }
 
     }
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Unity.Profiling;
+using static MBT.MonoBehaviourTree;
 
 namespace MBT
 {
@@ -28,6 +29,9 @@ namespace MBT
         private List<Node> executionLog;
         private List<Decorator> interruptingNodes = new List<Decorator>();
         public float LastTick { get; private set; }
+
+        public delegate void OnBehavioutTreeFinished();
+        public event OnBehavioutTreeFinished onBehavioutTreeFinished;
 
         void Awake()
         {
@@ -55,6 +59,11 @@ namespace MBT
                 n.behaviourTree = masterTree;
                 n.runningNodeResult = new NodeResult(Status.Running, n);
             }
+        }
+
+        public void Test()
+        {
+            onBehavioutTreeFinished?.Invoke();
         }
 
         private void EvaluateInterruptions()
@@ -95,8 +104,11 @@ namespace MBT
             }
             
             int nodeIndex = abortingNode.runtimePriority - 1;
+            nodeIndex = Math.Max(0, nodeIndex);
+
             // Sanity check
-            if (abortingNode != executionLog[nodeIndex]) {
+            if (abortingNode != executionLog[nodeIndex])
+            {
                 Debug.LogWarning("Priority of node does not match with exectuion log");
             }
             // Abort nodes in log
@@ -172,7 +184,7 @@ namespace MBT
                     executionStack.RemoveAt(executionStack.Count - 1);
                 }
             }
-            
+
             // Run this when execution stack is empty and BT should repeat
             if (repeatOnFinish) {
                 Restart();
