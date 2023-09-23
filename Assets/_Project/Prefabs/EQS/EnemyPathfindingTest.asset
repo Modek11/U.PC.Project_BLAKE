@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyPathfindingTest
   m_EditorClassIdentifier: 
   IsActive: 1
-  ScaleFactor: 1
+  ScaleFactor: -1
   ScoringEquation: 0
-  PathFindingType: 0
-  Target: {fileID: 0}
+  PathFindingType: 1
+  Target: {fileID: 7790469361782224641, guid: 20caf66ddd7209d4291d40715d756be9, type: 3}

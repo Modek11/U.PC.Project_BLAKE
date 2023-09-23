@@ -15,5 +15,6 @@ MonoBehaviour:
   IsActive: 1
   ScaleFactor: 1
   ScoringEquation: 0
-  DistanceTo: {fileID: 7790469361782224641, guid: 20caf66ddd7209d4291d40715d756be9,
-    type: 3}
+  DistanceTo: {fileID: 0}
+  MinDistance: 0.4
+  MaxDistance: 14

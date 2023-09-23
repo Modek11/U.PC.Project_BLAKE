@@ -15,8 +15,7 @@ MonoBehaviour:
   IsActive: 1
   ScaleFactor: 1
   ScoringEquation: 0
-  traceType: 0
-  TraceFrom: {fileID: 7790469361782224641, guid: 20caf66ddd7209d4291d40715d756be9,
-    type: 3}
-  ItemHeightOffset: 0.4
-  TargetHeightOffset: 0.4
+  traceType: 1
+  TraceFrom: {fileID: 0}
+  ItemHeightOffset: 0
+  TargetHeightOffset: 0
