@@ -25,8 +25,10 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
     [SerializeField] 
     protected Animator animator;
 
+#if UNITY_EDITOR
     [SerializeField]
     private bool godMode;
+#endif
 
     protected GameObject explosionParticleInstantiated;
     protected int defaultHealth;
@@ -63,7 +65,9 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
 
     public virtual void TakeDamage(GameObject instigator, int damage)
     {
+#if UNITY_EDITOR
         if (godMode) return;
+#endif
         if (onDamageTakenCounter > 0) return;
         if (health < 1) { return; }
 

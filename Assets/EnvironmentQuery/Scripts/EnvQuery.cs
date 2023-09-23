@@ -58,20 +58,25 @@ public class EnvQuery : MonoBehaviour
 		envQueryItemsBacking = envQueryItems.GetRange(0, envQueryItems.Count);
 	}
 
-	void Update()
+    //void Update()
+    //{
+		//RunEQSQuery();
+    //}
+
+    public void RunEQSQuery()
 	{
-		ResetScore();
-		foreach(EnvQueryItem item in envQueryItems)
-		{
-			item.UpdateNavMeshProjection();
-		}
-		for(int currentTest = 0; currentTest < EnvQueryTests.Count; currentTest++)
-		{
-			EnvQueryTests[currentTest].RunTest(currentTest, envQueryItems);
-			EnvQueryTests[currentTest].NormalizeItemScores(currentTest, envQueryItems);
-		}
-		FinalizeQuery();
-	}
+        ResetScore();
+        foreach (EnvQueryItem item in envQueryItems)
+        {
+            item.UpdateNavMeshProjection();
+        }
+        for (int currentTest = 0; currentTest < EnvQueryTests.Count; currentTest++)
+        {
+            EnvQueryTests[currentTest].RunTest(currentTest, envQueryItems);
+            EnvQueryTests[currentTest].NormalizeItemScores(currentTest, envQueryItems);
+        }
+        FinalizeQuery();
+    }
 
 	private void ResetScore()
 	{
@@ -125,19 +130,19 @@ public class EnvQuery : MonoBehaviour
 #if UNITY_EDITOR
 	private void OnDrawGizmos()
 	{
-		if(isActiveAndEnabled && envQueryItems != null)
+		if (isActiveAndEnabled && envQueryItems != null)
 		{
-			foreach(EnvQueryItem item in envQueryItems)
+			foreach (EnvQueryItem item in envQueryItems)
 			{
-				if(item.IsValid)
+				if (item.IsValid)
 				{
-					Gizmos.color = Color.HSVToRGB((item.Score/2.0f), 1.0f, 1.0f);
+					Gizmos.color = Color.HSVToRGB((item.Score / 2.0f), 1.0f, 1.0f);
 					Gizmos.DrawWireSphere(item.GetWorldPosition(), 0.25f);
 					UnityEditor.Handles.Label(item.GetWorldPosition(), item.Score.ToString());
 				}
 			}
 		}
-		if(isActiveAndEnabled && BestResult != null)
+		if (isActiveAndEnabled && BestResult != null)
 		{
 			Gizmos.color = Color.blue;
 			Gizmos.DrawSphere(BestResult.GetWorldPosition(), 0.25f);

@@ -1,5 +1,4 @@
 using MBT;
-using UnityEditor.Search;
 using UnityEngine;
 
 [AddComponentMenu("")]
@@ -13,15 +12,11 @@ public class BTT_RunEQSQuery : Leaf
     {
         if (EQSQuery == null) return NodeResult.failure;
 
-        if(!EQSQuery.enabled)
-        {
-            EQSQuery.enabled = true;
-        }
+        EQSQuery.RunEQSQuery();
 
         if (EQSQuery != null && EQSQuery.BestResult != null)
         {
             AimLocationReference.Value = EQSQuery.BestResult.GetWorldPosition();
-            EQSQuery.enabled = false;
             return NodeResult.success;
         }
 

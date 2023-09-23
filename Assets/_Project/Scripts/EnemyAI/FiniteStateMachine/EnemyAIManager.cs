@@ -120,7 +120,7 @@ public class EnemyAIManager : MonoBehaviour
         }
         else
         {
-            Invoke("ClearPlayerFocus", 6f);
+            Invoke("ClearPlayerFocus", 10f);
         }
     }
 
