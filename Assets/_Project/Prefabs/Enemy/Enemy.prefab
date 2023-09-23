@@ -3483,6 +3483,7 @@ MonoBehaviour:
   explosionParticle: {fileID: 6361431522622511341, guid: 12d7691791b971b41b6074506d2a114d,
     type: 3}
   animator: {fileID: 4250661716291628411}
+  godMode: 0
   weaponPickup: {fileID: 2250193661021338515, guid: 533ffb6a79d6ba94ca899689f9df94f3,
     type: 3}
 --- !u!114 &3069750451913799309
@@ -4250,11 +4251,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GeneratorType: 0
   CenterOfItems: {fileID: 0}
-  Radius: 9
-  SpaceBetween: 3
+  Radius: 15
+  SpaceBetween: 5
   EnvQueryTests:
   - {fileID: 11400000, guid: 9bfac3242f707aa40b96e49c0a47fb30, type: 2}
   - {fileID: 11400000, guid: 699e8d26807635b4fae2bae2eaf834e6, type: 2}
+  - {fileID: 11400000, guid: b0883504fdd02ce45ac08adab689a4e0, type: 2}
 --- !u!114 &-3707185606851980299
 MonoBehaviour:
   m_ObjectHideFlags: 0
