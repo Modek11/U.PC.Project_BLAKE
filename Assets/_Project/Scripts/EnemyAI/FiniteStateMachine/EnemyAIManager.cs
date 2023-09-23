@@ -98,12 +98,12 @@ public class EnemyAIManager : MonoBehaviour
             return;
         }
 
-        Vector3 direction = (_playerRef.transform.position - _enemyRef.transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-
         if (combatStateReference.GetVariable().Value != CombatState.Patrol)
         {
-            _enemyRef.transform.rotation = Quaternion.Slerp(_enemyRef.transform.rotation, lookRotation, Time.deltaTime * 3f);
+            Vector3 direction = (_playerRef.transform.position - _enemyRef.transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+            
+            _enemyRef.transform.rotation = Quaternion.Slerp(_enemyRef.transform.rotation, lookRotation, Time.deltaTime * 40f);
         }
     }
 
