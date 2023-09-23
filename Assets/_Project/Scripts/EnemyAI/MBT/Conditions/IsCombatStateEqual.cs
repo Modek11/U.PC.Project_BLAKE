@@ -36,7 +36,7 @@ public class IsCombatStateEqual : Condition
     private void OnVariableChange(CombatState oldValue, CombatState newValue)
     {
         //behaviourTree.onTick += () => EvaluateConditionAndTryAbort(abort);
-        behaviourTree.onBehavioutTreeFinished += () => EvaluateConditionAndTryAbort(abort);
+        //behaviourTree.onBehavioutTreeFinished += () => EvaluateConditionAndTryAbort(abort);
 
     }
 
