@@ -3322,13 +3322,16 @@ GameObject:
   - component: {fileID: 7161793314436595745}
   - component: {fileID: 6344856036324573767}
   - component: {fileID: 323183005275120560}
-  - component: {fileID: 1769657357718738665}
   - component: {fileID: -669197665866827864}
   - component: {fileID: 4966832978454690114}
   - component: {fileID: -7220201294149938652}
   - component: {fileID: -8730212179625630551}
   - component: {fileID: -1520097375117448222}
-  - component: {fileID: -1555613163562910582}
+  - component: {fileID: -6067202371559989259}
+  - component: {fileID: -1274732412291600798}
+  - component: {fileID: -5309661277522524817}
+  - component: {fileID: -3707185606851980299}
+  - component: {fileID: 2611339117920508267}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -3693,13 +3696,13 @@ MonoBehaviour:
   title: Attack
   rect:
     serializedVersion: 2
-    x: 603
+    x: 600
     y: 300
     width: 160
     height: 45
   parent: {fileID: -8901199169982741344}
   children:
-  - {fileID: -669197665866827864}
+  - {fileID: -1274732412291600798}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -3899,8 +3902,8 @@ MonoBehaviour:
   title: FindPositionAroundTarget
   rect:
     serializedVersion: 2
-    x: -160
-    y: 480
+    x: -163
+    y: 479
     width: 160
     height: 59
   parent: {fileID: 7161793314436595745}
@@ -3940,7 +3943,7 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   AcceptableDistance: 1
-  MoveSpeed: 5
+  MoveSpeed: 12
   LocationReference:
     useConstant: 0
     mode: 0
@@ -4021,37 +4024,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: HasLineOfSight
   val: 0
---- !u!114 &1769657357718738665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7446312994107534779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18c2f80692ccbe2488e0ff419e74f450, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: SetCombatState
-  rect:
-    serializedVersion: 2
-    x: 760
-    y: 464
-    width: 160
-    height: 45
-  parent: {fileID: 0}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  combatStateReference:
-    useConstant: 0
-    mode: 0
-    blackboard: {fileID: 2944841440345444223}
-    key: CombatState
-    constantValue: 0
-  NewCombatState: 3
 --- !u!114 &-669197665866827864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4067,13 +4039,14 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: 600
-    y: 380
+    x: 597
+    y: 503
     width: 160
     height: 45
-  parent: {fileID: -1019468932509090006}
+  parent: {fileID: -6067202371559989259}
   children:
-  - {fileID: -1555613163562910582}
+  - {fileID: -3707185606851980299}
+  - {fileID: 2611339117920508267}
   - {fileID: 4966832978454690114}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -4094,8 +4067,8 @@ MonoBehaviour:
   title: Wait
   rect:
     serializedVersion: 2
-    x: 597
-    y: 464
+    x: 780
+    y: 615
     width: 160
     height: 45
   parent: {fileID: -669197665866827864}
@@ -4108,8 +4081,8 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 0.4
-  randomDeviation: 0
+    constantValue: 0.5
+  randomDeviation: 0.2
   continueOnRestart: 0
 --- !u!114 &-7220201294149938652
 MonoBehaviour:
@@ -4201,7 +4174,7 @@ MonoBehaviour:
     key: CombatState
     constantValue: 0
   NewCombatState: 1
---- !u!114 &-1555613163562910582
+--- !u!114 &-6067202371559989259
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4210,14 +4183,95 @@ MonoBehaviour:
   m_GameObject: {fileID: 7446312994107534779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6fdb1a107f9ca94a8f7e328f3eb90b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 056841afaed742d4e909e76361b5173f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: PrimaryAttack
+  title: Repeater
   rect:
     serializedVersion: 2
-    x: 423
-    y: 471
+    x: 598
+    y: 439
+    width: 160
+    height: 45
+  parent: {fileID: -1274732412291600798}
+  children:
+  - {fileID: -669197665866827864}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  loops: 1
+  infinite: 1
+--- !u!114 &-1274732412291600798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7446312994107534779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acc027ff22b505f4ca6794ddda989f17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Shoot
+  rect:
+    serializedVersion: 2
+    x: 599
+    y: 371
+    width: 160
+    height: 45
+  parent: {fileID: -1019468932509090006}
+  children:
+  - {fileID: -6067202371559989259}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  interval: 0.4
+  randomDeviation: 0
+  callOnEnter: 1
+  HasLineOfSightReference:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 2944841440345444223}
+    key: HasLineOfSight
+    constantValue: 0
+  AIController: {fileID: 4250661716291628405}
+--- !u!114 &-5309661277522524817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7446312994107534779}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306c2d7d1b074634a853b81796e6df8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GeneratorType: 0
+  CenterOfItems: {fileID: 0}
+  Radius: 9
+  SpaceBetween: 3
+  EnvQueryTests:
+  - {fileID: 11400000, guid: 9bfac3242f707aa40b96e49c0a47fb30, type: 2}
+  - {fileID: 11400000, guid: 699e8d26807635b4fae2bae2eaf834e6, type: 2}
+--- !u!114 &-3707185606851980299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7446312994107534779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2c678be291449840a7ad2525c522181, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Run EQS query
+  rect:
+    serializedVersion: 2
+    x: 409
+    y: 612
     width: 160
     height: 45
   parent: {fileID: -669197665866827864}
@@ -4225,14 +4279,46 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
-  CombatStateReference:
+  EQSQuery: {fileID: -5309661277522524817}
+  AimLocationReference:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 2944841440345444223}
-    key: CombatState
-    constantValue: 0
+    key: AimLocation
+    constantValue: {x: 0, y: 0, z: 0}
+--- !u!114 &2611339117920508267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7446312994107534779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62eb78dd8618e62499b26b385c7aea5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Move To
+  rect:
+    serializedVersion: 2
+    x: 596
+    y: 615
+    width: 160
+    height: 45
+  parent: {fileID: -669197665866827864}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  AcceptableDistance: 1
+  MoveSpeed: 12
+  LocationReference:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 2944841440345444223}
+    key: AimLocation
+    constantValue: {x: 0, y: 0, z: 0}
   AIController: {fileID: 4250661716291628405}
-  WeaponRangeMultipler: 1.2
 --- !u!1 &7728173451198980118
 GameObject:
   m_ObjectHideFlags: 0

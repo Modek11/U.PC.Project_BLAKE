@@ -4,7 +4,7 @@ using UnityEngine;
 
 [AddComponentMenu("")]
 [MBTNode(name = "Tasks/FindPositionAroundTarget")]
-public class FindPositionAroundTarget : Leaf
+public class BTT_FindPositionAroundTarget : Leaf
 {
     public EnemyAIManager AIController;
     public Vector3Reference vector3Reference;

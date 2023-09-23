@@ -4,7 +4,7 @@ using UnityEngine;
 
 [AddComponentMenu("")]
 [MBTNode(name = "Tasks/SetCombatState")]
-public class SetCombatState : Leaf
+public class BTT_SetCombatState : Leaf
 {
     public CombatStateReference combatStateReference = new CombatStateReference();
     public CombatState NewCombatState = CombatState.Strafe;

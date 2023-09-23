@@ -4,7 +4,7 @@ using UnityEngine;
 
 [AddComponentMenu("")]
 [MBTNode(name = "Conditions/Is Combat State Equal")]
-public class IsCombatStateEqual : Condition
+public class BTD_IsCombatStateEqual : Condition
 {
     public Abort abort;
     public bool invert = false;

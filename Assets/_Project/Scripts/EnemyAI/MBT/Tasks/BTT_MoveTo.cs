@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 [AddComponentMenu("")]
 [MBTNode(name = "Tasks/Move To")]
-public class MoveTo : Leaf
+public class BTT_MoveTo : Leaf
 {
     public float AcceptableDistance = 1f;
     public float MoveSpeed = 5f;

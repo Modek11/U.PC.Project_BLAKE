@@ -112,7 +112,7 @@ public class EnemyAIManager : MonoBehaviour
         hasLineOfSightReference.Value = newCanSeePlayer;
         if (newCanSeePlayer)
         {
-            combatStateReference.GetVariable().Value = CombatState.Chase;
+            combatStateReference.GetVariable().Value = CombatState.Attack;
             if (IsInvoking("ClearPlayerFocus"))
             {
                 CancelInvoke("ClearPlayerFocus");

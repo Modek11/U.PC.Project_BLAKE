@@ -3,7 +3,7 @@ using UnityEngine;
 
 [AddComponentMenu("")]
 [MBTNode(name = "Tasks/Next Waypoint")]
-public class NextWaypoint : Leaf
+public class BTT_NextWaypoint : Leaf
 {
     public EnemyAIManager enemyAIManager;
     private int _waypointIndex = 0;

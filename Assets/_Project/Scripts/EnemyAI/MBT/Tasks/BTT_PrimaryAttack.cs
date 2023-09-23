@@ -2,8 +2,8 @@ using MBT;
 using UnityEngine;
 
 [AddComponentMenu("")]
-[MBTNode(name = "Tasks/PrimaryAttack")]
-public class PrimaryAttack : Leaf
+[MBTNode(name = "Tasks/Primary attack")]
+public class BTT_PrimaryAttack : Leaf
 {
     public CombatStateReference CombatStateReference;
     public EnemyAIManager AIController;
