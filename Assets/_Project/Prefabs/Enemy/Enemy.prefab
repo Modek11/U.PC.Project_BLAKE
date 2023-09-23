@@ -4256,7 +4256,6 @@ MonoBehaviour:
   EnvQueryTests:
   - {fileID: 11400000, guid: 9bfac3242f707aa40b96e49c0a47fb30, type: 2}
   - {fileID: 11400000, guid: 699e8d26807635b4fae2bae2eaf834e6, type: 2}
-  - {fileID: 11400000, guid: b0883504fdd02ce45ac08adab689a4e0, type: 2}
 --- !u!114 &-3707185606851980299
 MonoBehaviour:
   m_ObjectHideFlags: 0
