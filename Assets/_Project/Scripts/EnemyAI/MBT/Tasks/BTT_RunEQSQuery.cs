@@ -10,17 +10,19 @@ public class BTT_RunEQSQuery : Leaf
 
     public override void OnEnter()
     {
-        EQSQuery.ResetQuery();
+        EQSQuery.PrepareQuery();
     }
 
     public override NodeResult Execute()
     {
         if (EQSQuery == null) return NodeResult.failure;
 
-        EQSQuery.Progress();
+        EQSQuery.ProgressQuery();
 
-        if (EQSQuery != null && EQSQuery.QueryStatus == EQSStatus.Finished && EQSQuery.BestResult != null)
+        if (EQSQuery != null && EQSQuery.QueryStatus == EQSStatus.Finished)
         {
+            if (EQSQuery.BestResult == null) return NodeResult.failure;
+
             AimLocationReference.Value = EQSQuery.BestResult.GetWorldPosition();
             return NodeResult.success;
         }

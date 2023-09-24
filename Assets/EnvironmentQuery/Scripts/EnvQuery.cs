@@ -2,7 +2,7 @@
 using UnityEngine;
 using NoAlloq;
 using System;
-using static UnityEditor.Progress;
+using System.Threading.Tasks;
 using System.Diagnostics;
 
 /**
@@ -29,13 +29,20 @@ public class EnvQuery : MonoBehaviour
 	private List<EnvQueryItem> envQueryItems;
 	private List<EnvQueryItem> envQueryItemsBacking;
 
-	public Action Progress;
+    [SerializeField]
+    private int maxWorkMiliseconds = 2;
+
+    [SerializeField]
+    private bool startNextStepImmediately = false;
+
+    [HideInInspector]
+    public EQSStatus QueryStatus;
+
+    public Action ProgressQuery;
 	private int index;
-
-	public EQSStatus QueryStatus;
-
-	private float minScore1;
-	private float maxScore1;
+	private Stopwatch stopwatch = new Stopwatch();
+    private float minScore;
+	private float maxScore;
 
 	void Start()
 	{
@@ -74,18 +81,18 @@ public class EnvQuery : MonoBehaviour
 		//RunEQSQuery();
     //}
 
-	public void ResetQuery()
+	public void PrepareQuery()
 	{
 		QueryStatus = EQSStatus.Running;
         index = 0;
-		Progress = new Action(ResetScore1);
+		ProgressQuery = new Action(ResetScoreWithTimeGuard);
     }
 
-	public void ResetScore1()
+	public void ResetScoreWithTimeGuard()
 	{
-		Stopwatch stopwatch = Stopwatch.StartNew();
+		stopwatch.Restart();
 
-		while(index < envQueryItems.Count && stopwatch.ElapsedMilliseconds < 2)
+        while (index < envQueryItems.Count && stopwatch.ElapsedMilliseconds < maxWorkMiliseconds)
 		{
 			envQueryItems[index++].Score = 0.0f;
         }
@@ -95,78 +102,119 @@ public class EnvQuery : MonoBehaviour
 		if(index >= envQueryItems.Count)
 		{
 			index = 0;
-			Progress = new Action(UpdateNavMeshProjection1);
+			ProgressQuery = new Action(UpdateNavMeshProjectionWithTimeGuard);
+
+			if (startNextStepImmediately) UpdateNavMeshProjectionWithTimeGuard();
 		}
 	}
 
-	private void UpdateNavMeshProjection1()
+	private void UpdateNavMeshProjectionWithTimeGuard()
 	{
-        Stopwatch stopwatch = Stopwatch.StartNew();
+        stopwatch.Restart();
 
-        while (index < envQueryItems.Count && stopwatch.ElapsedMilliseconds < 2)
+        while (index < envQueryItems.Count && stopwatch.ElapsedMilliseconds < maxWorkMiliseconds)
         {
             envQueryItems[index++].UpdateNavMeshProjection();
         }
 
-        stopwatch.Stop();
+		stopwatch.Stop();
 
         if (index >= envQueryItems.Count)
         {
             index = 0;
-            Progress = new Action(RunTests1);
+            ProgressQuery = new Action(RunTestsWithTimeGuard);
+
+            if (startNextStepImmediately) RunTestsWithTimeGuard();
         }
     }
 
-	private void RunTests1()
+	private void RunTestsWithTimeGuard()
 	{
-        Stopwatch stopwatch = Stopwatch.StartNew();
+        stopwatch.Restart();
 
-        while (index < EnvQueryTests.Count && stopwatch.ElapsedMilliseconds < 2)
+        while (index < EnvQueryTests.Count && stopwatch.ElapsedMilliseconds < maxWorkMiliseconds)
         {
             EnvQueryTests[index].RunTest(index, envQueryItems);
             EnvQueryTests[index].NormalizeItemScores(index, envQueryItems);
 			index += 1;
         }
 
-        stopwatch.Stop();
+		stopwatch.Stop();
 
         if (index >= EnvQueryTests.Count)
         {
             index = 0;
-            Progress = new Action(NormalizeScore1);
+            ProgressQuery = new Action(FindMinMaxWithTimeGuard);
+
+            if (envQueryItems == null || envQueryItems.Count < 1)
+            {
+                QueryStatus = EQSStatus.Finished;
+            }
+
+            maxScore = envQueryItems[0].Score;
+            minScore = envQueryItems[0].Score;
+
+            if (startNextStepImmediately) FindMinMaxWithTimeGuard();
         }
     }
 
-	private void NormalizeScore1()
+    private void FindMinMaxWithTimeGuard()
 	{
-        if (envQueryItems == null || envQueryItems.Count < 1)
+        stopwatch.Restart();
+
+        while (index < envQueryItems.Count && stopwatch.ElapsedMilliseconds < maxWorkMiliseconds)
         {
-            return;
+            if (envQueryItems[index].Score > maxScore)
+            {
+                maxScore = envQueryItems[index].Score;
+            }
+            if (envQueryItems[index].Score < minScore)
+            {
+                minScore = envQueryItems[index].Score;
+            }
+            index += 1;
         }
 
-        float maxScore = envQueryItems[0].Score;
-        float minScore = envQueryItems[0].Score;
+		stopwatch.Stop();
 
-        foreach (EnvQueryItem item in envQueryItems)
+        if (index >= envQueryItems.Count)
         {
-            if (item.Score > maxScore)
-            {
-                maxScore = item.Score;
+            index = 0;
+
+            if (maxScore != minScore)
+			{
+                ProgressQuery = new Action(NormalizeScoreWithTimeGuard);
             }
-            if (item.Score < minScore)
-            {
-                minScore = item.Score;
+			else
+			{
+                ProgressQuery = new Action(FindBestResult);
             }
+
+            if (startNextStepImmediately) ProgressQuery();
+        }
+    }
+
+    private void NormalizeScoreWithTimeGuard()
+	{
+        stopwatch.Restart();
+
+        while (index < envQueryItems.Count && stopwatch.ElapsedMilliseconds < maxWorkMiliseconds)
+        {
+			envQueryItems[index].Score = (envQueryItems[index].Score - minScore) / (maxScore - minScore);
+            index += 1;
         }
 
-        if (maxScore != minScore)
-        {
-            foreach (EnvQueryItem item in envQueryItems)
-            {
-                item.Score = (item.Score - minScore) / (maxScore - minScore);
-            }
-        }
+		stopwatch.Stop();
 
+		if (index >= envQueryItems.Count)
+		{
+			index = 0;
+            ProgressQuery = new Action(FindBestResult);
+        }
+    }
+
+	private void FindBestResult()
+	{
         BestResult = envQueryItems
                         .AsSpan()
                         .Where(x => x.IsValid)
@@ -178,17 +226,21 @@ public class EnvQuery : MonoBehaviour
 
     public void RunEQSQuery()
 	{
-        ResetScore();
+		ResetScore();
+
         foreach (EnvQueryItem item in envQueryItems)
         {
             item.UpdateNavMeshProjection();
         }
+
         for (int currentTest = 0; currentTest < EnvQueryTests.Count; currentTest++)
         {
             EnvQueryTests[currentTest].RunTest(currentTest, envQueryItems);
             EnvQueryTests[currentTest].NormalizeItemScores(currentTest, envQueryItems);
         }
-        FinalizeQuery();
+
+        NormalizeScore();
+        FindBestResult();
     }
 
 	private void ResetScore()
@@ -199,16 +251,6 @@ public class EnvQuery : MonoBehaviour
 		}
 	}
 
-	private void FinalizeQuery()
-	{
-		NormalizeScore();
-		BestResult = envQueryItems
-						.AsSpan()
-						.Where(x => x.IsValid)
-						.OrderByDescending(envQueryItemsBacking.AsSpan(), x => x.Score)
-						.FirstOrDefault();
-	}
-
 	private void NormalizeScore()
 	{
         if(envQueryItems == null || envQueryItems.Count < 1)
@@ -216,8 +258,8 @@ public class EnvQuery : MonoBehaviour
             return;
         }
 
-		float maxScore = envQueryItems[0].Score;
-		float minScore = envQueryItems[0].Score;
+		maxScore = envQueryItems[0].Score;
+		minScore = envQueryItems[0].Score;
 
 		foreach(EnvQueryItem item in envQueryItems)
 		{
