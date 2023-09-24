@@ -8,13 +8,18 @@ public class BTT_RunEQSQuery : Leaf
     public EnvQuery EQSQuery;
     public Vector3Reference AimLocationReference;
 
+    public override void OnEnter()
+    {
+        EQSQuery.ResetQuery();
+    }
+
     public override NodeResult Execute()
     {
         if (EQSQuery == null) return NodeResult.failure;
 
-        EQSQuery.RunEQSQuery();
+        EQSQuery.Progress();
 
-        if (EQSQuery != null && EQSQuery.BestResult != null)
+        if (EQSQuery != null && EQSQuery.QueryStatus == EQSStatus.Finished && EQSQuery.BestResult != null)
         {
             AimLocationReference.Value = EQSQuery.BestResult.GetWorldPosition();
             return NodeResult.success;
