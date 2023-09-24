@@ -2,7 +2,6 @@
 using UnityEngine;
 using NoAlloq;
 using System;
-using System.Threading.Tasks;
 using System.Diagnostics;
 
 /**
@@ -143,16 +142,18 @@ public class EnvQuery : MonoBehaviour
 
         if (index >= EnvQueryTests.Count)
         {
-            index = 0;
-            ProgressQuery = new Action(FindMinMaxWithTimeGuard);
-
             if (envQueryItems == null || envQueryItems.Count < 1)
             {
                 QueryStatus = EQSStatus.Finished;
+				return;
             }
+
+            index = 0;
+            ProgressQuery = new Action(FindMinMaxWithTimeGuard);
 
             maxScore = envQueryItems[0].Score;
             minScore = envQueryItems[0].Score;
+            BestResult = envQueryItems[0];
 
             if (startNextStepImmediately) FindMinMaxWithTimeGuard();
         }
@@ -210,18 +211,42 @@ public class EnvQuery : MonoBehaviour
 		{
 			index = 0;
             ProgressQuery = new Action(FindBestResult);
+
+            if (startNextStepImmediately) FindBestResult();
         }
     }
 
 	private void FindBestResult()
 	{
-        BestResult = envQueryItems
-                        .AsSpan()
-                        .Where(x => x.IsValid)
-                        .OrderByDescending(envQueryItemsBacking.AsSpan(), x => x.Score)
-                        .FirstOrDefault();
+        //BestResult = envQueryItems
+        //                .AsSpan()
+        //                .Where(x => x.IsValid)
+        //                .OrderByDescending(envQueryItemsBacking.AsSpan(), x => x.Score)
+        //                .FirstOrDefault();
 
-        QueryStatus = EQSStatus.Finished;
+        stopwatch.Restart();
+
+        while (index < envQueryItems.Count && stopwatch.ElapsedMilliseconds < maxWorkMiliseconds)
+        {
+			if(envQueryItems[index].IsValid)
+			{
+				if(envQueryItems[index].Score > BestResult.Score)
+				{
+					BestResult = envQueryItems[index];
+                }
+			}
+            index += 1;
+        }
+
+        stopwatch.Stop();
+
+		if (index >= envQueryItems.Count)
+		{
+			index = 0;
+			QueryStatus = EQSStatus.Finished;
+
+			if (!BestResult.IsValid) BestResult = null;
+        }
     }
 
     public void RunEQSQuery()
