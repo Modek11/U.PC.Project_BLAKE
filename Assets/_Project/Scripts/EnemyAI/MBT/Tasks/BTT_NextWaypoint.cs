@@ -15,7 +15,7 @@ public class BTT_NextWaypoint : Leaf
         if (enemyAIManager.waypoints == null) return NodeResult.failure;
 
         int waypointCount = enemyAIManager.waypoints.GetCount();
-        if (_waypointIndex < enemyAIManager.waypoints.GetCount())
+        if (_waypointIndex < waypointCount)
         {
             Vector3 patrolPosition = enemyAIManager.waypoints.GetWaypointPosition(_waypointIndex % waypointCount);
             if (enemyAIManager.navMeshAgent.remainingDistance <= enemyAIManager.navMeshAgent.stoppingDistance)

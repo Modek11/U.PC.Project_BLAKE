@@ -7,6 +7,7 @@ public class EnvQueryItem
     public float Score;
     public bool IsValid;
     public float[] TestResults;
+    public bool TestFailed;
 
     private Transform centerOfItems; // 基準位置
     private Vector3 location; // 相対位置
@@ -17,6 +18,7 @@ public class EnvQueryItem
         Score = 0.0f;
         IsValid = true;
         TestResults = new float[numTests];
+        TestFailed = false;
         this.centerOfItems = centerOfItems;
         this.location = location;
         this.navLocation = location;

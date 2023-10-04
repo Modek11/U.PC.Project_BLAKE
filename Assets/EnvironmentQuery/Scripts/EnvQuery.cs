@@ -93,7 +93,8 @@ public class EnvQuery : MonoBehaviour
 
         while (index < envQueryItems.Count && stopwatch.ElapsedMilliseconds < maxWorkMiliseconds)
 		{
-			envQueryItems[index++].Score = 0.0f;
+			envQueryItems[index++].Score = 0f;
+			//envQueryItems[index++].TestFailed = false;
         }
 
 		stopwatch.Stop();

@@ -34,15 +34,17 @@ public class EnvQueryTestTrace : EnvQueryTest
         {
             foreach(EnvQueryItem item in envQueryItems)
             {
+                //if (item.TestFailed) continue;
+
                 Vector3 itemPosition = item.GetWorldPosition() + Vector3.up * ItemHeightOffset;
                 // Vector3 direction =  itemPosition - TraceFrom.position;
                 Vector3 direction = (TraceFrom.position + Vector3.up * TargetHeightOffset) - itemPosition;
-
+                
                 RaycastHit raycastHit;
-                Physics.Raycast(itemPosition, direction, out raycastHit);
+                Physics.Raycast(itemPosition, direction, out raycastHit, 100f);
                 // Physics.Raycast(TraceFrom.position, direction, out raycastHit);
-
-                if(raycastHit.transform == TraceFrom)
+                //Debug.DrawLine(itemPosition, raycastHit.point, Color.red, 0.1f);
+                if (raycastHit.transform == TraceFrom)
                 {
                     if(traceType == TraceType.Visible)
                     {
@@ -54,7 +56,8 @@ public class EnvQueryTestTrace : EnvQueryTest
                     }
                 }
                 else{
-                    item.TestResults[currentTest] = 0.0f;
+                    item.TestFailed = true;
+                    //item.TestResults[currentTest] = 0.0f;
                 }
             }
         }
