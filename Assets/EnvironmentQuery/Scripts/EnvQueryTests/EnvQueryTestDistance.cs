@@ -16,14 +16,11 @@ public class EnvQueryTestDistance : EnvQueryTest
         {
             foreach(EnvQueryItem item in envQueryItems)
             {
-                //if (item.TestFailed) continue;
-
                 float distance = Vector3.Distance(DistanceTo.position, item.GetWorldPosition());
                 
                 if (distance > MaxDistance || distance < MinDistance)
                 { 
                     item.TestResults[currentTest] = 0.0f;
-                    //item.TestFailed = true;
                     continue; 
                 }
 

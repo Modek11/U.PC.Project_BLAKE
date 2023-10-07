@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyTraceTest
   m_EditorClassIdentifier: 
   IsActive: 1
-  ScaleFactor: 1
+  ScaleFactor: 0.1
   ScoringEquation: 0
   traceType: 0
   TraceFrom: {fileID: 0}

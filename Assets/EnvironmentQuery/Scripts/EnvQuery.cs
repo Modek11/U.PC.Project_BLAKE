@@ -3,6 +3,7 @@ using UnityEngine;
 using NoAlloq;
 using System;
 using System.Diagnostics;
+using static UnityEditor.Progress;
 
 /**
  * Environment Query Instance
@@ -94,7 +95,6 @@ public class EnvQuery : MonoBehaviour
         while (index < envQueryItems.Count && stopwatch.ElapsedMilliseconds < maxWorkMiliseconds)
 		{
 			envQueryItems[index++].Score = 0f;
-			//envQueryItems[index++].TestFailed = false;
         }
 
 		stopwatch.Stop();

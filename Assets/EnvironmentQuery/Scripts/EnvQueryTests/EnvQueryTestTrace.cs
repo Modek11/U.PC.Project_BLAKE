@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum TraceType
+{
+    Visible,
+    Invisible
+}
+
 [CreateAssetMenu(menuName = "EQS/Trace")]
 public class EnvQueryTestTrace : EnvQueryTest
 {
-    private enum TraceType
-    {
-        Visible,
-        Invisible
-    }
-
     // [SerializeField]
     // private GameObject querier;
 
@@ -34,8 +34,6 @@ public class EnvQueryTestTrace : EnvQueryTest
         {
             foreach(EnvQueryItem item in envQueryItems)
             {
-                //if (item.TestFailed) continue;
-
                 Vector3 itemPosition = item.GetWorldPosition() + Vector3.up * ItemHeightOffset;
                 // Vector3 direction =  itemPosition - TraceFrom.position;
                 Vector3 direction = (TraceFrom.position + Vector3.up * TargetHeightOffset) - itemPosition;
@@ -55,9 +53,9 @@ public class EnvQueryTestTrace : EnvQueryTest
                         item.TestResults[currentTest] = -1.0f;
                     }
                 }
-                else{
-                    item.TestFailed = true;
-                    //item.TestResults[currentTest] = 0.0f;
+                else
+                {
+                    item.TestResults[currentTest] = 0.0f;
                 }
             }
         }

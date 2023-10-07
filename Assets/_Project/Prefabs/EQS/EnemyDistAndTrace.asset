@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d4871b264fdfff4da969dd9ea97abd7, type: 3}
-  m_Name: EnemyDistanceTest
+  m_Script: {fileID: 11500000, guid: 69af4fd2e53c4a346af15b95ce568f28, type: 3}
+  m_Name: EnemyDistAndTrace
   m_EditorClassIdentifier: 
   IsActive: 1
-  ScaleFactor: 0.9
+  ScaleFactor: 1
   ScoringEquation: 0
-  DistanceTo: {fileID: 0}
-  MinDistance: 1
+  Target: {fileID: 0}
+  MinDistance: 2
   MaxDistance: 17
+  traceType: 0
+  ItemHeightOffset: 2
+  TargetHeightOffset: 2
