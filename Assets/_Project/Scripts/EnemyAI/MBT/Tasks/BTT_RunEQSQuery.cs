@@ -18,7 +18,7 @@ public class BTT_RunEQSQuery : Leaf
         if (EQSQuery == null) return NodeResult.failure;
 
         EQSQuery.ProgressQuery();
-
+        
         if (EQSQuery != null && EQSQuery.QueryStatus == EQSStatus.Finished)
         {
             if (EQSQuery.BestResult == null) return NodeResult.failure;

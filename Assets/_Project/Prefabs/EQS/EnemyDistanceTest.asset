@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyDistanceTest
   m_EditorClassIdentifier: 
   IsActive: 1
-  ScaleFactor: 0.9
+  ScaleFactor: 1
   ScoringEquation: 0
   DistanceTo: {fileID: 0}
   MinDistance: 1
