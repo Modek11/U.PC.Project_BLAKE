@@ -28,17 +28,17 @@ public class BTT_PrimaryAttack : Leaf
 
         weaponInterface.PrimaryAttack();
 
-        float distanceToPlayer = Vector3.Distance(AIController.transform.position, ReferenceManager.BlakeHeroCharacter.transform.position);
+        //float distanceToPlayer = Vector3.Distance(AIController.transform.position, ReferenceManager.BlakeHeroCharacter.transform.position);
 
-        if (distanceToPlayer <= weaponRange * WeaponRangeMultipler)
-        {
-            AIController.navMeshAgent.isStopped = true;
-        }
+        //if (distanceToPlayer <= weaponRange * WeaponRangeMultipler)
+        //{
+        //    AIController.navMeshAgent.isStopped = true;
+        //}
 
-        if (distanceToPlayer > weaponRange)
-        {
-            CombatStateReference.GetVariable().Value = CombatState.Chase;
-        }
+        //if (distanceToPlayer > weaponRange)
+        //{
+        //    CombatStateReference.GetVariable().Value = CombatState.Chase;
+        //}
 
         return NodeResult.success;
     }
