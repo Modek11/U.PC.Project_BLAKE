@@ -359,6 +359,11 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 3194443941187315569, guid: e02126aae2951bf4b9b740ef58abdbcf,
         type: 3}
+      propertyPath: maxBaseRooms
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3194443941187315569, guid: e02126aae2951bf4b9b740ef58abdbcf,
+        type: 3}
       propertyPath: startingRoom
       value: 
       objectReference: {fileID: 5737354855109563083, guid: a0d68effb82dc0a4eab8eda80034f59a,
@@ -368,6 +373,12 @@ PrefabInstance:
       propertyPath: layerMask.m_Bits
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3194443941187315569, guid: e02126aae2951bf4b9b740ef58abdbcf,
+        type: 3}
+      propertyPath: treasureRoomPool
+      value: 
+      objectReference: {fileID: 11400000, guid: 610f869a8b563724da355d8fe7bc60c3,
+        type: 2}
     - target: {fileID: 3194443941187315574, guid: e02126aae2951bf4b9b740ef58abdbcf,
         type: 3}
       propertyPath: m_RootOrder

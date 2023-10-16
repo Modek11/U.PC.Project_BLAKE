@@ -5,20 +5,27 @@ using UnityEngine;
 [RequireComponent(typeof(FloorManager))]
 public class FloorGenerator : MonoBehaviour
 {
+
     [SerializeField]
     private int seed = 0;
 
+    [Header("Base Rooms Settings")]
     [SerializeField]
-    private RoomPool roomPool;
+    private RoomPool baseRoomPool;
+    [SerializeField]
+    private int maxBaseRooms = 3;
+
+    [Header("Treasure Room Settings")]
+    [SerializeField]
+    private RoomPool treasureRoomPool;
+    [SerializeField]
+    private int treasureRoomsAmount = 1;
 
     [SerializeField]
     private GameObject startingRoom;
 
     [SerializeField]
     private LayerMask layerMask;
-
-    [SerializeField]
-    private int maxRooms = 3;
 
     private int roomCounter = 1;
 
@@ -27,7 +34,10 @@ public class FloorGenerator : MonoBehaviour
 
     private List<GameObject> spawnedRooms = new List<GameObject>();
     private GameObject map;
-    
+    private int maxRooms = 0;
+    private int tries = 0;
+
+
     public int GetIntRoomsInitialized()
     {
         return maxRooms;
@@ -35,6 +45,7 @@ public class FloorGenerator : MonoBehaviour
     
     public IEnumerator GenerateFloor()
     {
+        maxRooms = maxBaseRooms + treasureRoomsAmount;
         if (ReferenceManager.SceneHandler != null)
         {
             ReferenceManager.SceneHandler.roomsToGenerate = maxRooms - 1;
@@ -53,25 +64,64 @@ public class FloorGenerator : MonoBehaviour
         Debug.Log("Using seed: " + seed);
         GameObject _startingRoom = Instantiate(startingRoom, Vector3.zero, Quaternion.identity);
         spawnedRooms.Add(_startingRoom);
-        int tries = 0;
-        while (roomCounter < maxRooms)
+
+        tries = 0;
+        //Generate Base Floors
+        yield return StartCoroutine(GenerateRoomsFromPool(baseRoomPool, maxBaseRooms));
+
+        tries = 0;
+        //Generate TreasureRooms
+        yield return StartCoroutine(GenerateRoomsFromPool(treasureRoomPool, treasureRoomsAmount));
+
+        foreach (GameObject room in spawnedRooms)
         {
+            Room roomScript = room.GetComponent<Room>();
+            roomScript.InitializeRoom(roomManager);
+            RoomTrigger[] triggers = room.GetComponentsInChildren<RoomTrigger>();
+            foreach(RoomTrigger trigger in triggers)
+            {
+                trigger.transform.parent = triggersObject.transform;
+            }
+            if(room != _startingRoom) room.SetActive(false);
+        }
+        foreach(Room room in startingRoom.GetComponent<Room>().GetNeigbours())
+        {
+            room.gameObject.SetActive(true);
+        }
+        roomManager.SetActiveRoom(_startingRoom.GetComponent<Room>());
+        _startingRoom.GetComponent<Room>().SeeRoom();
+
+        floorManager.OnFloorGeneratorEnd(_startingRoom.GetComponent<Room>().GetSpawnPointPosition());
+    }
+
+    public GameObject GetMapObject()
+    {
+        return map;
+    }
+
+    private IEnumerator GenerateRoomsFromPool(RoomPool pool, int amountOfRooms)
+    {
+        int tempCounter = 0;
+        while (tempCounter < amountOfRooms) {
             if (tries >= 50)
             {
                 Debug.LogWarning("Broken generation due to too many tries");
                 break;
             }
+
+
+
             List<GameObject> toAdd = new List<GameObject>();
             foreach (GameObject room in spawnedRooms)
             {
-                if (roomCounter >= maxRooms) break;
+                if (tempCounter >= amountOfRooms) break;
                 Room roomScript = room.GetComponent<Room>();
                 int randomNumber = Random.Range(0, roomScript.GetDoors().Length);
                 RoomConnector door = roomScript.GetDoors()[randomNumber];
 
                 if (door.GetConnector() != null) continue;
 
-                GameObject newRoom = Instantiate(roomPool.GetRandomRoomFromPool());
+                GameObject newRoom = Instantiate(pool.GetRandomRoomFromPool());
                 int randomDoor = Random.Range(0, newRoom.GetComponent<Room>().GetDoors().Length);
                 RoomConnector newDoor = newRoom.GetComponent<Room>().GetDoors()[randomDoor];
 
@@ -106,6 +156,7 @@ public class FloorGenerator : MonoBehaviour
                     toAdd.Add(newRoom);
                     newRoom.transform.parent = map.transform;
                     roomCounter++;
+                    tempCounter++;
 
                     if (ReferenceManager.SceneHandler != null)
                         ReferenceManager.SceneHandler.roomsGenerated++;
@@ -123,31 +174,5 @@ public class FloorGenerator : MonoBehaviour
                 spawnedRooms.Add(room);
             }
         }
-
-
-        foreach (GameObject room in spawnedRooms)
-        {
-            Room roomScript = room.GetComponent<Room>();
-            roomScript.InitializeRoom(roomManager);
-            RoomTrigger[] triggers = room.GetComponentsInChildren<RoomTrigger>();
-            foreach(RoomTrigger trigger in triggers)
-            {
-                trigger.transform.parent = triggersObject.transform;
-            }
-            if(room != _startingRoom) room.SetActive(false);
-        }
-        foreach(Room room in startingRoom.GetComponent<Room>().GetNeigbours())
-        {
-            room.gameObject.SetActive(true);
-        }
-        roomManager.SetActiveRoom(_startingRoom.GetComponent<Room>());
-        _startingRoom.GetComponent<Room>().SeeRoom();
-
-        floorManager.OnFloorGeneratorEnd(_startingRoom.GetComponent<Room>().GetSpawnPointPosition());
-    }
-
-    public GameObject GetMapObject()
-    {
-        return map;
     }
 }
