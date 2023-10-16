@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aac6368008f71cc469eb16fde59f9888, type: 3}
   m_Name: TreasureRoomPool
   m_EditorClassIdentifier: 
-  room: []
+  room:
+  - {fileID: 5258760730999853684, guid: dee305dc500b56049afc60fdc553a8c5, type: 3}
