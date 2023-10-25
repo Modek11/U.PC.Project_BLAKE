@@ -16,6 +16,7 @@ public class RoomConnector : MonoBehaviour
     [SerializeField]
     private Door door;
 
+    [SerializeField]
     private Room mainRoom;
     private bool isActive = false;
 

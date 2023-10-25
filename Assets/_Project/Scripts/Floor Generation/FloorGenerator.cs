@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(FloorManager))]
@@ -37,7 +39,7 @@ public class FloorGenerator : MonoBehaviour
     private int maxRooms = 0;
     private int tries = 0;
 
-
+    private Dictionary<Room, int> pathLength = new Dictionary<Room, int>();
     public int GetIntRoomsInitialized()
     {
         return maxRooms;
@@ -64,6 +66,7 @@ public class FloorGenerator : MonoBehaviour
         Debug.Log("Using seed: " + seed);
         GameObject _startingRoom = Instantiate(startingRoom, Vector3.zero, Quaternion.identity);
         spawnedRooms.Add(_startingRoom);
+        startingRoom.GetComponent<Room>().SetupDoorConnectors();
 
         tries = 0;
         //Generate Base Floors
@@ -71,7 +74,7 @@ public class FloorGenerator : MonoBehaviour
 
         tries = 0;
         //Generate TreasureRooms
-        yield return StartCoroutine(GenerateRoomsFromPool(treasureRoomPool, treasureRoomsAmount));
+        yield return StartCoroutine(GenerateRoomsFromPool(treasureRoomPool, treasureRoomsAmount, true));
 
         foreach (GameObject room in spawnedRooms)
         {
@@ -92,6 +95,8 @@ public class FloorGenerator : MonoBehaviour
         _startingRoom.GetComponent<Room>().SeeRoom();
 
         floorManager.OnFloorGeneratorEnd(_startingRoom.GetComponent<Room>().GetSpawnPointPosition());
+
+        
     }
 
     public GameObject GetMapObject()
@@ -99,9 +104,11 @@ public class FloorGenerator : MonoBehaviour
         return map;
     }
 
-    private IEnumerator GenerateRoomsFromPool(RoomPool pool, int amountOfRooms)
+    private IEnumerator GenerateRoomsFromPool(RoomPool pool, int amountOfRooms, bool usePathfinding = false)
     {
         int tempCounter = 0;
+        FloorPathfinding floorPathfinding = new FloorPathfinding(spawnedRooms);
+
         while (tempCounter < amountOfRooms) {
             if (tries >= 50)
             {
@@ -109,8 +116,7 @@ public class FloorGenerator : MonoBehaviour
                 break;
             }
 
-
-
+            
             List<GameObject> toAdd = new List<GameObject>();
             foreach (GameObject room in spawnedRooms)
             {
@@ -153,6 +159,7 @@ public class FloorGenerator : MonoBehaviour
                     tries = 0;
                     door.SetConnector(newDoor);
                     newDoor.SetConnector(door);
+                    newRoom.GetComponent<Room>().SetupDoorConnectors();
                     toAdd.Add(newRoom);
                     newRoom.transform.parent = map.transform;
                     roomCounter++;
@@ -172,6 +179,20 @@ public class FloorGenerator : MonoBehaviour
             foreach (GameObject room in toAdd)
             {
                 spawnedRooms.Add(room);
+                if (pathLength.ContainsKey(room.GetComponent<Room>())) continue;
+                floorPathfinding = new FloorPathfinding(spawnedRooms);
+                List<Room> path = floorPathfinding.FindPath(spawnedRooms[0], room);
+                pathLength.Add(room.GetComponent<Room>(), path.Count);
+            }
+
+        }
+        if (usePathfinding)
+        {
+            var newPaths = pathLength.OrderBy(key => key.Value).Reverse();
+
+            foreach (KeyValuePair<Room, int> kvp in newPaths)
+            {
+                Debug.Log("Room: " + kvp.Key.gameObject.name + "\nPath Length: " + kvp.Value);
             }
         }
     }

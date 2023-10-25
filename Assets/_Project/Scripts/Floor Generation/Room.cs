@@ -42,6 +42,21 @@ public class Room : MonoBehaviour
     private List<RoomOverlapTrigger> fogTriggers = new List<RoomOverlapTrigger>();
     private RoomsDoneCounter roomsDoneCounter;
 
+    [HideInInspector]
+    public int gCost;
+    [HideInInspector]
+    public int hCost;
+    [HideInInspector]
+    public int fCost;
+
+    [HideInInspector]
+    public Room cameFromRoom;
+
+    public void CalculateFCost()
+    {
+        fCost = gCost + hCost;
+    }
+
     [Serializable]
     public struct EnemySpawner
     {
@@ -55,6 +70,15 @@ public class Room : MonoBehaviour
         roomsDoneCounter = FindObjectOfType<RoomsDoneCounter>();
     }
 
+    public void SetupDoorConnectors()
+    {
+        foreach (RoomConnector door in doors)
+        {
+            door.SetRoom(this);
+            door.SetDoor();
+        }
+    }
+
     public void InitializeRoom(RoomManager rm)
     {
         roomManager = rm;
@@ -63,11 +87,7 @@ public class Room : MonoBehaviour
         {
             randomObject.InitializeRandomObject();
         }
-        foreach(RoomConnector door in doors)
-        {
-            door.SetRoom(this);
-            door.SetDoor();
-        }
+        
 
         if(minimapRoom != null && roomManager.GetMinimapFloor() != null)
         {
