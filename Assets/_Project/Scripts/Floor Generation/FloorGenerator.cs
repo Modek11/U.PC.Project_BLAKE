@@ -274,6 +274,7 @@ public class FloorGenerator : MonoBehaviour
 
                     if (ReferenceManager.SceneHandler != null)
                         ReferenceManager.SceneHandler.roomsGenerated++;
+                    break;
                 }
                 else
                 {
