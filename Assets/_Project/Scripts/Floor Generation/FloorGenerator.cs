@@ -35,11 +35,18 @@ public class FloorGenerator : MonoBehaviour
     private FloorManager floorManager;
 
     private List<GameObject> spawnedRooms = new List<GameObject>();
+    private List<GameObject> spawnedBaseRooms = new List<GameObject>();
     private GameObject map;
     private int maxRooms = 0;
     private int tries = 0;
 
     private Dictionary<Room, int> pathLength = new Dictionary<Room, int>();
+
+    [Header("Debugs")]
+    [SerializeField]
+    private bool debugOverlapping = false;
+    [SerializeField]
+    private bool debugRoomFinding = false;
     public int GetIntRoomsInitialized()
     {
         return maxRooms;
@@ -70,12 +77,11 @@ public class FloorGenerator : MonoBehaviour
 
         tries = 0;
         //Generate Base Floors
-        yield return StartCoroutine(GenerateRoomsFromPool(baseRoomPool, maxBaseRooms));
+        yield return StartCoroutine(GenerateBaseRoomsFromPool(baseRoomPool, maxBaseRooms));
 
         tries = 0;
         //Generate TreasureRooms
-        yield return StartCoroutine(GenerateRoomsFromPool(treasureRoomPool, treasureRoomsAmount, true));
-
+        yield return StartCoroutine(GenerateSpecialRoomsFromPool(treasureRoomPool, treasureRoomsAmount));
         foreach (GameObject room in spawnedRooms)
         {
             Room roomScript = room.GetComponent<Room>();
@@ -104,7 +110,7 @@ public class FloorGenerator : MonoBehaviour
         return map;
     }
 
-    private IEnumerator GenerateRoomsFromPool(RoomPool pool, int amountOfRooms, bool usePathfinding = false)
+    private IEnumerator GenerateBaseRoomsFromPool(RoomPool pool, int amountOfRooms)
     {
         int tempCounter = 0;
         FloorPathfinding floorPathfinding = new FloorPathfinding(spawnedRooms);
@@ -118,15 +124,14 @@ public class FloorGenerator : MonoBehaviour
 
             
             List<GameObject> toAdd = new List<GameObject>();
+            
             foreach (GameObject room in spawnedRooms)
             {
                 if (tempCounter >= amountOfRooms) break;
                 Room roomScript = room.GetComponent<Room>();
                 int randomNumber = Random.Range(0, roomScript.GetDoors().Length);
                 RoomConnector door = roomScript.GetDoors()[randomNumber];
-
                 if (door.GetConnector() != null) continue;
-
                 GameObject newRoom = Instantiate(pool.GetRandomRoomFromPool());
                 int randomDoor = Random.Range(0, newRoom.GetComponent<Room>().GetDoors().Length);
                 RoomConnector newDoor = newRoom.GetComponent<Room>().GetDoors()[randomDoor];
@@ -149,7 +154,7 @@ public class FloorGenerator : MonoBehaviour
                         {
                             overlap = true;
                             tries++;
-                            Debug.Log("Overlapping at " + room.name);
+                            if(debugOverlapping) Debug.Log("Overlapping at " + room.name);
                             break;
                         }
                     }
@@ -170,7 +175,109 @@ public class FloorGenerator : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Destroying" + newRoom.name);
+                    if (debugOverlapping)  Debug.Log("Destroying" + newRoom.name);
+                    Destroy(newRoom);
+                }
+
+                yield return new WaitForFixedUpdate();
+            }
+            foreach (GameObject room in toAdd)
+            {
+                spawnedRooms.Add(room);
+                spawnedBaseRooms.Add(room);
+                if (pathLength.ContainsKey(room.GetComponent<Room>())) continue;
+                floorPathfinding = new FloorPathfinding(spawnedRooms);
+                List<Room> path = floorPathfinding.FindPath(spawnedRooms[0], room);
+                pathLength.Add(room.GetComponent<Room>(), path.Count);
+            }
+
+        }
+        
+    }
+    private IEnumerator GenerateSpecialRoomsFromPool(RoomPool pool, int amountOfRooms)
+    {
+        int tempCounter = 0;
+        FloorPathfinding floorPathfinding = new FloorPathfinding(spawnedRooms);
+        var list = pathLength.OrderBy(key => key.Value).Reverse().Select(key => key.Key.gameObject).ToList();
+        if(debugRoomFinding) Debug.Log("Furthest room is: " + list[0].gameObject.name);
+        while (tempCounter < amountOfRooms)
+        {
+            if (tries >= 50)
+            {
+                Debug.LogWarning("Broken generation due to too many tries");
+                break;
+            }
+
+
+            List<GameObject> toAdd = new List<GameObject>();
+
+            foreach (GameObject room in list)
+            {
+                if (tempCounter >= amountOfRooms) break;
+                Room roomScript = room.GetComponent<Room>();
+
+                if(roomScript.GetRoomType() != RoomType.Base) { continue; }
+
+                RoomConnector door = null;
+                RoomConnector[] doors = roomScript.GetDoors();
+                var randomizedDoors = doors.OrderBy(c => Random.Range(0, doors.Length));
+
+                foreach (RoomConnector d in randomizedDoors) {
+                    if (d.GetConnector() != null)
+                    {
+                        continue;
+                    } else
+                    {
+                        door = d;
+                        break;
+                    }
+                }
+                if (door == null) continue;
+                GameObject newRoom = Instantiate(pool.GetRandomRoomFromPool());
+                int randomDoor = Random.Range(0, newRoom.GetComponent<Room>().GetDoors().Length);
+                RoomConnector newDoor = newRoom.GetComponent<Room>().GetDoors()[randomDoor];
+
+                Quaternion rot = Quaternion.LookRotation(-door.transform.forward);
+                newRoom.transform.rotation = rot * Quaternion.Inverse(newDoor.transform.rotation);
+
+                Vector3 offset = newDoor.transform.position - door.transform.position;
+                newRoom.transform.position -= offset;
+                bool overlap = false;
+                BoxCollider[] roomColliders = newRoom.GetComponent<Room>().GetOverlapColliders();
+                foreach (BoxCollider box in roomColliders)
+                {
+                    if (overlap) break;
+                    Collider[] colliders = Physics.OverlapBox(newRoom.transform.TransformPoint(box.center), box.size / 2, newRoom.transform.rotation, layerMask, QueryTriggerInteraction.Collide);
+
+                    foreach (Collider cols in colliders)
+                    {
+                        if (cols.gameObject != newRoom && cols.gameObject.GetComponent<RoomOverlapTrigger>() != null && cols.gameObject != room)
+                        {
+                            overlap = true;
+                            tries++;
+                            if (debugOverlapping) Debug.Log("Overlapping at " + room.name);
+                            break;
+                        }
+                    }
+                }
+                if (!overlap)
+                {
+                    if (debugRoomFinding) Debug.Log("Using: " + door.GetRoom().gameObject.name);
+                    tries = 0;
+                    door.SetConnector(newDoor);
+                    newDoor.SetConnector(door);
+                    newRoom.GetComponent<Room>().SetupDoorConnectors();
+                    toAdd.Add(newRoom);
+                    newRoom.transform.parent = map.transform;
+                    roomCounter++;
+                    tempCounter++;
+
+                    if (ReferenceManager.SceneHandler != null)
+                        ReferenceManager.SceneHandler.roomsGenerated++;
+                }
+                else
+                {
+                    if (debugOverlapping) Debug.Log("Destroying" + newRoom.name);
                     Destroy(newRoom);
                 }
 
@@ -186,14 +293,7 @@ public class FloorGenerator : MonoBehaviour
             }
 
         }
-        if (usePathfinding)
-        {
-            var newPaths = pathLength.OrderBy(key => key.Value).Reverse();
 
-            foreach (KeyValuePair<Room, int> kvp in newPaths)
-            {
-                Debug.Log("Room: " + kvp.Key.gameObject.name + "\nPath Length: " + kvp.Value);
-            }
-        }
     }
+
 }

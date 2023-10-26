@@ -19,7 +19,6 @@ public class FloorPathfinding
         Room endRoom = endRoomObject.GetComponent<Room>();
         openList = new List<Room> { startRoom };
         closedList = new List<Room>();
-        Debug.Log("End Room: " + endRoomObject.name);
         for(int i =0; i < floor.Count; i++)
         {
             Room room = floor[i].GetComponent<Room>();

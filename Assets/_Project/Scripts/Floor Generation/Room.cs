@@ -3,8 +3,19 @@ using UnityEngine;
 using Unity.AI.Navigation;
 using System;
 
+public enum RoomType
+{
+    Base,
+    Treasure,
+    Shop,
+    Boss
+}
+
 public class Room : MonoBehaviour
 {
+    [SerializeField]
+    private RoomType roomType = RoomType.Base;
+
     [SerializeField]
     private RoomConnector[] doors;
 
@@ -120,6 +131,11 @@ public class Room : MonoBehaviour
             spawnedEnemy.GetComponent<EnemyAIManager>().SetWaypoints(enemy.EnemyWaypoints);
             spawnedEnemies.Add(spawnedEnemy);
         }
+    }
+
+    public RoomType GetRoomType()
+    {
+        return roomType;
     }
 
     public void BeatLevel()

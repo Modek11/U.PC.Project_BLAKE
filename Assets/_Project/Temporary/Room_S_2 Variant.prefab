@@ -166,6 +166,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8020210768947020082, guid: 0e862de4eaf97ea4f84b687cb0a2d908,
         type: 3}
+      propertyPath: roomType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8020210768947020082, guid: 0e862de4eaf97ea4f84b687cb0a2d908,
+        type: 3}
       propertyPath: spawners.Array.size
       value: 0
       objectReference: {fileID: 0}
