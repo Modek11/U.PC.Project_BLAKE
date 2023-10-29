@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Camera cam;
+    private const string DIRECTION = "Direction";
+    private const string SPEED = "Speed";
     
     [SerializeField] private float playerSpeed;
     [SerializeField] private float dashForce;
@@ -13,26 +14,27 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform gunHandlerTransform;
 
-    private Vector2 _movementAxis;
-    private Vector2 _mousePosition;
-    private float _angleRotationDifference;
-    private Rigidbody _rigidbody;
-    private Animator _animator;
+    private Vector2 movementAxis;
+    private Vector2 mousePosition;
+    private float angleRotationDifference;
+    private Rigidbody rigidbodyCache;
+    private Animator animator;
 
-    private float _dashCooldownCountdown;
-    private float _dashDurationCountdown;
-    private bool _dashPerformed;
-    private float _minVelocityMagnitude = 0.1f;
+    private float dashCooldownCountdown;
+    private float dashDurationCountdown;
+    private bool dashPerformed;
+    private float minVelocityMagnitude = 0.1f;
 
+    private Camera mainCamera;
     public event Action OnDashPerformed;
     
     public float DashCooldown => dashCooldown;
-    public float DashCooldownCountdown => _dashCooldownCountdown;
+    public float DashCooldownCountdown => dashCooldownCountdown;
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _animator = GetComponentInChildren<Animator>();
+        rigidbodyCache = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
 
         StartCoroutine(SetMainCamera());
     }
@@ -51,8 +53,8 @@ public class PlayerMovement : MonoBehaviour
         Rotation();
         DashCountdown();
 
-        _animator.SetFloat("Direction", BlakeAnimatorHelper.CalculateDirection(_rigidbody.velocity, transform));
-        _animator.SetFloat("Speed", _rigidbody.velocity.magnitude);
+        animator.SetFloat(DIRECTION, BlakeAnimatorHelper.CalculateDirection(rigidbodyCache.velocity, transform));
+        animator.SetFloat(SPEED, rigidbodyCache.velocity.magnitude);
     }
 
 
@@ -64,26 +66,26 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovementHandler(Vector2 dir)
     {
-        _movementAxis = dir;
+        movementAxis = dir;
     }
     private void MousePositionHandler(Vector2 dir)
     {
-        _mousePosition = dir;
+        mousePosition = dir;
     }
 
     private void MovePlayer()
     {
-        _movementAxis = _movementAxis.normalized;
-        Vector3 direction = new Vector3(_movementAxis.x, 0, _movementAxis.y);
+        movementAxis = movementAxis.normalized;
+        Vector3 direction = new Vector3(movementAxis.x, 0, movementAxis.y);
         Vector3 isometricDirection = direction.ToIsometric();
         
-        _rigidbody.AddForce(isometricDirection * (playerSpeed * 10f), ForceMode.Force);
+        rigidbodyCache.AddForce(isometricDirection * (playerSpeed * 10f), ForceMode.Force);
     }
     
    private void Rotation()
    {
        Plane playerPlane = new Plane(Vector3.up, gunHandlerTransform.position);
-       Ray ray = cam.ScreenPointToRay(_mousePosition);
+       Ray ray = mainCamera.ScreenPointToRay(mousePosition);
        
        
        if (playerPlane.Raycast(ray, out var hitDistance))
@@ -95,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
            targetRotation.z = 0;
 
            if (!ShouldPlayerRotate(playerRotation, targetRotation)) return;
-           _rigidbody.MoveRotation(Quaternion.Slerp(playerRotation, targetRotation, 20f * Time.deltaTime).normalized);
+           rigidbodyCache.MoveRotation(Quaternion.Slerp(playerRotation, targetRotation, 20f * Time.deltaTime).normalized);
         }
    }
 
@@ -103,57 +105,57 @@ public class PlayerMovement : MonoBehaviour
    {
        //without this function, rigidbody calculating smth all the time
        var angle = Quaternion.Angle(playerRotation, targetRotation);
-       if (_angleRotationDifference == angle) return false;
+       if (angleRotationDifference == angle) return false;
        
-       _angleRotationDifference = angle;
+       angleRotationDifference = angle;
        return true;
 
    }
 
    private void Dash()
    {
-       var rbVelocity = _rigidbody.velocity;
+       var rbVelocity = rigidbodyCache.velocity;
 
-       if (_dashCooldownCountdown > 0 || rbVelocity.magnitude < _minVelocityMagnitude)
+       if (dashCooldownCountdown > 0 || rbVelocity.magnitude < minVelocityMagnitude)
        {
            return;
        }
 
-       var force = _rigidbody.velocity.normalized * playerSpeed * dashForce;
-       _rigidbody.AddForce(force, ForceMode.Impulse);
+       var force = rigidbodyCache.velocity.normalized * playerSpeed * dashForce;
+       rigidbodyCache.AddForce(force, ForceMode.Impulse);
 
        SetDashCountdowns();
    }
    
    private void SetDashCountdowns()
    {
-       _dashCooldownCountdown = dashCooldown;
-       _dashDurationCountdown = dashDuration;
+       dashCooldownCountdown = dashCooldown;
+       dashDurationCountdown = dashDuration;
        OnDashPerformed?.Invoke();
    }
 
    private void DashCountdown()
    {
-       if (_dashDurationCountdown > 0)
+       if (dashDurationCountdown > 0)
        {
-           _dashDurationCountdown -= Time.deltaTime;
+           dashDurationCountdown -= Time.deltaTime;
        }
 
-       if (_dashCooldownCountdown > 0)
+       if (dashCooldownCountdown > 0)
        {
-           _dashCooldownCountdown -= Time.deltaTime;
+           dashCooldownCountdown -= Time.deltaTime;
        }
    }
 
    private void SpeedControl()
    {
-       if (_dashDurationCountdown > 0) return;
+       if (dashDurationCountdown > 0) return;
        
-       var rbVelocity = _rigidbody.velocity;
+       var rbVelocity = rigidbodyCache.velocity;
 
-       if (rbVelocity.magnitude < _minVelocityMagnitude)
+       if (rbVelocity.magnitude < minVelocityMagnitude)
        {
-           _rigidbody.velocity = Vector3.zero;
+           rigidbodyCache.velocity = Vector3.zero;
            return;
        }
        
@@ -162,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
        if (currentVelocity.magnitude > playerSpeed)
        {
            currentVelocity = currentVelocity.normalized * playerSpeed;
-           _rigidbody.velocity = new Vector3(currentVelocity.x, 0, currentVelocity.z);
+           rigidbodyCache.velocity = new Vector3(currentVelocity.x, 0, currentVelocity.z);
        }
    }
    
@@ -185,6 +187,6 @@ public class PlayerMovement : MonoBehaviour
            yield return new WaitForSeconds(0.1f);
        }
 
-       cam = Camera.main;
+       mainCamera = Camera.main;
    }
 }
