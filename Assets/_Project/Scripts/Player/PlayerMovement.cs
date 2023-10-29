@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -22,8 +22,12 @@ public class PlayerMovement : MonoBehaviour
     private float _dashCooldownCountdown;
     private float _dashDurationCountdown;
     private bool _dashPerformed;
-    private GameObject _dashCooldownUI;
-    private Image _cooldownImage;
+    private float _minVelocityMagnitude = 0.1f;
+
+    public event Action OnDashPerformed;
+    
+    public float DashCooldown => dashCooldown;
+    public float DashCooldownCountdown => _dashCooldownCountdown;
 
     private void Awake()
     {
@@ -108,25 +112,24 @@ public class PlayerMovement : MonoBehaviour
 
    private void Dash()
    {
-       if (_dashCooldownCountdown > 0) return;
-       
-       _rigidbody.AddForce(_rigidbody.velocity * dashForce, ForceMode.Impulse);
-
-       _dashPerformed = true;
-   }
-
-   private void SpeedControl()
-   {
-       if (_dashDurationCountdown > 0) return;
-       
        var rbVelocity = _rigidbody.velocity;
-       
-       Vector3 currentVelocity = new Vector3(rbVelocity.x, 0, rbVelocity.z);
-       if (currentVelocity.magnitude > playerSpeed)
+
+       if (_dashCooldownCountdown > 0 || rbVelocity.magnitude < _minVelocityMagnitude)
        {
-           currentVelocity = currentVelocity.normalized * playerSpeed;
-           _rigidbody.velocity = new Vector3(currentVelocity.x, 0, currentVelocity.z);
+           return;
        }
+
+       var force = _rigidbody.velocity.normalized * playerSpeed * dashForce;
+       _rigidbody.AddForce(force, ForceMode.Impulse);
+
+       SetDashCountdowns();
+   }
+   
+   private void SetDashCountdowns()
+   {
+       _dashCooldownCountdown = dashCooldown;
+       _dashDurationCountdown = dashDuration;
+       OnDashPerformed?.Invoke();
    }
 
    private void DashCountdown()
@@ -139,29 +142,33 @@ public class PlayerMovement : MonoBehaviour
        if (_dashCooldownCountdown > 0)
        {
            _dashCooldownCountdown -= Time.deltaTime;
-           _cooldownImage.fillAmount += Time.deltaTime;
-           _dashCooldownUI.transform.position = _rigidbody.transform.position + Vector3.up * 0.6f;
-           _dashCooldownUI.transform.LookAt(Camera.main.transform);
-       }
-       else
-       {
-           _dashCooldownUI.SetActive(false);
-           _cooldownImage.fillAmount = 0;
-       }
-
-       if (_dashPerformed)
-       {
-           _dashCooldownUI.SetActive(true);
-           _dashDurationCountdown = dashDuration;
-           _dashCooldownCountdown = dashCooldown;
-           _dashPerformed = false;
        }
    }
 
-    private void Die()
+   private void SpeedControl()
+   {
+       if (_dashDurationCountdown > 0) return;
+       
+       var rbVelocity = _rigidbody.velocity;
+
+       if (rbVelocity.magnitude < _minVelocityMagnitude)
+       {
+           _rigidbody.velocity = Vector3.zero;
+           return;
+       }
+       
+       
+       Vector3 currentVelocity = new Vector3(rbVelocity.x, 0, rbVelocity.z);
+       if (currentVelocity.magnitude > playerSpeed)
+       {
+           currentVelocity = currentVelocity.normalized * playerSpeed;
+           _rigidbody.velocity = new Vector3(currentVelocity.x, 0, currentVelocity.z);
+       }
+   }
+   
+   private void Die()
     {
         ReferenceManager.PlayerInputController.enabled = false;
-        _dashCooldownUI.SetActive(false);
         this.enabled = false;
     }
 
@@ -180,10 +187,4 @@ public class PlayerMovement : MonoBehaviour
 
        cam = Camera.main;
    }
-
-    public void SetDashCooldownUIReference(GameObject dashCooldownUIReference)
-    {
-        _dashCooldownUI = dashCooldownUIReference;
-        _cooldownImage = _dashCooldownUI.transform.GetChild(1).GetComponent<Image>();
-    }
 }
