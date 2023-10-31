@@ -1,41 +1,48 @@
+using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private const string DIRECTION = "Direction";
+    private const string SPEED = "Speed";
+    
     [SerializeField] 
     private float playerSpeed;
 
-    [SerializeField]
+    [SerializeField] 
     private float dashForce;
 
-    [SerializeField]
+    [SerializeField] 
     private float dashCooldown;
-
-    [SerializeField]
+    
+    [SerializeField] 
     private float dashDuration;
 
     [SerializeField] 
     private Transform gunHandlerTransform;
 
-    private Camera cam;
-    private Vector2 _movementAxis;
-    private Vector2 _mousePosition;
-    private float _angleRotationDifference;
-    private Rigidbody _rigidbody;
-    private Animator _animator;
+    private Vector2 movementAxis;
+    private Vector2 mousePosition;
+    private float angleRotationDifference;
+    private Rigidbody rigidbodyCache;
+    private Animator animator;
 
-    private float _dashCooldownCountdown;
-    private float _dashDurationCountdown;
-    private bool _dashPerformed;
-    private GameObject _dashCooldownUI;
-    private Image _cooldownImage;
+    private float dashCooldownCountdown;
+    private float dashDurationCountdown;
+    private bool dashPerformed;
+    private float minVelocityMagnitude = 0.1f;
+
+    private Camera mainCamera;
+    public event Action OnDashPerformed;
+    
+    public float DashCooldown => dashCooldown;
+    public float DashCooldownCountdown => dashCooldownCountdown;
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _animator = GetComponentInChildren<Animator>();
+        rigidbodyCache = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
 
         StartCoroutine(SetMainCamera());
     }
@@ -54,8 +61,8 @@ public class PlayerMovement : MonoBehaviour
         Rotation();
         DashCountdown();
 
-        _animator.SetFloat("Direction", BlakeAnimatorHelper.CalculateDirection(_rigidbody.velocity, transform));
-        _animator.SetFloat("Speed", _rigidbody.velocity.magnitude);
+        animator.SetFloat(DIRECTION, BlakeAnimatorHelper.CalculateDirection(rigidbodyCache.velocity, transform));
+        animator.SetFloat(SPEED, rigidbodyCache.velocity.magnitude);
     }
 
 
@@ -67,26 +74,26 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovementHandler(Vector2 dir)
     {
-        _movementAxis = dir;
+        movementAxis = dir;
     }
     private void MousePositionHandler(Vector2 dir)
     {
-        _mousePosition = dir;
+        mousePosition = dir;
     }
 
     private void MovePlayer()
     {
-        _movementAxis = _movementAxis.normalized;
-        Vector3 direction = new Vector3(_movementAxis.x, 0, _movementAxis.y);
+        movementAxis = movementAxis.normalized;
+        Vector3 direction = new Vector3(movementAxis.x, 0, movementAxis.y);
         Vector3 isometricDirection = direction.ToIsometric();
         
-        _rigidbody.AddForce(isometricDirection * (playerSpeed * 10f), ForceMode.Force);
+        rigidbodyCache.AddForce(isometricDirection * (playerSpeed * 10f), ForceMode.Force);
     }
     
    private void Rotation()
    {
        Plane playerPlane = new Plane(Vector3.up, gunHandlerTransform.position);
-       Ray ray = cam.ScreenPointToRay(_mousePosition);
+       Ray ray = mainCamera.ScreenPointToRay(mousePosition);
        
        
        if (playerPlane.Raycast(ray, out var hitDistance))
@@ -98,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
            targetRotation.z = 0;
 
            if (!ShouldPlayerRotate(playerRotation, targetRotation)) return;
-           _rigidbody.MoveRotation(Quaternion.Slerp(playerRotation, targetRotation, 20f * Time.deltaTime).normalized);
+           rigidbodyCache.MoveRotation(Quaternion.Slerp(playerRotation, targetRotation, 20f * Time.deltaTime).normalized);
         }
    }
 
@@ -106,69 +113,72 @@ public class PlayerMovement : MonoBehaviour
    {
        //without this function, rigidbody calculating smth all the time
        var angle = Quaternion.Angle(playerRotation, targetRotation);
-       if (_angleRotationDifference == angle) return false;
+       if (angleRotationDifference == angle) return false;
        
-       _angleRotationDifference = angle;
+       angleRotationDifference = angle;
        return true;
 
    }
 
    private void Dash()
    {
-       if (_dashCooldownCountdown > 0) return;
-       
-       _rigidbody.AddForce(_rigidbody.velocity * dashForce, ForceMode.Impulse);
+       var rbVelocity = rigidbodyCache.velocity;
 
-       _dashPerformed = true;
+       if (dashCooldownCountdown > 0 || rbVelocity.magnitude < minVelocityMagnitude)
+       {
+           return;
+       }
+
+       var force = rigidbodyCache.velocity.normalized * playerSpeed * dashForce;
+       rigidbodyCache.AddForce(force, ForceMode.Impulse);
+
+       SetDashCountdowns();
+   }
+   
+   private void SetDashCountdowns()
+   {
+       dashCooldownCountdown = dashCooldown;
+       dashDurationCountdown = dashDuration;
+       OnDashPerformed?.Invoke();
+   }
+
+   private void DashCountdown()
+   {
+       if (dashDurationCountdown > 0)
+       {
+           dashDurationCountdown -= Time.deltaTime;
+       }
+
+       if (dashCooldownCountdown > 0)
+       {
+           dashCooldownCountdown -= Time.deltaTime;
+       }
    }
 
    private void SpeedControl()
    {
-       if (_dashDurationCountdown > 0) return;
+       if (dashDurationCountdown > 0) return;
        
-       var rbVelocity = _rigidbody.velocity;
+       var rbVelocity = rigidbodyCache.velocity;
+
+       if (rbVelocity.magnitude < minVelocityMagnitude)
+       {
+           rigidbodyCache.velocity = Vector3.zero;
+           return;
+       }
+       
        
        Vector3 currentVelocity = new Vector3(rbVelocity.x, 0, rbVelocity.z);
        if (currentVelocity.magnitude > playerSpeed)
        {
            currentVelocity = currentVelocity.normalized * playerSpeed;
-           _rigidbody.velocity = new Vector3(currentVelocity.x, 0, currentVelocity.z);
+           rigidbodyCache.velocity = new Vector3(currentVelocity.x, 0, currentVelocity.z);
        }
    }
-
-   private void DashCountdown()
-   {
-       if (_dashDurationCountdown > 0)
-       {
-           _dashDurationCountdown -= Time.deltaTime;
-       }
-
-       if (_dashCooldownCountdown > 0)
-       {
-           _dashCooldownCountdown -= Time.deltaTime;
-           _cooldownImage.fillAmount += Time.deltaTime;
-           _dashCooldownUI.transform.position = _rigidbody.transform.position + Vector3.up * 0.6f;
-           _dashCooldownUI.transform.LookAt(Camera.main.transform);
-       }
-       else
-       {
-           _dashCooldownUI.SetActive(false);
-           _cooldownImage.fillAmount = 0;
-       }
-
-       if (_dashPerformed)
-       {
-           _dashCooldownUI.SetActive(true);
-           _dashDurationCountdown = dashDuration;
-           _dashCooldownCountdown = dashCooldown;
-           _dashPerformed = false;
-       }
-   }
-
-    private void Die()
+   
+   private void Die()
     {
         ReferenceManager.PlayerInputController.enabled = false;
-        _dashCooldownUI.SetActive(false);
         this.enabled = false;
     }
 
@@ -185,12 +195,6 @@ public class PlayerMovement : MonoBehaviour
            yield return new WaitForSeconds(0.1f);
        }
 
-       cam = Camera.main;
+       mainCamera = Camera.main;
    }
-
-    public void SetDashCooldownUIReference(GameObject dashCooldownUIReference)
-    {
-        _dashCooldownUI = dashCooldownUIReference;
-        _cooldownImage = _dashCooldownUI.transform.GetChild(1).GetComponent<Image>();
-    }
 }

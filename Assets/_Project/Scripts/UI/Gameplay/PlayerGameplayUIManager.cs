@@ -1,10 +1,12 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerGameplayUIManager : MonoBehaviour
 {
-    [SerializeField]
-    private FloorManager _floorManager;
+    [SerializeField] 
+    private FloorManager floorManager;
 
     [SerializeField] 
     private MinimapCameraFollow minimapCamera;
@@ -12,16 +14,16 @@ public class PlayerGameplayUIManager : MonoBehaviour
     [SerializeField] 
     private RoomsDoneCounter roomsDoneCounter;
 
-    [SerializeField, Space]
+    [SerializeField, Space] 
     private TextMeshProUGUI weaponName;
 
-    [SerializeField]
+    [SerializeField] 
     private TextMeshProUGUI bulletsLeft;
 
-    [SerializeField]
+    [SerializeField] 
     private TextMeshProUGUI roomsCounter;
 
-    [SerializeField]
+    [SerializeField] 
     private TextMeshProUGUI healthLeft;
 
     [SerializeField] 
@@ -33,41 +35,43 @@ public class PlayerGameplayUIManager : MonoBehaviour
     [SerializeField] 
     private GameObject dashCooldownUI;
     
+    
     private GameObject player;
-    private WeaponsManager _weaponsManager;
+    private WeaponsManager weaponsManager;
     private PlayerInteractables playerInteractables;
     private BlakeCharacter blakeCharacter;
-    private PlayerMovement _playerMovement;
+    private PlayerMovement playerMovement;
+    private Image dashCooldownImage;
 
-    //private bool isMapShown = false;
-    
     private void Start()
     {
-        _floorManager.FloorGeneratorEnd += FloorManagerOnFloorGeneratorEnd;
+        floorManager.FloorGeneratorEnd += FloorManagerOnFloorGeneratorEnd;
         ReferenceManager.PlayerInputController.onMapPressEvent += ShowMap;
         ReferenceManager.PlayerInputController.onMapReleaseEvent += HideMap;
     }
 
     private void FloorManagerOnFloorGeneratorEnd(Transform playerTransform, Transform cameraFollowTransform)
     {
-        if (player == null || _weaponsManager == null)
+        if (player == null || weaponsManager == null)
         {
             player = playerTransform.gameObject;
-            _weaponsManager = player.GetComponent<WeaponsManager>();
-            _weaponsManager.onSuccessfulShotEvent += RefreshUI;
-            _weaponsManager.onPlayerPickupWeaponEvent += RefreshUI;
-            _weaponsManager.changeWeaponEvent += RefreshUI;
+            weaponsManager = player.GetComponent<WeaponsManager>();
+            weaponsManager.onSuccessfulShotEvent += RefreshUI;
+            weaponsManager.onPlayerPickupWeaponEvent += RefreshUI;
+            weaponsManager.changeWeaponEvent += RefreshUI;
             RefreshUI();
         }
         
         minimapCamera.SetPlayer(playerTransform);
         
         playerInteractables = player.GetComponent<PlayerInteractables>();
-        _playerMovement = player.GetComponent<PlayerMovement>();
         blakeCharacter = player.GetComponent<BlakeCharacter>();
+        playerMovement = player.GetComponent<PlayerMovement>();
 
         playerInteractables.SetInteractUIReference(interactUI);
-        _playerMovement.SetDashCooldownUIReference(dashCooldownUI);
+        dashCooldownImage = dashCooldownUI.transform.GetChild(1).GetComponent<Image>();
+        
+        playerMovement.OnDashPerformed += StartDashCooldownUI;
     }
     
     private void ShowMap()
@@ -96,18 +100,18 @@ public class PlayerGameplayUIManager : MonoBehaviour
 
     private void WeaponNameUI()
     {
-        weaponName.text = _weaponsManager.GetWeaponDefinition(_weaponsManager.ActiveWeaponIndex).weaponName;
+        weaponName.text = weaponsManager.GetWeaponDefinition(weaponsManager.ActiveWeaponIndex).weaponName;
     }
 
     private void BulletsLeftUI()
     {
-        if (weaponName.text == _weaponsManager.defaultWeapon.weaponName)
+        if (weaponName.text == weaponsManager.defaultWeapon.weaponName)
         {
             bulletsLeft.text = "∞";
         }
         else
         {
-            Weapon weapon = _weaponsManager.GetIWeapon(_weaponsManager.ActiveWeaponIndex).GetWeapon().GetComponent<Weapon>();
+            Weapon weapon = weaponsManager.GetIWeapon(weaponsManager.ActiveWeaponIndex).GetWeapon().GetComponent<Weapon>();
             bulletsLeft.text = weapon.BulletsLeft.ToString();
         }
     }
@@ -120,6 +124,29 @@ public class PlayerGameplayUIManager : MonoBehaviour
     private void HealthLeftUI()
     {
         healthLeft.text = blakeCharacter.Health.ToString();
+    }
+
+    private void StartDashCooldownUI()
+    {
+        StartCoroutine(DashCooldownUI());
+    }
+
+    private IEnumerator DashCooldownUI()
+    {
+        dashCooldownUI.SetActive(true);
+        
+        while(playerMovement.DashCooldownCountdown > 0)
+        {
+            dashCooldownImage.fillAmount = playerMovement.DashCooldownCountdown/playerMovement.DashCooldown;
+            dashCooldownUI.transform.position = player.transform.position + Vector3.up * 0.6f;
+            dashCooldownUI.transform.LookAt(Camera.main.transform);
+
+            yield return new WaitForEndOfFrame();
+        }
+        
+        dashCooldownUI.SetActive(false);
+        dashCooldownImage.fillAmount = 0;
+        
     }
     
 }
