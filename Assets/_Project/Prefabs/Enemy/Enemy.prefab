@@ -3457,16 +3457,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a4eab2db93a064facfcf5eb2875339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRef: {fileID: 0}
-  radius: 30
-  angle: 120
-  targetMask:
+  Radius: 30
+  Angle: 120
+  TargetMask:
     serializedVersion: 2
     m_Bits: 128
-  obstacleMask:
+  ObstacleMask:
     serializedVersion: 2
     m_Bits: 1280
-  canSeePlayer: 0
+  CanSeePlayer: 0
 --- !u!114 &6426853079096780474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3639,15 +3638,15 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
-  abort: 3
-  invert: 0
-  combatStateReference:
+  Abort: 3
+  Invert: 0
+  CombatStateReference:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 2944841440345444223}
     key: CombatState
     constantValue: 0
-  combatState: 0
+  CombatState: 0
 --- !u!114 &2330217625758376006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3673,15 +3672,15 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
-  abort: 3
-  invert: 0
-  combatStateReference:
+  Abort: 3
+  Invert: 0
+  CombatStateReference:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 2944841440345444223}
     key: CombatState
     constantValue: 0
-  combatState: 1
+  CombatState: 1
 --- !u!114 &-1019468932509090006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3707,15 +3706,15 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
-  abort: 3
-  invert: 0
-  combatStateReference:
+  Abort: 3
+  Invert: 0
+  CombatStateReference:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 2944841440345444223}
     key: CombatState
     constantValue: 0
-  combatState: 2
+  CombatState: 2
 --- !u!114 &3463585168474237226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3741,15 +3740,15 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
-  abort: 0
-  invert: 0
-  combatStateReference:
+  Abort: 3
+  Invert: 0
+  CombatStateReference:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 2944841440345444223}
     key: CombatState
     constantValue: 0
-  combatState: 3
+  CombatState: 3
 --- !u!114 &8844222667262711403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3834,8 +3833,8 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
-  enemyAIManager: {fileID: 4250661716291628405}
-  vector3Reference:
+  AIController: {fileID: 4250661716291628405}
+  Vector3Reference:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 2944841440345444223}

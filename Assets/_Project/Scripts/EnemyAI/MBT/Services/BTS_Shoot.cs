@@ -6,7 +6,7 @@ using UnityEngine;
 public class BTS_Shoot : Service
 {
     public BoolReference HasLineOfSightReference;
-    public EnemyAIManager AIController;
+    public AIController AIController;
     private IWeapon weapon;
 
     public override void Task()

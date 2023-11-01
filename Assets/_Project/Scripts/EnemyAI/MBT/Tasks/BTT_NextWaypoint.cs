@@ -5,23 +5,23 @@ using UnityEngine;
 [MBTNode(name = "Tasks/Next Waypoint")]
 public class BTT_NextWaypoint : Leaf
 {
-    public EnemyAIManager enemyAIManager;
-    private int _waypointIndex = 0;
+    public AIController AIController;
+    private int waypointIndex = 0;
 
-    public Vector3Reference vector3Reference = new Vector3Reference();
+    public Vector3Reference Vector3Reference = new Vector3Reference();
 
     public override NodeResult Execute()
     {
-        if (enemyAIManager.waypoints == null) return NodeResult.failure;
+        if (AIController.waypoints == null) return NodeResult.failure;
 
-        int waypointCount = enemyAIManager.waypoints.GetCount();
-        if (_waypointIndex < waypointCount)
+        int waypointCount = AIController.waypoints.GetCount();
+        if (waypointIndex < waypointCount)
         {
-            Vector3 patrolPosition = enemyAIManager.waypoints.GetWaypointPosition(_waypointIndex % waypointCount);
-            if (enemyAIManager.navMeshAgent.remainingDistance <= enemyAIManager.navMeshAgent.stoppingDistance)
+            Vector3 patrolPosition = AIController.waypoints.GetWaypointPosition(waypointIndex % waypointCount);
+            if (AIController.navMeshAgent.remainingDistance <= AIController.navMeshAgent.stoppingDistance)
             {
-                vector3Reference.Value = patrolPosition;
-                _waypointIndex = (_waypointIndex + 1) % waypointCount;
+                Vector3Reference.Value = patrolPosition;
+                waypointIndex = (waypointIndex + 1) % waypointCount;
             }
         }
         return NodeResult.success;

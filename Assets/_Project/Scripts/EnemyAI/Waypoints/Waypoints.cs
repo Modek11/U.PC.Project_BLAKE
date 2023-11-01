@@ -6,11 +6,11 @@ public class Waypoints : MonoBehaviour
 	[SerializeField] 
 	private List<Transform> waypoints;
 
-	private int _waypointsCount;
+	private int waypointsCount;
 
 	private void Start()
 	{
-		_waypointsCount = waypoints.Count;
+		waypointsCount = waypoints.Count;
 	}
 
 	public Vector3 GetWaypointPosition(int waypointIndex)
@@ -20,6 +20,6 @@ public class Waypoints : MonoBehaviour
 
 	public int GetCount()
 	{
-		return _waypointsCount;
+		return waypointsCount;
 	}
 }

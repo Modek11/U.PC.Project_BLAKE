@@ -11,7 +11,7 @@ public class BTT_MoveToTarget : Leaf
     public float MoveSpeed = 5f;
     public GameObject Target;
 
-    public EnemyAIManager AIController;
+    public AIController AIController;
 
     private void Awake()
     {

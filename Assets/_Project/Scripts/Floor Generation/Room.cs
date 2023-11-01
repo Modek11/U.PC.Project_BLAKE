@@ -97,7 +97,7 @@ public class Room : MonoBehaviour
         foreach (EnemySpawner enemy in spawners)
         {
             GameObject spawnedEnemy = Instantiate(enemy.EnemyToSpawn.gameObject, enemy.EnemySpawnPoint.transform.position, enemy.EnemySpawnPoint.rotation, this.transform);
-            spawnedEnemy.GetComponent<EnemyAIManager>().SetWaypoints(enemy.EnemyWaypoints);
+            spawnedEnemy.GetComponent<AIController>().SetWaypoints(enemy.EnemyWaypoints);
             spawnedEnemies.Add(spawnedEnemy);
         }
     }
@@ -161,8 +161,7 @@ public class Room : MonoBehaviour
         foreach(GameObject enemy in spawnedEnemies)
         {
             if (enemy == null) continue;
-            enemy.GetComponent<EnemyAIManager>().UpdatePlayerRef();
-            enemy.GetComponent<EnemyFOV>().FindPlayer();
+            enemy.GetComponent<AIController>().UpdatePlayerRef();
         }
 
         

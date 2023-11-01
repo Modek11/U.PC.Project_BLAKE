@@ -3,28 +3,17 @@ using UnityEngine;
 
 public class EnemyFOV : MonoBehaviour
 {
-    public GameObject playerRef;
+    public float Radius;
+    [Range(0, 360)] public float Angle;
 
-    public float radius;
-    [Range(0, 360)] public float angle;
+    public LayerMask TargetMask;
+    public LayerMask ObstacleMask;
 
-    public LayerMask targetMask;
-    public LayerMask obstacleMask;
+    [HideInInspector]
+    public bool CanSeePlayer;
 
-    public bool canSeePlayer;
-
-    public delegate void OnCanSeePlayerChanged(bool newCanSeePlayer);
-    public event OnCanSeePlayerChanged onCanSeePlayerChanged;
-
-    private void Awake()
-    {
-        FindPlayer();
-    }
-
-    public void FindPlayer()
-    {
-        playerRef = GameObject.FindGameObjectWithTag("Player");
-    }
+    public delegate void CanSeePlayerChanged(bool newCanSeePlayer);
+    public event CanSeePlayerChanged OnCanSeePlayerChanged;
 
     private void OnEnable()
     {
@@ -33,32 +22,32 @@ public class EnemyFOV : MonoBehaviour
 
     public void FieldOfViewCheck()
     {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, Radius, TargetMask);
 
         if (rangeChecks.Length != 0)
         {
             Transform target = rangeChecks[0].transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
+            if (Vector3.Angle(transform.forward, directionToTarget) < Angle / 2)
             {
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
-                if (!Physics.Raycast(transform.position + new Vector3(0, 3f, 0), directionToTarget, distanceToTarget, obstacleMask))
+                if (!Physics.Raycast(transform.position + new Vector3(0, 3f, 0), directionToTarget, distanceToTarget, ObstacleMask))
                 {
-                    if (!canSeePlayer)
+                    if (!CanSeePlayer)
                     {
-                        canSeePlayer = true;
-                        onCanSeePlayerChanged.Invoke(canSeePlayer);
+                        CanSeePlayer = true;
+                        OnCanSeePlayerChanged?.Invoke(CanSeePlayer);
                     }
                     return;
                 }
             }
         }
-        if (canSeePlayer)
+        if (CanSeePlayer)
         {
-            canSeePlayer = false;
-            onCanSeePlayerChanged.Invoke(canSeePlayer);
+            CanSeePlayer = false;
+            OnCanSeePlayerChanged?.Invoke(CanSeePlayer);
         }
 
     }

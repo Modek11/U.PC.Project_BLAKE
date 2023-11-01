@@ -6,40 +6,40 @@ using UnityEngine;
 [MBTNode(name = "Conditions/Is Combat State Equal")]
 public class BTD_IsCombatStateEqual : Condition
 {
-    public Abort abort;
-    public bool invert = false;
-    public CombatStateReference combatStateReference = new CombatStateReference();
-    public CombatState combatState;
+    public Abort Abort;
+    public bool Invert = false;
+    public CombatStateReference CombatStateReference = new CombatStateReference();
+    public CombatState CombatState;
 
     public override bool Check()
     {
-        return combatState == combatStateReference.GetVariable().Value;
+        return CombatState == CombatStateReference.GetVariable().Value;
     }
 
     public override void OnAllowInterrupt()
     {
-        if (abort != Abort.None)
+        if (Abort != Abort.None)
         {
             ObtainTreeSnapshot();
-            combatStateReference.GetVariable().AddListener(OnVariableChange);
+            CombatStateReference.GetVariable().AddListener(OnVariableChange);
         }
     }
 
     public override void OnDisallowInterrupt()
     {
-        if (abort != Abort.None)
+        if (Abort != Abort.None)
         {
-            combatStateReference.GetVariable().RemoveListener(OnVariableChange);
+            CombatStateReference.GetVariable().RemoveListener(OnVariableChange);
         }
     }
 
     private void OnVariableChange(CombatState oldValue, CombatState newValue)
     {
-        EvaluateConditionAndTryAbort(abort);
+        EvaluateConditionAndTryAbort(Abort);
     }
 
     public override bool IsValid()
     {
-        return !combatStateReference.isInvalid;
+        return !CombatStateReference.isInvalid;
     }
 }

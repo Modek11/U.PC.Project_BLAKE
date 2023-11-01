@@ -11,7 +11,7 @@ public class BTT_MoveTo : Leaf
     public float MoveSpeed = 5f;
     public Vector3Reference LocationReference = new Vector3Reference();
 
-    public EnemyAIManager AIController;
+    public AIController AIController;
 
     private void Awake()
     {

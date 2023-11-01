@@ -6,7 +6,7 @@ using UnityEngine;
 public class BTT_PrimaryAttack : Leaf
 {
     public CombatStateReference CombatStateReference;
-    public EnemyAIManager AIController;
+    public AIController AIController;
     public float WeaponRangeMultipler = 1f;
 
     private float weaponRange;
@@ -16,7 +16,7 @@ public class BTT_PrimaryAttack : Leaf
     {
         if (AIController == null)
         {
-            AIController = GetComponent<EnemyAIManager>();
+            AIController = GetComponent<AIController>();
             if (AIController == null) return NodeResult.failure;
         }
         if (weaponInterface == null)
