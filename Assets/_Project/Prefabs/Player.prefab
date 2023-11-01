@@ -3214,6 +3214,7 @@ MonoBehaviour:
   explosionParticle: {fileID: 6361431522622511341, guid: b9bcc07df42695645b74449cfd80b6db,
     type: 3}
   animator: {fileID: 341872085399694321}
+  godMode: 1
 --- !u!1 &8871600578562275924
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,11 +5,11 @@ public class EnemyCharacter : BlakeCharacter
     [SerializeField]
     private GameObject weaponPickup;
 
-    private EnemyAIManager ai;
+    private AIController ai;
 
     private void Awake()
     {
-        ai = GetComponent<EnemyAIManager>();
+        ai = GetComponent<AIController>();
     }
 
     public override void Die()
