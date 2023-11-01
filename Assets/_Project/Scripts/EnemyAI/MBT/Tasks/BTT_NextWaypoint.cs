@@ -12,13 +12,13 @@ public class BTT_NextWaypoint : Leaf
 
     public override NodeResult Execute()
     {
-        if (AIController.waypoints == null) return NodeResult.failure;
+        if (AIController.Waypoints == null) return NodeResult.failure;
 
-        int waypointCount = AIController.waypoints.GetCount();
+        int waypointCount = AIController.Waypoints.GetCount();
         if (waypointIndex < waypointCount)
         {
-            Vector3 patrolPosition = AIController.waypoints.GetWaypointPosition(waypointIndex % waypointCount);
-            if (AIController.navMeshAgent.remainingDistance <= AIController.navMeshAgent.stoppingDistance)
+            Vector3 patrolPosition = AIController.Waypoints.GetWaypointPosition(waypointIndex % waypointCount);
+            if (AIController.NavMeshAgent.remainingDistance <= AIController.NavMeshAgent.stoppingDistance)
             {
                 Vector3Reference.Value = patrolPosition;
                 waypointIndex = (waypointIndex + 1) % waypointCount;

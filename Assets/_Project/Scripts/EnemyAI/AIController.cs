@@ -10,21 +10,21 @@ public class AIController : MonoBehaviour
     private GameObject weaponRef;
 
     [HideInInspector]
-    public NavMeshAgent navMeshAgent;
+    public NavMeshAgent NavMeshAgent;
 
     private GameObject playerRef;
     private Animator animator;
 
-    public CombatStateReference combatStateReference;
-    public BoolReference hasLineOfSightReference;
+    public CombatStateReference CombatStateReference;
+    public BoolReference HasLineOfSightReference;
 
-    public Waypoints waypoints;
+    public Waypoints Waypoints;
 
     private void Awake()
     {
         UpdatePlayerRef();
 
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        NavMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
         GetComponent<BlakeCharacter>().onDeath += Die;
@@ -34,7 +34,7 @@ public class AIController : MonoBehaviour
     private void Die()
     {
         this.enabled = false;
-        navMeshAgent.isStopped = true;
+        NavMeshAgent.isStopped = true;
         GetComponent<MBTExecutor>().enabled = false;
     }
 
@@ -42,8 +42,8 @@ public class AIController : MonoBehaviour
     {
         FaceThePlayer();
 
-        animator.SetFloat("Direction", BlakeAnimatorHelper.CalculateDirection(navMeshAgent.velocity, transform));
-        animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
+        animator.SetFloat("Direction", BlakeAnimatorHelper.CalculateDirection(NavMeshAgent.velocity, transform));
+        animator.SetFloat("Speed", NavMeshAgent.velocity.magnitude);
     }
 
     public void UpdatePlayerRef()
@@ -53,7 +53,7 @@ public class AIController : MonoBehaviour
 
     public void SetWaypoints(Waypoints waypoints)
     {
-        this.waypoints = waypoints;
+        this.Waypoints = waypoints;
     }
 
     private void FaceThePlayer()
@@ -63,7 +63,7 @@ public class AIController : MonoBehaviour
             return;
         }
 
-        if (combatStateReference.GetVariable().Value != CombatState.Patrol)
+        if (CombatStateReference.GetVariable().Value != CombatState.Patrol)
         {
             Vector3 direction = (playerRef.transform.position - gameObject.transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
@@ -74,10 +74,10 @@ public class AIController : MonoBehaviour
 
     private void OnCanSeePlayerChanged(bool newCanSeePlayer)
     {
-        hasLineOfSightReference.Value = newCanSeePlayer;
+        HasLineOfSightReference.Value = newCanSeePlayer;
         if (newCanSeePlayer)
         {
-            combatStateReference.GetVariable().Value = CombatState.Attack;
+            CombatStateReference.GetVariable().Value = CombatState.Attack;
             if (IsInvoking("ClearPlayerFocus"))
             {
                 CancelInvoke("ClearPlayerFocus");
@@ -91,7 +91,7 @@ public class AIController : MonoBehaviour
 
     private void ClearPlayerFocus()
     {
-        combatStateReference.GetVariable().Value = CombatState.Patrol;
+        CombatStateReference.GetVariable().Value = CombatState.Patrol;
     }
 
     public GameObject GetWeaponRef()

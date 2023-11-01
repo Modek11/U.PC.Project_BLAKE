@@ -7,7 +7,7 @@ using UnityEngine;
 public class BTT_FindPositionAroundTarget : Leaf
 {
     public AIController AIController;
-    public Vector3Reference vector3Reference;
+    public Vector3Reference Vector3Reference;
 
     public override NodeResult Execute()
     {
@@ -21,7 +21,7 @@ public class BTT_FindPositionAroundTarget : Leaf
             offset = new Vector3(offset.x, 0, offset.z);
         }
 
-        vector3Reference.Value = ReferenceManager.BlakeHeroCharacter.transform.position + offset;
+        Vector3Reference.Value = ReferenceManager.BlakeHeroCharacter.transform.position + offset;
         return NodeResult.success;
     }
 }

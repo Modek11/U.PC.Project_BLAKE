@@ -6,7 +6,7 @@ using UnityEngine;
 [MBTNode(name = "Tasks/SetCombatState")]
 public class BTT_SetCombatState : Leaf
 {
-    public CombatStateReference combatStateReference = new CombatStateReference();
+    public CombatStateReference CombatStateReference = new CombatStateReference();
     public CombatState NewCombatState = CombatState.Strafe;
 
     public override NodeResult Execute()
@@ -19,6 +19,6 @@ public class BTT_SetCombatState : Leaf
     {
         yield return new WaitForEndOfFrame();
 
-        combatStateReference.GetVariable().Value = NewCombatState;
+        CombatStateReference.GetVariable().Value = NewCombatState;
     }
 }

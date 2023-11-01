@@ -21,22 +21,22 @@ public class BTT_MoveTo : Leaf
     public override void OnEnter()
     {
         if (AIController == null) return;
-        if (AIController.navMeshAgent.isStopped) AIController.navMeshAgent.isStopped = false;
+        if (AIController.NavMeshAgent.isStopped) AIController.NavMeshAgent.isStopped = false;
 
-        AIController.navMeshAgent.speed = MoveSpeed;
-        AIController.navMeshAgent.SetDestination(LocationReference.Value);
+        AIController.NavMeshAgent.speed = MoveSpeed;
+        AIController.NavMeshAgent.SetDestination(LocationReference.Value);
     }
 
     public override NodeResult Execute()
     {
-        if (AIController.navMeshAgent.pathStatus == NavMeshPathStatus.PathPartial) { return NodeResult.failure; }
-        if (AIController.navMeshAgent.pathStatus == NavMeshPathStatus.PathInvalid) { return NodeResult.failure; }
-        if (!AIController.navMeshAgent.hasPath) { return NodeResult.failure; }
-        if (AIController.navMeshAgent.velocity.sqrMagnitude == 0f) { return NodeResult.failure; }
+        if (AIController.NavMeshAgent.pathStatus == NavMeshPathStatus.PathPartial) { return NodeResult.failure; }
+        if (AIController.NavMeshAgent.pathStatus == NavMeshPathStatus.PathInvalid) { return NodeResult.failure; }
+        if (!AIController.NavMeshAgent.hasPath) { return NodeResult.failure; }
+        if (AIController.NavMeshAgent.velocity.sqrMagnitude == 0f) { return NodeResult.failure; }
 
-        if (AIController.navMeshAgent.remainingDistance <= AcceptableDistance)
+        if (AIController.NavMeshAgent.remainingDistance <= AcceptableDistance)
         {
-            AIController.navMeshAgent.ResetPath();
+            AIController.NavMeshAgent.ResetPath();
             return NodeResult.success;
         }
         return NodeResult.running;

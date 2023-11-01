@@ -3431,20 +3431,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponRef: {fileID: 0}
-  navMeshAgent: {fileID: 0}
-  combatStateReference:
+  NavMeshAgent: {fileID: 0}
+  CombatStateReference:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 2944841440345444223}
     key: CombatState
     constantValue: 0
-  hasLineOfSightReference:
+  HasLineOfSightReference:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 2944841440345444223}
     key: HasLineOfSight
     constantValue: 0
-  waypoints: {fileID: 0}
+  Waypoints: {fileID: 0}
 --- !u!114 &4250661716291628404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3912,7 +3912,7 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   AIController: {fileID: 4250661716291628405}
-  vector3Reference:
+  Vector3Reference:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 2944841440345444223}
@@ -4003,7 +4003,7 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
-  combatStateReference:
+  CombatStateReference:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 2944841440345444223}
@@ -4167,7 +4167,7 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
-  combatStateReference:
+  CombatStateReference:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 2944841440345444223}
