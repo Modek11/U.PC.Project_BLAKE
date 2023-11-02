@@ -1223,6 +1223,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 4763500703024379838, guid: 4c4b5f7670b559541a2e37b0c5082c8e,
         type: 3}
+      propertyPath: floorManager
+      value: 
+      objectReference: {fileID: 1422814106}
+    - target: {fileID: 4763500703024379838, guid: 4c4b5f7670b559541a2e37b0c5082c8e,
+        type: 3}
       propertyPath: _floorManager
       value: 
       objectReference: {fileID: 1422814106}
