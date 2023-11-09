@@ -364,6 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b680341974f81224e8e6bdbb3b72b3da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomType: 0
   doors:
   - {fileID: 2077577357897747766}
   - {fileID: 2077577357954752026}
@@ -398,6 +399,10 @@ MonoBehaviour:
   isInitialized: 0
   isBeaten: 0
   spawnPoint: {fileID: 8774859673408851681}
+  gCost: 0
+  hCost: 0
+  fCost: 0
+  cameFromRoom: {fileID: 0}
 --- !u!114 &3982801976457989227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20574,6 +20579,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2087882301756044489, guid: be02f6d2c5654034ebec1a2859efb68b,
+        type: 3}
+      propertyPath: mainRoom
+      value: 
+      objectReference: {fileID: 2505149276963611825}
     - target: {fileID: 2545124422801720630, guid: be02f6d2c5654034ebec1a2859efb68b,
         type: 3}
       propertyPath: m_RootOrder
@@ -21837,6 +21847,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 12574552307745358}
     m_Modifications:
+    - target: {fileID: 2087882301756044489, guid: be02f6d2c5654034ebec1a2859efb68b,
+        type: 3}
+      propertyPath: mainRoom
+      value: 
+      objectReference: {fileID: 2505149276963611825}
     - target: {fileID: 5761699083240367011, guid: be02f6d2c5654034ebec1a2859efb68b,
         type: 3}
       propertyPath: m_Name
@@ -31411,6 +31426,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 12574552307745358}
     m_Modifications:
+    - target: {fileID: 2087882301756044489, guid: be02f6d2c5654034ebec1a2859efb68b,
+        type: 3}
+      propertyPath: mainRoom
+      value: 
+      objectReference: {fileID: 2505149276963611825}
     - target: {fileID: 5761699083240367011, guid: be02f6d2c5654034ebec1a2859efb68b,
         type: 3}
       propertyPath: m_Name

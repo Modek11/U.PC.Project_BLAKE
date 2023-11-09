@@ -3,8 +3,19 @@ using UnityEngine;
 using Unity.AI.Navigation;
 using System;
 
+public enum RoomType
+{
+    Base,
+    Treasure,
+    Shop,
+    Boss
+}
+
 public class Room : MonoBehaviour
 {
+    [SerializeField]
+    private RoomType roomType = RoomType.Base;
+
     [SerializeField]
     private RoomConnector[] doors;
 
@@ -42,6 +53,21 @@ public class Room : MonoBehaviour
     private List<RoomOverlapTrigger> fogTriggers = new List<RoomOverlapTrigger>();
     private RoomsDoneCounter roomsDoneCounter;
 
+    [HideInInspector]
+    public int gCost;
+    [HideInInspector]
+    public int hCost;
+    [HideInInspector]
+    public int fCost;
+
+    [HideInInspector]
+    public Room cameFromRoom;
+
+    public void CalculateFCost()
+    {
+        fCost = gCost + hCost;
+    }
+
     [Serializable]
     public struct EnemySpawner
     {
@@ -55,6 +81,15 @@ public class Room : MonoBehaviour
         roomsDoneCounter = FindObjectOfType<RoomsDoneCounter>();
     }
 
+    public void SetupDoorConnectors()
+    {
+        foreach (RoomConnector door in doors)
+        {
+            door.SetRoom(this);
+            door.SetDoor();
+        }
+    }
+
     public void InitializeRoom(RoomManager rm)
     {
         roomManager = rm;
@@ -63,11 +98,7 @@ public class Room : MonoBehaviour
         {
             randomObject.InitializeRandomObject();
         }
-        foreach(RoomConnector door in doors)
-        {
-            door.SetRoom(this);
-            door.SetDoor();
-        }
+        
 
         if(minimapRoom != null && roomManager.GetMinimapFloor() != null)
         {
@@ -100,6 +131,11 @@ public class Room : MonoBehaviour
             spawnedEnemy.GetComponent<AIController>().SetWaypoints(enemy.EnemyWaypoints);
             spawnedEnemies.Add(spawnedEnemy);
         }
+    }
+
+    public RoomType GetRoomType()
+    {
+        return roomType;
     }
 
     public void BeatLevel()
