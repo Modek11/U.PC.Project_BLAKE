@@ -82,6 +82,8 @@ public class FloorGenerator : MonoBehaviour
         tries = 0;
         //Generate TreasureRooms
         yield return StartCoroutine(GenerateSpecialRoomsFromPool(treasureRoomPool, treasureRoomsAmount));
+
+
         foreach (GameObject room in spawnedRooms)
         {
             Room roomScript = room.GetComponent<Room>();
@@ -136,46 +138,16 @@ public class FloorGenerator : MonoBehaviour
                 int randomDoor = Random.Range(0, newRoom.GetComponent<Room>().GetDoors().Length);
                 RoomConnector newDoor = newRoom.GetComponent<Room>().GetDoors()[randomDoor];
 
-                Quaternion rot = Quaternion.LookRotation(-door.transform.forward);
-                newRoom.transform.rotation = rot * Quaternion.Inverse(newDoor.transform.rotation);
+                bool success = TryPositionRoom(room, newRoom, door, newDoor);
 
-                Vector3 offset = newDoor.transform.position - door.transform.position;
-                newRoom.transform.position -= offset;
-                bool overlap = false;
-                BoxCollider[] roomColliders = newRoom.GetComponent<Room>().GetOverlapColliders();
-                foreach (BoxCollider box in roomColliders)
+                if (success)
                 {
-                    if (overlap) break;
-                    Collider[] colliders = Physics.OverlapBox(newRoom.transform.TransformPoint(box.center), box.size / 2, newRoom.transform.rotation, layerMask, QueryTriggerInteraction.Collide);
-
-                    foreach (Collider cols in colliders)
-                    {
-                        if (cols.gameObject != newRoom && cols.gameObject.GetComponent<RoomOverlapTrigger>() != null && cols.gameObject != room)
-                        {
-                            overlap = true;
-                            tries++;
-                            if(debugOverlapping) Debug.Log("Overlapping at " + room.name);
-                            break;
-                        }
-                    }
-                }
-                if (!overlap)
-                {
-                    tries = 0;
-                    door.SetConnector(newDoor);
-                    newDoor.SetConnector(door);
-                    newRoom.GetComponent<Room>().SetupDoorConnectors();
+                    FinalizeRoomPlacement(newRoom, door, newDoor, map);
                     toAdd.Add(newRoom);
-                    newRoom.transform.parent = map.transform;
-                    roomCounter++;
                     tempCounter++;
-
-                    if (ReferenceManager.SceneHandler != null)
-                        ReferenceManager.SceneHandler.roomsGenerated++;
                 }
                 else
                 {
-                    if (debugOverlapping)  Debug.Log("Destroying" + newRoom.name);
                     Destroy(newRoom);
                 }
 
@@ -237,48 +209,16 @@ public class FloorGenerator : MonoBehaviour
                 int randomDoor = Random.Range(0, newRoom.GetComponent<Room>().GetDoors().Length);
                 RoomConnector newDoor = newRoom.GetComponent<Room>().GetDoors()[randomDoor];
 
-                Quaternion rot = Quaternion.LookRotation(-door.transform.forward);
-                newRoom.transform.rotation = rot * Quaternion.Inverse(newDoor.transform.rotation);
+                bool success = TryPositionRoom(room, newRoom, door, newDoor);
 
-                Vector3 offset = newDoor.transform.position - door.transform.position;
-                newRoom.transform.position -= offset;
-                bool overlap = false;
-                BoxCollider[] roomColliders = newRoom.GetComponent<Room>().GetOverlapColliders();
-                foreach (BoxCollider box in roomColliders)
+                if (success)
                 {
-                    if (overlap) break;
-                    Collider[] colliders = Physics.OverlapBox(newRoom.transform.TransformPoint(box.center), box.size / 2, newRoom.transform.rotation, layerMask, QueryTriggerInteraction.Collide);
-
-                    foreach (Collider cols in colliders)
-                    {
-                        if (cols.gameObject != newRoom && cols.gameObject.GetComponent<RoomOverlapTrigger>() != null && cols.gameObject != room)
-                        {
-                            overlap = true;
-                            tries++;
-                            if (debugOverlapping) Debug.Log("Overlapping at " + room.name);
-                            break;
-                        }
-                    }
-                }
-                if (!overlap)
-                {
-                    if (debugRoomFinding) Debug.Log("Using: " + door.GetRoom().gameObject.name);
-                    tries = 0;
-                    door.SetConnector(newDoor);
-                    newDoor.SetConnector(door);
-                    newRoom.GetComponent<Room>().SetupDoorConnectors();
+                    FinalizeRoomPlacement(newRoom, door, newDoor, map);
                     toAdd.Add(newRoom);
-                    newRoom.transform.parent = map.transform;
-                    roomCounter++;
                     tempCounter++;
-
-                    if (ReferenceManager.SceneHandler != null)
-                        ReferenceManager.SceneHandler.roomsGenerated++;
-                    break;
                 }
                 else
                 {
-                    if (debugOverlapping) Debug.Log("Destroying" + newRoom.name);
                     Destroy(newRoom);
                 }
 
@@ -297,4 +237,68 @@ public class FloorGenerator : MonoBehaviour
 
     }
 
+    private bool TryPositionRoom(GameObject room, GameObject newRoom, RoomConnector doorToConnect, RoomConnector newDoor)
+    {
+
+        // Calculate the rotation needed to match the new door with the door to connect
+        Quaternion rotationToMatchDoors = Quaternion.LookRotation(-doorToConnect.transform.forward);
+        newRoom.transform.rotation = rotationToMatchDoors * Quaternion.Inverse(newDoor.transform.rotation);
+
+        // Calculate the position offset to match the new door with the door to connect
+        Vector3 positionOffset = newDoor.transform.position - doorToConnect.transform.position;
+        newRoom.transform.position -= positionOffset;
+
+        // Check for any overlaps with existing rooms
+        bool isOverlapping = CheckForOverlap(room, newRoom);
+        if (isOverlapping)
+        {
+            tries++; // Increment tries if there is an overlap
+            if (debugOverlapping) Debug.Log($"Overlap detected on attempt {tries} for room: {newRoom.name}");
+        }
+        return !isOverlapping;
+    }
+
+    private bool CheckForOverlap(GameObject room, GameObject newRoom)
+    {
+
+        BoxCollider[] roomColliders = newRoom.GetComponentsInChildren<BoxCollider>();
+        foreach (BoxCollider collider in roomColliders)
+        {
+            Collider[] overlaps = Physics.OverlapBox(
+                newRoom.transform.TransformPoint(collider.center),
+                collider.size / 2,
+                newRoom.transform.rotation,
+                layerMask,
+                QueryTriggerInteraction.Collide
+            );
+
+            foreach (Collider overlap in overlaps)
+            {
+                if (overlap.gameObject != newRoom && overlap.gameObject.GetComponent<RoomOverlapTrigger>() != null && overlap.gameObject != room)
+                {
+                    // If any overlaps are detected with objects other than the room itself, return true.
+                    if (debugOverlapping) Debug.Log("Overlapping detected with: " + overlap.gameObject.name);
+                    return true;
+                }
+            }
+        }
+        // If no overlaps are detected, return false.
+        return false;
+    }
+
+    private void FinalizeRoomPlacement(GameObject newRoom, RoomConnector doorToConnect, RoomConnector newDoor, GameObject map)
+    {
+
+        doorToConnect.SetConnector(newDoor);
+        newDoor.SetConnector(doorToConnect);
+        newRoom.GetComponent<Room>().SetupDoorConnectors();
+        doorToConnect.GetRoom().GetComponent<Room>().SetupDoorConnectors();
+        newRoom.transform.parent = map.transform;
+        roomCounter++;
+
+        if (ReferenceManager.SceneHandler != null)
+        {
+            ReferenceManager.SceneHandler.roomsGenerated++;
+        }
+    }
 }

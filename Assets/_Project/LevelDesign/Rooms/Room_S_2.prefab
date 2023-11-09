@@ -516,6 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b680341974f81224e8e6bdbb3b72b3da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomType: 0
   doors:
   - {fileID: 205126731235329385}
   - {fileID: 205126730248529838}
@@ -543,6 +544,10 @@ MonoBehaviour:
   isInitialized: 0
   isBeaten: 0
   spawnPoint: {fileID: 2262005994774161461}
+  gCost: 0
+  hCost: 0
+  fCost: 0
+  cameFromRoom: {fileID: 0}
 --- !u!114 &886458964564112369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4480,6 +4485,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2171126759574821357}
     m_Modifications:
+    - target: {fileID: 2087882301756044489, guid: be02f6d2c5654034ebec1a2859efb68b,
+        type: 3}
+      propertyPath: mainRoom
+      value: 
+      objectReference: {fileID: 8020210768947020082}
     - target: {fileID: 5761699083240367011, guid: be02f6d2c5654034ebec1a2859efb68b,
         type: 3}
       propertyPath: m_Name
@@ -4887,6 +4897,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2171126759574821357}
     m_Modifications:
+    - target: {fileID: 2087882301756044489, guid: be02f6d2c5654034ebec1a2859efb68b,
+        type: 3}
+      propertyPath: mainRoom
+      value: 
+      objectReference: {fileID: 8020210768947020082}
     - target: {fileID: 5761699083240367011, guid: be02f6d2c5654034ebec1a2859efb68b,
         type: 3}
       propertyPath: m_Name
@@ -10466,6 +10481,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2171126759574821357}
     m_Modifications:
+    - target: {fileID: 2087882301756044489, guid: be02f6d2c5654034ebec1a2859efb68b,
+        type: 3}
+      propertyPath: mainRoom
+      value: 
+      objectReference: {fileID: 8020210768947020082}
     - target: {fileID: 5761699083240367011, guid: be02f6d2c5654034ebec1a2859efb68b,
         type: 3}
       propertyPath: m_Name
@@ -10858,6 +10878,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2171126759574821357}
     m_Modifications:
+    - target: {fileID: 2087882301756044489, guid: be02f6d2c5654034ebec1a2859efb68b,
+        type: 3}
+      propertyPath: mainRoom
+      value: 
+      objectReference: {fileID: 8020210768947020082}
     - target: {fileID: 5761699083240367011, guid: be02f6d2c5654034ebec1a2859efb68b,
         type: 3}
       propertyPath: m_Name
