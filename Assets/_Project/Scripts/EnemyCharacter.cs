@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class EnemyCharacter : BlakeCharacter
 {
+    public Room spawnedInRoom;
+    
     [SerializeField]
     private GameObject weaponPickup;
 
     private AIController ai;
-
+    
     private void Awake()
     {
         ai = GetComponent<AIController>();
@@ -35,6 +37,7 @@ public class EnemyCharacter : BlakeCharacter
             if (drop <= weaponDef.dropRate)
             {
                 GameObject weaponPickupObject = Instantiate(weaponPickup, transform.position, Quaternion.identity);
+                spawnedInRoom.AddSpawnedWeapon(weaponPickupObject);
 
                 //WeaponDefinition randomWeapon = WeaponsMagazine.GetRandomWeapon();
                 WeaponPickup weaponPickupScript = weaponPickupObject.GetComponent<WeaponPickup>();
