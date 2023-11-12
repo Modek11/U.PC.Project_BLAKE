@@ -105,8 +105,8 @@ public class PlayerMovement : MonoBehaviour
            targetRotation.z = 0;
 
            if (!ShouldPlayerRotate(playerRotation, targetRotation)) return;
-           rigidbodyCache.MoveRotation(Quaternion.Slerp(playerRotation, targetRotation, 20f * Time.deltaTime).normalized);
-        }
+           rigidbodyCache.MoveRotation(Quaternion.Slerp(playerRotation, targetRotation, 2000f * Time.deltaTime).normalized);
+       }
    }
 
    private bool ShouldPlayerRotate(Quaternion playerRotation, Quaternion targetRotation)
