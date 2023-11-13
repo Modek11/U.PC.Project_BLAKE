@@ -130,7 +130,7 @@ public class Room : MonoBehaviour
         {
             GameObject spawnedEnemy = Instantiate(enemy.EnemyToSpawn.gameObject, enemy.EnemySpawnPoint.transform.position, enemy.EnemySpawnPoint.rotation, this.transform);
             spawnedEnemy.GetComponent<AIController>().SetWaypoints(enemy.EnemyWaypoints);
-            spawnedEnemy.GetComponent<EnemyCharacter>().spawnedInRoom = this;
+            spawnedEnemy.GetComponent<EnemyCharacter>().SpawnedInRoom = this;
             spawnedEnemies.Add(spawnedEnemy);
         }
     }
