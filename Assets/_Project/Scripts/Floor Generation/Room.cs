@@ -52,6 +52,7 @@ public class Room : MonoBehaviour
     private List<RoomTrigger> triggers = new List<RoomTrigger>();
     private List<RoomOverlapTrigger> fogTriggers = new List<RoomOverlapTrigger>();
     private RoomsDoneCounter roomsDoneCounter;
+    private List<GameObject> instantiatedWeapons;
 
     [HideInInspector]
     public int gCost;
@@ -129,6 +130,7 @@ public class Room : MonoBehaviour
         {
             GameObject spawnedEnemy = Instantiate(enemy.EnemyToSpawn.gameObject, enemy.EnemySpawnPoint.transform.position, enemy.EnemySpawnPoint.rotation, this.transform);
             spawnedEnemy.GetComponent<AIController>().SetWaypoints(enemy.EnemyWaypoints);
+            spawnedEnemy.GetComponent<EnemyCharacter>().SpawnedInRoom = this;
             spawnedEnemies.Add(spawnedEnemy);
         }
     }
@@ -138,11 +140,12 @@ public class Room : MonoBehaviour
         return roomType;
     }
 
-    public void BeatLevel()
+    private void BeatLevel()
     {
         roomsDoneCounter.AddBeatenRoom();
         isBeaten = true;
         minimapRoom.CompleteRoom();
+        instantiatedWeapons = null;
     }
 
 
@@ -220,6 +223,8 @@ public class Room : MonoBehaviour
         {
             player.GetComponent<BlakeCharacter>().SetRespawnPosition(GetSpawnPointPosition());
         }
+
+        instantiatedWeapons = new List<GameObject>();
     }
 
     public void SetPlayer(GameObject _player)
@@ -248,6 +253,11 @@ public class Room : MonoBehaviour
             rt.Reset();
         }
         Invoke("ResetEnemies", 0.5f);
+
+        foreach (var weapon in instantiatedWeapons)
+        {
+            Destroy(weapon);
+        }
     }
 
 
@@ -370,6 +380,11 @@ public class Room : MonoBehaviour
             return spawnPoint.position;
         }
         else return transform.position;
+    }
+
+    public void AddSpawnedWeapon(GameObject weapon)
+    {
+        instantiatedWeapons.Add(weapon);
     }
 
 }
