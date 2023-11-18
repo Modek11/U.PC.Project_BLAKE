@@ -3083,6 +3083,7 @@ GameObject:
   - component: {fileID: 4151773349220175101}
   - component: {fileID: 5545414051132038904}
   - component: {fileID: -7787404852900598163}
+  - component: {fileID: -66852236823653447}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -3215,6 +3216,19 @@ MonoBehaviour:
     type: 3}
   animator: {fileID: 341872085399694321}
   godMode: 1
+--- !u!114 &-66852236823653447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8608387976418621433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baa0d837505c3564aae6d7462af6447e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startupAbilities: []
 --- !u!1 &8871600578562275924
 GameObject:
   m_ObjectHideFlags: 0

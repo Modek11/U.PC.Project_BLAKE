@@ -16,20 +16,20 @@ namespace GameFramework.Abilities
         public TypeReference AbilityClass = new(typeof(Ability));
 
         [SerializeField, HideInInspector]
-        private TypeReference OldAbilityClass = new(typeof(Ability));
+        private TypeReference oldAbilityClass = new(typeof(Ability));
 
         [SerializeReference]
-        private Ability AbilityInstance;
-        public Ability GetAbilityInstance() => AbilityInstance;
+        private Ability abilityInstance;
+        public Ability AbilityInstance { get => abilityInstance; }
 
         private void OnValidate()
         {
-            if(AbilityClass.Type != OldAbilityClass.Type)
+            if(AbilityClass.Type != oldAbilityClass.Type)
             {
-                AbilityInstance = (Ability)Activator.CreateInstance(AbilityClass);
-                AbilityInstance.AbilityData = this;
+                abilityInstance = (Ability)Activator.CreateInstance(AbilityClass);
+                abilityInstance.AbilityDefinition = this;
 
-                OldAbilityClass.Type = AbilityClass.Type;
+                oldAbilityClass.Type = AbilityClass.Type;
             }
         }
 

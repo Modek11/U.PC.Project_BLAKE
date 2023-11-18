@@ -12,29 +12,31 @@ namespace GameFramework.Abilities
     public partial class AbilityManager : MonoBehaviour
     {
         [SerializeField] 
-        private List<AbilityDefinition> StartupAbilities = new();
-        protected List<Ability> GivenAbilities = new();
+        private List<AbilityDefinition> startupAbilities = new();
 
-        protected Dictionary<State, int> StateCountArray = new();
-        protected List<State> ActiveStates = new();
-        protected Dictionary<State, StateDelegate> StateEventArray = new();
+        protected List<Ability> availableAbilities = new();
+        protected Dictionary<State, int> stateCountArray = new();
+        protected List<State> activeStates = new();
+        protected Dictionary<State, StateDelegate> stateEventArray = new();
 
-        public delegate void StateDelegate(State State, int NewCount);
+        public delegate void StateDelegate(State state, int newCount);
 
         private partial void Awake();
 
         #region Abilities
 
-        public partial void GiveAbility(AbilityDefinition AbilityData);
-        public partial bool TryActivateAbility(Type AbilityClass);
+        public partial void GiveAbility(AbilityDefinition abilityDefinition);
+        public partial void RemoveAbility(AbilityDefinition abilityDefinition);
+
+        public partial bool TryActivateAbility(Type abilityClass);
 
         #endregion
 
         #region States
 
-        public State[] GetActiveStates() => ActiveStates.ToArray();
-        public partial void UpdateStates(State State, int CountDelta);
-        public partial void RegisterStateEvent(State InState, StateDelegate InDelegate);
+        public State[] ActiveStates { get => activeStates.ToArray(); }
+        public partial void UpdateStates(State state, int countDelta);
+        public partial void RegisterStateEvent(State state, StateDelegate stateDelegate);
         
         #endregion
     }
@@ -43,40 +45,54 @@ namespace GameFramework.Abilities
     {
         private partial void Awake()
         {
-            for (int i = 0; i < StartupAbilities.Count; i++)
+            for (int i = 0; i < startupAbilities.Count; i++)
             {
-                GiveAbility(StartupAbilities[i]);
+                GiveAbility(startupAbilities[i]);
             }
         }
 
         #region Abilities
 
-        public partial void GiveAbility(AbilityDefinition AbilityData)
+        public partial void GiveAbility(AbilityDefinition abilityDefinition)
         {
-            if (AbilityData == null) { Debug.LogError("AbilityData is not vaild"); return; }
+            if (abilityDefinition == null) { Debug.LogError("AbilityData is not vaild"); return; }
 
-            Ability NewAbility = AbilityData.GetAbilityInstance().ShallowCopy();
-            GivenAbilities.Add(NewAbility);
-            NewAbility.OnGiveAbility(this);
+            Ability newAbility = abilityDefinition.AbilityInstance.ShallowCopy();
+            availableAbilities.Add(newAbility);
+            newAbility.OnGiveAbility(this);
         }
 
-        public partial bool TryActivateAbility(Type AbilityClass)
+        public partial void RemoveAbility(AbilityDefinition abilityDefinition)
         {
-            if (AbilityClass == null) { Debug.LogError("AbilityClass is not valid"); return false; }
+            if (abilityDefinition == null) { Debug.LogError("AbilityData is not vaild"); return; }
 
-            for (int i = 0; i < GivenAbilities.Count; i++)
+            for(int i = 0; i < availableAbilities.Count; i++)
             {
-                if (GivenAbilities[i].AbilityData == null)
+                if (availableAbilities[i].AbilityDefinition == abilityDefinition)
                 {
-                    Debug.LogError("AbilityData is not valid. " + GivenAbilities[i].ToString());
+                    availableAbilities.RemoveAt(i);
+                    return;
+                }
+            }
+        }
+
+        public partial bool TryActivateAbility(Type abilityClass)
+        {
+            if (abilityClass == null) { Debug.LogError("AbilityClass is not valid"); return false; }
+
+            for (int i = 0; i < availableAbilities.Count; i++)
+            {
+                if (availableAbilities[i].AbilityDefinition == null)
+                {
+                    Debug.LogError("AbilityData is not valid. " + availableAbilities[i].ToString());
                     continue;
                 }
 
-                if (GivenAbilities[i].AbilityData.AbilityClass.Type == AbilityClass)
+                if (availableAbilities[i].AbilityDefinition.AbilityClass.Type == abilityClass)
                 {
-                    if (!GivenAbilities[i].CanActivateAbility()) return false;
+                    if (!availableAbilities[i].CanActivateAbility()) return false;
 
-                    GivenAbilities[i].ActivateAbility();
+                    availableAbilities[i].ActivateAbility();
                     return true;
                 }
             }
@@ -87,71 +103,71 @@ namespace GameFramework.Abilities
 
         #region States
 
-        public partial void RegisterStateEvent(State InState, StateDelegate InDelegate)
+        public partial void RegisterStateEvent(State state, StateDelegate stateDelegate)
         {
-            if(!StateEventArray.ContainsKey(InState))
+            if(!stateEventArray.ContainsKey(state))
             {
-                StateEventArray.Add(InState, InDelegate);
+                stateEventArray.Add(state, stateDelegate);
                 return;
             }
 
-            StateEventArray[InState] += InDelegate;
+            stateEventArray[state] += stateDelegate;
         }
 
-        public partial void UpdateStates(State State, int CountDelta)
+        public partial void UpdateStates(State state, int countDelta)
         {
-            if (CountDelta != 0)
+            if (countDelta != 0)
             {
-                if(StateCountArray.ContainsKey(State))
+                if(stateCountArray.ContainsKey(state))
                 {
-                    StateCountArray[State] = Math.Max(StateCountArray[State] + CountDelta, 0);
+                    stateCountArray[state] = Math.Max(stateCountArray[state] + countDelta, 0);
                 }
                 else
                 {
-                    StateCountArray.Add(State, Math.Max(CountDelta, 0));
+                    stateCountArray.Add(state, Math.Max(countDelta, 0));
                 }
 
-                if(ActiveStates.Contains(State))
+                if(activeStates.Contains(state))
                 {
-                    if (StateCountArray[State] == 0)
+                    if (stateCountArray[state] == 0)
                     {
-                        ActiveStates.Remove(State);
+                        activeStates.Remove(state);
                     }
                 }
                 else
                 {
-                    if (StateCountArray[State] != 0)
+                    if (stateCountArray[state] != 0)
                     {
-                        ActiveStates.Add(State);
+                        activeStates.Add(state);
                     }
                 }
 
-                if (StateEventArray.ContainsKey(State))
+                if (stateEventArray.ContainsKey(state))
                 {
-                    List<StateDelegate> InvalidDelegates = null;
-                    Delegate[] Delegates = StateEventArray[State].GetInvocationList();
-                    for (int i = 0; i < Delegates.Length; i++)
+                    List<StateDelegate> invalidDelegates = null;
+                    Delegate[] delegates = stateEventArray[state].GetInvocationList();
+                    for (int i = 0; i < delegates.Length; i++)
                     {
-                        if (Delegates[i] is not StateDelegate StateDelegate) continue;
+                        if (delegates[i] is not StateDelegate stateDelegate) continue;
                         
-                        if (StateDelegate.Target is MonoBehaviour Behaviour)
+                        if (stateDelegate.Target is MonoBehaviour monoBehaviour)
                         {
-                            if (Behaviour == null)
+                            if (monoBehaviour == null)
                             {
-                                InvalidDelegates ??= new List<StateDelegate>();
-                                InvalidDelegates.Add(StateDelegate);
+                                invalidDelegates ??= new List<StateDelegate>();
+                                invalidDelegates.Add(stateDelegate);
                                 continue;
                             }
                         }
 
-                        StateDelegate.Invoke(State, StateCountArray[State]);
+                        stateDelegate.Invoke(state, stateCountArray[state]);
                     }
 
-                    if (InvalidDelegates == null) return;
+                    if (invalidDelegates == null) return;
 
-                    for (int i = 0; i < InvalidDelegates.Count; i++)
+                    for (int i = 0; i < invalidDelegates.Count; i++)
                     {
-                        StateEventArray[State] -= InvalidDelegates[i];
+                        stateEventArray[state] -= invalidDelegates[i];
                     }
                 }
             }

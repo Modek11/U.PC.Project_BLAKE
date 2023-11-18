@@ -8,66 +8,66 @@ namespace GameFramework.System
     public class State : object, ISerializationCallbackReceiver
     {
         [SerializeField]
-        private string StateName;
-        public string GetStateName() => StateName;
+        private string stateName;
+        public string StateName { get => stateName; }
 
         [SerializeField, HideInInspector]
-        private int StateId = -1;
-        public int GetStateId() => StateId;
+        private int stateId = -1;
+        public int StateId { get => stateId; }
 
         /// <summary>
         /// Use States.GetState instead.
         /// </summary>
-        public State(string InStateName, int InStateId)
+        public State(string stateName, int stateId)
         {
-            StateName = InStateName;
-            StateId = InStateId;
+            this.stateName = stateName;
+            this.stateId = stateId;
         }
 
         /// <summary>
         /// "A.B".MatchesState("A") = True
         /// </summary>
-        public bool MatchesState(State StateToCheck)
+        public bool MatchesState(State state)
         {
-            State[] SeparatedState = StatesManager.GetSeparatedState(this);
-            State[] SeparatedStateToCheck = StatesManager.GetSeparatedState(StateToCheck);
+            State[] separatedState = StatesManager.GetSeparatedState(this);
+            State[] separatedStateToCompare = StatesManager.GetSeparatedState(state);
 
-            if (SeparatedState.Length == SeparatedStateToCheck.Length) return this == StateToCheck;
-            if (SeparatedStateToCheck.Length > SeparatedState.Length) return false;
+            if (separatedState.Length == separatedStateToCompare.Length) return this == state;
+            if (separatedStateToCompare.Length > separatedState.Length) return false;
 
-            for (int i = 0; i < SeparatedState.Length && i < SeparatedStateToCheck.Length; i++)
+            for (int i = 0; i < separatedState.Length && i < separatedStateToCompare.Length; i++)
             {
-                if (SeparatedState[i] != SeparatedStateToCheck[i]) return false;
+                if (separatedState[i] != separatedStateToCompare[i]) return false;
             }
 
-            if (SeparatedStateToCheck.Length == 0 && SeparatedState.Length > 0) return SeparatedState[0] == StateToCheck;
+            if (separatedStateToCompare.Length == 0 && separatedState.Length > 0) return separatedState[0] == state;
             
             return true;
         }
 
-        public static bool HasAny(State[] InStates1, State[] InStates2)
+        public static bool HasAny(State[] statesA, State[] statesB)
         {
-            if (InStates2.Length < 1) return false;
+            if (statesB.Length < 1) return false;
 
-            for (int i = 0; i < InStates2.Length; i++)
+            for (int i = 0; i < statesB.Length; i++)
             {
-                for (int j = 0; j < InStates1.Length; j++)
+                for (int j = 0; j < statesA.Length; j++)
                 {
-                    if (InStates1[j].MatchesState(InStates2[i])) return true;
+                    if (statesA[j].MatchesState(statesB[i])) return true;
                 }
             }
             return false;
         }
 
-        public static bool HasAll(State[] InStates1, State[] InStates2)
+        public static bool HasAll(State[] statesA, State[] statesB)
         {
-            if(InStates2.Length < 1) return true;
+            if(statesB.Length < 1) return true;
 
-            for (int i = 0; i < InStates2.Length; i++)
+            for (int i = 0; i < statesB.Length; i++)
             {
-                for (int j = 0; j < InStates1.Length; j++)
+                for (int j = 0; j < statesA.Length; j++)
                 {
-                    if (!InStates1[j].MatchesState(InStates2[i])) return false;
+                    if (!statesA[j].MatchesState(statesB[i])) return false;
                 }
             }
             return true;
@@ -78,21 +78,21 @@ namespace GameFramework.System
             State other = obj as State;
             if (other == null) return base.Equals(obj);
 
-            return StateId == other.StateId;
+            return stateId == other.stateId;
         }
 
-        public static bool Equals(State X, State Y)
+        public static bool Equals(State x, State y)
         {
-            if ((object)X == (object)Y) return true;
-            if (X is null || Y is null) return false;
-            return X.Equals(Y);
+            if ((object)x == (object)y) return true;
+            if (x is null || y is null) return false;
+            return x.Equals(y);
         }
 
-        public static bool operator ==(State X, State Y) => Equals(X, Y);
-        public static bool operator !=(State X, State Y) => !Equals(X, Y);
+        public static bool operator ==(State x, State y) => Equals(x, y);
+        public static bool operator !=(State x, State y) => !Equals(x, y);
 
-        public override int GetHashCode() => StateId;
-        public override string ToString() => StateName;
+        public override int GetHashCode() => stateId;
+        public override string ToString() => stateName;
 
         public void OnBeforeSerialize()
         {
@@ -101,22 +101,22 @@ namespace GameFramework.System
 
         public void OnAfterDeserialize()
         {
-            if(StateName == null || StateName == "") return;
+            if(stateName == null || stateName == "") return;
 
-            State State;           
-            if (StateId != -1)
+            State state;           
+            if (stateId != -1)
             {
-                State = StatesManager.GetState(StateId);
-                if(State != null)
+                state = StatesManager.GetState(stateId);
+                if(state != null)
                 {
-                    if (State.StateName == StateName) return;
+                    if (state.stateName == stateName) return;
                 }
             }
             
-            State = StatesManager.GetState(StateName);
-            if (State == null) return;
+            state = StatesManager.GetState(stateName);
+            if (state == null) return;
             
-            StateId = State.StateId;
+            stateId = state.stateId;
         }
     }
 }

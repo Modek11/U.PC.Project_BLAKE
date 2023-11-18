@@ -11,48 +11,48 @@ namespace GameFramework.Abilities
     public partial class Ability : object
     {
         [SerializeField, HideInInspector]
-        public AbilityDefinition AbilityData;
+        public AbilityDefinition AbilityDefinition;
 
         public AbilityManager OwningAbilityManager { get; private set; }
 
-        private bool IsActive = false;
+        private bool isActive = false;
 
-        public delegate void AbilityEnded(bool WasCanceled);
+        public delegate void AbilityEnded(bool wasCanceled);
         public event AbilityEnded OnAbilityEnded;
 
-        public partial void StartCoroutine(IEnumerator Routine);
+        public partial void StartCoroutine(IEnumerator routine);
 
-        public virtual partial void OnGiveAbility(AbilityManager InAbilityManager);
+        public virtual partial void OnGiveAbility(AbilityManager abilityManager);
         public virtual partial bool CanActivateAbility();
         public virtual partial void ActivateAbility();
-        public virtual partial void EndAbility(bool WasCanceled);
+        public virtual partial void EndAbility(bool wasCanceled);
     }
 
     public partial class Ability : object
     {
-        public partial void StartCoroutine(IEnumerator Routine)
+        public partial void StartCoroutine(IEnumerator routine)
         {
             if (OwningAbilityManager == null) { Debug.LogError("OwningAbilityManager is not valid"); return; }
 
-            OwningAbilityManager.StartCoroutine(Routine);
+            OwningAbilityManager.StartCoroutine(routine);
         }
 
-        public virtual partial void OnGiveAbility(AbilityManager InAbilityManager)
+        public virtual partial void OnGiveAbility(AbilityManager abilityManager)
         {
-            OwningAbilityManager = InAbilityManager;
+            OwningAbilityManager = abilityManager;
         }
 
         public virtual partial bool CanActivateAbility()
         {
-            if (IsActive) return false;
+            if (isActive) return false;
             if (OwningAbilityManager == null) { Debug.LogError("OwningAbilityManager is not valid"); return false; }
 
-            if (AbilityData.BlockedStates.Length > 0 || AbilityData.RequiredStates.Length > 0)
+            if (AbilityDefinition.BlockedStates.Length > 0 || AbilityDefinition.RequiredStates.Length > 0)
             {
-                State[] AbilityManagerStates = OwningAbilityManager.GetActiveStates();
+                State[] abilityManagerStates = OwningAbilityManager.ActiveStates;
 
-                if (State.HasAny(AbilityManagerStates, AbilityData.BlockedStates)) return false;
-                if (!State.HasAll(AbilityManagerStates, AbilityData.RequiredStates)) return false;
+                if (State.HasAny(abilityManagerStates, AbilityDefinition.BlockedStates)) return false;
+                if (!State.HasAll(abilityManagerStates, AbilityDefinition.RequiredStates)) return false;
             }
 
             return true;
@@ -62,25 +62,25 @@ namespace GameFramework.Abilities
         {
             if (OwningAbilityManager == null) { Debug.LogError("OwningAbilityManager is not valid"); return; }
 
-            IsActive = true;
+            isActive = true;
 
-            for (int i = 0; i < AbilityData.StatesToAdd.Length; i++)
+            for (int i = 0; i < AbilityDefinition.StatesToAdd.Length; i++)
             {
-                OwningAbilityManager.UpdateStates(AbilityData.StatesToAdd[i], 1);
+                OwningAbilityManager.UpdateStates(AbilityDefinition.StatesToAdd[i], 1);
             }
         }
 
-        public virtual partial void EndAbility(bool WasCanceled)
+        public virtual partial void EndAbility(bool wasCanceled)
         {
             if (OwningAbilityManager == null) { Debug.LogError("OwningAbilityManager is not valid"); return; }
 
-            IsActive = false;
+            isActive = false;
 
-            for (int i = 0; i < AbilityData.StatesToAdd.Length; i++)
+            for (int i = 0; i < AbilityDefinition.StatesToAdd.Length; i++)
             {
-                OwningAbilityManager.UpdateStates(AbilityData.StatesToAdd[i], -1);
+                OwningAbilityManager.UpdateStates(AbilityDefinition.StatesToAdd[i], -1);
             }
-            OnAbilityEnded?.Invoke(WasCanceled);
+            OnAbilityEnded?.Invoke(wasCanceled);
         }
     }
 }

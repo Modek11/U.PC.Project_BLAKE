@@ -15,7 +15,7 @@ namespace GameFramework.Editor.Attributes
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            if (StringList != StatesManager.GetStatesNames()) StringList = StatesManager.GetStatesNames();
+            if (StringList != StatesManager.StatesNames) StringList = StatesManager.StatesNames;
 
             if (StringList != null && StringList.Length != 0)
             {

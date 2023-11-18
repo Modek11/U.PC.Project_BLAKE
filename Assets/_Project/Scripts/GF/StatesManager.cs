@@ -1,25 +1,25 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 
 namespace GameFramework.System
 {
     public static class StatesManager
     {
-        private static string[] StatesNames;
-        public static string[] GetStatesNames() => StatesNames;
+        private static string[] statesNames;
+        public static string[] StatesNames { get => statesNames; }
 
-        private static State[] States = new State[0];
-        private static Tuple<State, State[]>[] StatesWithSubStates = new Tuple<State, State[]>[0];
+        private static State[] states = new State[0];
+        private static Tuple<State, State[]>[] statesWithSubStates = new Tuple<State, State[]>[0];
 
 #if UNITY_EDITOR
         static StatesManager()
         {
-            StatesNames = File.ReadAllLines("Assets/Resources/BlakeStates.txt");
+            statesNames = File.ReadAllLines("Assets/Resources/BlakeStates.txt");
 
-            for (int i = 0; i < StatesNames.Length; i++)
+            for (int i = 0; i < statesNames.Length; i++)
             {
-                StatesNames[i] = StatesNames[i].Split(',')[0];
+                statesNames[i] = statesNames[i].Split(',')[0];
             }
             InitializeStates();
         }
@@ -27,14 +27,14 @@ namespace GameFramework.System
         [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void LoadAsset()
         {
-            UnityEngine.TextAsset StatesAsset = UnityEngine.Resources.Load<UnityEngine.TextAsset>("BlakeStates");
-            if (StatesAsset == null) return;
+            UnityEngine.TextAsset statesAsset = UnityEngine.Resources.Load<UnityEngine.TextAsset>("BlakeStates");
+            if (statesAsset == null) return;
 
-            StatesNames = StatesAsset.text.Split('\n');
+            statesNames = statesAsset.text.Split('\n');
 
-            for (int i = 0; i < StatesNames.Length; i++)
+            for (int i = 0; i < statesNames.Length; i++)
             {
-                StatesNames[i] = StatesNames[i].Split(',')[0];
+                statesNames[i] = statesNames[i].Split(',')[0];
             }
             InitializeStates();
         }
@@ -42,66 +42,66 @@ namespace GameFramework.System
 
         private static void InitializeStates()
         {
-            States = new State[StatesNames.Length];
-            StatesWithSubStates = new Tuple<State, State[]>[StatesNames.Length];
+            states = new State[statesNames.Length];
+            statesWithSubStates = new Tuple<State, State[]>[statesNames.Length];
 
-            for (int i = 0; i < StatesNames.Length; i++)
+            for (int i = 0; i < statesNames.Length; i++)
             {
-                List<State> ParentStates = new();
+                List<State> parentStates = new();
                 {
-                    string State = StatesNames[i];
-                    for (int Index = State.LastIndexOf('.'); Index != -1; Index = State.LastIndexOf('.'))
+                    string state = statesNames[i];
+                    for (int Index = state.LastIndexOf('.'); Index != -1; Index = state.LastIndexOf('.'))
                     {
-                        State = State[..Index];
-                        ParentStates.Add(GetState(State));
+                        state = state[..Index];
+                        parentStates.Add(GetState(state));
                     }
                 }
 
-                State[] ParentStatesArray = new State[ParentStates.Count];
+                State[] parentStatesArray = new State[parentStates.Count];
                 {
                     int n = 0;
-                    for (int j = ParentStates.Count - 1; j >= 0; j--)
+                    for (int j = parentStates.Count - 1; j >= 0; j--)
                     {
-                        ParentStatesArray[n++] = ParentStates[j];
+                        parentStatesArray[n++] = parentStates[j];
                     }
                 }
 
-                States[i] = new State(StatesNames[i], i);
-                StatesWithSubStates[i] = new Tuple<State, State[]>(States[i], ParentStatesArray);
+                states[i] = new State(statesNames[i], i);
+                statesWithSubStates[i] = new Tuple<State, State[]>(states[i], parentStatesArray);
             }
         }
 
-        public static State GetState(string InStateName)
+        public static State GetState(string stateName)
         {
-            for (int i = 0; i < States.Length; i++)
+            for (int i = 0; i < states.Length; i++)
             {
-                if (States[i].GetStateName() == InStateName)
+                if (states[i].StateName == stateName)
                 {
-                    return States[i];
+                    return states[i];
                 }
             }
             return null;
         }
 
-        public static State GetState(int InId)
+        public static State GetState(int stateId)
         {
-            if (States.Length > InId)
+            if (states.Length > stateId)
             {
-                return States[InId];
+                return states[stateId];
             }
             return null;
         }
 
-        public static State[] GetStates() => States;
-        public static int GetStatesCount() => States.Length;
+        public static State[] States { get => states; }
+        public static int StatesCount { get => states.Length; }
 
-        public static State[] GetSeparatedState(State InState)
+        public static State[] GetSeparatedState(State state)
         {
-            for (int i = 0; i < StatesWithSubStates.Length; i++)
+            for (int i = 0; i < statesWithSubStates.Length; i++)
             {
-                if (StatesWithSubStates[i].Item1.GetStateName() == InState.GetStateName())
+                if (statesWithSubStates[i].Item1.StateName == state.StateName)
                 {
-                    return StatesWithSubStates[i].Item2;
+                    return statesWithSubStates[i].Item2;
                 }
             }
             return new State[0];

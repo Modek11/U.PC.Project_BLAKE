@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameFramework.Abilities;
 
 public class WeaponsManager : MonoBehaviour
 {
@@ -81,13 +82,32 @@ public class WeaponsManager : MonoBehaviour
         if (index < 0 || index > capacity - 1) return;
         if (weaponItems[index].Item1 == null) return;
 
+        var abilityManager = GetComponent<AbilityManager>();
+        if (abilityManager == null) { Debug.LogError("AbilityManager is not valid"); return; }
+
         SetCurrentWeaponActive(false);
+
+        if (abilityManager != null)
+        {
+            foreach (var ability in weaponItems[activeWeaponIndex].Item1.AbilitiesToGrant)
+            {
+                abilityManager.RemoveAbility(ability);
+            }
+        }
 
         activeWeaponIndex = index;
 
         if (!SetCurrentWeaponActive(true))
         {
             SpawnWeapon();
+        }
+
+        if (abilityManager != null)
+        {
+            foreach (var ability in weaponItems[activeWeaponIndex].Item1.AbilitiesToGrant)
+            {
+                abilityManager.GiveAbility(ability);
+            }
         }
         
         changeWeaponEvent?.Invoke();
