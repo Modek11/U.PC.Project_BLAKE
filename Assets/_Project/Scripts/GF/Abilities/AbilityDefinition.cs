@@ -6,6 +6,7 @@ using TypeReferences;
 
 using GameFramework.System;
 using GameFramework.System.Attributes;
+using UnityEngine.InputSystem;
 
 namespace GameFramework.Abilities
 {
@@ -21,6 +22,8 @@ namespace GameFramework.Abilities
         [SerializeReference]
         private Ability abilityInstance;
         public Ability AbilityInstance { get => abilityInstance; }
+
+        public InputActionReference InputActionReference;
 
         private void OnValidate()
         {

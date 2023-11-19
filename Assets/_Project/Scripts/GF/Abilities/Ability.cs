@@ -15,7 +15,8 @@ namespace GameFramework.Abilities
 
         public AbilityManager OwningAbilityManager { get; private set; }
 
-        private bool isActive = false;
+        public bool IsActive { get; private set; }
+        public bool IsInputPressed { get; set; }
 
         public delegate void AbilityEnded(bool wasCanceled);
         public event AbilityEnded OnAbilityEnded;
@@ -25,7 +26,10 @@ namespace GameFramework.Abilities
         public virtual partial void OnGiveAbility(AbilityManager abilityManager);
         public virtual partial bool CanActivateAbility();
         public virtual partial void ActivateAbility();
-        public virtual partial void EndAbility(bool wasCanceled);
+        public virtual partial void EndAbility(bool wasCanceled = false);
+
+        public virtual void InputPressed() { }
+        public virtual void InputReleased() { }
     }
 
     public partial class Ability : object
@@ -44,7 +48,8 @@ namespace GameFramework.Abilities
 
         public virtual partial bool CanActivateAbility()
         {
-            if (isActive) return false;
+            if (IsActive) return false;
+            if (AbilityDefinition == null) { Debug.LogError("AbilityDefinition is not valid"); return false; }
             if (OwningAbilityManager == null) { Debug.LogError("OwningAbilityManager is not valid"); return false; }
 
             if (AbilityDefinition.BlockedStates.Length > 0 || AbilityDefinition.RequiredStates.Length > 0)
@@ -62,7 +67,7 @@ namespace GameFramework.Abilities
         {
             if (OwningAbilityManager == null) { Debug.LogError("OwningAbilityManager is not valid"); return; }
 
-            isActive = true;
+            IsActive = true;
 
             for (int i = 0; i < AbilityDefinition.StatesToAdd.Length; i++)
             {
@@ -74,7 +79,7 @@ namespace GameFramework.Abilities
         {
             if (OwningAbilityManager == null) { Debug.LogError("OwningAbilityManager is not valid"); return; }
 
-            isActive = false;
+            IsActive = false;
 
             for (int i = 0; i < AbilityDefinition.StatesToAdd.Length; i++)
             {

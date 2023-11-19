@@ -37,7 +37,14 @@ namespace GameFramework.Abilities
         public State[] ActiveStates { get => activeStates.ToArray(); }
         public partial void UpdateStates(State state, int countDelta);
         public partial void RegisterStateEvent(State state, StateDelegate stateDelegate);
-        
+
+        #endregion
+
+        #region Input
+
+        public partial void AbilityInputPressed(UnityEngine.InputSystem.InputAction.CallbackContext callbackContext);
+        public partial void AbilityInputReleased(UnityEngine.InputSystem.InputAction.CallbackContext callbackContext);
+
         #endregion
     }
 
@@ -55,16 +62,24 @@ namespace GameFramework.Abilities
 
         public partial void GiveAbility(AbilityDefinition abilityDefinition)
         {
-            if (abilityDefinition == null) { Debug.LogError("AbilityData is not vaild"); return; }
+            if (abilityDefinition == null) { Debug.LogError("AbilityDefinition is not vaild"); return; }
 
             Ability newAbility = abilityDefinition.AbilityInstance.ShallowCopy();
             availableAbilities.Add(newAbility);
+
+            if(newAbility.AbilityDefinition.InputActionReference != null)
+            {
+                newAbility.AbilityDefinition.InputActionReference.action.started += AbilityInputPressed;
+                newAbility.AbilityDefinition.InputActionReference.action.canceled += AbilityInputReleased;
+                newAbility.AbilityDefinition.InputActionReference.action.Enable();
+            }
+
             newAbility.OnGiveAbility(this);
         }
 
         public partial void RemoveAbility(AbilityDefinition abilityDefinition)
         {
-            if (abilityDefinition == null) { Debug.LogError("AbilityData is not vaild"); return; }
+            if (abilityDefinition == null) { Debug.LogError("AbilityDefinition is not vaild"); return; }
 
             for(int i = 0; i < availableAbilities.Count; i++)
             {
@@ -82,12 +97,6 @@ namespace GameFramework.Abilities
 
             for (int i = 0; i < availableAbilities.Count; i++)
             {
-                if (availableAbilities[i].AbilityDefinition == null)
-                {
-                    Debug.LogError("AbilityData is not valid. " + availableAbilities[i].ToString());
-                    continue;
-                }
-
                 if (availableAbilities[i].AbilityDefinition.AbilityClass.Type == abilityClass)
                 {
                     if (!availableAbilities[i].CanActivateAbility()) return false;
@@ -168,6 +177,46 @@ namespace GameFramework.Abilities
                     for (int i = 0; i < invalidDelegates.Count; i++)
                     {
                         stateEventArray[state] -= invalidDelegates[i];
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region Input
+
+        public partial void AbilityInputPressed(UnityEngine.InputSystem.InputAction.CallbackContext callbackContext)
+        {
+            for(int i = 0; i < availableAbilities.Count; i++)
+            {
+                if (availableAbilities[i].AbilityDefinition.InputActionReference.action == callbackContext.action)
+                {
+                    availableAbilities[i].IsInputPressed = true;
+
+                    if(availableAbilities[i].IsActive)
+                    {
+                        availableAbilities[i].InputPressed();
+                    }
+                    else
+                    {
+                        TryActivateAbility(availableAbilities[i].GetType());
+                    }
+                }
+            }
+        }
+
+        public partial void AbilityInputReleased(UnityEngine.InputSystem.InputAction.CallbackContext callbackContext)
+        {
+            for (int i = 0; i < availableAbilities.Count; i++)
+            {
+                if (availableAbilities[i].AbilityDefinition.InputActionReference.action == callbackContext.action)
+                {
+                    availableAbilities[i].IsInputPressed = false;
+
+                    if (availableAbilities[i].IsActive)
+                    {
+                        availableAbilities[i].InputReleased();
                     }
                 }
             }
