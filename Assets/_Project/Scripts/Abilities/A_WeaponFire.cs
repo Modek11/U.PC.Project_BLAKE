@@ -13,11 +13,4 @@ public class A_WeaponFire : Ability
 
         EndAbility();
     }
-
-    public override void OnGiveAbility(AbilityManager abilityManager)
-    {
-        base.OnGiveAbility(abilityManager);
-
-        Debug.Log("==============OnGiveAbility==============");
-    }
 }

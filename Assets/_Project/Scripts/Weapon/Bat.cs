@@ -19,6 +19,9 @@ public class Bat : MonoBehaviour, IWeapon
     private PlayableDirector playableDirector;
     private AudioSource _audioSource;
 
+    [SerializeField, HideInInspector]
+    private WeaponDefinition weaponDefinition;
+
     private void OnDisable()
     {
         transform.localRotation = quaternion.identity;
@@ -78,5 +81,15 @@ public class Bat : MonoBehaviour, IWeapon
     public void SetAmmo(int newAmmo)
     {
 
+    }
+
+    public WeaponDefinition GetWeaponDefinition()
+    {
+        return weaponDefinition;
+    }
+
+    public void SetWeaponDefinition(WeaponDefinition weaponDefinition)
+    {
+        this.weaponDefinition = weaponDefinition;
     }
 }

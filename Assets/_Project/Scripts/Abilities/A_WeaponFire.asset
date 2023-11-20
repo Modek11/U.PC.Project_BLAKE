@@ -14,17 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AbilityClass:
     GuidAssignmentFailed: 0
-    GUID: dace22f4a878a43428815e2f76fb3bb5
-    _typeNameAndAssembly: GameFramework.Abilities.Ability, Assembly-CSharp
+    GUID: 4cf59de6e6171f845a4482e2d4108025
+    _typeNameAndAssembly: A_WeaponFire, Assembly-CSharp
     _suppressLogs: 0
   oldAbilityClass:
     GuidAssignmentFailed: 0
-    GUID: dace22f4a878a43428815e2f76fb3bb5
-    _typeNameAndAssembly: GameFramework.Abilities.Ability, Assembly-CSharp
+    GUID: 4cf59de6e6171f845a4482e2d4108025
+    _typeNameAndAssembly: A_WeaponFire, Assembly-CSharp
     _suppressLogs: 0
   abilityInstance:
-    rid: -2
-  InputActionReference: {fileID: 0}
+    rid: 9151661232805642240
+  InputActionReference: {fileID: 8942947751858755327, guid: 9ec00f29d6ea6eb4f8e32d4386c28b17,
+    type: 3}
   AbilityStates: []
   AbilitiesToCancel: []
   AbilitiesToBlock: []
@@ -34,5 +35,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 9151661232805642240
+      type: {class: A_WeaponFire, ns: , asm: Assembly-CSharp}
+      data:
+        AbilityDefinition: {fileID: 11400000}

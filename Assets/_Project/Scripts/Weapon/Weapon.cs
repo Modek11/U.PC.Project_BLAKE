@@ -45,7 +45,7 @@ public class Weapon : MonoBehaviour, IWeapon
     [SerializeField, Tooltip("Attack which will be triggered on RMB, it's not required")]
     private InterfaceReference<IAttack> _secondaryAttack;
 
-    [SerializeField, Header("Varabiables to pass")]
+    [SerializeField, HideInInspector]
     private WeaponDefinition weaponDefinition;
 
     private Rigidbody _ownerRigidbody;
@@ -115,7 +115,7 @@ public class Weapon : MonoBehaviour, IWeapon
             {
                 if(owner.TryGetComponent(out WeaponsManager weaponsManager))
                 {
-                    weaponsManager.DestroyWeapon(weaponsManager.ActiveWeaponIndex);
+                    weaponsManager.Unequip(weaponsManager.ActiveWeaponIndex);
                 }
             }
             return false;
@@ -142,5 +142,10 @@ public class Weapon : MonoBehaviour, IWeapon
     public float GetWeaponRange()
     {
         return Range;
+    }
+
+    public void SetWeaponDefinition(WeaponDefinition weaponDefinition)
+    {
+        this.weaponDefinition = weaponDefinition;
     }
 }

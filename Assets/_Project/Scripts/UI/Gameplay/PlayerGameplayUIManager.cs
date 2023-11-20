@@ -100,7 +100,7 @@ public class PlayerGameplayUIManager : MonoBehaviour
 
     private void WeaponNameUI()
     {
-        weaponName.text = weaponsManager.GetWeaponDefinition(weaponsManager.ActiveWeaponIndex).weaponName;
+        weaponName.text = weaponsManager.Weapons[weaponsManager.ActiveWeaponIndex].GetWeaponDefinition().weaponName;
     }
 
     private void BulletsLeftUI()
@@ -111,7 +111,7 @@ public class PlayerGameplayUIManager : MonoBehaviour
         }
         else
         {
-            Weapon weapon = weaponsManager.GetIWeapon(weaponsManager.ActiveWeaponIndex).GetWeapon().GetComponent<Weapon>();
+            Weapon weapon = weaponsManager.Weapons[weaponsManager.ActiveWeaponIndex].GetWeapon().GetComponent<Weapon>();
             bulletsLeft.text = weapon.BulletsLeft.ToString();
         }
     }

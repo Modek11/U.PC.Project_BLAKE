@@ -16,6 +16,8 @@ MonoBehaviour:
     type: 3}
   weaponName: Shotgun
   magazineSize: 7
+  AbilitiesToGrant:
+  - {fileID: 11400000, guid: c6a789a579ce8d24c9363bf0dc5a3cd4, type: 2}
   dropRate: 0.6
   attachSocketName: GunHandler
   locationOffset: {x: 0, y: 0, z: 0}

@@ -25,7 +25,7 @@ namespace GameFramework.Abilities
 
         #region Abilities
 
-        public partial void GiveAbility(AbilityDefinition abilityDefinition);
+        public partial void GiveAbility(AbilityDefinition abilityDefinition, object sourceObject = null);
         public partial void RemoveAbility(AbilityDefinition abilityDefinition);
 
         public partial bool TryActivateAbility(Type abilityClass);
@@ -60,7 +60,7 @@ namespace GameFramework.Abilities
 
         #region Abilities
 
-        public partial void GiveAbility(AbilityDefinition abilityDefinition)
+        public partial void GiveAbility(AbilityDefinition abilityDefinition, object sourceObject)
         {
             if (abilityDefinition == null) { Debug.LogError("AbilityDefinition is not vaild"); return; }
 
@@ -74,7 +74,8 @@ namespace GameFramework.Abilities
                 newAbility.AbilityDefinition.InputActionReference.action.Enable();
             }
 
-            newAbility.OnGiveAbility(this);
+            newAbility.SetupAbility(this, sourceObject);
+            newAbility.OnGiveAbility();
         }
 
         public partial void RemoveAbility(AbilityDefinition abilityDefinition)
@@ -85,6 +86,13 @@ namespace GameFramework.Abilities
             {
                 if (availableAbilities[i].AbilityDefinition == abilityDefinition)
                 {
+                    if (availableAbilities[i].AbilityDefinition.InputActionReference != null)
+                    {
+                        availableAbilities[i].AbilityDefinition.InputActionReference.action.started -= AbilityInputPressed;
+                        availableAbilities[i].AbilityDefinition.InputActionReference.action.canceled -= AbilityInputReleased;
+                        availableAbilities[i].AbilityDefinition.InputActionReference.action.Disable();
+                    }
+
                     availableAbilities.RemoveAt(i);
                     return;
                 }

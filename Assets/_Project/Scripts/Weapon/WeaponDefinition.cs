@@ -1,4 +1,5 @@
 using GameFramework.Abilities;
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -30,4 +31,15 @@ public class WeaponDefinition : ScriptableObject
     public Vector3 pickupLocationOffset = Vector3.zero;
 
     public Quaternion pickupRotation;
+
+    private void OnValidate()
+    {
+        if (weaponPrefab != null)
+        {
+            if(weaponPrefab.TryGetComponent<IWeapon>(out var weapon))
+            {
+                weapon.SetWeaponDefinition(this);
+            }
+        }
+    }
 }

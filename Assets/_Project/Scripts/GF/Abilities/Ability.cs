@@ -17,13 +17,15 @@ namespace GameFramework.Abilities
 
         public bool IsActive { get; private set; }
         public bool IsInputPressed { get; set; }
+        public object SourceObject { get; private set; }
 
         public delegate void AbilityEnded(bool wasCanceled);
         public event AbilityEnded OnAbilityEnded;
 
         public partial void StartCoroutine(IEnumerator routine);
+        public partial void SetupAbility(AbilityManager abilityManager, object sourceObject = null);
 
-        public virtual partial void OnGiveAbility(AbilityManager abilityManager);
+        public virtual void OnGiveAbility() { }
         public virtual partial bool CanActivateAbility();
         public virtual partial void ActivateAbility();
         public virtual partial void EndAbility(bool wasCanceled = false);
@@ -41,9 +43,10 @@ namespace GameFramework.Abilities
             OwningAbilityManager.StartCoroutine(routine);
         }
 
-        public virtual partial void OnGiveAbility(AbilityManager abilityManager)
+        public partial void SetupAbility(AbilityManager abilityManager, object sourceObject)
         {
             OwningAbilityManager = abilityManager;
+            SourceObject = sourceObject;
         }
 
         public virtual partial bool CanActivateAbility()

@@ -37,43 +37,43 @@ public class WeaponPickup : Interactable
         int index = weaponsManager.ActiveWeaponIndex == 0 ? 1 : weaponsManager.ActiveWeaponIndex;
 
         WeaponDefinition weaponDefinition = null;
-        if(weaponsManager.IsWeaponValid(index))
+        if(weaponsManager.Weapons[index] != null)
         {
-            weaponDefinition = weaponsManager.GetWeaponDefinition(index);
+            weaponDefinition = weaponsManager.Weapons[index].GetWeaponDefinition();
         }
 
         int bulletsLeft = 0;
 
-        IWeapon oldWeapon = weaponsManager.GetIWeapon(index);
+        IWeapon oldWeapon = weaponsManager.Weapons[index];
         if (oldWeapon != null)
         {
             bulletsLeft = oldWeapon.GetWeapon().GetComponent<Weapon>().BulletsLeft;
         }
 
-        if (weaponsManager.ChangeItem(weaponToPickup, index))
+        weaponsManager.Equip(weaponToPickup, index);
+        if(weaponsManager.ActiveWeaponIndex == 0) weaponsManager.SetActiveIndex(index);
+
+        if (ammo != -1)
         {
-            if (ammo != -1)
-            {
-                weaponsManager.GetIWeapon(index).SetAmmo(ammo);
-            }
-
-            weaponsManager.OnPlayerPickupWeapon();
-
-            if (weaponDefinition != null)
-            {
-                weaponToPickup = weaponDefinition;
-                ammo = bulletsLeft;
-                ChangeVisuals(weaponDefinition);
-                return;
-            }
-
-            PlayerInteractables playerInteractables = interacter.GetComponent<PlayerInteractables>();
-            if (playerInteractables != null)
-            {
-                playerInteractables.RemoveInteractable(this);
-            }
-            Destroy(gameObject);
+            weaponsManager.Weapons[index].SetAmmo(ammo);
         }
+
+        weaponsManager.OnPlayerPickupWeapon();
+
+        if (weaponDefinition != null)
+        {
+            weaponToPickup = weaponDefinition;
+            ammo = bulletsLeft;
+            ChangeVisuals(weaponDefinition);
+            return;
+        }
+
+        PlayerInteractables playerInteractables = interacter.GetComponent<PlayerInteractables>();
+        if (playerInteractables != null)
+        {
+            playerInteractables.RemoveInteractable(this);
+        }
+        Destroy(gameObject);
     }
 
     private void ChangeVisuals(WeaponDefinition newWeapon)
