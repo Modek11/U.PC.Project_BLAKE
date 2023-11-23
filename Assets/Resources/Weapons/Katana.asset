@@ -15,6 +15,9 @@ MonoBehaviour:
   weaponPrefab: {fileID: 6770924938227727370, guid: 51554d862ae34f444b6baec656c9188e,
     type: 3}
   weaponName: Katana
+  magazineSize: 0
+  AbilitiesToGrant: []
+  dropRate: 0.6
   attachSocketName: GunHandler
   locationOffset: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 1}

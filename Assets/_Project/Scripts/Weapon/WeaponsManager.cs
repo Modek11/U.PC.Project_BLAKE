@@ -39,7 +39,7 @@ public class WeaponsManager : MonoBehaviour
         if (ReferenceManager.PlayerInputController != null)
         {
             ReferenceManager.PlayerInputController.changeWeaponEvent += SetActiveIndex;
-            ReferenceManager.PlayerInputController.shootEvent += ShootWeapon;
+            //ReferenceManager.PlayerInputController.shootEvent += ShootWeapon;
         }
 
         WeaponsMagazine.Init();
