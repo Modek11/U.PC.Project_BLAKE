@@ -6,8 +6,7 @@ using static EnemyFOV;
 [RequireComponent(typeof(BlakeCharacter))]
 public class AIController : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject weaponRef;
+    public Weapon Weapon;
 
     [HideInInspector]
     public NavMeshAgent NavMeshAgent;
@@ -23,6 +22,7 @@ public class AIController : MonoBehaviour
     private void Awake()
     {
         UpdatePlayerRef();
+        Weapon.Owner = gameObject;
 
         NavMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
@@ -92,10 +92,5 @@ public class AIController : MonoBehaviour
     private void ClearPlayerFocus()
     {
         CombatStateReference.GetVariable().Value = CombatState.Patrol;
-    }
-
-    public GameObject GetWeaponRef()
-    {
-        return weaponRef;
     }
 }

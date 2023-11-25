@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e011a979c8cc2444292152bf544c44bc, type: 3}
-  m_Name: A_WeaponFire
+  m_Name: A_WeaponAttack
   m_EditorClassIdentifier: 
   AbilityClass:
     GuidAssignmentFailed: 0
     GUID: 4cf59de6e6171f845a4482e2d4108025
-    _typeNameAndAssembly: A_WeaponFire, Assembly-CSharp
+    _typeNameAndAssembly: A_WeaponAttack, Assembly-CSharp
     _suppressLogs: 0
   oldAbilityClass:
     GuidAssignmentFailed: 0
     GUID: 4cf59de6e6171f845a4482e2d4108025
-    _typeNameAndAssembly: A_WeaponFire, Assembly-CSharp
+    _typeNameAndAssembly: A_WeaponAttack, Assembly-CSharp
     _suppressLogs: 0
   abilityInstance:
-    rid: 9151661232805642240
+    rid: 9151661374654906371
   InputActionReference: {fileID: 8942947751858755327, guid: 9ec00f29d6ea6eb4f8e32d4386c28b17,
     type: 3}
   AbilityStates: []
@@ -35,7 +35,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 9151661232805642240
-      type: {class: A_WeaponFire, ns: , asm: Assembly-CSharp}
+    - rid: 9151661374654906371
+      type: {class: A_WeaponAttack, ns: , asm: Assembly-CSharp}
       data:
         AbilityDefinition: {fileID: 11400000}

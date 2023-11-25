@@ -25,19 +25,17 @@ public class EnemyCharacter : BlakeCharacter
 
     protected override void DestroySelf()
     {
-        Weapon weapon = ai.GetWeaponRef().GetComponent<Weapon>();
-
-        if (weapon != null)
+        if (ai.Weapon != null)
         {
             float drop = Random.Range(0f, 1f);
-            if (drop <= weapon.WeaponDefinition.DropRate)
+            if (drop <= ai.Weapon.WeaponDefinition.DropRate)
             {
                 GameObject weaponPickupObject = Instantiate(weaponPickup, transform.position, Quaternion.identity);
                 SpawnedInRoom.AddSpawnedWeapon(weaponPickupObject);
 
                 WeaponPickup weaponPickupScript = weaponPickupObject.GetComponent<WeaponPickup>();
-                weaponPickupScript.WeaponDefinition = weapon.WeaponDefinition;
-                weaponPickupScript.WeaponInstanceInfo = weapon.GenerateWeaponInstanceInfo(true);
+                weaponPickupScript.WeaponDefinition = ai.Weapon.WeaponDefinition;
+                weaponPickupScript.WeaponInstanceInfo = ai.Weapon.GenerateWeaponInstanceInfo(true);
             }
         }
 

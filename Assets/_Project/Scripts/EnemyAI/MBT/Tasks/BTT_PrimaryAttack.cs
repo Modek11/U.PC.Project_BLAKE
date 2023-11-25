@@ -9,9 +9,6 @@ public class BTT_PrimaryAttack : Leaf
     public AIController AIController;
     public float WeaponRangeMultipler = 1f;
 
-    private float weaponRange;
-    private Weapon weaponInterface;
-
     public override NodeResult Execute()
     {
         if (AIController == null)
@@ -19,14 +16,11 @@ public class BTT_PrimaryAttack : Leaf
             AIController = GetComponent<AIController>();
             if (AIController == null) return NodeResult.failure;
         }
-        if (weaponInterface == null)
-        {
-            weaponInterface = AIController?.GetWeaponRef().GetComponent<Weapon>();
-            if (weaponInterface == null) return NodeResult.failure;
-        }
+        if (AIController.Weapon == null) return NodeResult.failure;
         if (ReferenceManager.BlakeHeroCharacter == null) return NodeResult.failure;
+        if (!AIController.Weapon.CanPrimaryAttack()) return NodeResult.failure;
 
-        weaponInterface.PrimaryAttack();
+        AIController.Weapon.PrimaryAttack();
 
         //float distanceToPlayer = Vector3.Distance(AIController.transform.position, ReferenceManager.BlakeHeroCharacter.transform.position);
 

@@ -2,15 +2,15 @@ using GameFramework.Abilities;
 using System.Collections;
 using UnityEngine;
 
-public class A_WeaponFire : Ability
+public class A_WeaponAttack : Ability
 {
-    private RangedWeapon weaponSource;
+    private Weapon weaponSource;
 
     public override bool CanActivateAbility()
     {
         if (weaponSource == null)
         {
-            weaponSource = SourceObject as RangedWeapon;
+            weaponSource = SourceObject as Weapon;
             if (weaponSource == null) { return false; }
         }
         return weaponSource.CanPrimaryAttack() && base.CanActivateAbility();
@@ -22,12 +22,6 @@ public class A_WeaponFire : Ability
 
         weaponSource.PrimaryAttack();
 
-        StartCoroutine(EndAbilityCoroutine());
-    }
-
-    public IEnumerator EndAbilityCoroutine()
-    {
-        yield return new WaitForSeconds(weaponSource.FireDelayTime);
         EndAbility();
     }
 }

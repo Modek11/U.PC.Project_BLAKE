@@ -15,7 +15,7 @@ public class BTT_FindPositionAroundTarget : Leaf
 
         Vector3 offset = Vector3.zero;
 
-        if (AIController.GetWeaponRef().name != "Baton")
+        if (AIController.Weapon.name != "Baton")
         {
             offset = Random.insideUnitSphere * 5f;
             offset = new Vector3(offset.x, 0, offset.z);

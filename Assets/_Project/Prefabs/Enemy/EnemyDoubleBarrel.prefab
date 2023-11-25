@@ -9,6 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4250661716291628405, guid: 20caf66ddd7209d4291d40715d756be9,
         type: 3}
+      propertyPath: Weapon
+      value: 
+      objectReference: {fileID: 5113988140216712398}
+    - target: {fileID: 4250661716291628405, guid: 20caf66ddd7209d4291d40715d756be9,
+        type: 3}
       propertyPath: weaponRef
       value: 
       objectReference: {fileID: 3743808909478535148}
@@ -92,6 +97,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6684149789715973956}
     m_Modifications:
+    - target: {fileID: 3541487880703571250, guid: d59ad31d5e825164385713c41e42f342,
+        type: 3}
+      propertyPath: infinityAmmo
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4911671507717690896, guid: d59ad31d5e825164385713c41e42f342,
         type: 3}
       propertyPath: m_Name
@@ -186,3 +196,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8637179956268534268}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5113988140216712398 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3541487880703571250, guid: d59ad31d5e825164385713c41e42f342,
+    type: 3}
+  m_PrefabInstance: {fileID: 8637179956268534268}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743808909478535148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45534a2832c67be4097c3d61b065197a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

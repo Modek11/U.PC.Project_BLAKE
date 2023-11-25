@@ -46,6 +46,8 @@ public class RangedWeapon : Weapon
 
     private Rigidbody rb;
 
+    private float lastFireTime;
+
     protected override void Awake()
     {
         base.Awake();
@@ -56,8 +58,12 @@ public class RangedWeapon : Weapon
     public override void PrimaryAttack()
     {
         audioSource.PlayOneShot(audioSource.clip);
+        
         Shot();
-        weaponsManager.BroadcastOnPrimaryAttack();
+
+        lastFireTime = Time.time;
+
+        weaponsManager?.BroadcastOnPrimaryAttack();
     }
 
     public override void OnOwnerChanged()
@@ -69,11 +75,14 @@ public class RangedWeapon : Weapon
 
     public override bool CanPrimaryAttack()
     {
+        if (Time.time - lastFireTime < FireDelayTime) return false;
+
         if(bulletsLeft <= 0)
         {
             StartCoroutine("UnequipSelf");
             return false;
         }
+
         return true;
     }
 
