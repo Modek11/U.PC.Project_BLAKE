@@ -11,15 +11,15 @@ public class WeaponsManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> attachSockets = new List<GameObject>();
 
-    public event Action changeWeaponEvent;
-    public event Action onPlayerPickupWeaponEvent;
-    public event Action onSuccessfulShotEvent;
+    public event Action<Weapon> OnWeaponChangedEvent;
+    public event Action<Weapon> OnPlayerPickupWeaponEvent;
+    public event Action<Weapon> OnPrimaryAttack;
 
     private int activeWeaponIndex = 0;
     public int ActiveWeaponIndex { get => activeWeaponIndex; }
 
-    private List<IWeapon> weapons = new List<IWeapon>() { null, null };
-    public List<IWeapon> Weapons { get => weapons; }
+    private List<Weapon> weapons = new List<Weapon>() { null, null };
+    public List<Weapon> Weapons { get => weapons; }
 
     public WeaponDefinition defaultWeapon;
     private AbilityManager abilityManager;
@@ -39,10 +39,7 @@ public class WeaponsManager : MonoBehaviour
         if (ReferenceManager.PlayerInputController != null)
         {
             ReferenceManager.PlayerInputController.changeWeaponEvent += SetActiveIndex;
-            //ReferenceManager.PlayerInputController.shootEvent += ShootWeapon;
         }
-
-        WeaponsMagazine.Init();
     }
 
     public void Equip(WeaponDefinition weaponDefinition, int index)
@@ -56,7 +53,7 @@ public class WeaponsManager : MonoBehaviour
         if(index == activeWeaponIndex)
         {
             GiveWeaponAbilities();
-            changeWeaponEvent?.Invoke();
+            OnWeaponChangedEvent?.Invoke(weapons[activeWeaponIndex]);
         }
     }
 
@@ -71,7 +68,7 @@ public class WeaponsManager : MonoBehaviour
                 RemoveWeaponAbilities();
             }
 
-            Destroy(weapons[index].GetWeapon());
+            Destroy(weapons[index].gameObject);
             weapons[index] = null;
         }
     }
@@ -84,31 +81,28 @@ public class WeaponsManager : MonoBehaviour
 
         if (weapons[activeWeaponIndex] != null)
         {
-            weapons[activeWeaponIndex].GetWeapon().SetActive(false);
+            weapons[activeWeaponIndex].gameObject.SetActive(false);
             RemoveWeaponAbilities();
         }
 
         if (weapons[index] != null)
         {
             activeWeaponIndex = index;
-            weapons[activeWeaponIndex].GetWeapon().SetActive(true);
+            weapons[activeWeaponIndex].gameObject.SetActive(true);
             GiveWeaponAbilities();
 
-            changeWeaponEvent?.Invoke();
+            OnWeaponChangedEvent?.Invoke(weapons[activeWeaponIndex]);
         }
     }
 
-    public void ShootWeapon()
+    public void BroadcastOnPrimaryAttack()
     {
-        if(weapons[activeWeaponIndex].PrimaryAttack())
-        {
-            onSuccessfulShotEvent?.Invoke();
-        }
+        OnPrimaryAttack?.Invoke(weapons[activeWeaponIndex]);
     }
 
     public void OnPlayerPickupWeapon()
     {
-        onPlayerPickupWeaponEvent?.Invoke();
+        OnPlayerPickupWeaponEvent?.Invoke(weapons[activeWeaponIndex]);
     }
 
     public int GetFreeIndex()
@@ -131,31 +125,31 @@ public class WeaponsManager : MonoBehaviour
         Transform socketTransform = transform;
         foreach(var socket in attachSockets)
         {
-            if(socket.name == weaponDefinition.attachSocketName)
+            if(socket.name == weaponDefinition.AttachSocketName)
             {
                 socketTransform = socket.transform;
                 break;
             }
         }
 
-        Vector3 spawnLocation = socketTransform.position + weaponDefinition.locationOffset;
-        Quaternion spawnRotation = weaponDefinition.rotation;
+        Vector3 spawnLocation = socketTransform.position + weaponDefinition.LocationOffset;
+        Quaternion spawnRotation = weaponDefinition.Rotation;
 
-        var weapon = Instantiate(weaponDefinition.weaponPrefab, spawnLocation, spawnRotation, transform);
-        weapon.transform.localScale = weaponDefinition.scale;
+        var weapon = Instantiate(weaponDefinition.WeaponPrefab, spawnLocation, spawnRotation, transform);
+        weapon.transform.localScale = weaponDefinition.Scale;
         weapon.SetActive(index == activeWeaponIndex);
 
         if (weapon.TryGetComponent(out Weapon weaponComp))
         {
-            weaponComp.SetOwner(gameObject);
+            weaponComp.Owner = gameObject;
         }
 
-        weapons[index] = weapon.GetComponent<IWeapon>();
+        weapons[index] = weapon.GetComponent<Weapon>();
     }
 
     private void GiveWeaponAbilities()
     {
-        foreach (var ability in weapons[activeWeaponIndex].GetWeaponDefinition().AbilitiesToGrant)
+        foreach (var ability in weapons[activeWeaponIndex].WeaponDefinition.AbilitiesToGrant)
         {
             abilityManager.GiveAbility(ability, weapons[activeWeaponIndex]);
         }
@@ -163,63 +157,9 @@ public class WeaponsManager : MonoBehaviour
 
     private void RemoveWeaponAbilities()
     {
-        foreach (var ability in weapons[activeWeaponIndex].GetWeaponDefinition().AbilitiesToGrant)
+        foreach (var ability in weapons[activeWeaponIndex].WeaponDefinition.AbilitiesToGrant)
         {
             abilityManager.RemoveAbility(ability);
         }
-    }
-}
-
-public static class WeaponsMagazine //XD
-{
-    static List<WeaponDefinition> weapons;
-    static bool Inited = false;
-
-    public static void Init()
-    {
-        if (Inited) return;
-
-        weapons = Resources.LoadAll<WeaponDefinition>("Weapons").ToList();
-        
-        int katanaIndex = -1;
-        int batIndex = -1;
-        for (int i = 0; i < weapons.Count; i++)
-        {
-            if (weapons[i].name == "Katana")
-            {
-                katanaIndex = i;
-            }
-            if (weapons[i].name == "Bat")
-            {
-                batIndex = i;
-            }
-        }
-        if (katanaIndex == -1 || batIndex == -1) return;
-
-        weapons.RemoveAt(katanaIndex);
-        weapons.RemoveAt(batIndex);
-
-        string weaponsText = weapons[0].name;
-        for (int i = 1; i < weapons.Count; i++)
-        {
-            weaponsText += ", " + weapons[i].name;
-        }
-        Debug.Log("Weapons count: " + weapons.Count + " - " + weaponsText);
-
-        Inited = true;
-    }
-
-    public static WeaponDefinition GetRandomWeapon()
-    {
-        WeaponDefinition randomWeapon = weapons[UnityEngine.Random.Range(0, weapons.Count)];
-        Debug.Log("Random weapom: " + randomWeapon.name);
-        return randomWeapon;
-    }
-
-    public static int GetRandomWeaponAmmo(WeaponDefinition weapon)
-    {
-        int randomWeaponAmmo = UnityEngine.Random.Range(weapon.magazineSize / 2, weapon.magazineSize + 1);
-        Debug.Log("Random ammo for " + weapon.name + " weapon: " + randomWeaponAmmo);
-        return randomWeaponAmmo;
     }
 }

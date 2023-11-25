@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a982e479cb5e0ef4e9da5465e69574b3, type: 3}
-  m_Name: Baton
+  m_Name: Revolver
   m_EditorClassIdentifier: 
-  WeaponPrefab: {fileID: 6770924938227727370, guid: b95b54a6a09e88b4bbfc99cc710c47f7,
+  WeaponPrefab: {fileID: 2211575096574099193, guid: 7bafbe8de9e5c224f9c91487d46efe98,
     type: 3}
-  WeaponName: Baton
-  AbilitiesToGrant: []
+  WeaponName: Revolver
+  AbilitiesToGrant:
+  - {fileID: 11400000, guid: c6a789a579ce8d24c9363bf0dc5a3cd4, type: 2}
   DropRate: 0.6
   AttachSocketName: GunHandler
-  LocationOffset: {x: 0, y: 0.47, z: 0}
+  LocationOffset: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0, w: 0}
   Scale: {x: 1, y: 1, z: 1}
-  WeaponGFX: {fileID: 6940019093615102882, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
+  WeaponGFX: {fileID: 296156443889256378, guid: af2522d929ba0ec4eab11a3835c86b8b,
     type: 3}
   PickupLocationOffset: {x: 0, y: 0, z: 0}
   PickupRotation: {x: 0, y: 0, z: 0, w: 0}

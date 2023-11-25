@@ -2,7 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class Bat : MonoBehaviour, IWeapon
+public class MeleeWeapon : Weapon
 {
     [SerializeField] 
     private float spereCastRadius;
@@ -13,14 +13,7 @@ public class Bat : MonoBehaviour, IWeapon
     [SerializeField] 
     private LayerMask layerMask;
 
-    [SerializeField] 
-    private float attackSpeed;
-
     private PlayableDirector playableDirector;
-    private AudioSource _audioSource;
-
-    [SerializeField, HideInInspector]
-    private WeaponDefinition weaponDefinition;
 
     private void OnDisable()
     {
@@ -28,20 +21,23 @@ public class Bat : MonoBehaviour, IWeapon
         playableDirector.Stop();
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         playableDirector = GetComponent<PlayableDirector>();
-        _audioSource = GetComponent<AudioSource>();
     }
 
-    public bool PrimaryAttack()
+    public override bool CanPrimaryAttack()
     {
-        if (playableDirector.state == PlayState.Playing) return false;
+        return playableDirector.state != PlayState.Playing;
+    }
 
+    public override void PrimaryAttack()
+    {
         playableDirector.Play();
-        _audioSource.Play();
+        audioSource.Play();
         Invoke("MakeRaycast", 0.27f); // XD  
-        return true;
     }
 
     private void MakeRaycast()
@@ -58,38 +54,8 @@ public class Bat : MonoBehaviour, IWeapon
         }
     }
 
-    public void Reload()
+    public override void LoadWeaponInstanceInfo(WeaponInstanceInfo weaponInstanceInfo)
     {
         
-    }
-
-    public GameObject GetWeapon()
-    {
-        return gameObject;
-    }
-
-    public float GetWeaponRange()
-    {
-        return maxDistance;
-    }
-
-    public float GetWeaponFireRate()
-    {
-        return attackSpeed;
-    }
-
-    public void SetAmmo(int newAmmo)
-    {
-
-    }
-
-    public WeaponDefinition GetWeaponDefinition()
-    {
-        return weaponDefinition;
-    }
-
-    public void SetWeaponDefinition(WeaponDefinition weaponDefinition)
-    {
-        this.weaponDefinition = weaponDefinition;
     }
 }

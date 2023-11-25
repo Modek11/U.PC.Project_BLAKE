@@ -10,7 +10,7 @@ public class BTT_PrimaryAttack : Leaf
     public float WeaponRangeMultipler = 1f;
 
     private float weaponRange;
-    private IWeapon weaponInterface;
+    private Weapon weaponInterface;
 
     public override NodeResult Execute()
     {
@@ -21,7 +21,7 @@ public class BTT_PrimaryAttack : Leaf
         }
         if (weaponInterface == null)
         {
-            weaponInterface = AIController?.GetWeaponRef().GetComponent<IWeapon>();
+            weaponInterface = AIController?.GetWeaponRef().GetComponent<Weapon>();
             if (weaponInterface == null) return NodeResult.failure;
         }
         if (ReferenceManager.BlakeHeroCharacter == null) return NodeResult.failure;

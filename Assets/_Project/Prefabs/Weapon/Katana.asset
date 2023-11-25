@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a982e479cb5e0ef4e9da5465e69574b3, type: 3}
   m_Name: Katana
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 6770924938227727370, guid: 51554d862ae34f444b6baec656c9188e,
+  WeaponPrefab: {fileID: 6770924938227727370, guid: 51554d862ae34f444b6baec656c9188e,
     type: 3}
-  weaponName: Katana
-  magazineSize: 0
+  WeaponName: Katana
   AbilitiesToGrant: []
-  dropRate: 0.6
-  attachSocketName: GunHandler
-  locationOffset: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0, w: 1}
-  scale: {x: 1, y: 1, z: 1}
-  weaponGFX: {fileID: 4049531343827068314, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
+  DropRate: 0.6
+  AttachSocketName: GunHandler
+  LocationOffset: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 0, z: 0, w: 0}
+  Scale: {x: 1, y: 1, z: 1}
+  WeaponGFX: {fileID: 4049531343827068314, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
     type: 3}
-  pickupLocationOffset: {x: 0, y: 0, z: 0}
-  pickupRotation: {x: 0, y: 0, z: 0, w: 0}
+  PickupLocationOffset: {x: 0, y: 0, z: 0}
+  PickupRotation: {x: 0, y: 0, z: 0, w: 0}

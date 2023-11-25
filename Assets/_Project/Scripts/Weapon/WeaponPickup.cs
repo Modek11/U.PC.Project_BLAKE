@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class WeaponPickup : Interactable
 {
-    [SerializeField] 
-    private WeaponDefinition weaponToPickup;
+    public WeaponDefinition WeaponDefinition;
 
     [SerializeField] 
     private GameObject pickupGameObject;
@@ -12,12 +11,14 @@ public class WeaponPickup : Interactable
     [SerializeField] 
     private float rotateForce = 12f;
 
-    public int ammo = -1;
+    [HideInInspector]
+    public WeaponInstanceInfo WeaponInstanceInfo;
+
     private GameObject weaponGFX;
 
     private void Start()
     {
-        weaponGFX = Instantiate(weaponToPickup.weaponGFX, pickupGameObject.transform.position, pickupGameObject.transform.rotation, pickupGameObject.transform);
+        weaponGFX = Instantiate(WeaponDefinition.WeaponGFX, pickupGameObject.transform.position, pickupGameObject.transform.rotation, pickupGameObject.transform);
     }
 
     private void Update()
@@ -39,31 +40,30 @@ public class WeaponPickup : Interactable
         WeaponDefinition weaponDefinition = null;
         if(weaponsManager.Weapons[index] != null)
         {
-            weaponDefinition = weaponsManager.Weapons[index].GetWeaponDefinition();
+            weaponDefinition = weaponsManager.Weapons[index].WeaponDefinition;
         }
 
-        int bulletsLeft = 0;
-
-        IWeapon oldWeapon = weaponsManager.Weapons[index];
+        WeaponInstanceInfo weaponInstanceInfoToSave = null;
+        Weapon oldWeapon = weaponsManager.Weapons[index];
         if (oldWeapon != null)
         {
-            bulletsLeft = oldWeapon.GetWeapon().GetComponent<Weapon>().BulletsLeft;
+            weaponInstanceInfoToSave = oldWeapon.GenerateWeaponInstanceInfo();
         }
 
-        weaponsManager.Equip(weaponToPickup, index);
+        weaponsManager.Equip(WeaponDefinition, index);
         if(weaponsManager.ActiveWeaponIndex == 0) weaponsManager.SetActiveIndex(index);
 
-        if (ammo != -1)
+        if (WeaponInstanceInfo != null)
         {
-            weaponsManager.Weapons[index].SetAmmo(ammo);
+            weaponsManager.Weapons[index].LoadWeaponInstanceInfo(WeaponInstanceInfo);
         }
 
+        WeaponInstanceInfo = weaponInstanceInfoToSave;
         weaponsManager.OnPlayerPickupWeapon();
 
         if (weaponDefinition != null)
         {
-            weaponToPickup = weaponDefinition;
-            ammo = bulletsLeft;
+            WeaponDefinition = weaponDefinition;
             ChangeVisuals(weaponDefinition);
             return;
         }
@@ -83,13 +83,18 @@ public class WeaponPickup : Interactable
             Destroy(weaponGFX);
         }
 
-        weaponGFX = Instantiate(newWeapon.weaponGFX, pickupGameObject.transform);
-        weaponGFX.transform.localPosition = newWeapon.pickupLocationOffset;
-        weaponGFX.transform.localRotation = newWeapon.pickupRotation;
+        weaponGFX = Instantiate(newWeapon.WeaponGFX, pickupGameObject.transform);
+        weaponGFX.transform.localPosition = newWeapon.PickupLocationOffset;
+        weaponGFX.transform.localRotation = newWeapon.PickupRotation;
     }
+}
 
-    public void SetWeaponDefinition(WeaponDefinition wd)
-    {
-        weaponToPickup = wd;
-    }
+public class WeaponInstanceInfo
+{
+
+}
+
+public class RangedWeaponInstanceInfo : WeaponInstanceInfo
+{
+    public int bulletsLeft;
 }

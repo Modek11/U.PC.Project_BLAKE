@@ -86,6 +86,15 @@ namespace GameFramework.Abilities
             {
                 if (availableAbilities[i].AbilityDefinition == abilityDefinition)
                 {
+                    if(availableAbilities[i].IsActive)
+                    {
+                        availableAbilities[i].OnAbilityEnded += (bool wasCanceled) =>
+                        {
+                            RemoveAbility(abilityDefinition);
+                        };
+                        return;
+                    }
+
                     if (availableAbilities[i].AbilityDefinition.InputActionReference != null)
                     {
                         availableAbilities[i].AbilityDefinition.InputActionReference.action.started -= AbilityInputPressed;

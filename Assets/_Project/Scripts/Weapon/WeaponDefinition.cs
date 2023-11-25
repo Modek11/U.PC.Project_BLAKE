@@ -1,44 +1,40 @@
 using GameFramework.Abilities;
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 [CreateAssetMenu(fileName = "Weapon definition", menuName = "Project BLAKE/Weapon")]
 public class WeaponDefinition : ScriptableObject
 {
-    public GameObject weaponPrefab;
+    public GameObject WeaponPrefab;
 
-    public string weaponName;
-
-    public int magazineSize;
+    public string WeaponName;
 
     public AbilityDefinition[] AbilitiesToGrant;
 
     [Range(0f, 1f)]
-    public float dropRate = 0.6f;
+    public float DropRate = 0.6f;
 
-    public string attachSocketName;
+    public string AttachSocketName;
 
-    public Vector3 locationOffset;
+    public Vector3 LocationOffset;
     
-    public Quaternion rotation;
+    public Quaternion Rotation;
 
-    public Vector3 scale = Vector3.one;
+    public Vector3 Scale = Vector3.one;
 
-    public GameObject weaponGFX;
+    public GameObject WeaponGFX;
 
-    public Vector3 pickupLocationOffset = Vector3.zero;
+    public Vector3 PickupLocationOffset = Vector3.zero;
 
-    public Quaternion pickupRotation;
+    public Quaternion PickupRotation;
 
     private void OnValidate()
     {
-        if (weaponPrefab != null)
+        if (WeaponPrefab != null)
         {
-            if(weaponPrefab.TryGetComponent<IWeapon>(out var weapon))
+            if(WeaponPrefab.TryGetComponent<Weapon>(out var weapon))
             {
-                weapon.SetWeaponDefinition(this);
+                weapon.WeaponDefinition = this;
             }
         }
     }

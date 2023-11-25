@@ -7,14 +7,14 @@ public class BTS_Shoot : Service
 {
     public BoolReference HasLineOfSightReference;
     public AIController AIController;
-    private IWeapon weapon;
+    private Weapon weapon;
 
     public override void Task()
     {
         if (AIController == null) return;
         if(weapon == null)
         {
-            weapon = AIController.GetWeaponRef()?.GetComponent<IWeapon>();
+            weapon = AIController.GetWeaponRef()?.GetComponent<Weapon>();
             if (weapon == null) return;
         }
         if (!HasLineOfSightReference.Value) return;
