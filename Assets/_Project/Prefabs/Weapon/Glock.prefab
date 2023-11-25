@@ -140,10 +140,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5319882019298209557}
-  - component: {fileID: 5319882019298209558}
-  - component: {fileID: 1896440285}
-  - component: {fileID: 1896440286}
   - component: {fileID: 4023297975374877411}
+  - component: {fileID: 879817029879317628}
   m_Layer: 0
   m_Name: Glock
   m_TagString: Untagged
@@ -169,63 +167,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5319882019298209558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5319882019298209556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 961f286b4752ab149a0825dd6c5a6ba6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Range: 30
-  infinityAmmo: 0
-  BulletsSpawnPoint: {fileID: 5319882019081080685}
-  BulletPrefab: {fileID: 8745238448183679230, guid: a068551a7488b474fa34d68d5f97afbe,
-    type: 3}
-  isLastShotOver: 0
-  BulletsLeft: 10
-  As: {fileID: 0}
-  _primaryAttack:
-    _underlyingValue: {fileID: 1896440285}
-  _secondaryAttack:
-    _underlyingValue: {fileID: 1896440286}
-  weaponDefinition: {fileID: 11400000, guid: cb112670c3a49bc4784159c4dfb4e34e, type: 2}
---- !u!114 &1896440285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5319882019298209556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eda587f63642855459c33caf66f6478d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeBetweenShooting: 0.5
-  spread: 8
-  shotsPerTap: 1
-  bulletsPerShot: 1
---- !u!114 &1896440286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5319882019298209556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eda587f63642855459c33caf66f6478d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeBetweenShooting: 0.1
-  spread: 5
-  shotsPerTap: 3
-  bulletsPerShot: 1
 --- !u!82 &4023297975374877411
 AudioSource:
   m_ObjectHideFlags: 0
@@ -322,6 +263,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &879817029879317628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5319882019298209556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45534a2832c67be4097c3d61b065197a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WeaponDefinition: {fileID: 11400000, guid: cb112670c3a49bc4784159c4dfb4e34e, type: 2}
+  infinityAmmo: 0
+  bulletsSpawnPoint: {fileID: 5319882019081080685}
+  bulletPrefab: {fileID: 8745238448183679230, guid: a068551a7488b474fa34d68d5f97afbe,
+    type: 3}
+  FireDelayTime: 0.5
+  spread: 8
+  spreadMinMagnitude: 0
+  bulletsPerShot: 1
+  MagazineSize: 15
+  Range: 30
 --- !u!1001 &660952055753094989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -464,6 +428,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5319882019298209557}
     m_Modifications:
+    - target: {fileID: 3636025993700825803, guid: aff676e8c741cbc4b8314666d5f6d72d,
+        type: 3}
+      propertyPath: attackPointTransform
+      value: 
+      objectReference: {fileID: 5319882019081080685}
     - target: {fileID: 3636025993700825803, guid: aff676e8c741cbc4b8314666d5f6d72d,
         type: 3}
       propertyPath: _attackPointTransform

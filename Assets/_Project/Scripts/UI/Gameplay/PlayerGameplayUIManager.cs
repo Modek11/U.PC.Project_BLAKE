@@ -56,10 +56,10 @@ public class PlayerGameplayUIManager : MonoBehaviour
         {
             player = playerTransform.gameObject;
             weaponsManager = player.GetComponent<WeaponsManager>();
-            weaponsManager.onSuccessfulShotEvent += RefreshUI;
-            weaponsManager.onPlayerPickupWeaponEvent += RefreshUI;
-            weaponsManager.changeWeaponEvent += RefreshUI;
-            RefreshUI();
+            weaponsManager.OnPrimaryAttack += RefreshUI;
+            weaponsManager.OnPlayerPickupWeaponEvent += RefreshUI;
+            weaponsManager.OnWeaponChangedEvent += RefreshUI;
+            RefreshUI(weaponsManager.Weapons[weaponsManager.ActiveWeaponIndex]);
         }
         
         minimapCamera.SetPlayer(playerTransform);
@@ -92,27 +92,27 @@ public class PlayerGameplayUIManager : MonoBehaviour
         HealthLeftUI();
     }
 
-    private void RefreshUI()
+    private void RefreshUI(Weapon weapon)
     {
-        WeaponNameUI();
-        BulletsLeftUI();
+        WeaponNameUI(weapon);
+        BulletsLeftUI(weapon);
     }
 
-    private void WeaponNameUI()
+    private void WeaponNameUI(Weapon weapon)
     {
-        weaponName.text = weaponsManager.GetWeaponDefinition(weaponsManager.ActiveWeaponIndex).weaponName;
+        weaponName.text = weapon.WeaponDefinition.WeaponName;
     }
 
-    private void BulletsLeftUI()
+    private void BulletsLeftUI(Weapon weapon)
     {
-        if (weaponName.text == weaponsManager.defaultWeapon.weaponName)
+        RangedWeapon rangedWeapon = weapon as RangedWeapon;
+        if (rangedWeapon != null)
         {
-            bulletsLeft.text = "∞";
+            bulletsLeft.text = rangedWeapon.BulletsLeft.ToString(); 
         }
         else
         {
-            Weapon weapon = weaponsManager.GetIWeapon(weaponsManager.ActiveWeaponIndex).GetWeapon().GetComponent<Weapon>();
-            bulletsLeft.text = weapon.BulletsLeft.ToString();
+            bulletsLeft.text = "∞";
         }
     }
     

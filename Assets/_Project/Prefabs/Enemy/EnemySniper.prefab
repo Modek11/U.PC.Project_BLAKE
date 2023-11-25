@@ -17,6 +17,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5456813154298885065, guid: 419325c1d82cb204cb136d7467339420,
+        type: 3}
+      propertyPath: infinityAmmo
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8623244368148286621, guid: 419325c1d82cb204cb136d7467339420,
         type: 3}
       propertyPath: BulletPrefab
@@ -95,6 +100,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 419325c1d82cb204cb136d7467339420, type: 3}
+--- !u!114 &6610444272936404280 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5456813154298885065, guid: 419325c1d82cb204cb136d7467339420,
+    type: 3}
+  m_PrefabInstance: {fileID: 1155026716721821425}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7470506124892437102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45534a2832c67be4097c3d61b065197a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7470506124892437102 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8623244368148286623, guid: 419325c1d82cb204cb136d7467339420,
@@ -108,6 +125,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4250661716291628405, guid: 20caf66ddd7209d4291d40715d756be9,
+        type: 3}
+      propertyPath: Weapon
+      value: 
+      objectReference: {fileID: 6610444272936404280}
     - target: {fileID: 4250661716291628405, guid: 20caf66ddd7209d4291d40715d756be9,
         type: 3}
       propertyPath: weaponRef

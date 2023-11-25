@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a982e479cb5e0ef4e9da5465e69574b3, type: 3}
   m_Name: Baton
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 6770924938227727370, guid: b95b54a6a09e88b4bbfc99cc710c47f7,
+  WeaponPrefab: {fileID: 6770924938227727370, guid: b95b54a6a09e88b4bbfc99cc710c47f7,
     type: 3}
-  weaponName: Baton
-  attachSocketName: GunHandler
-  locationOffset: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0, w: 1}
-  scale: {x: 1, y: 1, z: 1}
-  weaponGFX: {fileID: 6940019093615102882, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
+  WeaponName: Baton
+  AbilitiesToGrant:
+  - {fileID: 11400000, guid: c6a789a579ce8d24c9363bf0dc5a3cd4, type: 2}
+  DropRate: 0.6
+  AttachSocketName: GunHandler
+  LocationOffset: {x: 0, y: 0.47, z: 0}
+  Rotation: {x: 0, y: 0, z: 0, w: 0}
+  Scale: {x: 1, y: 1, z: 1}
+  WeaponGFX: {fileID: 6940019093615102882, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
     type: 3}
-  pickupLocationOffset: {x: 0, y: 0, z: 0}
-  pickupRotation: {x: 0, y: 0, z: 0, w: 0}
+  PickupLocationOffset: {x: 0, y: 0, z: 0}
+  PickupRotation: {x: 0, y: 0, z: 0, w: 0}

@@ -104,6 +104,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4250661716291628405, guid: 20caf66ddd7209d4291d40715d756be9,
         type: 3}
+      propertyPath: Weapon
+      value: 
+      objectReference: {fileID: 7918091861135849427}
+    - target: {fileID: 4250661716291628405, guid: 20caf66ddd7209d4291d40715d756be9,
+        type: 3}
       propertyPath: weaponRef
       value: 
       objectReference: {fileID: 1426138867378329946}
@@ -406,3 +411,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5637805129380078928}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7918091861135849427 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2584845723702579843, guid: b95b54a6a09e88b4bbfc99cc710c47f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 5637805129380078928}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426138867378329946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d1a434521a48b54d911faeb1deddcc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

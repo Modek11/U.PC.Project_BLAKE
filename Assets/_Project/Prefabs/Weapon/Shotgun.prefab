@@ -40,9 +40,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7102642101788406656}
-  - component: {fileID: 7102642101788406659}
-  - component: {fileID: 7102642102260057997}
   - component: {fileID: 8410761408337805822}
+  - component: {fileID: 1362863765141256286}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -68,47 +67,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7102642101788406659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7102642101788406657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 961f286b4752ab149a0825dd6c5a6ba6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Range: 25
-  infinityAmmo: 0
-  BulletsSpawnPoint: {fileID: 7102642101703529464}
-  BulletPrefab: {fileID: 8745238448183679230, guid: 840b6a6b89ca7344da4b0ad530514ca7,
-    type: 3}
-  isLastShotOver: 0
-  BulletsLeft: 10
-  As: {fileID: 0}
-  _primaryAttack:
-    _underlyingValue: {fileID: 7102642102260057997}
-  _secondaryAttack:
-    _underlyingValue: {fileID: 0}
-  weaponDefinition: {fileID: 11400000, guid: 84867b61f986ef5438050060175a68b8, type: 2}
---- !u!114 &7102642102260057997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7102642101788406657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eda587f63642855459c33caf66f6478d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeBetweenShooting: 1.05
-  spread: 25
-  shotsPerTap: 1
-  bulletsPerShot: 5
 --- !u!82 &8410761408337805822
 AudioSource:
   m_ObjectHideFlags: 0
@@ -205,6 +163,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1362863765141256286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7102642101788406657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45534a2832c67be4097c3d61b065197a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WeaponDefinition: {fileID: 11400000, guid: 84867b61f986ef5438050060175a68b8, type: 2}
+  infinityAmmo: 0
+  bulletsSpawnPoint: {fileID: 7102642101703529464}
+  bulletPrefab: {fileID: 8745238448183679230, guid: 840b6a6b89ca7344da4b0ad530514ca7,
+    type: 3}
+  FireDelayTime: 1.05
+  spread: 25
+  spreadMinMagnitude: 0
+  projectilesPerShot: 5
+  MagazineSize: 7
+  Range: 25
 --- !u!1001 &4583913612280929633
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -327,6 +308,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7102642101788406656}
     m_Modifications:
+    - target: {fileID: 3636025993700825803, guid: aff676e8c741cbc4b8314666d5f6d72d,
+        type: 3}
+      propertyPath: attackPointTransform
+      value: 
+      objectReference: {fileID: 7102642101703529464}
     - target: {fileID: 3636025993700825803, guid: aff676e8c741cbc4b8314666d5f6d72d,
         type: 3}
       propertyPath: _attackPointTransform

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.solidalloy.type-references": "2.16.0",
     "com.unity.ai.navigation": "1.0.0-exp.4",
     "com.unity.cinemachine": "2.8.9",
     "com.unity.collab-proxy": "2.0.0",
@@ -44,5 +45,16 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.openupm",
+        "com.solidalloy",
+        "org.nuget"
+      ]
+    }
+  ]
 }
