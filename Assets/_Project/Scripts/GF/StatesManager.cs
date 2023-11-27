@@ -15,7 +15,7 @@ namespace GameFramework.System
 #if UNITY_EDITOR
         static StatesManager()
         {
-            statesNames = File.ReadAllLines("Assets/Resources/BlakeStates.txt");
+            statesNames = File.ReadAllLines("Assets/Resources/" + ProjectStatics.StatesAssetPath + ".txt");
 
             for (int i = 0; i < statesNames.Length; i++)
             {
@@ -27,7 +27,7 @@ namespace GameFramework.System
         [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void LoadAsset()
         {
-            UnityEngine.TextAsset statesAsset = UnityEngine.Resources.Load<UnityEngine.TextAsset>("BlakeStates");
+            UnityEngine.TextAsset statesAsset = UnityEngine.Resources.Load<UnityEngine.TextAsset>(ProjectStatics.StatesAssetPath);
             if (statesAsset == null) return;
 
             statesNames = statesAsset.text.Split('\n');

@@ -19,7 +19,7 @@ namespace GameFramework.Editor.Attributes
 
             if (StringList != null && StringList.Length != 0)
             {
-                SerializedProperty SerializedProperty = property.FindPropertyRelative("StateName");
+                SerializedProperty SerializedProperty = property.FindPropertyRelative("stateName");
 
                 int SelectedIndex = Mathf.Max(Array.IndexOf(StringList, SerializedProperty.stringValue), 0);
                 SelectedIndex = EditorGUI.Popup(position, property.name, SelectedIndex, StringList);
