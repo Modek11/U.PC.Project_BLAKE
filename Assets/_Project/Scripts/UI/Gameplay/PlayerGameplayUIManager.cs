@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerGameplayUIManager : MonoBehaviour
 {
+    private const string INFINITY_SYMBOL = "∞";
+    
     [SerializeField] 
     private FloorManager floorManager;
 
@@ -35,7 +37,6 @@ public class PlayerGameplayUIManager : MonoBehaviour
     [SerializeField] 
     private GameObject dashCooldownUI;
     
-    
     private GameObject player;
     private WeaponsManager weaponsManager;
     private PlayerInteractables playerInteractables;
@@ -52,6 +53,8 @@ public class PlayerGameplayUIManager : MonoBehaviour
 
     private void FloorManagerOnFloorGeneratorEnd(Transform playerTransform, Transform cameraFollowTransform)
     {
+        floorManager.FloorGeneratorEnd -= FloorManagerOnFloorGeneratorEnd;
+        
         if (player == null || weaponsManager == null)
         {
             player = playerTransform.gameObject;
@@ -72,6 +75,11 @@ public class PlayerGameplayUIManager : MonoBehaviour
         dashCooldownImage = dashCooldownUI.transform.GetChild(1).GetComponent<Image>();
         
         playerMovement.OnDashPerformed += StartDashCooldownUI;
+        roomsDoneCounter.OnRoomBeaten += RoomsCounterUI;
+        blakeCharacter.OnDamageTaken += HealthLeftUI;
+        blakeCharacter.onRespawn += HealthLeftUI;
+        HealthLeftUI();
+        RoomsCounterUI();
     }
     
     private void ShowMap()
@@ -82,14 +90,6 @@ public class PlayerGameplayUIManager : MonoBehaviour
     private void HideMap()
     {
         mapUI.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if (blakeCharacter is null) return;
-        //Create events which updates those values only when they're changed 
-        RoomsCounterUI();
-        HealthLeftUI();
     }
 
     private void RefreshUI(Weapon weapon)
@@ -106,14 +106,8 @@ public class PlayerGameplayUIManager : MonoBehaviour
     private void BulletsLeftUI(Weapon weapon)
     {
         RangedWeapon rangedWeapon = weapon as RangedWeapon;
-        if (rangedWeapon != null)
-        {
-            bulletsLeft.text = rangedWeapon.BulletsLeft.ToString(); 
-        }
-        else
-        {
-            bulletsLeft.text = "∞";
-        }
+
+        bulletsLeft.text = rangedWeapon != null ? rangedWeapon.BulletsLeft.ToString() : INFINITY_SYMBOL;
     }
     
     private void RoomsCounterUI()
@@ -146,7 +140,5 @@ public class PlayerGameplayUIManager : MonoBehaviour
         
         dashCooldownUI.SetActive(false);
         dashCooldownImage.fillAmount = 0;
-        
     }
-    
 }

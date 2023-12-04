@@ -14,7 +14,7 @@ public class ReferenceManager : MonoBehaviour
         set
         {
             if (instance == null) return;
-            instance.blakeHeroCharacter = value;
+                instance.blakeHeroCharacter = value;
         }
     }
     
@@ -23,8 +23,8 @@ public class ReferenceManager : MonoBehaviour
         get => instance != null ? instance.playerInputController : null;
         set
         {
-            if (instance == null) return;
-            instance.playerInputController = value;
+            if (instance == null) return;   
+                instance.playerInputController = value;
         }
     }
     
@@ -34,11 +34,14 @@ public class ReferenceManager : MonoBehaviour
         set
         {
             if (instance == null) return;
-            instance.sceneHandler = value;
+                instance.sceneHandler = value;
         }
     }
 
-    public static MessageRouter MessageRouter => instance != null ? instance.messageRouter : null;
+    public static MessageRouter MessageRouter
+    {
+        get => instance != null ? instance.messageRouter : null;
+    }
 
     private void Awake()
     {
