@@ -41,6 +41,6 @@ public class FloorManager : MonoBehaviour
         virtualCamera.Follow = cameraFollow.transform;
         cameraFollow.GetComponent<CameraFollowScript>().SetPlayerReference(player.transform);
         
-        FloorGeneratorEnd?.Invoke(player.transform,cameraFollow.transform);
+        FloorGeneratorEnd?.Invoke(player.transform, cameraFollow.transform);
     }
 }

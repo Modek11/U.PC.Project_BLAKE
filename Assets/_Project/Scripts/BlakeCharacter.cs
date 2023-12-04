@@ -1,10 +1,14 @@
-using Unity.Mathematics;
-using UnityEngine; 
+using System;
+using System.Collections;
+using UnityEngine;
 
 public abstract class BlakeCharacter : MonoBehaviour, IDamageable
 {
     [SerializeField]
     protected int health = 1;
+
+    [SerializeField] 
+    protected float timeBetweenDamages = .5f;
 
     public int Health
     {
@@ -32,7 +36,7 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
 
     protected GameObject explosionParticleInstantiated;
     protected int defaultHealth;
-    protected float onDamageTakenCounter;
+    protected bool recentlyDamaged = false;
     protected bool isDead = false;
     protected Vector3 respawnPos;
 
@@ -40,21 +44,11 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
     public event OnDeath onDeath;
     public delegate void OnRespawn();
     public event OnRespawn onRespawn;
-
-    private void Update()
-    {
-        if (onDamageTakenCounter > 0)
-        {
-            onDamageTakenCounter -= Time.deltaTime;
-        }
-    }
+    public event Action OnDamageTaken;
 
     public virtual void Die()
     {
         isDead = true;
-        
-        //GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        //GetComponent<CapsuleCollider>().enabled = false;
         onDeath?.Invoke();
     }
 
@@ -68,12 +62,18 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
 #if UNITY_EDITOR
         if (godMode) return;
 #endif
-        if (onDamageTakenCounter > 0) return;
+        if (recentlyDamaged) return;
         if (health < 1) { return; }
 
         Debug.Log(instigator.name + " took " + damage + " damage to " + name);
         Health -= damage;
-        onDamageTakenCounter = .5f;
+        
+        if (health > 0)
+        {
+            StartCoroutine(StopTakingDamageForPeriod(timeBetweenDamages));
+        }
+        
+        OnDamageTaken?.Invoke();
     }
 
     public virtual bool CanTakeDamage(GameObject instigator)
@@ -97,17 +97,21 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         return respawnPos;
     }
 
+    private IEnumerator StopTakingDamageForPeriod(float period)
+    {
+        recentlyDamaged = true;
+        yield return new WaitForSeconds(period);
+        recentlyDamaged = false;
+    }
+
     protected void Respawn()
     {
-        onRespawn?.Invoke();
         isDead = false;
-        //animator.SetBool("IsAlive", true); //only for DD we should only animate enemies
         Destroy(explosionParticleInstantiated);
         transform.position = respawnPos;
         gameObject.SetActive(true);
-        //GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionX;
-        //GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionZ;
         GetComponent<CapsuleCollider>().enabled = true;
         health = defaultHealth;
+        onRespawn?.Invoke();
     }
 }

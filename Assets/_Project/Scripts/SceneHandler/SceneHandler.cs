@@ -25,13 +25,13 @@ public class SceneHandler : MonoBehaviour
     
     private void Awake()
     {
-        if (ReferenceManager.SceneHandler != null && ReferenceManager.SceneHandler != this) 
-        { 
-            Destroy(gameObject); 
-        } 
+        if (ReferenceManager.SceneHandler != null && ReferenceManager.SceneHandler != this)
+        {
+            Destroy(gameObject);
+        }
         else 
-        { 
-            ReferenceManager.SceneHandler = this; 
+        {
+            ReferenceManager.SceneHandler = this;
             DontDestroyOnLoad(ReferenceManager.SceneHandler);
         }
     }
@@ -54,7 +54,6 @@ public class SceneHandler : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
-        
         
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
