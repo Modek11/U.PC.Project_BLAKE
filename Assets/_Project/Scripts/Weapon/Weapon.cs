@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    [SerializeField, HideInInspector]
+    [SerializeField]
     public WeaponDefinition WeaponDefinition;
 
     //BlakeCharacter
