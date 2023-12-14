@@ -18,7 +18,7 @@ public class ReferenceManager : MonoBehaviour
         set
         {
             if (instance == null) return;
-                instance.blakeHeroCharacter = value;
+            instance.blakeHeroCharacter = value;
         }
     }
     
@@ -28,7 +28,7 @@ public class ReferenceManager : MonoBehaviour
         set
         {
             if (instance == null) return;   
-                instance.playerInputController = value;
+            instance.playerInputController = value;
         }
     }
     
@@ -38,7 +38,7 @@ public class ReferenceManager : MonoBehaviour
         set
         {
             if (instance == null) return;
-                instance.sceneHandler = value;
+            instance.sceneHandler = value;
         }
     }
 
