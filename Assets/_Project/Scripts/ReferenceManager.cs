@@ -1,5 +1,9 @@
 using UnityEngine;
 
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+using Unity.Services.Core;
+#endif
+
 public class ReferenceManager : MonoBehaviour
 {
     private static ReferenceManager instance;
@@ -53,6 +57,10 @@ public class ReferenceManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(instance);
+
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+            UnityServices.InitializeAsync();
+#endif
         }
     }
 }

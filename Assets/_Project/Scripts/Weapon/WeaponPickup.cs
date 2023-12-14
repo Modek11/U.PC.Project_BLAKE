@@ -1,5 +1,9 @@
-using System.Xml.Serialization;
+using System.Collections.Generic;
 using UnityEngine;
+
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+using Unity.Services.Analytics;
+#endif
 
 public class WeaponPickup : Interactable
 {
@@ -52,6 +56,16 @@ public class WeaponPickup : Interactable
 
         weaponsManager.Equip(WeaponDefinition, index);
         if(weaponsManager.ActiveWeaponIndex == 0) weaponsManager.SetActiveIndex(index);
+
+        Dictionary<string, object> parameters = new Dictionary<string, object>()
+        {
+            { "itemName", WeaponDefinition.WeaponName }
+        };
+
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+        AnalyticsService.Instance.CustomData("WeaponPickup", parameters);
+        AnalyticsService.Instance.StartDataCollection();
+#endif
 
         if (WeaponInstanceInfo != null)
         {
