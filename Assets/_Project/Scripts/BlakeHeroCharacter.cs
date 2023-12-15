@@ -28,10 +28,13 @@ public class BlakeHeroCharacter : BlakeCharacter
         Dictionary<string, object> parameters = new Dictionary<string, object>()
         {
             { "killer", killer.name },
-            { "itemName", killer.GetComponent<AIController>()?.Weapon?.name }
+            { "itemName", killer.GetComponent<AIController>()?.Weapon?.name },
+            { "placementName", ReferenceManager.RoomManager.GetActiveRoom().name }
         };
 
         AnalyticsService.Instance.CustomData("HeroDead", parameters);
+        AnalyticsService.Instance.StartDataCollection();
+        Debug.Log("Analytics data sent.");
 #endif
 
         explosionParticleInstantiated = Instantiate(explosionParticle, transform.position, quaternion.identity);

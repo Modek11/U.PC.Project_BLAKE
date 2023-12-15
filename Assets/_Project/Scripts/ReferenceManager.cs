@@ -1,4 +1,8 @@
 using UnityEngine;
+using Unity.Services.Analytics;
+using System.Threading.Tasks;
+
+
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
 using Unity.Services.Core;
@@ -70,7 +74,8 @@ public class ReferenceManager : MonoBehaviour
             DontDestroyOnLoad(instance);
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
-            UnityServices.InitializeAsync();
+            Task initializationTask = UnityServices.InitializeAsync();
+            //initializationTask.ContinueWith(t => { AnalyticsService.Instance.StartDataCollection(); });
 #endif
         }
     }
