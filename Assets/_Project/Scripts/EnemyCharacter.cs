@@ -14,13 +14,13 @@ public class EnemyCharacter : BlakeCharacter
         ai = GetComponent<AIController>();
     }
 
-    public override void Die()
+    public override void Die(GameObject killer)
     {
         //animator.SetBool("IsAlive", false);
         explosionParticleInstantiated = Instantiate(explosionParticle, transform.position, Quaternion.identity);
         Invoke("DestroySelf", 2f);
 
-        base.Die();
+        base.Die(killer);
     }
 
     protected override void DestroySelf()

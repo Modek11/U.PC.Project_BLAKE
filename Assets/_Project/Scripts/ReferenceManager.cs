@@ -11,6 +11,7 @@ public class ReferenceManager : MonoBehaviour
     private PlayerInputController playerInputController;
     private SceneHandler sceneHandler;
     private MessageRouter messageRouter = new();
+    private RoomManager roomManager;
 
     public static BlakeHeroCharacter BlakeHeroCharacter
     {
@@ -45,6 +46,16 @@ public class ReferenceManager : MonoBehaviour
     public static MessageRouter MessageRouter
     {
         get => instance != null ? instance.messageRouter : null;
+    }
+
+    public static RoomManager RoomManager
+    {
+        get => instance != null ? instance.roomManager : null;
+        set
+        {
+            if (instance == null) return;
+            instance.roomManager = value;
+        }
     }
 
     private void Awake()

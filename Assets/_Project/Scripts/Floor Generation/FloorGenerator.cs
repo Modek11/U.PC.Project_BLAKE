@@ -47,7 +47,7 @@ public class FloorGenerator : MonoBehaviour
     [SerializeField]
     private bool debugRoomFinding = false;
     public int MaxRooms => maxRooms;
-    
+
     public IEnumerator GenerateFloor()
     {
         maxRooms = maxBaseRooms + treasureRoomsAmount;
@@ -114,7 +114,7 @@ public class FloorGenerator : MonoBehaviour
         FloorPathfinding floorPathfinding = new FloorPathfinding(spawnedRooms);
 
         while (tempCounter < amountOfRooms) {
-            if (tries >= 50)
+            if (tries >= 200)
             {
                 Debug.LogWarning("Broken generation due to too many tries");
                 break;

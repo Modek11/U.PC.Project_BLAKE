@@ -1,2 +1,2 @@
-Ability
-Ability.WeaponFire
+Ability,
+Ability.WeaponFire,

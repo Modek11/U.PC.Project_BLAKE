@@ -9,6 +9,11 @@ public class RoomManager : MonoBehaviour
     [SerializeField]
     private Transform minimapFloor;
 
+    private void Awake()
+    {
+        ReferenceManager.RoomManager = this;
+    }
+
     public void SetActiveRoom(Room newRoom)
     {
         activeRoom = newRoom;

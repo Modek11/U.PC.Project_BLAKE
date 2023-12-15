@@ -20,6 +20,10 @@ public class WeaponPickup : Interactable
 
     private GameObject weaponGFX;
 
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+    public bool SendAnalyticsDataOnPickup = false;
+#endif
+
     private void Start()
     {
         weaponGFX = Instantiate(WeaponDefinition.WeaponGFX, pickupGameObject.transform.position, pickupGameObject.transform.rotation, pickupGameObject.transform);
@@ -57,14 +61,16 @@ public class WeaponPickup : Interactable
         weaponsManager.Equip(WeaponDefinition, index);
         if(weaponsManager.ActiveWeaponIndex == 0) weaponsManager.SetActiveIndex(index);
 
-        Dictionary<string, object> parameters = new Dictionary<string, object>()
-        {
-            { "itemName", WeaponDefinition.WeaponName }
-        };
-
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
-        AnalyticsService.Instance.CustomData("WeaponPickup", parameters);
-        AnalyticsService.Instance.StartDataCollection();
+        if (SendAnalyticsDataOnPickup)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
+            {
+                { "itemName", WeaponDefinition.WeaponName }
+            };
+
+            AnalyticsService.Instance.CustomData("WeaponPickup", parameters);
+        }
 #endif
 
         if (WeaponInstanceInfo != null)

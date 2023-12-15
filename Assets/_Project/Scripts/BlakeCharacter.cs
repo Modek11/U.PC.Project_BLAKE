@@ -13,14 +13,7 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
     public int Health
     {
         get => health;
-        set
-        {
-            health = value;
-            if (health < 1 && !isDead)
-            {
-                Die();
-            }
-        }
+        protected set { health = value; }
     }
 
     [SerializeField] 
@@ -44,9 +37,9 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
     public event OnDeath onDeath;
     public delegate void OnRespawn();
     public event OnRespawn onRespawn;
-    public event Action OnDamageTaken;
+    public event Action<GameObject> OnDamageTaken;
 
-    public virtual void Die()
+    public virtual void Die(GameObject killer)
     {
         isDead = true;
         onDeath?.Invoke();
@@ -67,13 +60,17 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
 
         Debug.Log(instigator.name + " took " + damage + " damage to " + name);
         Health -= damage;
-        
+
         if (health > 0)
         {
             StartCoroutine(StopTakingDamageForPeriod(timeBetweenDamages));
         }
+        else if (!isDead)
+        {
+            Die(instigator);
+        }
         
-        OnDamageTaken?.Invoke();
+        OnDamageTaken?.Invoke(instigator);
     }
 
     public virtual bool CanTakeDamage(GameObject instigator)
