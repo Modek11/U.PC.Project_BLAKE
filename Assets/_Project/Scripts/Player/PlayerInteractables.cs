@@ -45,15 +45,26 @@ public class PlayerInteractables : MonoBehaviour
         {
             IInteractable closest = null;
             float closestDistance = float.MaxValue;
+
+            List<IInteractable> invalidInteractables = new List<IInteractable>();
+
             foreach (IInteractable interactable in interactables)
             {
                 if (!interactable.CanInteract()) continue;
+                if (interactable.GetGameObject() == null) { invalidInteractables.Add(interactable); continue; }
+
                 if (Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position) < closestDistance)
                 {
                     closest = interactable;
                     closestDistance = Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position);
                 }
             }
+
+            for(int i = 0; i < invalidInteractables.Count; i++)
+            {
+                interactables.Remove(invalidInteractables[i]);
+            }
+
             return closest;
         }
         return null;
@@ -71,6 +82,7 @@ public class PlayerInteractables : MonoBehaviour
     private void SetUI()
     {
         if (interactUI == null) return;
+
         IInteractable closest = GetClosestInteractable();
         if (closest == null)
         {

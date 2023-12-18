@@ -23,6 +23,7 @@ public abstract class Interactable : MonoBehaviour, IInteractable
             other.GetComponent<PlayerInteractables>().AddInteractable(this);
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.GetComponent<PlayerInteractables>() != null)
@@ -31,17 +32,16 @@ public abstract class Interactable : MonoBehaviour, IInteractable
         }
     }
 
-
     /// <returns>If object is interactable</returns>
     public bool CanInteract()
     {
         return interactable;
     }
 
-
     /// <returns>This gameObject</returns>
     public GameObject GetGameObject()
     {
+        if (this == null) return null;
         return this.gameObject;
     }
 
