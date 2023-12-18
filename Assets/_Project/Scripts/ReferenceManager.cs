@@ -75,7 +75,6 @@ public class ReferenceManager : MonoBehaviour
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
             Task initializationTask = UnityServices.InitializeAsync();
-            //initializationTask.ContinueWith(t => { AnalyticsService.Instance.StartDataCollection(); });
 #endif
         }
     }

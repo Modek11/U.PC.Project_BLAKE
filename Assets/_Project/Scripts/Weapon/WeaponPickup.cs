@@ -69,8 +69,8 @@ public class WeaponPickup : Interactable
                 { "itemName", WeaponDefinition.WeaponName }
             };
 
-            AnalyticsService.Instance.CustomData("WeaponPickup", parameters);
             AnalyticsService.Instance.StartDataCollection();
+            AnalyticsService.Instance.CustomData("WeaponPickup", parameters);
             Debug.Log("Analytics data sent.");
         }
 #endif

@@ -32,8 +32,8 @@ public class BlakeHeroCharacter : BlakeCharacter
             { "placementName", ReferenceManager.RoomManager.GetActiveRoom().name }
         };
 
-        AnalyticsService.Instance.CustomData("HeroDead", parameters);
         AnalyticsService.Instance.StartDataCollection();
+        AnalyticsService.Instance.CustomData("HeroDead", parameters);
         Debug.Log("Analytics data sent.");
 #endif
 
