@@ -75,6 +75,8 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
 
     public virtual bool CanTakeDamage(GameObject instigator)
     {
+        if (instigator == null) return false;
+
         BlakeCharacter other = instigator.GetComponent<BlakeCharacter>();
         if(other != null)
         {

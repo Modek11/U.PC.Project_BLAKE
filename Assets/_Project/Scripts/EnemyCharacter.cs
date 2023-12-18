@@ -42,7 +42,7 @@ public class EnemyCharacter : BlakeCharacter
             }
             else
             {
-                Debug.LogError("WeaponDefinition is not valid.");
+                Debug.LogError("WeaponDefinition is not valid. " + name);
             }
         }
 

@@ -3212,10 +3212,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1
+  timeBetweenDamages: 0.5
   explosionParticle: {fileID: 6361431522622511341, guid: b9bcc07df42695645b74449cfd80b6db,
     type: 3}
   animator: {fileID: 341872085399694321}
-  godMode: 1
+  godMode: 0
 --- !u!114 &-66852236823653447
 MonoBehaviour:
   m_ObjectHideFlags: 0

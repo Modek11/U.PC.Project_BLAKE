@@ -283,7 +283,7 @@ MonoBehaviour:
   FireDelayTime: 0.5
   spread: 8
   spreadMinMagnitude: 0
-  bulletsPerShot: 1
+  projectilesPerShot: 1
   MagazineSize: 15
   Range: 30
 --- !u!1001 &660952055753094989

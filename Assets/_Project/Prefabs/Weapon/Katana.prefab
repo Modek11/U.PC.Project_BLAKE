@@ -63,12 +63,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d1a434521a48b54d911faeb1deddcc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WeaponDefinition: {fileID: 11400000, guid: ba6d981959989e54081af014222d2c3f, type: 2}
   spereCastRadius: 2
   maxDistance: 2
   layerMask:
     serializedVersion: 2
     m_Bits: 512
-  attackSpeed: 0
 --- !u!82 &8945000990863372136
 AudioSource:
   m_ObjectHideFlags: 0

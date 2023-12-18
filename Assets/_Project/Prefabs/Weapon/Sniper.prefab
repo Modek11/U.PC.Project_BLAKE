@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45534a2832c67be4097c3d61b065197a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponDefinition: {fileID: 0}
+  WeaponDefinition: {fileID: 11400000, guid: 853c1e795d7565e4987cefbb9acb9301, type: 2}
   infinityAmmo: 0
   bulletsSpawnPoint: {fileID: 8623244367694195942}
   bulletPrefab: {fileID: 8745238448183679230, guid: 3834453275fdaab4aa045b723129cc96,
