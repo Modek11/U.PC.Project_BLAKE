@@ -11,7 +11,7 @@ public class WeaponDefinition : ScriptableObject
 
     public AbilityDefinition[] AbilitiesToGrant;
 
-    [Range(0f, 1f)]
+    [Range(-0.01f, 1f)]
     public float DropRate = 0.6f;
 
     public string AttachSocketName;

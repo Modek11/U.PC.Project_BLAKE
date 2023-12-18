@@ -14,28 +14,35 @@ public class EnemyCharacter : BlakeCharacter
         ai = GetComponent<AIController>();
     }
 
-    public override void Die()
+    public override void Die(GameObject killer)
     {
         //animator.SetBool("IsAlive", false);
         explosionParticleInstantiated = Instantiate(explosionParticle, transform.position, Quaternion.identity);
         Invoke("DestroySelf", 2f);
 
-        base.Die();
+        base.Die(killer);
     }
 
     protected override void DestroySelf()
     {
         if (ai.Weapon != null)
         {
-            float drop = Random.Range(0f, 1f);
-            if (drop <= ai.Weapon.WeaponDefinition.DropRate)
+            if (ai.Weapon.WeaponDefinition != null)
             {
-                GameObject weaponPickupObject = Instantiate(weaponPickup, transform.position, Quaternion.identity);
-                SpawnedInRoom.AddSpawnedWeapon(weaponPickupObject);
+                float drop = Random.Range(0f, 1f);
+                if (drop <= ai.Weapon.WeaponDefinition.DropRate)
+                {
+                    GameObject weaponPickupObject = Instantiate(weaponPickup, transform.position, Quaternion.identity);
+                    SpawnedInRoom.AddSpawnedWeapon(weaponPickupObject);
 
-                WeaponPickup weaponPickupScript = weaponPickupObject.GetComponent<WeaponPickup>();
-                weaponPickupScript.WeaponDefinition = ai.Weapon.WeaponDefinition;
-                weaponPickupScript.WeaponInstanceInfo = ai.Weapon.GenerateWeaponInstanceInfo(true);
+                    WeaponPickup weaponPickupScript = weaponPickupObject.GetComponent<WeaponPickup>();
+                    weaponPickupScript.WeaponDefinition = ai.Weapon.WeaponDefinition;
+                    weaponPickupScript.WeaponInstanceInfo = ai.Weapon.GenerateWeaponInstanceInfo(true);
+                }
+            }
+            else
+            {
+                Debug.LogError("WeaponDefinition is not valid.");
             }
         }
 

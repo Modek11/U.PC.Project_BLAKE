@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GameFramework.Abilities;
-using static UnityEditor.Progress;
 
 public class WeaponsManager : MonoBehaviour
 {

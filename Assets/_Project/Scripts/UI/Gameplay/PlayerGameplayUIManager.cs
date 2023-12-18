@@ -77,8 +77,8 @@ public class PlayerGameplayUIManager : MonoBehaviour
         playerMovement.OnDashPerformed += StartDashCooldownUI;
         roomsDoneCounter.OnRoomBeaten += RoomsCounterUI;
         blakeCharacter.OnDamageTaken += HealthLeftUI;
-        blakeCharacter.onRespawn += HealthLeftUI;
-        HealthLeftUI();
+        blakeCharacter.onRespawn += OnRespawnUIUpdate;
+        OnRespawnUIUpdate();
         RoomsCounterUI();
     }
     
@@ -115,7 +115,12 @@ public class PlayerGameplayUIManager : MonoBehaviour
         roomsCounter.text = $"Rooms Beaten : {roomsDoneCounter.RoomsBeaten}/{roomsDoneCounter.RoomsInitialized}";
     }
 
-    private void HealthLeftUI()
+    private void HealthLeftUI(GameObject instigator)
+    {
+        healthLeft.text = blakeCharacter.Health.ToString();
+    }
+
+    private void OnRespawnUIUpdate()
     {
         healthLeft.text = blakeCharacter.Health.ToString();
     }

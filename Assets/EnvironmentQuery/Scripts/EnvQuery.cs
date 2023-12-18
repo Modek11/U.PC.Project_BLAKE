@@ -3,7 +3,6 @@ using UnityEngine;
 using NoAlloq;
 using System;
 using System.Diagnostics;
-using static UnityEditor.Progress;
 
 /**
  * Environment Query Instance
