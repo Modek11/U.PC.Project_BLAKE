@@ -17,7 +17,7 @@ MonoBehaviour:
   WeaponName: 
   AbilitiesToGrant:
   - {fileID: 11400000, guid: c6a789a579ce8d24c9363bf0dc5a3cd4, type: 2}
-  DropRate: 0.6
+  DropRate: 0
   AttachSocketName: 
   LocationOffset: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0, w: 0}

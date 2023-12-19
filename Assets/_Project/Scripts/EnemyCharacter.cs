@@ -30,7 +30,7 @@ public class EnemyCharacter : BlakeCharacter
             if (ai.Weapon.WeaponDefinition != null)
             {
                 float drop = Random.Range(0f, 1f);
-                if (drop <= ai.Weapon.WeaponDefinition.DropRate)
+                if (drop > 0 && drop <= ai.Weapon.WeaponDefinition.DropRate)
                 {
                     GameObject weaponPickupObject = Instantiate(weaponPickup, transform.position, Quaternion.identity);
                     SpawnedInRoom.AddSpawnedWeapon(weaponPickupObject);
