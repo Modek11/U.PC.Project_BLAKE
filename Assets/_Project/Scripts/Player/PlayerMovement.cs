@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 direction = new Vector3(movementAxis.x, 0, movementAxis.y);
         Vector3 isometricDirection = direction.ToIsometric();
         
-        rigidbodyCache.AddForce(isometricDirection * (playerSpeed * 10f), ForceMode.Force);
+        rigidbodyCache.AddForce(isometricDirection * playerSpeed, ForceMode.VelocityChange);
     }
     
    private void Rotation()
