@@ -8,7 +8,6 @@ public class MechanicalDoor : Door, IInteractable
     private Animator animator;
     [SerializeField]
     private RoomConnector connector;
-    [SerializeField]
     private bool interactable = false;
     private bool open = false;
 
@@ -16,17 +15,17 @@ public class MechanicalDoor : Door, IInteractable
     {
         if(animator == null)
         animator = GetComponent<Animator>();
-        LockDoor();
+        Close();
     }
-    public override void UnlockDoor()
+    public override void OpenDoor()
     {
         interactable = true;
     }
 
-    public override void LockDoor()
+    public override void CloseDoor()
     {
         interactable = false;
-        CloseDoor();
+        Close();
     }
 
 
@@ -36,13 +35,10 @@ public class MechanicalDoor : Door, IInteractable
 
         if(open)
         {
-            CloseDoor();
-            connector.CloseDoor();
+            Close();
         } else
         {
-            OpenDoor();
-            connector.OpenDoor();
-
+            Open();
         }
     }
 
@@ -55,7 +51,7 @@ public class MechanicalDoor : Door, IInteractable
     {
         return gameObject;
     }
-    public override void OpenDoor()
+    private void Open()
     {
         animator.SetBool("closed", false);
         //if (open) return;
@@ -63,7 +59,7 @@ public class MechanicalDoor : Door, IInteractable
 
     }
 
-    public override void CloseDoor()
+    private void Close()
     {
         animator.SetBool("closed", true);
         //if (!open) return;
@@ -76,5 +72,4 @@ public class MechanicalDoor : Door, IInteractable
     {
         return transform.position + transform.forward + Vector3.up;
     }
-
 }
