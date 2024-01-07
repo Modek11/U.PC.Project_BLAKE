@@ -117,7 +117,8 @@ public class Room : MonoBehaviour
 
         foreach (RoomConnector roomConnector in doors)
         {
-            roomConnector.OpenDoor();
+            roomConnector.UnlockDoor();
+            roomConnector.CloseDoor();
         }
         isInitialized = true;
 
@@ -215,7 +216,11 @@ public class Room : MonoBehaviour
             {
                 foreach (RoomConnector roomConnector in doors)
                 {
-                    roomConnector.CloseDoor();
+                    if (roomConnector.GetConnector() != null)
+                    {
+                        roomConnector.GetConnector().LockDoor();
+                    }
+                    roomConnector.LockDoor();
                 }
             }
         }
@@ -239,7 +244,11 @@ public class Room : MonoBehaviour
         if (roomManager.GetActiveRoom() != this) return;
         foreach (RoomConnector roomConnector in doors)
         {
-            roomConnector.OpenDoor();
+            roomConnector.UnlockDoor();
+            if (roomConnector.GetConnector() != null)
+            {
+                roomConnector.GetConnector().UnlockDoor();
+            }
         }
         minimapRoom.ForgetRoom();
 
@@ -280,7 +289,11 @@ public class Room : MonoBehaviour
                 BeatLevel();
                 foreach (RoomConnector roomConnector in doors)
                 {
-                    roomConnector.OpenDoor();
+                    roomConnector.UnlockDoor();
+                    if (roomConnector.GetConnector() != null)
+                    {
+                        roomConnector.GetConnector().UnlockDoor();
+                    }
                 }
                 if(player != null)
                 {

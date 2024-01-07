@@ -20,6 +20,11 @@ public class RoomConnector : MonoBehaviour
     private Room mainRoom;
     private bool isActive = false;
 
+    private void Start()
+    {
+        CloseDoor();
+    }
+
     public void SetConnector(RoomConnector room)
     {
         connectedDoor = room;
@@ -51,6 +56,18 @@ public class RoomConnector : MonoBehaviour
     {
         if (!isActive) return;
         door.CloseDoor();
+    }
+
+    public void UnlockDoor()
+    {
+        if (!isActive) return;
+        door.UnlockDoor();
+    }
+
+    public void LockDoor()
+    {
+        if (!isActive) return;
+        door.LockDoor();
     }
 
     public RoomConnector GetConnector()
