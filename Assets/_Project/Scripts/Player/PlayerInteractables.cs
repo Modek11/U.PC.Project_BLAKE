@@ -1,8 +1,13 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerInteractables : MonoBehaviour
 {
+    [SerializeField]
+    private float interactRadius = 10f;
+    [SerializeField]
+    private LayerMask mask;
     //List of Interactable objects nearby
     [SerializeField]
     private List<IInteractable> interactables = new List<IInteractable>();
@@ -14,6 +19,7 @@ public class PlayerInteractables : MonoBehaviour
     private void Start()
     {
         ReferenceManager.PlayerInputController.interactEvent += Interact;
+        InvokeRepeating("CheckForInteractables", 0f, 0.2f);
     }
 
     /// <summary>
@@ -34,9 +40,24 @@ public class PlayerInteractables : MonoBehaviour
         interactables.Remove(interactable);
     }
 
+
+
     private void Update()
     {
         SetUI();
+    }
+
+    private void CheckForInteractables()
+    {
+        interactables.Clear();
+        Collider[] cols = Physics.OverlapSphere(transform.position, interactRadius, mask, QueryTriggerInteraction.Collide);
+        foreach(var col in cols)
+        {
+            if(col.GetComponent<IInteractable>() != null)
+            {
+                interactables.Add(col.GetComponent<IInteractable>());
+            }
+        }
     }
 
     private IInteractable GetClosestInteractable()
