@@ -1,4 +1,12 @@
 using UnityEngine;
+using Unity.Services.Analytics;
+using System.Threading.Tasks;
+
+
+
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+using Unity.Services.Core;
+#endif
 
 public class ReferenceManager : MonoBehaviour
 {
@@ -7,6 +15,7 @@ public class ReferenceManager : MonoBehaviour
     private PlayerInputController playerInputController;
     private SceneHandler sceneHandler;
     private MessageRouter messageRouter = new();
+    private RoomManager roomManager;
 
     public static BlakeHeroCharacter BlakeHeroCharacter
     {
@@ -14,7 +23,7 @@ public class ReferenceManager : MonoBehaviour
         set
         {
             if (instance == null) return;
-                instance.blakeHeroCharacter = value;
+            instance.blakeHeroCharacter = value;
         }
     }
     
@@ -24,7 +33,7 @@ public class ReferenceManager : MonoBehaviour
         set
         {
             if (instance == null) return;   
-                instance.playerInputController = value;
+            instance.playerInputController = value;
         }
     }
     
@@ -34,13 +43,23 @@ public class ReferenceManager : MonoBehaviour
         set
         {
             if (instance == null) return;
-                instance.sceneHandler = value;
+            instance.sceneHandler = value;
         }
     }
 
     public static MessageRouter MessageRouter
     {
         get => instance != null ? instance.messageRouter : null;
+    }
+
+    public static RoomManager RoomManager
+    {
+        get => instance != null ? instance.roomManager : null;
+        set
+        {
+            if (instance == null) return;
+            instance.roomManager = value;
+        }
     }
 
     private void Awake()
@@ -53,6 +72,10 @@ public class ReferenceManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(instance);
+
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+            Task initializationTask = UnityServices.InitializeAsync();
+#endif
         }
     }
 }

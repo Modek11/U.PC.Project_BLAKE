@@ -13,6 +13,7 @@ public class BTT_NextWaypoint : Leaf
     public override NodeResult Execute()
     {
         if (AIController.Waypoints == null) return NodeResult.failure;
+        if (AIController.NavMeshAgent == null) return NodeResult.failure;
 
         int waypointCount = AIController.Waypoints.GetCount();
         if (waypointIndex < waypointCount)

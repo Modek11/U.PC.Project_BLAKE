@@ -27,15 +27,4 @@ public class WeaponDefinition : ScriptableObject
     public Vector3 PickupLocationOffset = Vector3.zero;
 
     public Quaternion PickupRotation;
-
-    private void OnValidate()
-    {
-        if (WeaponPrefab != null)
-        {
-            if(WeaponPrefab.TryGetComponent<Weapon>(out var weapon))
-            {
-                weapon.WeaponDefinition = this;
-            }
-        }
-    }
 }
