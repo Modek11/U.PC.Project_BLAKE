@@ -117,6 +117,7 @@ public class Room : MonoBehaviour
 
         foreach (RoomConnector roomConnector in doors)
         {
+            roomConnector.UnlockDoor();
             roomConnector.OpenDoor();
         }
         isInitialized = true;
@@ -215,7 +216,7 @@ public class Room : MonoBehaviour
             {
                 foreach (RoomConnector roomConnector in doors)
                 {
-                    roomConnector.CloseDoor();
+                    roomConnector.LockDoor();
                 }
             }
         }
@@ -239,6 +240,7 @@ public class Room : MonoBehaviour
         if (roomManager.GetActiveRoom() != this) return;
         foreach (RoomConnector roomConnector in doors)
         {
+            roomConnector.UnlockDoor();
             roomConnector.OpenDoor();
         }
         minimapRoom.ForgetRoom();
@@ -280,6 +282,7 @@ public class Room : MonoBehaviour
                 BeatLevel();
                 foreach (RoomConnector roomConnector in doors)
                 {
+                    roomConnector.UnlockDoor();
                     roomConnector.OpenDoor();
                 }
                 if(player != null)

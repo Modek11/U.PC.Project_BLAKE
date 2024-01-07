@@ -53,6 +53,18 @@ public class RoomConnector : MonoBehaviour
         door.CloseDoor();
     }
 
+    public void UnlockDoor()
+    {
+        if (!isActive) return;
+        door.UnlockDoor();
+    }
+
+    public void LockDoor()
+    {
+        if (!isActive) return;
+        door.LockDoor();
+    }
+
     public RoomConnector GetConnector()
     {
         return connectedDoor;
