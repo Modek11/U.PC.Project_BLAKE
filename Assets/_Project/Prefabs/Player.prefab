@@ -3183,6 +3183,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cdb5d565c5af9946b400702e20dd17f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactRadius: 2
+  mask:
+    serializedVersion: 2
+    m_Bits: 2147483647
   interactUI: {fileID: 0}
 --- !u!114 &5545414051132038904
 MonoBehaviour:

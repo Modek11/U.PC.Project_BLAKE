@@ -16,21 +16,6 @@ public abstract class Interactable : MonoBehaviour, IInteractable
     /// </summary>
     public abstract void Interact(GameObject interacter);
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<PlayerInteractables>() != null)
-        {
-            other.GetComponent<PlayerInteractables>().AddInteractable(this);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<PlayerInteractables>() != null)
-        {
-            other.GetComponent<PlayerInteractables>().RemoveInteractable(this);
-        }
-    }
 
     /// <returns>If object is interactable</returns>
     public bool CanInteract()

@@ -72,19 +72,4 @@ public class MechanicalDoor : Door, IInteractable
     {
         return transform.position + transform.forward + Vector3.up;
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<PlayerInteractables>() != null)
-        {
-            other.GetComponent<PlayerInteractables>().AddInteractable(this);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<PlayerInteractables>() != null)
-        {
-            other.GetComponent<PlayerInteractables>().RemoveInteractable(this);
-        }
-    }
-
 }
