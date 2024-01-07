@@ -8,24 +8,31 @@ public class MechanicalDoor : Door, IInteractable
     private Animator animator;
     [SerializeField]
     private RoomConnector connector;
+    [SerializeField]
     private bool interactable = false;
+    [SerializeField]
     private bool open = false;
 
     private void Awake()
     {
         if(animator == null)
         animator = GetComponent<Animator>();
-        Close();
+        LockDoor();
     }
-    public override void OpenDoor()
+
+    private void Start()
+    {
+        CloseDoor();
+    }
+    public override void UnlockDoor()
     {
         interactable = true;
     }
 
-    public override void CloseDoor()
+    public override void LockDoor()
     {
         interactable = false;
-        Close();
+        CloseDoor();
     }
 
 
@@ -35,10 +42,13 @@ public class MechanicalDoor : Door, IInteractable
 
         if(open)
         {
-            Close();
+            CloseDoor();
+            connector.GetConnector().CloseDoor();
         } else
         {
-            Open();
+            OpenDoor();
+            connector.GetConnector().OpenDoor();
+
         }
     }
 
@@ -51,7 +61,7 @@ public class MechanicalDoor : Door, IInteractable
     {
         return gameObject;
     }
-    private void Open()
+    public override void OpenDoor()
     {
         animator.SetBool("closed", false);
         //if (open) return;
@@ -59,7 +69,7 @@ public class MechanicalDoor : Door, IInteractable
 
     }
 
-    private void Close()
+    public override void CloseDoor()
     {
         animator.SetBool("closed", true);
         //if (!open) return;
@@ -71,20 +81,6 @@ public class MechanicalDoor : Door, IInteractable
     public Vector3 GetPositionForUI()
     {
         return transform.position + transform.forward + Vector3.up;
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<PlayerInteractables>() != null)
-        {
-            other.GetComponent<PlayerInteractables>().AddInteractable(this);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<PlayerInteractables>() != null)
-        {
-            other.GetComponent<PlayerInteractables>().RemoveInteractable(this);
-        }
     }
 
 }
