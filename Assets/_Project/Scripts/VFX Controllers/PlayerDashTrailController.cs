@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class PlayerDashTrailController : MonoBehaviour
 {
-    [SerializeField] private GameObject playerDashTrailGO;
+    [SerializeField] 
+    private GameObject playerDashTrailGO;
     
     private TrailRenderer playerDashTrail;
     private float trailTime;
