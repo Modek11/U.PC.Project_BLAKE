@@ -22,6 +22,10 @@ public class FloorGenerator : MonoBehaviour
     [SerializeField]
     private int treasureRoomsAmount = 1;
 
+    [Header("Next Level Room")]
+    [SerializeField]
+    private GameObject endRoom;
+
     [SerializeField]
     private GameObject startingRoom;
 
@@ -38,6 +42,7 @@ public class FloorGenerator : MonoBehaviour
     private GameObject map;
     private int maxRooms = 0;
     private int tries = 0;
+    private int endRoomTries = 0;
 
     private Dictionary<Room, int> pathLength = new Dictionary<Room, int>();
 
@@ -74,6 +79,10 @@ public class FloorGenerator : MonoBehaviour
         tries = 0;
         //Generate Base Floors
         yield return StartCoroutine(GenerateBaseRoomsFromPool(baseRoomPool, maxBaseRooms));
+
+        //Generate End Room
+        tries = 0;
+        GenerateEndRoom();
 
         tries = 0;
         //Generate TreasureRooms
@@ -231,6 +240,68 @@ public class FloorGenerator : MonoBehaviour
 
         }
 
+    }
+
+    public void GenerateEndRoom()
+    {
+        int tempCounter = 0;
+        FloorPathfinding floorPathfinding = new FloorPathfinding(spawnedRooms);
+
+        if (tries >= 200)
+        {
+            Debug.LogWarning("Broken generation due to too many tries");
+            return;
+        }
+
+
+        List<GameObject> toAdd = new List<GameObject>();
+
+        foreach (GameObject room in spawnedRooms)
+        {
+            Room roomScript = room.GetComponent<Room>();
+            int randomNumber = Random.Range(0, roomScript.GetDoors().Length);
+            RoomConnector door = roomScript.GetDoors()[randomNumber];
+            if (door.GetConnector() != null) continue;
+            GameObject newRoom = Instantiate(endRoom);
+            int randomDoor = Random.Range(0, newRoom.GetComponent<Room>().GetDoors().Length);
+            RoomConnector newDoor = newRoom.GetComponent<Room>().GetDoors()[randomDoor];
+
+            bool success = TryPositionRoom(room, newRoom, door, newDoor);
+
+            if (success)
+            {
+                FinalizeRoomPlacement(newRoom, door, newDoor, map);
+                toAdd.Add(newRoom);
+                tempCounter++;
+                break;
+            }
+            else
+            {
+                Destroy(newRoom);
+            }
+
+        }
+
+        if(toAdd.Count == 0)
+        {
+            if(endRoomTries < 100)
+            {
+                endRoomTries++;
+                GenerateEndRoom();
+                return;
+            }
+            Debug.LogError("END ROOM DIDN'T SPAWNED");
+        }
+
+        foreach (GameObject room in toAdd)
+        {
+            spawnedRooms.Add(room);
+            spawnedBaseRooms.Add(room);
+            if (pathLength.ContainsKey(room.GetComponent<Room>())) continue;
+            floorPathfinding = new FloorPathfinding(spawnedRooms);
+            List<Room> path = floorPathfinding.FindPath(spawnedRooms[0], room);
+            pathLength.Add(room.GetComponent<Room>(), path.Count);
+        }
     }
 
     private bool TryPositionRoom(GameObject room, GameObject newRoom, RoomConnector doorToConnect, RoomConnector newDoor)
