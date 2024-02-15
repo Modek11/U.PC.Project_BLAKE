@@ -11,7 +11,15 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
         inputSystem = new PlayerInputSystem();
         inputSystem.Gameplay.SetCallbacks(this);
         SetUpControls();
-        ReferenceManager.PlayerInputController = this;
+        if (ReferenceManager.PlayerInputController != null && ReferenceManager.PlayerInputController != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            ReferenceManager.PlayerInputController = this;
+            DontDestroyOnLoad(ReferenceManager.PlayerInputController);
+        }
     }
 
     void SetUpControls()

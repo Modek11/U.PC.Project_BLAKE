@@ -29,12 +29,25 @@ public class FloorManager : MonoBehaviour
 
     private void Start()
     {
+        if (ReferenceManager.PlayerInputController != null)
+        {
+            ReferenceManager.PlayerInputController.gameObject.SetActive(false);
+        }
         StartCoroutine(floorGenerator.GenerateFloor());
     }
 
     public void OnFloorGeneratorEnd(Vector3 startingRoomTransform)
     {
-        player = Instantiate(playerPrefab, startingRoomTransform, Quaternion.identity);
+        if (ReferenceManager.PlayerInputController == null)
+        {
+            player = Instantiate(playerPrefab, startingRoomTransform, Quaternion.identity);
+        } else
+        {
+            player = ReferenceManager.PlayerInputController.gameObject;
+            player.transform.position = startingRoomTransform;
+            player.transform.rotation = Quaternion.identity;
+            ReferenceManager.PlayerInputController.gameObject.SetActive(true);
+        }
         virtualCamera = Instantiate(virtualCameraPrefab).GetComponent<CinemachineVirtualCamera>();
         cameraFollow = Instantiate(cameraFollowPrefab);
         

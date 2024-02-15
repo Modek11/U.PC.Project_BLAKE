@@ -1313,6 +1313,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5822617530672222334, guid: 4c4b5f7670b559541a2e37b0c5082c8e,
+        type: 3}
+      propertyPath: floorManager
+      value: 
+      objectReference: {fileID: 1422814106}
     - target: {fileID: 6611959705766102313, guid: 4c4b5f7670b559541a2e37b0c5082c8e,
         type: 3}
       propertyPath: m_AnchorMax.y

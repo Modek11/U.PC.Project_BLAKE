@@ -44,6 +44,10 @@ public class PlayerMovement : MonoBehaviour
         rigidbodyCache = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
 
+    }
+
+    private void OnEnable()
+    {
         StartCoroutine(SetMainCamera());
     }
 
@@ -92,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
     
    private void Rotation()
    {
+        if (mainCamera == null) return;
        Plane playerPlane = new Plane(Vector3.up, gunHandlerTransform.position);
        Ray ray = mainCamera.ScreenPointToRay(mousePosition);
        

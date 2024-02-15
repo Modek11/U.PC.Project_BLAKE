@@ -28,6 +28,7 @@ public class CylinderStretcher : MonoBehaviour
 
     void Update()
     {
+        if(playerTransform == null) return;
         if (!referencesSet) return;
         if (!playerTransform.hasChanged || !mainCameraTransform.hasChanged) return;
 

@@ -336,9 +336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelIndex: 0
-  levelNames:
-  - Build1505
-  - 
+  levelNames: {fileID: 0}
 --- !u!114 &1422814106 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3194443941187315572, guid: e02126aae2951bf4b9b740ef58abdbcf,
@@ -1335,6 +1333,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5822617530672222334, guid: 4c4b5f7670b559541a2e37b0c5082c8e,
+        type: 3}
+      propertyPath: floorManager
+      value: 
+      objectReference: {fileID: 1422814106}
     - target: {fileID: 6611959705766102313, guid: 4c4b5f7670b559541a2e37b0c5082c8e,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1525,6 +1528,5 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -135
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4196851254987759291, guid: 4c4b5f7670b559541a2e37b0c5082c8e, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c4b5f7670b559541a2e37b0c5082c8e, type: 3}

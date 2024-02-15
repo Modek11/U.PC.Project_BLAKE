@@ -50,13 +50,19 @@ public class LevelHandler : MonoBehaviour
     {
         if (levelIndex == levelNames.levelNames.Length - 1)
         {
-            levelIndex = 0;
-            sceneHandler.LoadMainMenu();
+            EndRun();
             return;
         }
 
         levelIndex++;
         sceneHandler.LoadNewLevel(levelNames.levelNames[levelIndex]);
+    }
+
+    public void EndRun()
+    {
+        levelIndex = 0;
+        Destroy(ReferenceManager.PlayerInputController.gameObject);
+        sceneHandler.LoadMainMenu();
     }
 
     public void ResetValues()

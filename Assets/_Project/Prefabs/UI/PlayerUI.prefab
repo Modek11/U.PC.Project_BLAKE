@@ -3316,7 +3316,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1942973803814658378}
   - component: {fileID: 5822617530672222334}
-  - component: {fileID: 4196851254987759291}
   - component: {fileID: 2570236739958058535}
   m_Layer: 0
   m_Name: PlayerUI
@@ -3355,18 +3354,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fae0e646bb2e32347b9cac56c168d6d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4196851254987759291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4155177754195708989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b64ed9092cca9ac42a6140927d1bb94d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &2570236739958058535
@@ -7152,7 +7139,6 @@ GameObject:
   - component: {fileID: 7766354205380842400}
   - component: {fileID: 7766354205380842401}
   - component: {fileID: 4763500703024379838}
-  - component: {fileID: 4018908792236070094}
   m_Layer: 5
   m_Name: PlayerUI (Canvas)
   m_TagString: Untagged
@@ -7260,7 +7246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7da7e2362e9f043ab4738024d6e331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _floorManager: {fileID: 0}
+  floorManager: {fileID: 0}
   minimapCamera: {fileID: 0}
   roomsDoneCounter: {fileID: 0}
   weaponName: {fileID: 7766354204994938144}
@@ -7270,18 +7256,6 @@ MonoBehaviour:
   interactUI: {fileID: 6199193435667474840}
   mapUI: {fileID: 864119434025899202}
   dashCooldownUI: {fileID: 1839753385663850843}
---- !u!114 &4018908792236070094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7766354205380842406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b64ed9092cca9ac42a6140927d1bb94d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8037796449731694400
 GameObject:
   m_ObjectHideFlags: 0
