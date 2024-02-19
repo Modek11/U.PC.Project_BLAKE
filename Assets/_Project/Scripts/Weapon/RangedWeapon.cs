@@ -57,6 +57,7 @@ public class RangedWeapon : Weapon
 
     public override void PrimaryAttack()
     {
+        audioSource.pitch = Random.Range(0.9f, 1.1f);
         audioSource.PlayOneShot(audioSource.clip);
         
         Shot();
@@ -99,6 +100,15 @@ public class RangedWeapon : Weapon
 
     private bool Shot()
     {
+        float spreadTmp = spread / 10f;
+        //float chosenSpread = rb.velocity.magnitude <= spreadMinMagnitude ? 0 : Random.Range(projectilesPerShot > 1 ? -spread : 0f, spread);
+        int f = -(projectilesPerShot / 2);
+        if (f == 0)
+        {
+            f = 1;
+            spreadTmp = spreadTmp * Random.value >= 0.5f ? 1f : -1f;
+        }
+
         for (int i = 0; i < projectilesPerShot; i++)
         {
             if (BulletsLeft == 0) return false;
@@ -106,23 +116,23 @@ public class RangedWeapon : Weapon
             var bullet = Instantiate(bulletPrefab, bulletsSpawnPoint.position, transform.rotation);
 
             //Choose spread depending on player's controls
-            float chosenSpread = rb.velocity.magnitude <= spreadMinMagnitude ? 0 : Random.Range(-spread, spread);
+            //float chosenSpread = rb.velocity.magnitude <= spreadMinMagnitude ? 0 : Random.Range(-spread, spread);
 
-            if (projectilesPerShot <= 1)
-            {
-                bullet.GetComponent<IBullet>().SetupBullet(chosenSpread, transform.parent.gameObject, Range);
-            }
-            else
-            {
-                if (i % 2 == 0)
-                {
-                    bullet.GetComponent<IBullet>().SetupBullet(Random.Range(-spread, 0), transform.parent.gameObject, Range);
-                }
-                else
-                {
-                    bullet.GetComponent<IBullet>().SetupBullet(Random.Range(0, spread), transform.parent.gameObject, Range);
-                }
-            }
+            //if (projectilesPerShot <= 1)
+            //{
+                bullet.GetComponent<IBullet>().SetupBullet(f++ * spreadTmp/*chosenSpread*/, transform.parent.gameObject, Range);
+            //}
+            //else
+            //{
+            //    if (i % 2 == 0)
+            //    {
+            //        bullet.GetComponent<IBullet>().SetupBullet(chosenSpread/*Random.Range(-spread, 0)*/, transform.parent.gameObject, Range);
+            //    }
+            //    else
+            //    {
+            //        bullet.GetComponent<IBullet>().SetupBullet(chosenSpread/*Random.Range(0, spread)*/, transform.parent.gameObject, Range);
+            //    }
+            //}
         }
 
         if (!infinityAmmo) BulletsLeft--;

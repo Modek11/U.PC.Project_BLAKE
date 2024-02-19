@@ -36,7 +36,7 @@ public class BasicBullet : MonoBehaviour, IBullet
     {
         destroyTime = range / bulletSpeed;
         //TODO: Instead of changing spawn pos, change rotation
-        transform.eulerAngles = new Vector3(0, Random.Range(transform.eulerAngles.y-xSpread, transform.eulerAngles.y+xSpread), 0);
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + xSpread/*Random.Range(transform.eulerAngles.y-xSpread, transform.eulerAngles.y+xSpread)*/, 0);
         _instigator = instigator;
         Destroy(gameObject, destroyTime);
     }
