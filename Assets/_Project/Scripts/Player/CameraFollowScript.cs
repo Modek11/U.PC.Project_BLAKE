@@ -43,6 +43,7 @@ public class CameraFollowScript : MonoBehaviour
 
     private void FollowPlayerWithMouseOffset()
     {
+        if (playerTransform == null) return;
         playerPos = playerTransform.position;
         GetMousePositionWorldPoint();
 

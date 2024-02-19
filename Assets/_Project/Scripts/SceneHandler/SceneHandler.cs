@@ -38,6 +38,7 @@ public class SceneHandler : MonoBehaviour
 
     public void StartNewGame()
     {
+        GetComponent<LevelHandler>().ResetValues();
         StartCoroutine(LoadNewSceneAdditive(build1505));
     }
 
@@ -49,6 +50,11 @@ public class SceneHandler : MonoBehaviour
     public void LoadMainMenu()
     {
         StartCoroutine(LoadNewSceneAdditive(mainMenu));
+    }
+
+    public void LoadNewLevel(string sceneToLoadString)
+    {
+        StartCoroutine(LoadNewSceneAdditive(sceneToLoadString));
     }
 
     public void QuitGame()

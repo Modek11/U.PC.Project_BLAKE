@@ -47,12 +47,13 @@ public class PlayerGameplayUIManager : MonoBehaviour
     private void Start()
     {
         floorManager.FloorGeneratorEnd += FloorManagerOnFloorGeneratorEnd;
-        ReferenceManager.PlayerInputController.onMapPressEvent += ShowMap;
-        ReferenceManager.PlayerInputController.onMapReleaseEvent += HideMap;
     }
 
     private void FloorManagerOnFloorGeneratorEnd(Transform playerTransform, Transform cameraFollowTransform)
     {
+
+        ReferenceManager.PlayerInputController.onMapPressEvent += ShowMap;
+        ReferenceManager.PlayerInputController.onMapReleaseEvent += HideMap;
         floorManager.FloorGeneratorEnd -= FloorManagerOnFloorGeneratorEnd;
         
         if (player == null || weaponsManager == null)

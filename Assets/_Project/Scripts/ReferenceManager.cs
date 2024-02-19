@@ -14,6 +14,7 @@ public class ReferenceManager : MonoBehaviour
     private BlakeHeroCharacter blakeHeroCharacter;
     private PlayerInputController playerInputController;
     private SceneHandler sceneHandler;
+    private LevelHandler levelHandler;
     private MessageRouter messageRouter = new();
     private RoomManager roomManager;
 
@@ -44,6 +45,16 @@ public class ReferenceManager : MonoBehaviour
         {
             if (instance == null) return;
             instance.sceneHandler = value;
+        }
+    }
+
+    public static LevelHandler LevelHandler
+    {
+        get => instance != null ? instance.levelHandler : null;
+        set
+        {
+            if (instance == null) return;
+            instance.levelHandler = value;
         }
     }
 
