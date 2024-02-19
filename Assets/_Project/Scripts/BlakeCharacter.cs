@@ -16,6 +16,10 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         protected set { health = value; }
     }
 
+    protected int respawnCounter = 0;
+    [SerializeField]
+    protected int maxRespawns = 3;
+
     [SerializeField] 
     protected GameObject explosionParticle;
 
@@ -42,6 +46,14 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
     public virtual void Die(GameObject killer)
     {
         isDead = true;
+        if (respawnCounter >= maxRespawns)
+        {
+            ReferenceManager.LevelHandler.EndRun();
+            return;
+        } else
+        {
+            respawnCounter++;
+        }
         onDeath?.Invoke();
     }
 
