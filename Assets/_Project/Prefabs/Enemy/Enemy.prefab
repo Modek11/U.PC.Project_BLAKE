@@ -405,7 +405,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 723259478104998798}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.1
   m_Height: 0.84244144
   m_Direction: 1
@@ -774,7 +774,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1738362165641466551}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.12
   m_Height: 0.7035177
   m_Direction: 1
@@ -1626,7 +1626,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 4000657031029738044}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.1
   m_Height: 0.72
   m_Direction: 1
@@ -1802,7 +1802,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 4582476214026274015}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.12
   m_Height: 0.7035177
   m_Direction: 1
@@ -2285,7 +2285,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 5474211763857052913}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.11
   m_Height: 0.48772442
   m_Direction: 1
@@ -2578,7 +2578,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 6040150990241521257}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.1
   m_Height: 0.84244144
   m_Direction: 1
@@ -2691,7 +2691,7 @@ BoxCollider:
   m_GameObject: {fileID: 6190529867202063158}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.87685925, y: 0.6874706, z: 0.63028723}
   m_Center: {x: -0.0000026524067, y: 0.037720352, z: 0.0029951036}
@@ -2833,7 +2833,7 @@ SphereCollider:
   m_GameObject: {fileID: 6278142510454196703}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.37
   m_Center: {x: 0, y: 0.31, z: 0}
@@ -3138,7 +3138,7 @@ BoxCollider:
   m_GameObject: {fileID: 6984426415263012374}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.87685925, y: 0.66314876, z: 0.6302187}
   m_Center: {x: -0.000006020069, y: 0.1946513, z: -0.0017119944}
@@ -3297,6 +3297,7 @@ GameObject:
   - component: {fileID: 7790469361782224641}
   - component: {fileID: 4250661716291628411}
   - component: {fileID: 2179513338760033546}
+  - component: {fileID: 6862616546200951086}
   - component: {fileID: 4250661716291628406}
   - component: {fileID: 4250661716291628405}
   - component: {fileID: 4250661716291628404}
@@ -3396,6 +3397,20 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!136 &6862616546200951086
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7446312994107534779}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.8
+  m_Height: 3.86
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.88, z: 0}
 --- !u!195 &4250661716291628406
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3501,6 +3516,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 4250661716291628411}
   agent: {fileID: 4250661716291628406}
+  mainCollider: {fileID: 6862616546200951086}
+  ragdollColliders:
+  - {fileID: 2007920129610817984}
+  - {fileID: 4031135110255844889}
+  - {fileID: 1820058937815164345}
+  - {fileID: 6268939008312043437}
+  - {fileID: 5534449627873279838}
+  - {fileID: 5403667277471786638}
+  - {fileID: 6061082909128279335}
+  - {fileID: 7207977625991172543}
+  - {fileID: 4378758117826953166}
+  - {fileID: 2089859324918649035}
+  - {fileID: 4685226148616642712}
 --- !u!114 &-4992416190820966225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4560,7 +4588,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 8559744700291427271}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.1
   m_Height: 0.72
   m_Direction: 1
@@ -4798,7 +4826,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 9025504701381592979}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.11
   m_Height: 0.48772442
   m_Direction: 1
