@@ -95,6 +95,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4035988739716000790, guid: 7bafbe8de9e5c224f9c91487d46efe98,
         type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 8745238448183679230, guid: ce74abece29aeed468a273772f17dfaf,
+        type: 3}
+    - target: {fileID: 4035988739716000790, guid: 7bafbe8de9e5c224f9c91487d46efe98,
+        type: 3}
       propertyPath: infinityAmmo
       value: 1
       objectReference: {fileID: 0}

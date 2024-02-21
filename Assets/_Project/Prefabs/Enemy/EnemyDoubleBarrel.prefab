@@ -99,6 +99,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3541487880703571250, guid: d59ad31d5e825164385713c41e42f342,
         type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 6969907592589934767, guid: ec2f9bd7460e984489e0a928cb5d7985,
+        type: 3}
+    - target: {fileID: 3541487880703571250, guid: d59ad31d5e825164385713c41e42f342,
+        type: 3}
       propertyPath: infinityAmmo
       value: 1
       objectReference: {fileID: 0}
