@@ -3333,6 +3333,7 @@ GameObject:
   - component: {fileID: -5309661277522524817}
   - component: {fileID: -3707185606851980299}
   - component: {fileID: 2611339117920508267}
+  - component: {fileID: -470558907172326393}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -3495,6 +3496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1
   timeBetweenDamages: 0.5
+  maxRespawns: 3
   explosionParticle: {fileID: 6361431522622511341, guid: 12d7691791b971b41b6074506d2a114d,
     type: 3}
   animator: {fileID: 4250661716291628411}
@@ -4352,6 +4354,21 @@ MonoBehaviour:
     key: AimLocation
     constantValue: {x: 0, y: 0, z: 0}
   AIController: {fileID: 4250661716291628405}
+--- !u!114 &-470558907172326393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7446312994107534779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6979cb52b97ed394a8d91d16005ac7ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyCharacter: {fileID: 6426853079096780474}
+  enemyTypeEnum: 0
+  pointsForKill: -1
 --- !u!1 &7728173451198980118
 GameObject:
   m_ObjectHideFlags: 0

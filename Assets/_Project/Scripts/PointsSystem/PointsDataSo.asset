@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3495ab1d74b865645aa004c9662c58ef, type: 3}
+  m_Name: PointsDataSo
+  m_EditorClassIdentifier: 
+  enemyData:
+  - enemyTypeEnum: 0
+    pointsForKill: -1
+  - enemyTypeEnum: 1
+    pointsForKill: 1
+  - enemyTypeEnum: 2
+    pointsForKill: 2
+  - enemyTypeEnum: 3
+    pointsForKill: 3
+  - enemyTypeEnum: 4
+    pointsForKill: 4
+  - enemyTypeEnum: 5
+    pointsForKill: 5
+  - enemyTypeEnum: 6
+    pointsForKill: 6
