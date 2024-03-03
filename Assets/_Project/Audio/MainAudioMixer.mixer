@@ -12,7 +12,6 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: -3480081075734911879}
   - {fileID: 8048913908855039910}
-  - {fileID: 4648539429615520453}
   m_Volume: 9dc953357dcf52d45b4c676c2167cf4c
   m_Pitch: 85a73b50f30fb064080b4c8b6aba3259
   m_Send: 00000000000000000000000000000000
@@ -71,8 +70,6 @@ AudioMixerController:
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters:
-  - guid: 33397d85a1493264ebbd1b4cb1ca97d5
-    name: EnemySFX
   - guid: 7c7c84f2715bf094ba2878719b1d3a02
     name: EnvironmentSFX
   - guid: a01f6327708183847826612c79e684e8
@@ -90,7 +87,6 @@ AudioMixerController:
     - 61618371e61abf940b4c98dbcfd9dd6f
     - f8488fd7a2b77834bbb249929850eff6
     - 3ed23816c274dc24fa26a163e3675db8
-    - 9cf4311a01af1364c98ad8c8601f661e
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -155,39 +151,6 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
---- !u!244 &3735785887300746182
-AudioMixerEffectController:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_EffectID: 0258ea76ce045384894585c068e29150
-  m_EffectName: Attenuation
-  m_MixLevel: 9987692392c5eb544975a183e5558f2e
-  m_Parameters: []
-  m_SendTarget: {fileID: 0}
-  m_EnableWetMix: 0
-  m_Bypass: 0
---- !u!243 &4648539429615520453
-AudioMixerGroupController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EnemySFX
-  m_AudioMixer: {fileID: 24100000}
-  m_GroupID: 9cf4311a01af1364c98ad8c8601f661e
-  m_Children: []
-  m_Volume: 33397d85a1493264ebbd1b4cb1ca97d5
-  m_Pitch: 85cfecaff1efbcd4a9ed0cfe58bf2da6
-  m_Send: 00000000000000000000000000000000
-  m_Effects:
-  - {fileID: 3735785887300746182}
-  m_UserColorIndex: 0
-  m_Mute: 0
-  m_Solo: 0
-  m_BypassEffects: 0
 --- !u!244 &4726980136619292389
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -222,7 +185,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerSFX
+  m_Name: GameplaySFX
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 3ed23816c274dc24fa26a163e3675db8
   m_Children: []
