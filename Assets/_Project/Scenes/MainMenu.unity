@@ -5688,8 +5688,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279d92a8edadcea418d80c0e9c504039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObjectToClose: {fileID: 923771519}
-  gameObjectToOpen: {fileID: 2086220881}
+  gameObjectToClose: {fileID: 760445508}
+  gameObjectToOpen: {fileID: 2051236288}
 --- !u!114 &643832367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6979,12 +6979,12 @@ RectTransform:
   m_Children:
   - {fileID: 1489128592}
   - {fileID: 163995491}
-  m_Father: {fileID: 1179903222}
+  m_Father: {fileID: 923771520}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 10, y: 0}
+  m_AnchoredPosition: {x: 699.99994, y: 0}
   m_SizeDelta: {x: 900, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &760445510
@@ -8537,6 +8537,9 @@ RectTransform:
   - {fileID: 1805014717}
   - {fileID: 1265851892}
   - {fileID: 104088763}
+  - {fileID: 3831056697171213386}
+  - {fileID: 2051236289}
+  - {fileID: 760445509}
   m_Father: {fileID: 1179903222}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10620,9 +10623,6 @@ RectTransform:
   - {fileID: 570416797}
   - {fileID: 2086220882}
   - {fileID: 923771520}
-  - {fileID: 3831056697171213386}
-  - {fileID: 2051236289}
-  - {fileID: 760445509}
   - {fileID: 1814767843}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -13109,8 +13109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279d92a8edadcea418d80c0e9c504039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObjectToClose: {fileID: 923771519}
-  gameObjectToOpen: {fileID: 3831056697171213387}
+  gameObjectToClose: {fileID: 2051236288}
+  gameObjectToOpen: {fileID: 760445508}
 --- !u!114 &1435665796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16424,7 +16424,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1179903222}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1814767844
 MonoBehaviour:
@@ -17002,6 +17002,7 @@ GameObject:
   - component: {fileID: 1834440959}
   - component: {fileID: 1834440958}
   - component: {fileID: 1834440957}
+  - component: {fileID: 1834440960}
   m_Layer: 0
   m_Name: Back
   m_TagString: Untagged
@@ -17073,19 +17074,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1834440958}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 308389309}
-        m_TargetAssemblyTypeName: MenuElementsHandler, Assembly-CSharp
-        m_MethodName: QuitButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1834440958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17124,6 +17113,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834440955}
   m_CullTransparentMesh: 1
+--- !u!114 &1834440960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834440955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 279d92a8edadcea418d80c0e9c504039, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectToClose: {fileID: 923771519}
+  gameObjectToOpen: {fileID: 570416796}
 --- !u!1 &1840390628
 GameObject:
   m_ObjectHideFlags: 0
@@ -17837,7 +17840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObjectToClose: {fileID: 570416796}
-  gameObjectToOpen: {fileID: 3831056697171213387}
+  gameObjectToOpen: {fileID: 923771519}
 --- !u!1 &1925074768
 GameObject:
   m_ObjectHideFlags: 0
@@ -19198,7 +19201,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2051236289
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19213,12 +19216,12 @@ RectTransform:
   m_Children:
   - {fileID: 1405557219}
   - {fileID: 2124925044}
-  m_Father: {fileID: 1179903222}
+  m_Father: {fileID: 923771520}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 10, y: 0}
+  m_AnchoredPosition: {x: 699.99994, y: 0}
   m_SizeDelta: {x: 900, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2051236290
@@ -23078,12 +23081,12 @@ RectTransform:
   m_Children:
   - {fileID: 3831056697413181412}
   - {fileID: 3831056697159400621}
-  m_Father: {fileID: 1179903222}
+  m_Father: {fileID: 923771520}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 10, y: 0}
+  m_AnchoredPosition: {x: 699.99994, y: 0}
   m_SizeDelta: {x: 900, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3831056697171213387
