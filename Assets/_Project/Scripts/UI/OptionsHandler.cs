@@ -28,15 +28,20 @@ public class OptionsHandler : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI fullScreenValueText;
 
+    [SerializeField]
+    private TextMeshProUGUI vSyncValueText;
+
     [Space]
     
     [SerializeField]
     private TextMeshProUGUI masterVolumeValueText;
+
     [SerializeField] 
     private Slider masterVolumeSlider;
 
     [SerializeField]
     private TextMeshProUGUI musicVolumeValueText;
+
     [SerializeField] 
     private Slider musicVolumeSlider;
 
@@ -47,16 +52,19 @@ public class OptionsHandler : MonoBehaviour
     
     [SerializeField]
     private TextMeshProUGUI environmentSfxVolumeValueText;
+
     [SerializeField] 
     private Slider environmentSfxVolumeSlider;
 
     [SerializeField]
     private TextMeshProUGUI playerSfxVolumeValueText;
+
     [SerializeField] 
     private Slider playerSfxVolumeSlider;
 
     [SerializeField]
     private TextMeshProUGUI enemySfxVolumeValueText;
+
     [SerializeField] 
     private Slider enemySfxVolumeSlider;
 
@@ -64,6 +72,7 @@ public class OptionsHandler : MonoBehaviour
     {
         SetResolutions();
         SetAllSliders();
+        SetGraphics();
     }
 
     private void SetResolutions()
@@ -78,10 +87,29 @@ public class OptionsHandler : MonoBehaviour
         
         foreach (var resolution in Screen.resolutions)
         {
-            resolutionsDropdown.options.Add(new TMP_Dropdown.OptionData($"{resolution.width} x {resolution.height}"));
+            //bool alreadyExist = false;
+            //for(int i = 0; i < resolutionsDropdown.options.Count; i++)
+            //{
+            //    if (resolutionsDropdown.options[i].text == $"{resolution.width} x {resolution.height}")
+            //    {
+            //        alreadyExist = true;
+            //        break;
+            //    }
+            //}
+            //if (!alreadyExist)
+            //{
+                resolutionsDropdown.options.Add(new TMP_Dropdown.OptionData($"{resolution.width} x {resolution.height}"));
+            //}
         }
-        
-        resolutionsDropdown.RefreshShownValue();
+
+        for (int i = 0; i < resolutionsDropdown.options.Count; i++)
+        {
+            if (resolutionsDropdown.options[i].text == $"{Screen.currentResolution.width} x {Screen.currentResolution.height}")
+            {
+                resolutionsDropdown.value = i;
+                break;
+            }
+        }
     }
 
     public void SetResolution(int resolutionIndex)
@@ -96,6 +124,12 @@ public class OptionsHandler : MonoBehaviour
         Screen.fullScreen = isFullScreen;
     }
 
+    public void SetVSync(bool enabled)
+    {
+        vSyncValueText.text = enabled ? ON : OFF;
+        QualitySettings.vSyncCount = enabled ? 1 : 0;
+    }
+
     private void SetAllSliders()
     {
         masterVolumeSlider.value = GetVolume(MASTER);
@@ -104,6 +138,15 @@ public class OptionsHandler : MonoBehaviour
         environmentSfxVolumeSlider.value = GetVolume(ENVIRONMENT_SFX);
         playerSfxVolumeSlider.value = GetVolume(PLAYER_SFX);
         enemySfxVolumeSlider.value = GetVolume(ENEMY_SFX);
+    }
+
+    private void SetGraphics()
+    {
+        fullScreenValueText.text = Screen.fullScreen ? ON : OFF;
+        fullScreenValueText.transform.parent.GetComponent<Toggle>().isOn = Screen.fullScreen ? true : false;
+
+        vSyncValueText.text = QualitySettings.vSyncCount > 0 ? ON : OFF;
+        vSyncValueText.transform.parent.GetComponent<Toggle>().isOn = QualitySettings.vSyncCount > 0 ? true : false;
     }
 
     public void SetMasterVolume(float volume)
