@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class OptionsHandler : MonoBehaviour
 {
@@ -30,6 +31,9 @@ public class OptionsHandler : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI vSyncValueText;
+
+    [SerializeField]
+    private TMP_Dropdown qualityDropdown;
 
     [Space]
     
@@ -130,6 +134,11 @@ public class OptionsHandler : MonoBehaviour
         QualitySettings.vSyncCount = enabled ? 1 : 0;
     }
 
+    public void SetQuality(int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex);
+    }
+
     private void SetAllSliders()
     {
         masterVolumeSlider.value = GetVolume(MASTER);
@@ -147,6 +156,15 @@ public class OptionsHandler : MonoBehaviour
 
         vSyncValueText.text = QualitySettings.vSyncCount > 0 ? ON : OFF;
         vSyncValueText.transform.parent.GetComponent<Toggle>().isOn = QualitySettings.vSyncCount > 0 ? true : false;
+
+        qualityDropdown.ClearOptions();
+        qualityDropdown.AddOptions(new List<TMP_Dropdown.OptionData>()
+                { new TMP_Dropdown.OptionData("Low")
+                , new TMP_Dropdown.OptionData("Medium")
+                , new TMP_Dropdown.OptionData("High")
+                , new TMP_Dropdown.OptionData("Ultra") });
+
+        qualityDropdown.value = QualitySettings.GetQualityLevel();
     }
 
     public void SetMasterVolume(float volume)
