@@ -1,16 +1,11 @@
-using UnityEngine;
-using Unity.Services.Analytics;
 using System.Threading.Tasks;
-
-
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
 using Unity.Services.Core;
 #endif
 
-public class ReferenceManager : MonoBehaviour
+public class ReferenceManager : Singleton<ReferenceManager>
 {
-    private static ReferenceManager instance;
     private BlakeHeroCharacter blakeHeroCharacter;
     private PlayerInputController playerInputController;
     private SceneHandler sceneHandler;
@@ -20,73 +15,63 @@ public class ReferenceManager : MonoBehaviour
 
     public static BlakeHeroCharacter BlakeHeroCharacter
     {
-        get => instance != null ? instance.blakeHeroCharacter : null;
+        get => Instance != null ? Instance.blakeHeroCharacter : null;
         set
         {
-            if (instance == null) return;
-            instance.blakeHeroCharacter = value;
+            if (Instance == null) return;
+            Instance.blakeHeroCharacter = value;
         }
     }
     
     public static PlayerInputController PlayerInputController
     {
-        get => instance != null ? instance.playerInputController : null;
+        get => Instance != null ? Instance.playerInputController : null;
         set
         {
-            if (instance == null) return;   
-            instance.playerInputController = value;
+            if (Instance == null) return;   
+            Instance.playerInputController = value;
         }
     }
     
     public static SceneHandler SceneHandler
     {
-        get => instance != null ? instance.sceneHandler : null;
+        get => Instance != null ? Instance.sceneHandler : null;
         set
         {
-            if (instance == null) return;
-            instance.sceneHandler = value;
+            if (Instance == null) return;
+            Instance.sceneHandler = value;
         }
     }
 
     public static LevelHandler LevelHandler
     {
-        get => instance != null ? instance.levelHandler : null;
+        get => Instance != null ? Instance.levelHandler : null;
         set
         {
-            if (instance == null) return;
-            instance.levelHandler = value;
+            if (Instance == null) return;
+            Instance.levelHandler = value;
         }
     }
 
     public static MessageRouter MessageRouter
     {
-        get => instance != null ? instance.messageRouter : null;
+        get => Instance != null ? Instance.messageRouter : null;
     }
 
     public static RoomManager RoomManager
     {
-        get => instance != null ? instance.roomManager : null;
+        get => Instance != null ? Instance.roomManager : null;
         set
         {
-            if (instance == null) return;
-            instance.roomManager = value;
+            if (Instance == null) return;
+            Instance.roomManager = value;
         }
     }
 
     private void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(instance);
-
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
             Task initializationTask = UnityServices.InitializeAsync();
 #endif
-        }
     }
 }

@@ -1,26 +1,9 @@
 using UnityEngine;
 
-public class GameHandler : MonoBehaviour
+public class GameHandler : Singleton<GameHandler>
 {
-    public static GameHandler Instance { get; private set; }
-
     [SerializeField]
     private GameObject pausedGameCanvas;
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this) 
-        { 
-            Destroy(this); 
-        } 
-        else 
-        { 
-            Instance = this; 
-            
-            //Ustawić dostęp poprzez skrypt aby nie wypinało referencji
-            //DontDestroyOnLoad(Instance);
-        }
-    }
 
     private void Start()
     {

@@ -1,4 +1,5 @@
 using System.Collections;
+using _Project.Scripts.PointsSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +28,15 @@ public class PlayerGameplayUIManager : MonoBehaviour
 
     [SerializeField] 
     private TextMeshProUGUI healthLeft;
+    
+    [SerializeField] 
+    private TextMeshProUGUI pointsCounter;
+    
+    [SerializeField] 
+    private TextMeshProUGUI killsCounter;
+    
+    [SerializeField] 
+    private TextMeshProUGUI comboCounter;
 
     [SerializeField] 
     private GameObject interactUI;
@@ -51,7 +61,6 @@ public class PlayerGameplayUIManager : MonoBehaviour
 
     private void FloorManagerOnFloorGeneratorEnd(Transform playerTransform, Transform cameraFollowTransform)
     {
-
         ReferenceManager.PlayerInputController.onMapPressEvent += ShowMap;
         ReferenceManager.PlayerInputController.onMapReleaseEvent += HideMap;
         floorManager.FloorGeneratorEnd -= FloorManagerOnFloorGeneratorEnd;
@@ -74,6 +83,10 @@ public class PlayerGameplayUIManager : MonoBehaviour
 
         playerInteractables.SetInteractUIReference(interactUI);
         dashCooldownImage = dashCooldownUI.transform.GetChild(1).GetComponent<Image>();
+
+        EnemyDeathMediator.Instance.OnRegisteredEnemyDeath += UpdatePointsAndCombo;
+        EnemyDeathMediator.Instance.ComboController.OnComboTimerEnd += HideComboTexts;
+        HideComboTexts();
         
         playerMovement.OnDashPerformed += StartDashCooldownUI;
         roomsDoneCounter.OnRoomBeaten += RoomsCounterUI;
@@ -124,6 +137,28 @@ public class PlayerGameplayUIManager : MonoBehaviour
     private void OnRespawnUIUpdate()
     {
         healthLeft.text = blakeCharacter.Health.ToString();
+    }
+
+    private void UpdatePointsAndCombo(ComboAndPointsValues comboAndPointsValues)
+    {
+        if (!killsCounter.gameObject.activeInHierarchy || !comboCounter.gameObject.activeInHierarchy)
+        {
+            killsCounter.gameObject.SetActive(true);
+            comboCounter.gameObject.SetActive(true);
+        }
+        
+        pointsCounter.text = $"Points: {comboAndPointsValues.Points}";
+        killsCounter.text = $"x{comboAndPointsValues.KillsCounter} KILLS";
+        comboCounter.text = $"x{comboAndPointsValues.ComboCounter} Points";
+    }
+
+    private void HideComboTexts()
+    {
+        if (killsCounter.gameObject.activeInHierarchy || comboCounter.gameObject.activeInHierarchy)
+        {
+            killsCounter.gameObject.SetActive(false);
+            comboCounter.gameObject.SetActive(false);
+        }
     }
 
     private void StartDashCooldownUI()
