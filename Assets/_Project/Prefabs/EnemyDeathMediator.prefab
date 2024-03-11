@@ -9,9 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7042320408617693878}
+  - component: {fileID: 1294710600597893877}
   - component: {fileID: 7042320408617693877}
+  - component: {fileID: 2065355500254027380}
   m_Layer: 0
-  m_Name: PlayerCurrencyController
+  m_Name: EnemyDeathMediator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,6 +34,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1294710600597893877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7042320408617693876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf3723495ae5504ba33cb57f2b33be1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCurrencyController: {fileID: 7042320408617693877}
+  comboController: {fileID: 2065355500254027380}
 --- !u!114 &7042320408617693877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,4 +60,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b25bc494363ee246b9da5490a8a177d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsDataSo: {fileID: 11400000, guid: 5023a2e0ab0f6a24da0bd37afa27547a, type: 2}
+  tmpro: {fileID: 0}
+  comboController: {fileID: 2065355500254027380}
+--- !u!114 &2065355500254027380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7042320408617693876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616866574a7fb3b47b5f4e54963db817, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace _Project.Scripts.PointsSystem
@@ -28,8 +27,19 @@ namespace _Project.Scripts.PointsSystem
 
         private void EnemyCharacterOnDeath()
         {
-            
-            throw new NotImplementedException();
+            EnemyDeathMediator.Instance.RegisterEnemyDeath(pointsForKill, enemyTypeEnum);
+            UnregisterEvent();
         }
+
+        private void UnregisterEvent()
+        {
+            enemyCharacter.onDeath -= EnemyCharacterOnDeath;
+        }
+
+        private void OnDestroy()
+        {
+            UnregisterEvent();
+        }
+        
     }
 }

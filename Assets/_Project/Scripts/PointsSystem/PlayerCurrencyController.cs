@@ -2,21 +2,17 @@ using UnityEngine;
 
 namespace _Project.Scripts.PointsSystem
 {
-    public class PlayerCurrencyController : Singleton<PlayerCurrencyController>
+    public class PlayerCurrencyController : MonoBehaviour
     {
-        [SerializeField] 
-        private PointsDataSo pointsDataSo;
+        [SerializeField] private ComboController comboController;
         
-        private int points = 0;
-        
-        public PointsDataSo PointsDataSo { get; private set; }
-        public int Points { get; private set; }
+        private float points = 0;
 
-        public void AddPointsFromCharacterDeath(EnemyTypeEnum enemyTypeEnum)
+        public float Points => points;
+
+        public void RegisterEnemyDeath(int pointsForKill)
         {
-            
+            points += pointsForKill * comboController.ComboCounter;
         }
-
-
     }
 }

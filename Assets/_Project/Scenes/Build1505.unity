@@ -1067,10 +1067,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2065355500254027380, guid: faef93e2d4ecc5440920fe8456bf75e7,
+        type: 3}
+      propertyPath: tmpro
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7042320408617693876, guid: faef93e2d4ecc5440920fe8456bf75e7,
         type: 3}
       propertyPath: m_Name
-      value: PlayerCurrencyController
+      value: EnemyDeathMediator
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042320408617693877, guid: faef93e2d4ecc5440920fe8456bf75e7,
+        type: 3}
+      propertyPath: tmpro
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7042320408617693878, guid: faef93e2d4ecc5440920fe8456bf75e7,
         type: 3}
