@@ -31,7 +31,7 @@ public class WeaponPickup : Interactable
 
     private void Update()
     {
-        pickupGameObject.transform.Rotate(Vector3.up * Time.deltaTime * rotateForce);
+        pickupGameObject.transform.Rotate(Vector3.up * (Time.deltaTime * rotateForce));
     }
 
     public override void Interact(GameObject interacter)
