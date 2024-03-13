@@ -3251,6 +3251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1
   timeBetweenDamages: 0.5
+  maxRespawns: 3
   explosionParticle: {fileID: 6361431522622511341, guid: b9bcc07df42695645b74449cfd80b6db,
     type: 3}
   animator: {fileID: 341872085399694321}
@@ -3280,8 +3281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200a7c6f8de1bfa4ebf42b3c6360f484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDashTrailGO: {fileID: 6425254008251407351}
-  howlong: 0.5
+  playerDashTrail: {fileID: 6425254008251407350}
 --- !u!1 &8871600578562275924
 GameObject:
   m_ObjectHideFlags: 0
@@ -3448,9 +3448,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5214ff9f4af73fc4a9258cc6244eee80, type: 3}
---- !u!1 &6425254008251407351 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6734674225229350141, guid: 5214ff9f4af73fc4a9258cc6244eee80,
+--- !u!96 &6425254008251407350 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 6734674225229350140, guid: 5214ff9f4af73fc4a9258cc6244eee80,
     type: 3}
   m_PrefabInstance: {fileID: 314487799539343114}
   m_PrefabAsset: {fileID: 0}
