@@ -70,6 +70,7 @@ public class ReferenceManager : Singleton<ReferenceManager>
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
             Task initializationTask = UnityServices.InitializeAsync();
 #endif
