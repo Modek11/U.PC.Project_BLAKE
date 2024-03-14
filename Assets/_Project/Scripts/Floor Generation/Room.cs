@@ -80,6 +80,8 @@ public class Room : MonoBehaviour
     private void Awake()
     {
         roomsDoneCounter = FindObjectOfType<RoomsDoneCounter>();
+        instantiatedWeapons = new List<GameObject>();
+
     }
 
     public void SetupDoorConnectors()
@@ -172,6 +174,15 @@ public class Room : MonoBehaviour
         fog.SetActive(true);
     }
 
+    public void DisableRoom()
+    {
+        gameObject.SetActive(false);
+        foreach(var weapon in instantiatedWeapons)
+        {
+            weapon.gameObject.SetActive(false);
+        }
+    }
+
     public void EnterRoom()
     {
         if (IsPlayerInside()) return;
@@ -183,7 +194,7 @@ public class Room : MonoBehaviour
             if (roomsToDisable.Contains(this)) roomsToDisable.Remove(this);
             foreach (Room room in roomsToDisable)
             {
-                room.gameObject.SetActive(false);
+                room.DisableRoom();
             }
         }
         List<Room> roomsToActivate = GetNeigbours();
@@ -229,7 +240,10 @@ public class Room : MonoBehaviour
             player.GetComponent<BlakeCharacter>().SetRespawnPosition(GetSpawnPointPosition());
         }
 
-        instantiatedWeapons = new List<GameObject>();
+        foreach (var weapon in instantiatedWeapons)
+        {
+            weapon.gameObject.SetActive(true);
+        }
     }
 
     public void SetPlayer(GameObject _player)
@@ -264,9 +278,10 @@ public class Room : MonoBehaviour
         }
         Invoke("ResetEnemies", 0.5f);
 
-        foreach (var weapon in instantiatedWeapons)
+        foreach (var weapon in instantiatedWeapons.ToArray())
         {
             Destroy(weapon);
+            instantiatedWeapons.Remove(weapon);
         }
 
         if (player != null)
