@@ -11,6 +11,8 @@ public class PlayerInteractables : MonoBehaviour
     //List of Interactable objects nearby
     [SerializeField]
     private List<IInteractable> interactables = new List<IInteractable>();
+    [SerializeField]
+    private Transform playerHead;
 
     //Object of UI to show above
     [SerializeField]
@@ -76,8 +78,23 @@ public class PlayerInteractables : MonoBehaviour
 
                 if (Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position) < closestDistance)
                 {
-                    closest = interactable;
-                    closestDistance = Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position);
+                    if (Physics.Raycast(new Ray(playerHead.position, interactable.GetGameObject().transform.position - playerHead.position), out RaycastHit hit))
+                    {
+                        if (hit.transform.gameObject == interactable.GetGameObject())
+                        {
+                            closest = interactable;
+                        }
+                        else if (Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position) < 0.7f)
+                        {
+                            closest = interactable;
+                            closestDistance = Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position);
+                        }
+                    }
+                    else if (Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position) < 0.5f)
+                    {
+                        closest = interactable;
+                        closestDistance = Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position);
+                    }
                 }
             }
 
