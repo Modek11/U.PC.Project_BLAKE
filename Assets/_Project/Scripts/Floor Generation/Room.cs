@@ -143,10 +143,10 @@ public class Room : MonoBehaviour
 
     private void BeatLevel()
     {
+        player.GetComponent<BlakeCharacter>().onRespawn += ResetRoom;
         roomsDoneCounter.AddBeatenRoom();
         isBeaten = true;
         minimapRoom.CompleteRoom();
-        instantiatedWeapons = null;
     }
 
 
@@ -242,6 +242,7 @@ public class Room : MonoBehaviour
     private void ResetRoom()
     {
         if (roomManager.GetActiveRoom() != this) return;
+        if (isBeaten) return;
         foreach (RoomConnector roomConnector in doors)
         {
             roomConnector.UnlockDoor();
