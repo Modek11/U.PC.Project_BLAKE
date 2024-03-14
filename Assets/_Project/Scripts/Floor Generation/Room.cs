@@ -267,6 +267,11 @@ public class Room : MonoBehaviour
         {
             Destroy(weapon);
         }
+
+        if (player != null)
+        {
+            player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
+        }
     }
 
 
@@ -324,6 +329,10 @@ public class Room : MonoBehaviour
 
     public void ExitRoom()
     {
+        if (player != null)
+        {
+            player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
+        }
         if (IsPlayerInside()) return;
         /*if(roomManager.GetActiveRoom() == this)
         {
@@ -400,4 +409,14 @@ public class Room : MonoBehaviour
         instantiatedWeapons.Add(weapon);
     }
 
+    private void OnDestroy()
+    {
+        if (player == null) return;
+        player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
+    }
+
+    ~Room() {
+        player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
+
+    }
 }
