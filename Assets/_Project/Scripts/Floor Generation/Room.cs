@@ -80,6 +80,8 @@ public class Room : MonoBehaviour
     private void Awake()
     {
         roomsDoneCounter = FindObjectOfType<RoomsDoneCounter>();
+        instantiatedWeapons = new List<GameObject>();
+
     }
 
     public void SetupDoorConnectors()
@@ -143,10 +145,10 @@ public class Room : MonoBehaviour
 
     private void BeatLevel()
     {
+        player.GetComponent<BlakeCharacter>().onRespawn += ResetRoom;
         roomsDoneCounter.AddBeatenRoom();
         isBeaten = true;
         minimapRoom.CompleteRoom();
-        instantiatedWeapons = null;
     }
 
 
@@ -172,6 +174,15 @@ public class Room : MonoBehaviour
         fog.SetActive(true);
     }
 
+    public void DisableRoom()
+    {
+        gameObject.SetActive(false);
+        foreach(var weapon in instantiatedWeapons)
+        {
+            weapon.gameObject.SetActive(false);
+        }
+    }
+
     public void EnterRoom()
     {
         if (IsPlayerInside()) return;
@@ -183,7 +194,7 @@ public class Room : MonoBehaviour
             if (roomsToDisable.Contains(this)) roomsToDisable.Remove(this);
             foreach (Room room in roomsToDisable)
             {
-                room.gameObject.SetActive(false);
+                room.DisableRoom();
             }
         }
         List<Room> roomsToActivate = GetNeigbours();
@@ -229,7 +240,10 @@ public class Room : MonoBehaviour
             player.GetComponent<BlakeCharacter>().SetRespawnPosition(GetSpawnPointPosition());
         }
 
-        instantiatedWeapons = new List<GameObject>();
+        foreach (var weapon in instantiatedWeapons)
+        {
+            weapon.gameObject.SetActive(true);
+        }
     }
 
     public void SetPlayer(GameObject _player)
@@ -242,6 +256,7 @@ public class Room : MonoBehaviour
     private void ResetRoom()
     {
         if (roomManager.GetActiveRoom() != this) return;
+        if (isBeaten) return;
         foreach (RoomConnector roomConnector in doors)
         {
             roomConnector.UnlockDoor();
@@ -263,9 +278,15 @@ public class Room : MonoBehaviour
         }
         Invoke("ResetEnemies", 0.5f);
 
-        foreach (var weapon in instantiatedWeapons)
+        foreach (var weapon in instantiatedWeapons.ToArray())
         {
             Destroy(weapon);
+            instantiatedWeapons.Remove(weapon);
+        }
+
+        if (player != null)
+        {
+            player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
         }
     }
 
@@ -324,6 +345,10 @@ public class Room : MonoBehaviour
 
     public void ExitRoom()
     {
+        if (player != null)
+        {
+            player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
+        }
         if (IsPlayerInside()) return;
         /*if(roomManager.GetActiveRoom() == this)
         {
@@ -400,4 +425,14 @@ public class Room : MonoBehaviour
         instantiatedWeapons.Add(weapon);
     }
 
+    private void OnDestroy()
+    {
+        if (player == null) return;
+        player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
+    }
+
+    ~Room() {
+        player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
+
+    }
 }
