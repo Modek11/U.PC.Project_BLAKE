@@ -50,16 +50,10 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         {
             ReferenceManager.LevelHandler.EndRun();
             return;
-        } else
-        {
-            respawnCounter++;
         }
+        
+        respawnCounter++;
         onDeath?.Invoke();
-    }
-
-    protected virtual void DestroySelf()
-    {
-        Destroy(gameObject);
     }
 
     public virtual void TakeDamage(GameObject instigator, int damage)

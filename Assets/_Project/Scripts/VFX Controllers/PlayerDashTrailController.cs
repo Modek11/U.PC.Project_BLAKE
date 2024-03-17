@@ -1,33 +1,42 @@
+using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class PlayerDashTrailController : MonoBehaviour
+namespace _Project.Scripts.VFX_Controllers
 {
-    [SerializeField] 
-    private GameObject playerDashTrailGO;
-    
-    private TrailRenderer playerDashTrail;
-    private float trailTime;
-    private float delayTime = 0.04f;
-    
-    private void Start()
+    public class PlayerDashTrailController : MonoBehaviour
     {
-        playerDashTrail = playerDashTrailGO.GetComponent<TrailRenderer>();
-        trailTime = playerDashTrail.time;
-        playerDashTrail.time = 0f;
-        
-        GetComponent<PlayerMovement>().OnDashPerformed += OnDashPerformed;
-    }
-
-    private void FixedUpdate()
-    {
-        if (playerDashTrail.time > 0f)
+        [SerializeField] 
+        private TrailRenderer playerDashTrail;
+    
+        private float trailTime;
+        private float delayTime = 0.04f;
+    
+        private void Start()
         {
-            playerDashTrail.time -= delayTime;
+            trailTime = playerDashTrail.time;
+            playerDashTrail.time = 0f;
+            playerDashTrail.gameObject.SetActive(false);
+        
+            GetComponent<PlayerMovement>().OnDashPerformed += OnDashPerformed;
         }
-    }
 
-    private void OnDashPerformed()
-    {
-        playerDashTrail.time = trailTime;
+        private void OnDashPerformed()
+        {
+            UniTask.Void(async () =>
+            {
+                playerDashTrail.gameObject.SetActive(true);
+                playerDashTrail.time = trailTime;
+            
+                while (playerDashTrail.time > 0f)
+                {
+                    playerDashTrail.time -= delayTime;
+                    await UniTask.Delay(TimeSpan.FromSeconds(delayTime));
+                }
+            
+                playerDashTrail.time = 0f;
+                playerDashTrail.gameObject.SetActive(false);
+            });
+        }
     }
 }
