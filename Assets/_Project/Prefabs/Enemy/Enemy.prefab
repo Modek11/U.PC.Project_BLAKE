@@ -3501,9 +3501,9 @@ MonoBehaviour:
     type: 3}
   animator: {fileID: 4250661716291628411}
   godMode: 0
-  SpawnedInRoom: {fileID: 0}
-  weaponPickup: {fileID: 2250193661021338515, guid: 533ffb6a79d6ba94ca899689f9df94f3,
+  weaponPickup: {fileID: 8762673793604440, guid: 533ffb6a79d6ba94ca899689f9df94f3,
     type: 3}
+  SpawnedInRoom: {fileID: 0}
 --- !u!114 &3069750451913799309
 MonoBehaviour:
   m_ObjectHideFlags: 0
