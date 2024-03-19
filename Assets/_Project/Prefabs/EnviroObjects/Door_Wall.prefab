@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 559052841118044094}
   - component: {fileID: 4200503237609755824}
   - component: {fileID: 1063035006573424611}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -475,6 +475,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 673370192246167348}
   connector: {fileID: 2087882301756044489}
+  interactable: 0
+  open: 0
 --- !u!65 &1063035006573424611
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -483,7 +485,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8736427752958271802}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3.0138843, y: 5.1899366, z: 6.987879}
