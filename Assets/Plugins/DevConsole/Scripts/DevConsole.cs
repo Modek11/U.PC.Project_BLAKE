@@ -5,12 +5,12 @@ using System.Collections;
 using SickDev.CommandSystem;
 using UnityEngine;
 using UnityEngine.UI;
-
+/*
 namespace SickDev.CommandSystem {
     public class DevConsole {
         public static SickDev.DevConsole.DevConsole singleton { get { return SickDev.DevConsole.DevConsole.singleton; } }
     }
-}
+}*/
 
 namespace SickDev.DevConsole{
     public class DevConsole : MonoBehaviour, ISerializationCallbackReceiver {
