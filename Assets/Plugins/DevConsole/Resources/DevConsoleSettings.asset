@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9340f545dec0840479a6b26033680948, type: 3}
   m_Name: DevConsoleSettings
   m_EditorClassIdentifier: 
-  selectedTab: 0
+  selectedTab: 3
   attachedLogLevel: -1
   openKey: 96
   autoCompleteKey: 283
@@ -120,8 +120,8 @@ MonoBehaviour:
     animator: 0
     appleReplayKit: 0
     appleTvRemote: 0
-    application: 1
-    audioListener: 1
+    application: 0
+    audioListener: 0
     audioSettings: 0
     audioSource: 0
     caching: 0
@@ -132,21 +132,21 @@ MonoBehaviour:
     colorUtility: 0
     crashReport: 0
     crashReportHandler: 0
-    cursor: 1
-    debug: 1
+    cursor: 0
+    debug: 0
     playerConnection: 0
-    display: 1
+    display: 0
     dynamicGI: 0
     font: 0
-    gameObject: 1
+    gameObject: 0
     hash128: 0
-    handheld: 1
+    handheld: 0
     humanTrait: 0
-    input: 1
+    input: 0
     compass: 0
     gyroscope: 0
     locationService: 0
-    iOSDevice: 1
+    iOSDevice: 0
     iOSNotificationServices: 0
     iOSOnDemandResources: 0
     layerMask: 0
@@ -158,26 +158,26 @@ MonoBehaviour:
     microphone: 0
     physics: 0
     physics2D: 0
-    playerPrefs: 1
+    playerPrefs: 0
     proceduralMaterial: 0
     profiler: 0
-    qualitySettings: 1
+    qualitySettings: 0
     quaternion: 0
     random: 0
     rect: 0
     reflectionProbe: 0
     remoteSettings: 0
     graphicsSettings: 0
-    renderSettings: 1
+    renderSettings: 0
     samsungTV: 0
-    sceneManager: 1
+    sceneManager: 0
     sceneUtility: 0
-    screen: 1
+    screen: 0
     shader: 0
     sortingLayer: 0
-    systemInfo: 1
+    systemInfo: 0
     texture: 0
-    time: 1
+    time: 0
     touchScreenKeyboard: 0
     vector2: 0
     vector3: 0
