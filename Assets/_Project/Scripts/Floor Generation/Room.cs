@@ -177,9 +177,21 @@ public class Room : MonoBehaviour
     public void DisableRoom()
     {
         gameObject.SetActive(false);
+        var toDelete = new List<GameObject>();
         foreach(var weapon in instantiatedWeapons)
         {
-            weapon.gameObject.SetActive(false);
+            if (weapon != null)
+            {
+                weapon.gameObject.SetActive(false);
+            } else
+            {
+                toDelete.Add(weapon);
+            }
+        }
+
+        foreach(var delete in toDelete)
+        {
+            instantiatedWeapons.Remove(delete);
         }
     }
 
