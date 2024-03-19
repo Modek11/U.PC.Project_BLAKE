@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using SickDev.CommandSystem;
 using SickDev.DevConsole;
 using UnityEngine;
 
@@ -6,6 +8,9 @@ namespace _Project.Scripts.ConsoleCommands
     public class BaseCommand : MonoBehaviour
     {
         private bool isInitialized = false;
+        
+        protected List<Command> commandsHolder = new List<Command>();
+        protected Command command;
         
         private void OnEnable()
         {
@@ -24,6 +29,7 @@ namespace _Project.Scripts.ConsoleCommands
         private void OnDisable()
         {
             DevConsole.singleton.onOpenStateChanged -= OnOpenStateChanged;
+            DevConsole.singleton.RemoveCommands(commandsHolder.ToArray());
         }
 
         private void OnOpenStateChanged(bool isOpen)

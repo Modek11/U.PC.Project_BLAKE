@@ -1,6 +1,5 @@
 using SickDev.CommandSystem;
 using SickDev.DevConsole;
-using UnityEngine;
 
 namespace _Project.Scripts.ConsoleCommands
 {
@@ -15,8 +14,10 @@ namespace _Project.Scripts.ConsoleCommands
         {
             base.Initialize();
             
-            DevConsole.singleton.AddCommand(new ActionCommand<bool>(GodMode) { className = NAME });
-            DevConsole.singleton.AddCommand(new ActionCommand<bool>(ShortDash) { className = NAME });
+            DevConsole.singleton.AddCommand(command = new ActionCommand<bool>(GodMode) { className = NAME });
+            commandsHolder.Add(command);
+            DevConsole.singleton.AddCommand(command = new ActionCommand<bool>(ShortDash) { className = NAME });
+            commandsHolder.Add(command);
         }
 
         private void GodMode(bool isEnabled)

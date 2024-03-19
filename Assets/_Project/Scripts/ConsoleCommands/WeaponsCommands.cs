@@ -21,10 +21,14 @@ namespace _Project.Scripts.ConsoleCommands
         {
             base.Initialize();
             
-            DevConsole.singleton.AddCommand(new ActionCommand<string>(SpawnGun) { className = NAME });
-            DevConsole.singleton.AddCommand(new ActionCommand<string, string>(SpawnGun) { className = NAME });
-            DevConsole.singleton.AddCommand(new ActionCommand<int>(AddAmmo) { className = NAME });
-            DevConsole.singleton.AddCommand(new ActionCommand<bool>(InfiniteAmmo) { className = NAME });
+            DevConsole.singleton.AddCommand(command = new ActionCommand<string>(SpawnGun) { className = NAME });
+            commandsHolder.Add(command);
+            DevConsole.singleton.AddCommand(command = new ActionCommand<string, string>(SpawnGun) { className = NAME });
+            commandsHolder.Add(command);
+            DevConsole.singleton.AddCommand(command = new ActionCommand<int>(AddAmmo) { className = NAME });
+            commandsHolder.Add(command);
+            DevConsole.singleton.AddCommand(command = new ActionCommand<bool>(InfiniteAmmo) { className = NAME });
+            commandsHolder.Add(command);
         }
 
         private void SpawnGun(string weaponName)
