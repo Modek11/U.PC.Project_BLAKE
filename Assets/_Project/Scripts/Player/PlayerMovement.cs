@@ -43,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rigidbodyCache = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
-
     }
 
     private void OnEnable()
@@ -202,4 +201,11 @@ public class PlayerMovement : MonoBehaviour
 
        mainCamera = Camera.main;
    }
+
+#if UNITY_EDITOR
+    public void SetDashValue(float dashValue)
+    {
+        dashCooldown = dashValue;
+    }
+#endif
 }
