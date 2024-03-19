@@ -23,10 +23,13 @@ namespace _Project.Scripts.ConsoleCommands
             
             DevConsole.singleton.AddCommand(command = new ActionCommand<string>(SpawnGun) { className = NAME });
             commandsHolder.Add(command);
+            
             DevConsole.singleton.AddCommand(command = new ActionCommand<string, string>(SpawnGun) { className = NAME });
             commandsHolder.Add(command);
+            
             DevConsole.singleton.AddCommand(command = new ActionCommand<int>(AddAmmo) { className = NAME });
             commandsHolder.Add(command);
+            
             DevConsole.singleton.AddCommand(command = new ActionCommand<bool>(InfiniteAmmo) { className = NAME });
             commandsHolder.Add(command);
         }

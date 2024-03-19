@@ -16,6 +16,7 @@ namespace _Project.Scripts.ConsoleCommands
             
             DevConsole.singleton.AddCommand(command = new ActionCommand<bool>(GodMode) { className = NAME });
             commandsHolder.Add(command);
+            
             DevConsole.singleton.AddCommand(command = new ActionCommand<bool>(ShortDash) { className = NAME });
             commandsHolder.Add(command);
         }
