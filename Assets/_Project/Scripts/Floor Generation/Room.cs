@@ -319,6 +319,7 @@ public class Room : MonoBehaviour
         {
             if(spawnedEnemies.Count == 0)
             {
+                if (player == null) return;
                 BeatLevel();
                 foreach (RoomConnector roomConnector in doors)
                 {
