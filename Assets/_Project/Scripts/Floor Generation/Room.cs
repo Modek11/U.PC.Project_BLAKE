@@ -252,9 +252,22 @@ public class Room : MonoBehaviour
             player.GetComponent<BlakeCharacter>().SetRespawnPosition(GetSpawnPointPosition());
         }
 
+        var toDelete = new List<GameObject>();
         foreach (var weapon in instantiatedWeapons)
         {
-            weapon.gameObject.SetActive(true);
+            if (weapon != null)
+            {
+                weapon.gameObject.SetActive(true);
+            }
+            else
+            {
+                toDelete.Add(weapon);
+            }
+        }
+
+        foreach (var delete in toDelete)
+        {
+            instantiatedWeapons.Remove(delete);
         }
     }
 
