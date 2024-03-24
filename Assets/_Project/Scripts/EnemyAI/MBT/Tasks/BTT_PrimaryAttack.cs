@@ -18,9 +18,8 @@ public class BTT_PrimaryAttack : Leaf
         }
         if (AIController.Weapon == null) return NodeResult.failure;
         if (ReferenceManager.BlakeHeroCharacter == null) return NodeResult.failure;
+        if (!AIController.Weapon.CanAttack()) return NodeResult.failure;
         if (!AIController.Weapon.CanPrimaryAttack()) return NodeResult.failure;
-        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(AIController.transform.position);
-        if (viewportPosition.x <= 0 || viewportPosition.x >= 1 || viewportPosition.y <= 0 || viewportPosition.y >= 1) return NodeResult.failure;
 
         AIController.Weapon.PrimaryAttack();
 
