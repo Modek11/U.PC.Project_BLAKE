@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class OptionsHandler : MonoBehaviour
 {
@@ -10,8 +11,7 @@ public class OptionsHandler : MonoBehaviour
     private const string MUSIC = "Music";
     private const string SFX = "SFX";
     private const string ENVIRONMENT_SFX = "EnvironmentSFX";
-    private const string PLAYER_SFX = "PlayerSFX";
-    private const string ENEMY_SFX = "EnemySFX";
+    private const string GAMEPLAY_SFX = "GameplaySFX";
     
     private const string ON = "ON";
     private const string OFF = "OFF";
@@ -28,15 +28,23 @@ public class OptionsHandler : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI fullScreenValueText;
 
+    [SerializeField]
+    private TextMeshProUGUI vSyncValueText;
+
+    [SerializeField]
+    private TMP_Dropdown qualityDropdown;
+
     [Space]
     
     [SerializeField]
     private TextMeshProUGUI masterVolumeValueText;
+
     [SerializeField] 
     private Slider masterVolumeSlider;
 
     [SerializeField]
     private TextMeshProUGUI musicVolumeValueText;
+
     [SerializeField] 
     private Slider musicVolumeSlider;
 
@@ -47,23 +55,21 @@ public class OptionsHandler : MonoBehaviour
     
     [SerializeField]
     private TextMeshProUGUI environmentSfxVolumeValueText;
+
     [SerializeField] 
     private Slider environmentSfxVolumeSlider;
 
     [SerializeField]
-    private TextMeshProUGUI playerSfxVolumeValueText;
-    [SerializeField] 
-    private Slider playerSfxVolumeSlider;
+    private TextMeshProUGUI gameplaySfxVolumeValueText;
 
-    [SerializeField]
-    private TextMeshProUGUI enemySfxVolumeValueText;
     [SerializeField] 
-    private Slider enemySfxVolumeSlider;
+    private Slider gameplaySfxVolumeSlider;
 
     public void Start()
     {
         SetResolutions();
         SetAllSliders();
+        SetGraphics();
     }
 
     private void SetResolutions()
@@ -78,10 +84,18 @@ public class OptionsHandler : MonoBehaviour
         
         foreach (var resolution in Screen.resolutions)
         {
-            resolutionsDropdown.options.Add(new TMP_Dropdown.OptionData($"{resolution.width} x {resolution.height}"));
+            resolutionsDropdown.options.Add(new TMP_Dropdown.OptionData(resolution.ToString()));
         }
-        
-        resolutionsDropdown.RefreshShownValue();
+
+        for (int i = 0; i < resolutionsDropdown.options.Count; i++)
+        {
+            if (resolutionsDropdown.options[i].text == $"{Screen.width} x {Screen.height} @ {Screen.currentResolution.refreshRate}Hz")
+            {
+                resolutionsDropdown.SetValueWithoutNotify(i);
+                //resolutionsDropdown.value = i;
+                break;
+            }
+        }
     }
 
     public void SetResolution(int resolutionIndex)
@@ -96,46 +110,74 @@ public class OptionsHandler : MonoBehaviour
         Screen.fullScreen = isFullScreen;
     }
 
+    public void SetVSync(bool enabled)
+    {
+        vSyncValueText.text = enabled ? ON : OFF;
+        QualitySettings.vSyncCount = enabled ? 1 : 0;
+    }
+
+    public void SetQuality(int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex);
+    }
+
     private void SetAllSliders()
     {
-        masterVolumeSlider.value = GetVolume(MASTER);
-        musicVolumeSlider.value = GetVolume(MUSIC);
-        sfxVolumeSlider.value = GetVolume(SFX);
-        environmentSfxVolumeSlider.value = GetVolume(ENVIRONMENT_SFX);
-        playerSfxVolumeSlider.value = GetVolume(PLAYER_SFX);
-        enemySfxVolumeSlider.value = GetVolume(ENEMY_SFX);
+        masterVolumeSlider.value = PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume") : GetVolume(MASTER);
+        musicVolumeSlider.value = PlayerPrefs.HasKey("MusicVolume") ? PlayerPrefs.GetFloat("MusicVolume") : GetVolume(MUSIC);
+        sfxVolumeSlider.value = PlayerPrefs.HasKey("SFXVolume") ? PlayerPrefs.GetFloat("SFXVolume") : GetVolume(SFX);
+        environmentSfxVolumeSlider.value = PlayerPrefs.HasKey("EnvironmentSFXVolume") ? PlayerPrefs.GetFloat("EnvironmentSFXVolume") : GetVolume(ENVIRONMENT_SFX);
+        gameplaySfxVolumeSlider.value = PlayerPrefs.HasKey("GameplaySFXVolume") ? PlayerPrefs.GetFloat("GameplaySFXVolume") : GetVolume(GAMEPLAY_SFX);
+    }
+
+    private void SetGraphics()
+    {
+        fullScreenValueText.text = Screen.fullScreen ? ON : OFF;
+        fullScreenValueText.transform.parent.GetComponent<Toggle>().isOn = Screen.fullScreen ? true : false;
+
+        vSyncValueText.text = QualitySettings.vSyncCount > 0 ? ON : OFF;
+        vSyncValueText.transform.parent.GetComponent<Toggle>().isOn = QualitySettings.vSyncCount > 0 ? true : false;
+
+        qualityDropdown.ClearOptions();
+        qualityDropdown.AddOptions(new List<TMP_Dropdown.OptionData>()
+                { new TMP_Dropdown.OptionData("Low")
+                , new TMP_Dropdown.OptionData("Medium")
+                , new TMP_Dropdown.OptionData("High")
+                , new TMP_Dropdown.OptionData("Ultra") });
+
+        qualityDropdown.SetValueWithoutNotify(QualitySettings.GetQualityLevel());
     }
 
     public void SetMasterVolume(float volume)
     {
         SetVolumeAndText(volume, MASTER, masterVolumeValueText);
+        PlayerPrefs.SetFloat("MasterVolume", volume);
     }
 
     public void SetMusicVolume(float volume)
     {
         SetVolumeAndText(volume, MUSIC, musicVolumeValueText);
+        PlayerPrefs.SetFloat("MusicVolume", volume);
     }
 
     public void SetSfxVolume(float volume)
     {
         SetVolumeAndText(volume, SFX, sfxVolumeValueText);
+        PlayerPrefs.SetFloat("SFXVolume", volume);
     }
     
     public void SetEnvironmentSfxVolume(float volume)
     {
         SetVolumeAndText(volume, ENVIRONMENT_SFX, environmentSfxVolumeValueText);
+        PlayerPrefs.SetFloat("EnvironmentSFXVolume", volume);
     }
     
-    public void SetPlayerSfxVolume(float volume)
+    public void SetGameplaySfxVolume(float volume)
     {
-        SetVolumeAndText(volume, PLAYER_SFX, playerSfxVolumeValueText);
+        SetVolumeAndText(volume, GAMEPLAY_SFX, gameplaySfxVolumeValueText);
+        PlayerPrefs.SetFloat("GameplaySFXVolume", volume);
     }
     
-    public void SetEnemySfxVolume(float volume)
-    {
-        SetVolumeAndText(volume, ENEMY_SFX, enemySfxVolumeValueText);
-    }
-
     private void SetVolumeAndText(float volume, string mixerName, TextMeshProUGUI textMeshProRef)
     {
         textMeshProRef.text = GetVolumeString(volume);

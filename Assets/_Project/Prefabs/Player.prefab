@@ -2074,6 +2074,37 @@ Transform:
   m_Father: {fileID: 5533702899640291268}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5057555200360379558
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3376777296779623240}
+  m_Layer: 7
+  m_Name: Head
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3376777296779623240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5057555200360379558}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.94, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8952298361853881667}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5087645183812299773
 GameObject:
   m_ObjectHideFlags: 0
@@ -3143,6 +3174,7 @@ Transform:
   - {fileID: 3772505427568618154}
   - {fileID: 9084103628866338115}
   - {fileID: 6087499551083853488}
+  - {fileID: 3376777296779623240}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3217,10 +3249,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cdb5d565c5af9946b400702e20dd17f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactRadius: 2
-  mask:
+  interactRadius: 5
+  collectMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 4096
+  raycastMask:
+    serializedVersion: 2
+    m_Bits: 4353
+  playerHead: {fileID: 3376777296779623240}
   interactUI: {fileID: 0}
 --- !u!114 &5545414051132038904
 MonoBehaviour:
@@ -3251,6 +3287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1
   timeBetweenDamages: 0.5
+  maxRespawns: 3
   explosionParticle: {fileID: 6361431522622511341, guid: b9bcc07df42695645b74449cfd80b6db,
     type: 3}
   animator: {fileID: 341872085399694321}
@@ -3280,8 +3317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200a7c6f8de1bfa4ebf42b3c6360f484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDashTrailGO: {fileID: 6425254008251407351}
-  howlong: 0.5
+  playerDashTrail: {fileID: 6425254008251407350}
 --- !u!1 &8871600578562275924
 GameObject:
   m_ObjectHideFlags: 0
@@ -3448,9 +3484,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5214ff9f4af73fc4a9258cc6244eee80, type: 3}
---- !u!1 &6425254008251407351 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6734674225229350141, guid: 5214ff9f4af73fc4a9258cc6244eee80,
+--- !u!96 &6425254008251407350 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 6734674225229350140, guid: 5214ff9f4af73fc4a9258cc6244eee80,
     type: 3}
   m_PrefabInstance: {fileID: 314487799539343114}
   m_PrefabAsset: {fileID: 0}

@@ -16,6 +16,12 @@ public class LevelHandler : MonoBehaviour
     private void Awake()
     {
 
+        
+        
+    }
+
+    private void Start()
+    {
         if (ReferenceManager.LevelHandler != null && ReferenceManager.LevelHandler != this)
         {
             Destroy(gameObject);
@@ -25,11 +31,7 @@ public class LevelHandler : MonoBehaviour
             ReferenceManager.LevelHandler = this;
             DontDestroyOnLoad(ReferenceManager.LevelHandler);
         }
-        
-    }
 
-    private void Start()
-    {
         sceneHandler = GetComponent<SceneHandler>();
 
         string currentSceneName = SceneManager.GetActiveScene().name;

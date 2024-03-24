@@ -106,14 +106,24 @@ public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayA
             escapeButtonEvent?.Invoke();
         }
     }
-
-    private void OnEnable()
+    
+    public void EnableInputSystem()
     {
         inputSystem.Enable();
     }
 
-    private void OnDisable()
+    public void DisableInputSystem()
     {
         inputSystem.Disable();
+    }
+
+    private void OnEnable()
+    {
+        EnableInputSystem();
+    }
+
+    private void OnDisable()
+    {
+        DisableInputSystem();
     }
 }
