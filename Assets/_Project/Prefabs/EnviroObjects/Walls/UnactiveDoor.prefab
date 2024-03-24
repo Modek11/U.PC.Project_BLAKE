@@ -63,17 +63,17 @@ PrefabInstance:
     - target: {fileID: 1784778567408875181, guid: 1a3c4469695755745a384e3a0dadf2f2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1784778567408875181, guid: 1a3c4469695755745a384e3a0dadf2f2,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7072302
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1784778567408875181, guid: 1a3c4469695755745a384e3a0dadf2f2,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7069834
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1784778567408875181, guid: 1a3c4469695755745a384e3a0dadf2f2,
         type: 3}
@@ -88,7 +88,7 @@ PrefabInstance:
     - target: {fileID: 1784778567408875181, guid: 1a3c4469695755745a384e3a0dadf2f2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -89.98
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1784778567408875181, guid: 1a3c4469695755745a384e3a0dadf2f2,
         type: 3}
@@ -143,12 +143,12 @@ PrefabInstance:
     - target: {fileID: 1784778567408875181, guid: 1a3c4469695755745a384e3a0dadf2f2,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7072302
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1784778567408875181, guid: 1a3c4469695755745a384e3a0dadf2f2,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7069834
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1784778567408875181, guid: 1a3c4469695755745a384e3a0dadf2f2,
         type: 3}
@@ -163,7 +163,7 @@ PrefabInstance:
     - target: {fileID: 1784778567408875181, guid: 1a3c4469695755745a384e3a0dadf2f2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -89.98
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1784778567408875181, guid: 1a3c4469695755745a384e3a0dadf2f2,
         type: 3}
