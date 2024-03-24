@@ -164,4 +164,12 @@ public class RangedWeapon : Weapon
             BulletsLeft = rangedWeaponInstanceInfo.bulletsLeft;
         }
     }
+
+#if UNITY_EDITOR
+    public void SetInfiniteAmmo(bool setInfinite)
+    {
+        infinityAmmo = setInfinite;
+    }
+#endif
+    
 }
