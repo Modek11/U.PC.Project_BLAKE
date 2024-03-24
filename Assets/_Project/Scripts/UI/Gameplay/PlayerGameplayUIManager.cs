@@ -94,8 +94,9 @@ public class PlayerGameplayUIManager : MonoBehaviour
         blakeCharacter.onRespawn += OnRespawnUIUpdate;
         OnRespawnUIUpdate();
         RoomsCounterUI();
+
     }
-    
+
     private void ShowMap()
     {
         mapUI.SetActive(true);
@@ -181,5 +182,13 @@ public class PlayerGameplayUIManager : MonoBehaviour
         
         dashCooldownUI.SetActive(false);
         dashCooldownImage.fillAmount = 0;
+    }
+
+    private void OnDestroy()
+    {
+        playerMovement.OnDashPerformed -= StartDashCooldownUI;
+        roomsDoneCounter.OnRoomBeaten -= RoomsCounterUI;
+        blakeCharacter.OnDamageTaken -= HealthLeftUI;
+        blakeCharacter.onRespawn -= OnRespawnUIUpdate;
     }
 }

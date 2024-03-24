@@ -177,9 +177,21 @@ public class Room : MonoBehaviour
     public void DisableRoom()
     {
         gameObject.SetActive(false);
+        var toDelete = new List<GameObject>();
         foreach(var weapon in instantiatedWeapons)
         {
-            weapon.gameObject.SetActive(false);
+            if (weapon != null)
+            {
+                weapon.gameObject.SetActive(false);
+            } else
+            {
+                toDelete.Add(weapon);
+            }
+        }
+
+        foreach(var delete in toDelete)
+        {
+            instantiatedWeapons.Remove(delete);
         }
     }
 
@@ -240,9 +252,22 @@ public class Room : MonoBehaviour
             player.GetComponent<BlakeCharacter>().SetRespawnPosition(GetSpawnPointPosition());
         }
 
+        var toDelete = new List<GameObject>();
         foreach (var weapon in instantiatedWeapons)
         {
-            weapon.gameObject.SetActive(true);
+            if (weapon != null)
+            {
+                weapon.gameObject.SetActive(true);
+            }
+            else
+            {
+                toDelete.Add(weapon);
+            }
+        }
+
+        foreach (var delete in toDelete)
+        {
+            instantiatedWeapons.Remove(delete);
         }
     }
 
@@ -307,6 +332,7 @@ public class Room : MonoBehaviour
         {
             if(spawnedEnemies.Count == 0)
             {
+                if (player == null) return;
                 BeatLevel();
                 foreach (RoomConnector roomConnector in doors)
                 {

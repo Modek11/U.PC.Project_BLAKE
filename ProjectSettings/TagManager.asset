@@ -21,7 +21,7 @@ TagManager:
   - Enemy
   - EnemyPOVBlock
   - Floor
-  - 
+  - Interactable
   - 
   - Minimap
   - 
