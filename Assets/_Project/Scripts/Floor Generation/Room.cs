@@ -447,6 +447,11 @@ public class Room : MonoBehaviour
         else return transform.position;
     }
 
+    public List<GameObject> GetSpawnedEnemies()
+    {
+        return spawnedEnemies;
+    }
+
     public void AddSpawnedWeapon(GameObject weapon)
     {
         instantiatedWeapons.Add(weapon);
