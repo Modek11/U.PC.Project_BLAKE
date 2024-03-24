@@ -40,7 +40,7 @@ MonoBehaviour:
     passTag: OnTop
     Event: 550
     filterSettings:
-      RenderQueueType: 0
+      RenderQueueType: 1
       LayerMask:
         serializedVersion: 2
         m_Bits: 8192
