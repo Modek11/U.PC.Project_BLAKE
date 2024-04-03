@@ -90,7 +90,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.13586967
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -235,57 +235,42 @@ PrefabInstance:
     - target: {fileID: 3709000036729700128, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 3709000036729700128, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3709000036729700128, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3709000036729700128, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3709000036729700128, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 270
-      objectReference: {fileID: 0}
-    - target: {fileID: 3709000036729700128, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3709000036729700128, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
         type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3709000036729700128, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3709000036729700128, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3709000036729700128, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3709000036729700128, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 270
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4049531343827068314, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
         type: 3}
       propertyPath: m_Name
       value: Katana_GFX
-      objectReference: {fileID: 0}
-    - target: {fileID: 6220473127961529307, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6220473127961529307, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6220473127961529307, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6220473127961529307, guid: 45fd1550ea736bb4fb2e8bba426c9b84,
         type: 3}

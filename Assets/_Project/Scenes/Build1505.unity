@@ -424,7 +424,7 @@ PrefabInstance:
         type: 3}
       propertyPath: endRoom
       value: 
-      objectReference: {fileID: 737388224598824198, guid: 1b3bc4f630601424c8ae7bc42eb5aad7,
+      objectReference: {fileID: 2171126759078518847, guid: 0e862de4eaf97ea4f84b687cb0a2d908,
         type: 3}
     - target: {fileID: 3194443941187315569, guid: e02126aae2951bf4b9b740ef58abdbcf,
         type: 3}
@@ -462,8 +462,12 @@ PrefabInstance:
         type: 3}
       propertyPath: treasureRoomPool
       value: 
-      objectReference: {fileID: 11400000, guid: 610f869a8b563724da355d8fe7bc60c3,
-        type: 2}
+      objectReference: {fileID: 0}
+    - target: {fileID: 3194443941187315569, guid: e02126aae2951bf4b9b740ef58abdbcf,
+        type: 3}
+      propertyPath: treasureRoomsAmount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3194443941187315574, guid: e02126aae2951bf4b9b740ef58abdbcf,
         type: 3}
       propertyPath: m_RootOrder
@@ -671,7 +675,7 @@ PrefabInstance:
     - target: {fileID: 7478649078521535363, guid: 937f6125761fadc4abee1023b0ea40f9,
         type: 3}
       propertyPath: orthographic size
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7478649078521535363, guid: 937f6125761fadc4abee1023b0ea40f9,
         type: 3}

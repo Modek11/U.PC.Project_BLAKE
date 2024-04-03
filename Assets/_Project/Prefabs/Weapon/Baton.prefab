@@ -90,7 +90,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.16441748
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -275,27 +275,27 @@ PrefabInstance:
     - target: {fileID: 7711348059265503512, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7711348059265503512, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7711348059265503512, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7711348059265503512, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7711348059265503512, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 270
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7711348059265503512, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
         type: 3}
