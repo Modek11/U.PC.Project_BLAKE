@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4576319290019124915}
   - component: {fileID: 6095538060859961772}
   - component: {fileID: 690804536495207032}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrel_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2801148438413789983}
   - component: {fileID: 3957295357726239395}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

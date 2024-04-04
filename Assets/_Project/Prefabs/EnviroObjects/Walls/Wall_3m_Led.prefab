@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3332124411417843193}
   - component: {fileID: 8486296418491553603}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 1904796258044016477}
   - component: {fileID: 871554825198880826}
   - component: {fileID: 858844691023710110}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall_3m_Led
   m_TagString: Untagged
   m_Icon: {fileID: 0}

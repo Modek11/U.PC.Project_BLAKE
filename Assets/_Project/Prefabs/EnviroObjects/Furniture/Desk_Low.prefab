@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2740709105571316731}
   - component: {fileID: 8219428437567780718}
   - component: {fileID: 6312685096247441777}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Desk_Low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5574081642847261571}
   - component: {fileID: 92051133911014125}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

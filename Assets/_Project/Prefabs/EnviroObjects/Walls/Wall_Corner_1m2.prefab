@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1857575209903457532}
   - component: {fileID: 2843456582361999686}
   - component: {fileID: 4914236936366174735}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall_Corner_1m2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5009032537202198728}
   - component: {fileID: 8105693722088746445}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Collider (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3508464658352480897}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8541988051944116250}
   - component: {fileID: 3562011722526915052}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Collider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
