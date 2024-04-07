@@ -1,7 +1,6 @@
 using MBT;
 using UnityEngine;
 using UnityEngine.AI;
-using static EnemyFOV;
 
 [RequireComponent(typeof(BlakeCharacter))]
 public class AIController : MonoBehaviour
@@ -29,6 +28,16 @@ public class AIController : MonoBehaviour
 
         GetComponent<BlakeCharacter>().onDeath += Die;
         GetComponent<EnemyFOV>().OnCanSeePlayerChanged += OnCanSeePlayerChanged;
+    }
+
+    private void Start()
+    {
+        ReferenceManager.BlakeHeroCharacter.onDeath += OnPlayerDeath;
+    }
+    
+    private void OnDestroy()
+    {
+        ReferenceManager.BlakeHeroCharacter.onDeath -= OnPlayerDeath;
     }
 
     private void Die()
@@ -92,5 +101,10 @@ public class AIController : MonoBehaviour
     private void ClearPlayerFocus()
     {
         CombatStateReference.GetVariable().Value = CombatState.Patrol;
+    }
+
+    private void OnPlayerDeath()
+    {
+        ClearPlayerFocus();
     }
 }
