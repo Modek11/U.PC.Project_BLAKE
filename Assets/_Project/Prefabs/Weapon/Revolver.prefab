@@ -181,12 +181,12 @@ MonoBehaviour:
   bulletsSpawnPoint: {fileID: 2211575096222883456}
   bulletPrefab: {fileID: 8745238448183679230, guid: 6737c19ee0289854f924664298e930db,
     type: 3}
-  FireDelayTime: 0.65
+  FireDelayTime: 0.5
   spread: 0
   spreadMinMagnitude: 0
   projectilesPerShot: 1
   MagazineSize: 6
-  Range: 40
+  Range: 15
 --- !u!1001 &2488213421074405073
 PrefabInstance:
   m_ObjectHideFlags: 0
