@@ -248,7 +248,7 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
-  AcceptableDistance: 2.4
+  AcceptableDistance: 1
   MoveSpeed: 12
   Target: {fileID: 0}
   AIController: {fileID: 4195407616045605612}
@@ -367,22 +367,22 @@ PrefabInstance:
     - target: {fileID: 6142990783774354892, guid: b95b54a6a09e88b4bbfc99cc710c47f7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6142990783774354892, guid: b95b54a6a09e88b4bbfc99cc710c47f7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.15947545
+      value: 0.078
       objectReference: {fileID: 0}
     - target: {fileID: 6142990783774354892, guid: b95b54a6a09e88b4bbfc99cc710c47f7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.468
+      value: 1.066
       objectReference: {fileID: 0}
     - target: {fileID: 6142990783774354892, guid: b95b54a6a09e88b4bbfc99cc710c47f7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.783
+      value: 0.372
       objectReference: {fileID: 0}
     - target: {fileID: 6142990783774354892, guid: b95b54a6a09e88b4bbfc99cc710c47f7,
         type: 3}
