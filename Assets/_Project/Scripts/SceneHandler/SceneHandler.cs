@@ -65,7 +65,8 @@ namespace _Project.Scripts.SceneHandler
         private IEnumerator LoadNewSceneAdditive(string sceneToLoadString)
         {
             isSceneLoadedProperly = false;
-            SceneManager.LoadSceneAsync(loadingScene);
+            var loadingSceneAsync = SceneManager.LoadSceneAsync(loadingScene);
+            yield return loadingSceneAsync;
 
             var asyncOperation = SceneManager.LoadSceneAsync(sceneToLoadString, LoadSceneMode.Additive);
         
