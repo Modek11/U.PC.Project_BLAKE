@@ -3148,6 +3148,7 @@ GameObject:
   - component: {fileID: -7787404852900598163}
   - component: {fileID: -66852236823653447}
   - component: {fileID: 7331389265025813093}
+  - component: {fileID: -985876670150846625}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -3221,7 +3222,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 4
-  dashForce: 1.5
+  additionalPlayerSpeed: 0
+  dashForce: 2
   dashCooldown: 1.5
   dashDuration: 0.175
   gunHandlerTransform: {fileID: 3772505426422216946}
@@ -3319,6 +3321,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDashTrail: {fileID: 6425254008251407350}
+--- !u!114 &-985876670150846625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8608387976418621433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37017a0378cc13e43ab5717167a6f1a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  perkScripts: []
+  perksToStartWith: []
 --- !u!1 &8871600578562275924
 GameObject:
   m_ObjectHideFlags: 0

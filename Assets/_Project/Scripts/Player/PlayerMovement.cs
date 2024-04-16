@@ -10,7 +10,8 @@ public class PlayerMovement : MonoBehaviour
     
     [SerializeField] 
     private float playerSpeed;
-
+    [SerializeField]
+    private float additionalPlayerSpeed = 0;
     [SerializeField] 
     private float dashForce;
 
@@ -76,6 +77,21 @@ public class PlayerMovement : MonoBehaviour
         SpeedControl();
     }
 
+    private float CalculateSpeed()
+    {
+        return playerSpeed + additionalPlayerSpeed;
+    }
+
+    public void AddAdditionalSpeed(float speed)
+    {
+        additionalPlayerSpeed += speed;
+    }
+
+    public void RemoveAdditionalSpeed(float speed)
+    {
+        additionalPlayerSpeed -= speed;
+    }
+
     private void MovementHandler(Vector2 dir)
     {
         movementAxis = dir;
@@ -91,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 direction = new Vector3(movementAxis.x, 0, movementAxis.y);
         Vector3 isometricDirection = direction.ToIsometric();
         
-        rigidbodyCache.AddForce(isometricDirection * playerSpeed, ForceMode.VelocityChange);
+        rigidbodyCache.AddForce(isometricDirection * CalculateSpeed(), ForceMode.VelocityChange);
     }
     
    private void Rotation()
@@ -134,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
            return;
        }
 
-       var force = rigidbodyCache.velocity.normalized * playerSpeed * dashForce;
+       var force = rigidbodyCache.velocity.normalized * CalculateSpeed() * dashForce;
        rigidbodyCache.AddForce(force, ForceMode.Impulse);
 
        SetDashCountdowns();
@@ -174,9 +190,9 @@ public class PlayerMovement : MonoBehaviour
        
        
        Vector3 currentVelocity = new Vector3(rbVelocity.x, 0, rbVelocity.z);
-       if (currentVelocity.magnitude > playerSpeed)
+       if (currentVelocity.magnitude > CalculateSpeed())
        {
-           currentVelocity = currentVelocity.normalized * playerSpeed;
+           currentVelocity = currentVelocity.normalized * CalculateSpeed();
            rigidbodyCache.velocity = new Vector3(currentVelocity.x, 0, currentVelocity.z);
        }
    }
