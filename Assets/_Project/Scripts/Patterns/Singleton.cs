@@ -96,7 +96,6 @@ namespace _Project.Scripts.Patterns
         /// <returns>Singleton game object name.</returns>
         protected virtual string GetSingletonName()
         {
-            Debug.Log($"XDDDDDDDD {typeof(TSingleton).Name}");
             return typeof(TSingleton).Name;
         }
 
@@ -117,9 +116,8 @@ namespace _Project.Scripts.Patterns
             }
 
             if (dontDestroyOnLoad) DontDestroyOnLoad(this);
-
-            //if (!string.IsNullOrEmpty(GetSingletonName()))
-                gameObject.name = GetSingletonName();
+            
+            gameObject.name = GetSingletonName();
 
             _initialized = true;
         }
