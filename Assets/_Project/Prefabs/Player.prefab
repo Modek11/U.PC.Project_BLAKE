@@ -1654,7 +1654,7 @@ Transform:
   m_GameObject: {fileID: 3772505426422216949}
   m_LocalRotation: {x: -0.00000015783705, y: -0.000000042966015, z: 0.00000014952798,
     w: 1}
-  m_LocalPosition: {x: 0.118, y: 1.307, z: 0.317}
+  m_LocalPosition: {x: 0.118, y: 1.307, z: 0.351}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3204,7 +3204,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.45
+  m_Radius: 0.25
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1.04, z: 0}
@@ -3220,7 +3220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2159499b039ad94b9fbf234fd33ea24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 5
+  playerSpeed: 4
   dashForce: 1.5
   dashCooldown: 1.5
   dashDuration: 0.175
@@ -3249,7 +3249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cdb5d565c5af9946b400702e20dd17f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactRadius: 2
+  interactRadius: 1.5
   collectMask:
     serializedVersion: 2
     m_Bits: 4096
