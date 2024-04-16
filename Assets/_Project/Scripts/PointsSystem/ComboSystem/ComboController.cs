@@ -9,6 +9,7 @@ namespace _Project.Scripts.PointsSystem.ComboSystem
         private const float MAX_COMBO_COUNT = 2f;
         private const float MIN_COMBO_COUNT = 1f;
         private const float COMBO_INCREASE_STEP = .1f;
+        private const int MIN_KILLS_TO_START_COMBO = 2;
     
         private float comboCounter = 1f;
         private float timer = 0f;
@@ -19,6 +20,7 @@ namespace _Project.Scripts.PointsSystem.ComboSystem
 
         public float ComboCounter => comboCounter;
         public int KillsCounter => killsCounter;
+        public bool ShouldComboStart => killsCounter >= MIN_KILLS_TO_START_COMBO;
 
         private void Update()
         {
@@ -32,7 +34,7 @@ namespace _Project.Scripts.PointsSystem.ComboSystem
 
             isComboActive = true;
 
-            if (comboCounter < MAX_COMBO_COUNT)
+            if (comboCounter < MAX_COMBO_COUNT && ShouldComboStart)
             {
                 comboCounter += COMBO_INCREASE_STEP;
             }

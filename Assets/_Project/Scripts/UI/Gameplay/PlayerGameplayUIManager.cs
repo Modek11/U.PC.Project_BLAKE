@@ -142,20 +142,31 @@ public class PlayerGameplayUIManager : MonoBehaviour
 
     private void UpdatePointsAndCombo(ComboAndPointsValues comboAndPointsValues)
     {
-        if (!killsCounter.gameObject.activeInHierarchy || !comboCounter.gameObject.activeInHierarchy)
+        pointsCounter.text = $"Points: {comboAndPointsValues.Points}";
+        
+        if (!comboAndPointsValues.ShouldComboStart)
+        {
+            return;
+        }
+        
+        var killsCounterActive = killsCounter.gameObject.activeInHierarchy;
+        var comboCounterActive = comboCounter.gameObject.activeInHierarchy;
+        
+        if (!killsCounterActive || !comboCounterActive)
         {
             killsCounter.gameObject.SetActive(true);
             comboCounter.gameObject.SetActive(true);
         }
         
-        pointsCounter.text = $"Points: {comboAndPointsValues.Points}";
         killsCounter.text = $"x{comboAndPointsValues.KillsCounter} KILLS";
         comboCounter.text = $"x{comboAndPointsValues.ComboCounter} Points";
     }
 
     private void HideComboTexts()
     {
-        if (killsCounter.gameObject.activeInHierarchy || comboCounter.gameObject.activeInHierarchy)
+        var killsCounterActive = killsCounter.gameObject.activeInHierarchy;
+        var comboCounterActive = comboCounter.gameObject.activeInHierarchy;
+        if (killsCounterActive || comboCounterActive)
         {
             killsCounter.gameObject.SetActive(false);
             comboCounter.gameObject.SetActive(false);
