@@ -111,7 +111,7 @@ namespace _Project.Scripts.Patterns
             else if (_instance != this)
             {
                 Debug.LogWarning($"Singleton already exits of type {GetType().Name}. Destroying.");
-                Destroy(this);
+                Destroy(this.gameObject);
                 return;
             }
 
