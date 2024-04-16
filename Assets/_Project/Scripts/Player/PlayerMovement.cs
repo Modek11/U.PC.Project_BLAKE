@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rigidbodyCache;
     private Animator animator;
 
+    private float dashCooldownReduction = 0;
     private float dashCooldownCountdown;
     private float dashDurationCountdown;
     private bool dashPerformed;
@@ -38,7 +39,14 @@ public class PlayerMovement : MonoBehaviour
     private Camera mainCamera;
     public event Action OnDashPerformed;
     
-    public float DashCooldown => dashCooldown;
+    public float DashCooldown
+    {
+        get
+        {
+            return Math.Max(dashCooldown - dashCooldownReduction, 0.5f);
+        }
+    }
+
     public float DashCooldownCountdown => dashCooldownCountdown;
 
     private void Awake()
@@ -90,6 +98,16 @@ public class PlayerMovement : MonoBehaviour
     public void RemoveAdditionalSpeed(float speed)
     {
         additionalPlayerSpeed -= speed;
+    }
+
+    public void AddDashCooldownReduction(float reduction)
+    {
+        dashCooldownReduction += reduction;
+    }
+
+    public void RemoveDashCooldownReduction(float reduction)
+    {
+        dashCooldownReduction -= reduction;
     }
 
     private void MovementHandler(Vector2 dir)
@@ -158,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
    
    private void SetDashCountdowns()
    {
-       dashCooldownCountdown = dashCooldown;
+       dashCooldownCountdown = DashCooldown;
        dashDurationCountdown = dashDuration;
        OnDashPerformed?.Invoke();
    }
