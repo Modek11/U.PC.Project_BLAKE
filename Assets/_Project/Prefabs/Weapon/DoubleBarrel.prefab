@@ -151,7 +151,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6969907592589934767, guid: 9d1137cbb8bc7254fa284ca1f304bf0e,
     type: 3}
   FireDelayTime: 0.8
-  spread: 10
+  spread: 13
   spreadMinMagnitude: 0
   projectilesPerShot: 2
   MagazineSize: 4
