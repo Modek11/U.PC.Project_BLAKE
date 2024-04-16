@@ -25,7 +25,12 @@ namespace _Project.Scripts.SceneHandler
 
         [HideInInspector]
         public bool isNormalDifficulty = true; //only for DD purposes
-    
+
+        protected override void Awake()
+        {
+            base.Awake();
+            ReferenceManager.SceneHandler = this;
+        }
 
         public void StartNewGame()
         {
