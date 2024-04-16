@@ -69,8 +69,9 @@ namespace _Project.Scripts
             }
         }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
             Task initializationTask = UnityServices.InitializeAsync();
 #endif

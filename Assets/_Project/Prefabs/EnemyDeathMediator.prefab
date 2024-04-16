@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf3723495ae5504ba33cb57f2b33be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 0
   playerCurrencyController: {fileID: 7042320408617693877}
   comboController: {fileID: 2065355500254027380}
 --- !u!114 &7042320408617693877
@@ -60,7 +61,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b25bc494363ee246b9da5490a8a177d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tmpro: {fileID: 0}
   comboController: {fileID: 2065355500254027380}
 --- !u!114 &2065355500254027380
 MonoBehaviour:
