@@ -36,9 +36,11 @@ namespace _Project.Scripts.ConsoleCommands
 
         private void SpawnGun(string weaponName)
         {
+            weaponName = weaponName.ToLower();
             foreach (var weaponDefinition in weaponDefinitionHolder.ranged)
             {
-                if (weaponName != weaponDefinition.WeaponName)
+                var weaponDefinitionName = weaponDefinition.WeaponName.ToLower();
+                if (weaponName != weaponDefinitionName)
                 {
                     continue;
                 }
@@ -46,6 +48,7 @@ namespace _Project.Scripts.ConsoleCommands
                 var player = ReferenceManager.PlayerInputController.transform;
                 var weaponPickupInstantiated = Instantiate(weaponPickup, player.position, Quaternion.identity);
                 weaponPickupInstantiated.WeaponDefinition = weaponDefinition;
+                return;
             }
         }
         
@@ -57,9 +60,12 @@ namespace _Project.Scripts.ConsoleCommands
         private void AddAmmo(int amount)
         {
             var weaponsManager = ReferenceManager.PlayerInputController.GetComponent<WeaponsManager>();
+            
             var weapon = weaponsManager.Weapons[weaponsManager.ActiveWeaponIndex];
-            var rangedWeapon = (RangedWeapon)weapon;
-            rangedWeapon.BulletsLeft = rangedWeapon.BulletsLeft + amount;
+            if (weapon != null && weapon is RangedWeapon rangedWeapon)
+            {
+                rangedWeapon.BulletsLeft += amount;
+            }
         }
 
         private void InfiniteAmmo(bool obj)
@@ -82,8 +88,10 @@ namespace _Project.Scripts.ConsoleCommands
 
         private void OnPlayerPickupWeapon(global::Weapon weapon)
         {
-            var rangedWeapon = (RangedWeapon)weapon;
-            rangedWeapon.SetInfiniteAmmo(infiniteAmmo);
+            if (weapon != null && weapon is RangedWeapon rangedWeapon)
+            {
+                rangedWeapon.SetInfiniteAmmo(infiniteAmmo);
+            }
         }
     }
 }
