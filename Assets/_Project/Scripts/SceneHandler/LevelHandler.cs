@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using _Project.Scripts;
+using _Project.Scripts.SceneHandler;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

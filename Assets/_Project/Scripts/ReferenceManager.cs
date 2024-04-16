@@ -1,78 +1,79 @@
 using System.Threading.Tasks;
-
-#if ENABLE_CLOUD_SERVICES_ANALYTICS
+using _Project.Scripts.Patterns;
+using _Project.Scripts.Player;
 using Unity.Services.Core;
-#endif
 
-public class ReferenceManager : Singleton<ReferenceManager>
+namespace _Project.Scripts
 {
-    private BlakeHeroCharacter blakeHeroCharacter;
-    private PlayerInputController playerInputController;
-    private SceneHandler sceneHandler;
-    private LevelHandler levelHandler;
-    private MessageRouter messageRouter = new();
-    private RoomManager roomManager;
-
-    public static BlakeHeroCharacter BlakeHeroCharacter
+    public class ReferenceManager : Singleton<ReferenceManager>
     {
-        get => Instance != null ? Instance.blakeHeroCharacter : null;
-        set
+        private BlakeHeroCharacter blakeHeroCharacter;
+        private PlayerInputController playerInputController;
+        private SceneHandler.SceneHandler sceneHandler;
+        private LevelHandler levelHandler;
+        private MessageRouter messageRouter = new();
+        private RoomManager roomManager;
+
+        public static BlakeHeroCharacter BlakeHeroCharacter
         {
-            if (Instance == null) return;
-            Instance.blakeHeroCharacter = value;
+            get => Instance != null ? Instance.blakeHeroCharacter : null;
+            set
+            {
+                if (Instance == null) return;
+                Instance.blakeHeroCharacter = value;
+            }
         }
-    }
     
-    public static PlayerInputController PlayerInputController
-    {
-        get => Instance != null ? Instance.playerInputController : null;
-        set
+        public static PlayerInputController PlayerInputController
         {
-            if (Instance == null) return;   
-            Instance.playerInputController = value;
+            get => Instance != null ? Instance.playerInputController : null;
+            set
+            {
+                if (Instance == null) return;   
+                Instance.playerInputController = value;
+            }
         }
-    }
     
-    public static SceneHandler SceneHandler
-    {
-        get => Instance != null ? Instance.sceneHandler : null;
-        set
+        public static SceneHandler.SceneHandler SceneHandler
         {
-            if (Instance == null) return;
-            Instance.sceneHandler = value;
+            get => Instance != null ? Instance.sceneHandler : null;
+            set
+            {
+                if (Instance == null) return;
+                Instance.sceneHandler = value;
+            }
         }
-    }
 
-    public static LevelHandler LevelHandler
-    {
-        get => Instance != null ? Instance.levelHandler : null;
-        set
+        public static LevelHandler LevelHandler
         {
-            if (Instance == null) return;
-            Instance.levelHandler = value;
+            get => Instance != null ? Instance.levelHandler : null;
+            set
+            {
+                if (Instance == null) return;
+                Instance.levelHandler = value;
+            }
         }
-    }
 
-    public static MessageRouter MessageRouter
-    {
-        get => Instance != null ? Instance.messageRouter : null;
-    }
-
-    public static RoomManager RoomManager
-    {
-        get => Instance != null ? Instance.roomManager : null;
-        set
+        public static MessageRouter MessageRouter
         {
-            if (Instance == null) return;
-            Instance.roomManager = value;
+            get => Instance != null ? Instance.messageRouter : null;
         }
-    }
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
+        public static RoomManager RoomManager
+        {
+            get => Instance != null ? Instance.roomManager : null;
+            set
+            {
+                if (Instance == null) return;
+                Instance.roomManager = value;
+            }
+        }
+
+        private void Awake()
+        {
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
             Task initializationTask = UnityServices.InitializeAsync();
 #endif
+        }
     }
 }

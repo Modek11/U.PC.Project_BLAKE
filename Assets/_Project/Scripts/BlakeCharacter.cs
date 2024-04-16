@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using _Project.Scripts;
 using UnityEngine;
 
 public abstract class BlakeCharacter : MonoBehaviour, IDamageable
