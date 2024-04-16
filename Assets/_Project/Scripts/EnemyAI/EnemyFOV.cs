@@ -8,6 +8,7 @@ public class EnemyFOV : MonoBehaviour
 
     public LayerMask TargetMask;
     public LayerMask ObstacleMask;
+    public Transform raycastOrigin;
 
     [HideInInspector]
     public bool CanSeePlayer;
@@ -33,7 +34,7 @@ public class EnemyFOV : MonoBehaviour
             {
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
-                if (!Physics.Raycast(transform.position + new Vector3(0, 3f, 0), directionToTarget, distanceToTarget, ObstacleMask))
+                if (!Physics.Raycast(raycastOrigin.position, directionToTarget, distanceToTarget, ObstacleMask))
                 {
                     if (!CanSeePlayer)
                     {

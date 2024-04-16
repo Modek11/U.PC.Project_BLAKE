@@ -3344,7 +3344,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.28
   m_Height: 2.13
   m_Direction: 1
   m_Center: {x: 0, y: 0.96, z: 0}
@@ -3357,7 +3357,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7446312994107534779}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.28
   m_Speed: 3.5
   m_Acceleration: 400
   avoidancePriority: 50
@@ -3409,7 +3409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a4eab2db93a064facfcf5eb2875339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Radius: 12.5
+  Radius: 12
   Angle: 120
   TargetMask:
     serializedVersion: 2
@@ -3417,6 +3417,7 @@ MonoBehaviour:
   ObstacleMask:
     serializedVersion: 2
     m_Bits: 1280
+  raycastOrigin: {fileID: 2290463781106356550}
   CanSeePlayer: 0
 --- !u!114 &6426853079096780474
 MonoBehaviour:
@@ -3479,7 +3480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: -1274732412291600798}
   repeatOnFinish: 1
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -3870,8 +3871,8 @@ MonoBehaviour:
   title: FindPositionAroundTarget
   rect:
     serializedVersion: 2
-    x: -163
-    y: 479
+    x: -160
+    y: 480
     width: 160
     height: 59
   parent: {fileID: 7161793314436595745}
@@ -3911,7 +3912,7 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   AcceptableDistance: 1
-  MoveSpeed: 7
+  MoveSpeed: 6
   LocationReference:
     useConstant: 0
     mode: 0
@@ -4282,7 +4283,7 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   AcceptableDistance: 1
-  MoveSpeed: 7
+  MoveSpeed: 6
   LocationReference:
     useConstant: 0
     mode: 0
