@@ -66,6 +66,12 @@ namespace _Project.Scripts.ConsoleCommands
         {
             infiniteAmmo = obj;
             var weaponsManager = ReferenceManager.PlayerInputController.GetComponent<WeaponsManager>();
+            
+            var secondWeapon = weaponsManager.Weapons[1];
+            if (secondWeapon != null && secondWeapon is RangedWeapon currentRangedWeapon)
+            {
+                currentRangedWeapon.SetInfiniteAmmo(infiniteAmmo);
+            }
 
             if (!infiniteAmmoSubscribed)
             {
