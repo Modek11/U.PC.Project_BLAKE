@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponDefinition: {fileID: 11400000, guid: ba6d981959989e54081af014222d2c3f, type: 2}
-  spereCastRadius: 0.7
+  spereCastRadius: 0.85
   maxDistance: 1.25
   layerMask:
     serializedVersion: 2
