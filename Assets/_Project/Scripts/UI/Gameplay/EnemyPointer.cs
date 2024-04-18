@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _Project.Scripts;
 using UnityEngine;
 
 public class EnemyPointer : MonoBehaviour
@@ -25,7 +26,7 @@ public class EnemyPointer : MonoBehaviour
         }
         if (player == null || roomManager == null) return;
         offScreenEnemies.Clear();
-        foreach (var enemy in roomManager.GetActiveRoom().GetSpawnedEnemies())
+        foreach (var enemy in roomManager.GetActiveRoom()?.GetSpawnedEnemies())
         {
             if (enemy == null) continue;
             Vector3 viewportPosition = Camera.main.WorldToViewportPoint(enemy.transform.position);

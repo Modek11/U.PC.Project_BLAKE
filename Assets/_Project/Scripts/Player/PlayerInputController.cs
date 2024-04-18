@@ -1,129 +1,125 @@
 using System;
+using _Project.Scripts.Patterns;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputController : MonoBehaviour, PlayerInputSystem.IGameplayActions
+namespace _Project.Scripts.Player
 {
-    private PlayerInputSystem inputSystem;
-
-    private void Awake()
+    public class PlayerInputController : Singleton<PlayerInputController>, PlayerInputSystem.IGameplayActions
     {
-        inputSystem = new PlayerInputSystem();
-        inputSystem.Gameplay.SetCallbacks(this);
-        SetUpControls();
-        if (ReferenceManager.PlayerInputController != null && ReferenceManager.PlayerInputController != this)
+        private PlayerInputSystem inputSystem;
+
+        private void Awake()
         {
-            Destroy(gameObject);
-        }
-        else
-        {
+            inputSystem = new PlayerInputSystem();
+            inputSystem.Gameplay.SetCallbacks(this);
+            SetUpControls();
             ReferenceManager.PlayerInputController = this;
-            DontDestroyOnLoad(ReferenceManager.PlayerInputController);
         }
-    }
 
-    void SetUpControls()
-    {
-        inputSystem.Enable();
-
-        //Shooting
-    }
-
-    public event Action<Vector2> movementEvent;
-    public event Action<Vector2> mousePositionEvent;
-
-    public event Action onShootStartEvent;
-    public event Action shootEvent;
-    public event Action onShootCancelEvent;
-    public event Action<int> changeWeaponEvent;
-    public event Action interactEvent;
-    public event Action onMapPressEvent; 
-    public event Action onMapReleaseEvent;
-    public event Action dashEvent;
-    public event Action escapeButtonEvent;
-
-    public void OnMovement(InputAction.CallbackContext context)
-    {
-        movementEvent?.Invoke(context.ReadValue<Vector2>());
-    }
-
-    public void OnChangeWeapon(InputAction.CallbackContext context)
-    {
-        if (context.performed)
+        void SetUpControls()
         {
-            changeWeaponEvent?.Invoke((int)context.ReadValue<float>() - 1);
+            inputSystem.Enable();
+
+            //Shooting
         }
-    }
 
-    public void OnShooting(InputAction.CallbackContext context)
-    {
-        if (context.started) onShootStartEvent?.Invoke();
-        if (context.canceled) onShootCancelEvent?.Invoke();
+        public event Action<Vector2> movementEvent;
+        public event Action<Vector2> mousePositionEvent;
 
-        if(context.performed)
+        public event Action onShootStartEvent;
+        public event Action shootEvent;
+        public event Action onShootCancelEvent;
+        public event Action<int> changeWeaponEvent;
+        public event Action interactEvent;
+        public event Action onMapPressEvent; 
+        public event Action onMapReleaseEvent;
+        public event Action dashEvent;
+        public event Action escapeButtonEvent;
+
+        public void OnMovement(InputAction.CallbackContext context)
         {
-            shootEvent?.Invoke();
+            movementEvent?.Invoke(context.ReadValue<Vector2>());
         }
-    }
 
-    public void OnInteract(InputAction.CallbackContext context)
-    {
-        if(context.performed)
+        public void OnChangeWeapon(InputAction.CallbackContext context)
         {
-            interactEvent?.Invoke();
+            if (context.performed)
+            {
+                changeWeaponEvent?.Invoke((int)context.ReadValue<float>() - 1);
+            }
         }
-    }
 
-    public void OnMap(InputAction.CallbackContext context)
-    {
-        if (context.started)
+        public void OnShooting(InputAction.CallbackContext context)
         {
-            onMapPressEvent?.Invoke();
-        }
-        else if (context.canceled)
-        {
-            onMapReleaseEvent?.Invoke();
-        }
-    }
+            if (context.started) onShootStartEvent?.Invoke();
+            if (context.canceled) onShootCancelEvent?.Invoke();
 
-    public void OnMousePosition(InputAction.CallbackContext context)
-    {
-        mousePositionEvent?.Invoke(context.ReadValue<Vector2>());
-    }
-
-    public void OnDash(InputAction.CallbackContext context)
-    {
-        if(context.performed)
-        {
-            dashEvent?.Invoke();
+            if(context.performed)
+            {
+                shootEvent?.Invoke();
+            }
         }
-    }
 
-    public void OnEscapeButton(InputAction.CallbackContext context)
-    {
-        if (context.performed)
+        public void OnInteract(InputAction.CallbackContext context)
         {
-            escapeButtonEvent?.Invoke();
+            if(context.performed)
+            {
+                interactEvent?.Invoke();
+            }
         }
-    }
+
+        public void OnMap(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                onMapPressEvent?.Invoke();
+            }
+            else if (context.canceled)
+            {
+                onMapReleaseEvent?.Invoke();
+            }
+        }
+
+        public void OnMousePosition(InputAction.CallbackContext context)
+        {
+            mousePositionEvent?.Invoke(context.ReadValue<Vector2>());
+        }
+
+        public void OnDash(InputAction.CallbackContext context)
+        {
+            if(context.performed)
+            {
+                dashEvent?.Invoke();
+            }
+        }
+
+        public void OnEscapeButton(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                escapeButtonEvent?.Invoke();
+            }
+        }
     
-    public void EnableInputSystem()
-    {
-        inputSystem.Enable();
-    }
+        public void EnableInputSystem()
+        {
+            inputSystem.Enable();
+        }
 
-    public void DisableInputSystem()
-    {
-        inputSystem.Disable();
-    }
+        public void DisableInputSystem()
+        {
+            inputSystem.Disable();
+        }
 
-    private void OnEnable()
-    {
-        EnableInputSystem();
-    }
+        private void OnEnable()
+        {
+            EnableInputSystem();
+        }
 
-    private void OnDisable()
-    {
-        DisableInputSystem();
+        private void OnDisable()
+        {
+            DisableInputSystem();
+        }
     }
 }
