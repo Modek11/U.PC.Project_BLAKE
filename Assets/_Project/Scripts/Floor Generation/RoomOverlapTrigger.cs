@@ -48,8 +48,6 @@ public class RoomOverlapTrigger : MonoBehaviour
     {
 
         playerInside = false;
-        if (other.CompareTag("Player"))
-        parent.EnableFog();
     }
 
     public bool IsPlayerInside()
