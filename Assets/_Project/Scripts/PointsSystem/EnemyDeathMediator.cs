@@ -1,20 +1,23 @@
 using System;
+using _Project.Scripts.PointsSystem.ComboSystem;
 using UnityEngine;
 
 namespace _Project.Scripts.PointsSystem
 {
     public struct ComboAndPointsValues
     {
-        public ComboAndPointsValues(float points, float comboCounter, int killsCounter)
+        public ComboAndPointsValues(float points, float comboCounter, int killsCounter, bool shouldComboStart)
         {
             Points = points;
             ComboCounter = comboCounter;
             KillsCounter = killsCounter;
+            ShouldComboStart = shouldComboStart;
         }
         
-        public float Points;
-        public float ComboCounter;
-        public int KillsCounter;
+        public readonly float Points;
+        public readonly float ComboCounter;
+        public readonly int KillsCounter;
+        public readonly bool ShouldComboStart;
     }
     
     public class EnemyDeathMediator : Singleton<EnemyDeathMediator>
@@ -25,6 +28,7 @@ namespace _Project.Scripts.PointsSystem
         private float points => playerCurrencyController.Points;
         private float comboCounter => comboController.ComboCounter;
         private int killsCounter => comboController.KillsCounter;
+        private bool shouldComboStart => comboController.ShouldComboStart;
         
         public event Action<ComboAndPointsValues> OnRegisteredEnemyDeath;
 
@@ -32,10 +36,11 @@ namespace _Project.Scripts.PointsSystem
         
         public void RegisterEnemyDeath(int pointsForKill, EnemyTypeEnum enemyTypeEnum)
         {
-            playerCurrencyController.RegisterEnemyDeath(pointsForKill);
             comboController.RegisterEnemyDeath();
-            
-            OnRegisteredEnemyDeath?.Invoke(new ComboAndPointsValues(points, comboCounter, killsCounter));
+            playerCurrencyController.RegisterEnemyDeath(pointsForKill);
+
+            var values = new ComboAndPointsValues(points, comboCounter, killsCounter, shouldComboStart);
+            OnRegisteredEnemyDeath?.Invoke(values);
         }
     }
 }

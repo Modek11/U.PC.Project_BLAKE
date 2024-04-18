@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using _Project.Scripts;
+using _Project.Scripts.Floor_Generation;
 using UnityEngine;
 
 [RequireComponent(typeof(FloorManager))]
@@ -104,7 +106,7 @@ public class FloorGenerator : MonoBehaviour
         {
             room.gameObject.SetActive(true);
         }
-        roomManager.SetActiveRoom(_startingRoom.GetComponent<Room>());
+        //roomManager.SetActiveRoom(_startingRoom.GetComponent<Room>());
         _startingRoom.GetComponent<Room>().SeeRoom();
 
         floorManager.OnFloorGeneratorEnd(_startingRoom.GetComponent<Room>().GetSpawnPointPosition());

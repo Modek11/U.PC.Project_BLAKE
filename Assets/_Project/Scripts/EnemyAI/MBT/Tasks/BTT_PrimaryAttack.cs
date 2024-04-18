@@ -1,3 +1,4 @@
+using _Project.Scripts;
 using MBT;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ public class BTT_PrimaryAttack : Leaf
         }
         if (AIController.Weapon == null) return NodeResult.failure;
         if (ReferenceManager.BlakeHeroCharacter == null) return NodeResult.failure;
+        if (!AIController.Weapon.CanAttack()) return NodeResult.failure;
         if (!AIController.Weapon.CanPrimaryAttack()) return NodeResult.failure;
 
         AIController.Weapon.PrimaryAttack();

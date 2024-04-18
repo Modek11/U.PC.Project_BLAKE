@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using _Project.Scripts;
+using _Project.Scripts.Patterns;
+using _Project.Scripts.SceneHandler;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(SceneHandler))]
-public class LevelHandler : MonoBehaviour
+public class LevelHandler : Singleton<LevelHandler>
 {
     [SerializeField]
     private int levelIndex = 0;
@@ -13,26 +14,11 @@ public class LevelHandler : MonoBehaviour
     private LevelList levelNames;
     private SceneHandler sceneHandler;
 
-    private void Awake()
-    {
-
-        
-        
-    }
-
     private void Start()
     {
-        if (ReferenceManager.LevelHandler != null && ReferenceManager.LevelHandler != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            ReferenceManager.LevelHandler = this;
-            DontDestroyOnLoad(ReferenceManager.LevelHandler);
-        }
+        ReferenceManager.LevelHandler = this;
 
-        sceneHandler = GetComponent<SceneHandler>();
+        sceneHandler = ReferenceManager.SceneHandler;
 
         string currentSceneName = SceneManager.GetActiveScene().name;
         if (levelNames.levelNames.Contains(currentSceneName))
