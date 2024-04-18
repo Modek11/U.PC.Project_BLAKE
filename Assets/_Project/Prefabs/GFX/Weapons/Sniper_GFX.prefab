@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 8449238279393241179}
   - component: {fileID: 3177608764159168655}
   m_Layer: 0
-  m_Name: Sniper
+  m_Name: Sniper_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

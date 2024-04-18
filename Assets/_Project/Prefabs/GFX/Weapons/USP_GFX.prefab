@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2043854990322133841}
   - component: {fileID: 933883929431254540}
   m_Layer: 0
-  m_Name: USP
+  m_Name: USP_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

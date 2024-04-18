@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 2514246732597990771}
   - component: {fileID: 6261476461590396923}
   m_Layer: 0
-  m_Name: Revolver
+  m_Name: Revolver_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

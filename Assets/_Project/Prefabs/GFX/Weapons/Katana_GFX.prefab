@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9118618333315866766}
   - component: {fileID: 6269047129226079764}
   m_Layer: 0
-  m_Name: Baton
+  m_Name: Baton_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 7645278601796714715}
   - component: {fileID: 6910356497106173633}
   m_Layer: 0
-  m_Name: Katana
+  m_Name: Katana_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
