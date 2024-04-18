@@ -1,62 +1,67 @@
 using System;
 using UnityEngine;
 
-public class ComboController : MonoBehaviour
+namespace _Project.Scripts.PointsSystem.ComboSystem
 {
-    private const float MAX_TIMER_VALUE = 3f;
-    private const float MAX_COMBO_COUNT = 2f;
-    private const float MIN_COMBO_COUNT = 1f;
-    private const float COMBO_INCREASE_STEP = .1f;
+    public class ComboController : MonoBehaviour
+    {
+        private const float MAX_TIMER_VALUE = 3f;
+        private const float MAX_COMBO_COUNT = 2f;
+        private const float MIN_COMBO_COUNT = 1f;
+        private const float COMBO_INCREASE_STEP = .1f;
+        private const int MIN_KILLS_TO_START_COMBO = 2;
     
-    private float comboCounter = 1f;
-    private float timer = 0f;
-    private int killsCounter = 0;
-    private bool isComboActive = false;
+        private float comboCounter = 1f;
+        private float timer = 0f;
+        private int killsCounter = 0;
+        private bool isComboActive = false;
 
-    public event Action OnComboTimerEnd;
+        public event Action OnComboTimerEnd;
 
-    public float ComboCounter => comboCounter;
-    public int KillsCounter => killsCounter;
+        public float ComboCounter => comboCounter;
+        public int KillsCounter => killsCounter;
+        public bool ShouldComboStart => killsCounter >= MIN_KILLS_TO_START_COMBO;
 
-    private void Update()
-    {
-        CountdownTime();
-    }
-
-    public void RegisterEnemyDeath()
-    {
-        timer = MAX_TIMER_VALUE;
-        killsCounter++;
-
-        isComboActive = true;
-
-        if (comboCounter < MAX_COMBO_COUNT)
+        private void Update()
         {
-            comboCounter += COMBO_INCREASE_STEP;
+            CountdownTime();
         }
-    }
+
+        public void RegisterEnemyDeath()
+        {
+            timer = MAX_TIMER_VALUE;
+            killsCounter++;
+
+            isComboActive = true;
+
+            if (comboCounter < MAX_COMBO_COUNT && ShouldComboStart)
+            {
+                comboCounter += COMBO_INCREASE_STEP;
+            }
+        }
     
-    private void CountdownTime()
-    {
-        if (!isComboActive)
+        private void CountdownTime()
         {
-            return;
-        }
+            if (!isComboActive)
+            {
+                return;
+            }
         
-        timer -= Time.deltaTime;
+            timer -= Time.deltaTime;
         
-        if (timer < 0)
-        {
-            ResetValues();
+            if (timer < 0)
+            {
+                ResetValues();
+            }
         }
-    }
 
-    private void ResetValues()
-    {
-        OnComboTimerEnd?.Invoke();
-        timer = 0f;
-        killsCounter = 0;
-        comboCounter = MIN_COMBO_COUNT;
-        isComboActive = false;
+        private void ResetValues()
+        {
+            OnComboTimerEnd?.Invoke();
+            timer = 0f;
+            killsCounter = 0;
+            comboCounter = MIN_COMBO_COUNT;
+            isComboActive = false;
+        }
     }
 }
