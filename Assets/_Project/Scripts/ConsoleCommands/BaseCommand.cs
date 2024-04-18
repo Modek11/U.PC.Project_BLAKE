@@ -47,6 +47,7 @@ namespace _Project.Scripts.ConsoleCommands
         protected virtual void Initialize()
         {
             isInitialized = true;
+            DontDestroyOnLoad(this);
         }
     }
 }

@@ -1,77 +1,133 @@
+using System.Linq;
 using UnityEngine;
 
-/// <summary>
-/// MONOBEHAVIOR PSEUDO SINGLETON ABSTRACT CLASS
-/// usage	: best is to be attached to a gameobject but if not that is ok,
-/// 		: this will create one on first access
-/// example	: '''public sealed class MyClass : Singleton<MyClass> {'''
-/// references	: http://tinyurl.com/d498g8c
-/// 		: http://tinyurl.com/cc73a9h
-/// 		: http://unifycommunity.com/wiki/index.php?title=Singleton
-/// </summary>
-public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+namespace _Project.Scripts.Patterns
 {
+    /// <summary>
+    /// Abstract singleton class for Unity. Updated with possible errors: 
+    /// - Doesn't create a new singleton if it is in scene. 
+    /// - Singleton has an initialize method which is called on creation, finding one from scene, or awake. Which makes sure initialization always happen before using it. 
+    /// - It doesn't create a new single if you try to access it OnDestroy (e.g. game quit). Returns null instead.
+    /// </summary>
+    /// <typeparam name="TSingleton">Type of singleton. (Same as class inheriting from it.)</typeparam>
+    public abstract class Singleton<TSingleton> : MonoBehaviour
+        where TSingleton : Singleton<TSingleton>
+    {
+        /// <summary>
+        /// A flag which is set to true when Application.quitting event is fired.
+        /// Used to stop singleton from spawning if it is used OnDestroy.
+        /// </summary>
+        private static bool _applicationIsQuitting = false;
 
-	private static T _instance = null;
-	
-	public static bool IsAwake { get { return (_instance != null); } }
-			
-	/// <summary>
-	/// gets the instance of this Singleton
-	/// use this for all instance calls:
-	/// MyClass.Instance.MyMethod();
-	/// or make your public methods static
-	/// and have them use Instance
-	/// </summary>
-	public static T Instance {
-		get {
-			if (_instance == null) {
-				_instance = (T)FindObjectOfType (typeof(T));
-				if (_instance == null) {
-					
-					string goName = typeof(T).ToString ();			
-					
-					GameObject go = GameObject.Find (goName);
-					if (go == null) {
-						go = new GameObject ();
-						go.name = goName;
-					}
-					
-					_instance = go.AddComponent<T> ();					
-				}
-			}
-			return _instance;
-		}
-	}
-	
-	/// <summary>
-	/// for garbage collection
-	/// </summary>
-	public virtual void OnApplicationQuit ()
-	{
-		// release reference on exit
-		_instance = null;
-	}
-	
-	// in your child class you can implement Awake()
-	// and add any initialization code you want such as
-	// DontDestroyOnLoad(go);
-	// if you want this to persist across loads
-	// or if you want to set a parent object with SetParent()
-	
-	/// <summary>
-	/// parent this to another gameobject by string
-	/// call from Awake if you so desire
-	/// </summary>
-	protected void SetParent (string parentGOName)
-	{
-		if (parentGOName != null) {
-			GameObject parentGO = GameObject.Find (parentGOName);
-			if (parentGO == null) {
-				parentGO = new GameObject ();
-				parentGO.name = parentGOName;
-			}
-			this.transform.parent = parentGO.transform;
-		}
-	}
+        /// <summary>
+        /// Has initialization code been called?
+        /// </summary>
+        private bool _initialized = false;
+
+        /// <summary>
+        /// Backing field of the instance.
+        /// </summary>
+        private static TSingleton _instance;
+
+        /// <summary>
+        /// Static property to access singleton. Creates a new one if it doesn't exist.
+        /// </summary>
+        public static TSingleton Instance
+        {
+            get
+            {
+                if (_applicationIsQuitting) return null;
+                if (_instance != null) return _instance;
+                // Try to find a singleton in scene.
+                var foundSingletons = Resources.FindObjectsOfTypeAll<TSingleton>().ToList();
+                if (foundSingletons.Count != 0)  // is not (null or empty)
+                {
+                    // choose one that has already initialized.
+                    _instance = foundSingletons.FirstOrDefault(singleton => singleton._initialized);
+                    // if none have initialised then choose first one.
+                    if (_instance == null) _instance = foundSingletons[0];
+                    // destroy th rest.
+                    foundSingletons.Remove(_instance);
+                    if (foundSingletons.Count > 0)
+                    {
+                        Debug.LogWarning($"Found more than one singleton of type: {_instance.GetType()} when searching in scene. Make sure scene only has one instance. Removing them.");
+                        for (var idx = foundSingletons.Count - 1; idx >= 1; idx--) Destroy(foundSingletons[idx]);
+                    }
+                }
+                else
+                {
+                    // otherwise create one.
+                    var singleton = new GameObject("Singleton").AddComponent<TSingleton>();
+                    _instance = singleton.GetComponent<TSingleton>();
+                    Debug.Log($"Singleton of type: {nameof(TSingleton)} was created on the fly.");
+                }
+
+                // initialize singleton if it hasn't been initialized.
+                if (_instance._initialized) return _instance;
+                _instance.Initialize();
+                _instance._initialized = true;
+
+                return _instance;
+            }
+        }
+
+        /// <summary>
+        /// Should we mark this singleton object as don't destroy on load.
+        /// <remarks>It is best to keep a singleton on one game object as it may mark the game object as don't destroy on load (Unity can be weird).</remarks>
+        /// </summary>
+        public bool dontDestroyOnLoad = false;
+
+        /// <summary>
+        /// Sets up the instance field. And names the game object.
+        /// </summary>
+        protected virtual void Awake()
+        {
+            if (_initialized == false)
+            {
+                Initialize();
+                _initialized = true;
+            }
+        }
+
+        /// <summary>
+        /// Needs to be overwritten by child class. Give it a descriptive name with "Singleton" suffix.
+        /// Return null or empty string to not overwrite name in scene. 
+        /// </summary>
+        /// <returns>Singleton game object name.</returns>
+        protected virtual string GetSingletonName()
+        {
+            return typeof(TSingleton).Name;
+        }
+
+        /// <summary>
+        /// Initialize is called in Awake and on creation. You should put any code that should run before this singleton is usable.
+        /// Since it can create an instance on the fly, it's is not guaranteed that Awake will run before you access it.
+        /// But this will run just after it is created on fly or on Awake.
+        /// <remarks>Call base on override.</remarks>
+        /// </summary>
+        protected virtual void Initialize()
+        {
+            if (_instance == null) _instance = this as TSingleton;
+            else if (_instance != this)
+            {
+                Debug.LogWarning($"Singleton already exits of type {GetType().Name}. Destroying.");
+                Destroy(this.gameObject);
+                return;
+            }
+
+            if (dontDestroyOnLoad) DontDestroyOnLoad(this);
+            
+            gameObject.name = GetSingletonName();
+
+            _initialized = true;
+        }
+
+        /// <summary>
+        /// We need this method because we were getting following error:
+        /// 'Some objects were not cleaned up when closing the scene. (Did you spawn new GameObjects from OnDestroy?)'
+        /// Which is caused because objects try to access destroyed singleton OnDisable (which is called last on quit) and since it doesn't exists, it create a new instance.
+        /// </summary>
+        private void OnApplicationQuit() => _applicationIsQuitting = true;
+
+    }
 }

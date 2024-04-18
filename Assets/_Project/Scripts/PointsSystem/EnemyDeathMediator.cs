@@ -1,4 +1,5 @@
 using System;
+using _Project.Scripts.Patterns;
 using UnityEngine;
 
 namespace _Project.Scripts.PointsSystem
