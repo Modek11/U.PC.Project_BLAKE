@@ -17,4 +17,4 @@ MonoBehaviour:
   ScoringEquation: 0
   DistanceTo: {fileID: 0}
   MinDistance: 1
-  MaxDistance: 17
+  MaxDistance: 10

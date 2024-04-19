@@ -334,7 +334,7 @@ public class FloorGenerator : MonoBehaviour
         foreach (BoxCollider collider in roomColliders)
         {
             Collider[] overlaps = Physics.OverlapBox(
-                newRoom.transform.TransformPoint(collider.center),
+                newRoom.transform.TransformPoint(collider.center + collider.transform.localPosition),
                 collider.size / 2,
                 newRoom.transform.rotation,
                 layerMask,

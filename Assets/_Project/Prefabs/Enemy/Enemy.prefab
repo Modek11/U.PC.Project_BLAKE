@@ -1,67 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &341416795
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 341416796}
-  m_Layer: 0
-  m_Name: StrafeLeft
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &341416796
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 341416795}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7790469361782224641}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1709301180
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1709301181}
-  m_Layer: 0
-  m_Name: StrafeRight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1709301181
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1709301180}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7790469361782224641}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &751312178214351
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,8 +435,8 @@ Transform:
   m_GameObject: {fileID: 734739417814232533}
   m_LocalRotation: {x: 0.000000081460335, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6374920037703418956}
   m_Father: {fileID: 7790469361782224641}
@@ -3351,14 +3289,12 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1201787963843553183}
   - {fileID: 7303044552361109284}
   - {fileID: 6041966008548309468}
   - {fileID: 4646812212058794984}
-  - {fileID: 341416796}
-  - {fileID: 1709301181}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3408,10 +3344,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.8
-  m_Height: 3.86
+  m_Radius: 0.28
+  m_Height: 2.13
   m_Direction: 1
-  m_Center: {x: 0, y: 1.88, z: 0}
+  m_Center: {x: 0, y: 0.96, z: 0}
 --- !u!195 &4250661716291628406
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3421,7 +3357,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7446312994107534779}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.28
   m_Speed: 3.5
   m_Acceleration: 400
   avoidancePriority: 50
@@ -3430,7 +3366,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 3.5
+  m_Height: 2.04
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -3473,7 +3409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a4eab2db93a064facfcf5eb2875339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Radius: 30
+  Radius: 12
   Angle: 120
   TargetMask:
     serializedVersion: 2
@@ -3481,6 +3417,7 @@ MonoBehaviour:
   ObstacleMask:
     serializedVersion: 2
     m_Bits: 1280
+  raycastOrigin: {fileID: 2290463781106356550}
   CanSeePlayer: 0
 --- !u!114 &6426853079096780474
 MonoBehaviour:
@@ -3543,7 +3480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: -1274732412291600798}
   repeatOnFinish: 1
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -3911,7 +3848,7 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   AcceptableDistance: 1
-  MoveSpeed: 5
+  MoveSpeed: 2.5
   LocationReference:
     useConstant: 0
     mode: 0
@@ -3934,8 +3871,8 @@ MonoBehaviour:
   title: FindPositionAroundTarget
   rect:
     serializedVersion: 2
-    x: -163
-    y: 479
+    x: -160
+    y: 480
     width: 160
     height: 59
   parent: {fileID: 7161793314436595745}
@@ -3975,7 +3912,7 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   AcceptableDistance: 1
-  MoveSpeed: 12
+  MoveSpeed: 6
   LocationReference:
     useConstant: 0
     mode: 0
@@ -4282,8 +4219,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GeneratorType: 0
   CenterOfItems: {fileID: 0}
-  Radius: 28
-  SpaceBetween: 4
+  Radius: 10
+  SpaceBetween: 2
   EnvQueryTests:
   - {fileID: 11400000, guid: 9bfac3242f707aa40b96e49c0a47fb30, type: 2}
   - {fileID: 11400000, guid: 699e8d26807635b4fae2bae2eaf834e6, type: 2}
@@ -4346,7 +4283,7 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   AcceptableDistance: 1
-  MoveSpeed: 12
+  MoveSpeed: 6
   LocationReference:
     useConstant: 0
     mode: 0

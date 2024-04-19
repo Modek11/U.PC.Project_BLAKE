@@ -9,6 +9,8 @@ public class MechanicalDoor : Door, IInteractable
     [SerializeField]
     private RoomConnector connector;
     [SerializeField]
+    private Transform uiHolder;
+    [SerializeField]
     private bool interactable = false;
     [SerializeField]
     private bool open = false;
@@ -80,7 +82,7 @@ public class MechanicalDoor : Door, IInteractable
 
     public Vector3 GetPositionForUI()
     {
-        return transform.position + transform.forward + Vector3.up;
+        return uiHolder.position;
     }
 
 }

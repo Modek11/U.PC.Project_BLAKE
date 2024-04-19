@@ -252,6 +252,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 610f869a8b563724da355d8fe7bc60c3,
         type: 2}
+    - target: {fileID: 3194443941187315569, guid: e02126aae2951bf4b9b740ef58abdbcf,
+        type: 3}
+      propertyPath: treasureRoomsAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3194443941187315574, guid: e02126aae2951bf4b9b740ef58abdbcf,
         type: 3}
       propertyPath: m_RootOrder
@@ -459,7 +464,7 @@ PrefabInstance:
     - target: {fileID: 7478649078521535363, guid: 937f6125761fadc4abee1023b0ea40f9,
         type: 3}
       propertyPath: orthographic size
-      value: 15
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 7478649078521535363, guid: 937f6125761fadc4abee1023b0ea40f9,
         type: 3}
@@ -499,22 +504,22 @@ PrefabInstance:
     - target: {fileID: 7478649078521535364, guid: 937f6125761fadc4abee1023b0ea40f9,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.82812756
+      value: 0.7708548
       objectReference: {fileID: 0}
     - target: {fileID: 7478649078521535364, guid: 937f6125761fadc4abee1023b0ea40f9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.4095829
+      value: 0.50925076
       objectReference: {fileID: 0}
     - target: {fileID: 7478649078521535364, guid: 937f6125761fadc4abee1023b0ea40f9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.34302166
+      value: 0.31929848
       objectReference: {fileID: 0}
     - target: {fileID: 7478649078521535364, guid: 937f6125761fadc4abee1023b0ea40f9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.16965479
+      value: -0.21093856
       objectReference: {fileID: 0}
     - target: {fileID: 7478649078521535364, guid: 937f6125761fadc4abee1023b0ea40f9,
         type: 3}

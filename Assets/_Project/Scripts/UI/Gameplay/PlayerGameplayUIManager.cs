@@ -188,7 +188,7 @@ namespace _Project.Scripts.UI.Gameplay
             while(playerMovement.DashCooldownCountdown > 0)
             {
                 dashCooldownImage.fillAmount = playerMovement.DashCooldownCountdown/playerMovement.DashCooldown;
-                dashCooldownUI.transform.position = player.transform.position + Vector3.up * 0.6f;
+                dashCooldownUI.transform.position = player.transform.position + Vector3.up * 0.2f;
                 dashCooldownUI.transform.LookAt(Camera.main.transform);
 
                 yield return new WaitForEndOfFrame();

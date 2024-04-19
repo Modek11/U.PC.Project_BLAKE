@@ -1523,7 +1523,7 @@ Transform:
   m_GameObject: {fileID: 3772505426192782039}
   m_LocalRotation: {x: -0.00000015783705, y: -0.000000042966015, z: 0.00000014952798,
     w: 1}
-  m_LocalPosition: {x: 0.15947545, y: 2.6421664, z: 0.83950216}
+  m_LocalPosition: {x: 0.118, y: 1.676, z: 0.338}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1654,7 +1654,7 @@ Transform:
   m_GameObject: {fileID: 3772505426422216949}
   m_LocalRotation: {x: -0.00000015783705, y: -0.000000042966015, z: 0.00000014952798,
     w: 1}
-  m_LocalPosition: {x: 0.15947545, y: 2.6421664, z: 0.83950216}
+  m_LocalPosition: {x: 0.118, y: 1.307, z: 0.351}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2098,7 +2098,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5057555200360379558}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.94, z: 0}
+  m_LocalPosition: {x: 0, y: 2.015, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3204,10 +3204,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.45
-  m_Height: 3.5
+  m_Radius: 0.25
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: -0.000030308962, y: 2.3, z: 0}
+  m_Center: {x: 0, y: 1.04, z: 0}
 --- !u!114 &5545414051132038897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3220,10 +3220,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2159499b039ad94b9fbf234fd33ea24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 8
-  dashForce: 2
+  playerSpeed: 4
+  dashForce: 1.5
   dashCooldown: 1.5
-  dashDuration: 0.25
+  dashDuration: 0.175
   gunHandlerTransform: {fileID: 3772505426422216946}
 --- !u!114 &5545414051132038907
 MonoBehaviour:
@@ -3249,14 +3249,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cdb5d565c5af9946b400702e20dd17f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactRadius: 5
+  interactRadius: 1.65
   collectMask:
     serializedVersion: 2
     m_Bits: 4096
   raycastMask:
     serializedVersion: 2
     m_Bits: 4353
-  playerHead: {fileID: 3376777296779623240}
+  playerHead: {fileID: 7222346875757800973}
   interactUI: {fileID: 0}
 --- !u!114 &5545414051132038904
 MonoBehaviour:
@@ -3435,7 +3435,7 @@ PrefabInstance:
     - target: {fileID: 6734674225229350131, guid: 5214ff9f4af73fc4a9258cc6244eee80,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: 1.477
       objectReference: {fileID: 0}
     - target: {fileID: 6734674225229350131, guid: 5214ff9f4af73fc4a9258cc6244eee80,
         type: 3}
@@ -3475,6 +3475,26 @@ PrefabInstance:
     - target: {fileID: 6734674225229350131, guid: 5214ff9f4af73fc4a9258cc6244eee80,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6734674225229350140, guid: 5214ff9f4af73fc4a9258cc6244eee80,
+        type: 3}
+      propertyPath: m_Time
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6734674225229350140, guid: 5214ff9f4af73fc4a9258cc6244eee80,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6734674225229350140, guid: 5214ff9f4af73fc4a9258cc6244eee80,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 0.3688521
+      objectReference: {fileID: 0}
+    - target: {fileID: 6734674225229350140, guid: 5214ff9f4af73fc4a9258cc6244eee80,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].value
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6734674225229350141, guid: 5214ff9f4af73fc4a9258cc6244eee80,
@@ -3541,7 +3561,7 @@ PrefabInstance:
     - target: {fileID: 5504133953575378245, guid: 9de12f8bc2362b74191b6672821fccaa,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.4
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 5504133953575378245, guid: 9de12f8bc2362b74191b6672821fccaa,
         type: 3}
@@ -3617,3 +3637,9 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!4 &7222346875757800973 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8945087887272510968, guid: 9de12f8bc2362b74191b6672821fccaa,
+    type: 3}
+  m_PrefabInstance: {fileID: 1736621705938676725}
+  m_PrefabAsset: {fileID: 0}
