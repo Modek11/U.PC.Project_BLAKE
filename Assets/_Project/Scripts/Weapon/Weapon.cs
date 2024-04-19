@@ -1,146 +1,52 @@
-using AYellowpaper;
+using MBT;
 using UnityEngine;
-using UnityEngine.Assertions;
 
-[RequireComponent(typeof(AudioSource))]
-public class Weapon : MonoBehaviour, IWeapon
+public abstract class Weapon : MonoBehaviour
 {
-    private GameObject owner;
+    [SerializeField]
+    public WeaponDefinition WeaponDefinition;
 
-    //TODO: Implement range
-    public float Range;
-    private int MagazineSize;
-    public bool infinityAmmo = false;
-    public Transform BulletsSpawnPoint;
-    public GameObject BulletPrefab;
-    private bool outOfAmmo = false;
-    private int bulletsLeft = 0;
-    public int BulletsLeft
+    //BlakeCharacter
+    private GameObject owner;
+    public GameObject Owner
     {
-        get => bulletsLeft;
+        get => owner;
         set
         {
-            if (bulletsLeft != value)
-            {
-                bulletsLeft = value;
-
-                if(bulletsLeft <= 0)
-                {
-                    outOfAmmo = true;
-                }
-            }
+            if (owner == value) return;
+            owner = value;
+            OnOwnerChanged();
         }
     }
 
-    [HideInInspector]
-    public bool isLastShotOver;
+    protected AudioSource audioSource;
+    protected WeaponsManager weaponsManager;
 
-    //TODO: Move it outside
-    [HideInInspector]
-    public AudioSource As;
-
-    [SerializeField, Header("Attacks"), Tooltip("Attack which will be triggered on LMB")]
-    private InterfaceReference<IAttack> _primaryAttack;
-
-    [SerializeField, Tooltip("Attack which will be triggered on RMB, it's not required")]
-    private InterfaceReference<IAttack> _secondaryAttack;
-
-    [SerializeField, Header("Varabiables to pass")]
-    private WeaponDefinition weaponDefinition;
-
-    private Rigidbody _ownerRigidbody;
-
-    private void Awake()
+    protected virtual void Awake()
     {
-        As = GetComponent<AudioSource>();
-        _ownerRigidbody = GetComponentInParent<Rigidbody>();
-
-        MagazineSize = weaponDefinition.magazineSize;
-        BulletsLeft = MagazineSize;
+        audioSource = GetComponent<AudioSource>();
     }
 
-    private void Start()
+    public abstract void PrimaryAttack();
+
+    public virtual void OnOwnerChanged()
     {
-        isLastShotOver = true;
+        if (Owner == null) { return; }
+
+        weaponsManager = Owner.GetComponent<WeaponsManager>();
     }
 
-    public bool PrimaryAttack()
+    public virtual bool CanPrimaryAttack() => true;
+
+    public virtual bool CanAttack()
     {
-        if (!CanShoot()) return false;
-        return _primaryAttack.Value.Attack(this);
+
+        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(owner.transform.position);
+        if (viewportPosition.x <= 0 || viewportPosition.x >= 1 || viewportPosition.y <= 0 || viewportPosition.y >= 1) return false;
+
+        return true;
     }
 
-    public float GetWeaponFireRate()
-    {
-        return _primaryAttack.Value.ReturnFireRate();
-    }
-    
-    public void SecondaryAttack()
-    {
-        if (_secondaryAttack.Value is null) return;
-        if (!CanShoot()) return;
-        _secondaryAttack.Value.Attack(this);
-    }
-    
-    public void ResetShot()
-    {
-        isLastShotOver = true;
-    }
-
-    public void SetOwner(GameObject inOwner)
-    {
-        owner = inOwner;
-    }
-
-    public void SetAmmo(int newAmmo)
-    {
-        BulletsLeft = newAmmo;
-    }
-
-    public GameObject GetWeapon()
-    {
-        return gameObject;
-    }
-
-    public Rigidbody GetRigidbodyOfWeaponOwner()
-    {
-        return _ownerRigidbody;
-    }
-
-    private bool CanShoot()
-    {
-        if(outOfAmmo)
-        {
-            if (owner != null)
-            {
-                if(owner.TryGetComponent(out WeaponsManager weaponsManager))
-                {
-                    weaponsManager.DestroyWeapon(weaponsManager.ActiveWeaponIndex);
-                }
-            }
-            return false;
-        }
-
-        return isLastShotOver;
-    }
-
-    private void OnValidate()
-    {
-        Assert.IsNotNull(_primaryAttack.Value);
-    }
-
-    public void SetMagazineSize(int size)
-    {
-        MagazineSize = size;
-    }
-
-    public WeaponDefinition GetWeaponDefinition()
-    {
-        return weaponDefinition;
-    }
-
-    public float GetWeaponRange()
-    {
-        return Range;
-    }
+    public virtual WeaponInstanceInfo GenerateWeaponInstanceInfo(bool randomize = false) => new WeaponInstanceInfo();
+    public abstract void LoadWeaponInstanceInfo(WeaponInstanceInfo weaponInstanceInfo);
 }

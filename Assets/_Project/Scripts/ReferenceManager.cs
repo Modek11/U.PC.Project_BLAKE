@@ -1,55 +1,80 @@
-using UnityEngine;
+using System.Threading.Tasks;
+using _Project.Scripts.Patterns;
+using _Project.Scripts.Player;
+using Unity.Services.Core;
 
-public class ReferenceManager : MonoBehaviour
+namespace _Project.Scripts
 {
-    private static ReferenceManager instance;
-    private BlakeHeroCharacter blakeHeroCharacter;
-    private PlayerInputController playerInputController;
-    private SceneHandler sceneHandler;
-    private MessageRouter messageRouter = new();
-
-    public static BlakeHeroCharacter BlakeHeroCharacter
+    public class ReferenceManager : Singleton<ReferenceManager>
     {
-        get => instance != null ? instance.blakeHeroCharacter : null;
-        set
+        private BlakeHeroCharacter blakeHeroCharacter;
+        private PlayerInputController playerInputController;
+        private SceneHandler.SceneHandler sceneHandler;
+        private LevelHandler levelHandler;
+        private MessageRouter messageRouter = new();
+        private RoomManager roomManager;
+
+        public static BlakeHeroCharacter BlakeHeroCharacter
         {
-            if (instance == null) return;
-            instance.blakeHeroCharacter = value;
+            get => Instance != null ? Instance.blakeHeroCharacter : null;
+            set
+            {
+                if (Instance == null) return;
+                Instance.blakeHeroCharacter = value;
+            }
         }
-    }
     
-    public static PlayerInputController PlayerInputController
-    {
-        get => instance != null ? instance.playerInputController : null;
-        set
+        public static PlayerInputController PlayerInputController
         {
-            if (instance == null) return;
-            instance.playerInputController = value;
+            get => Instance != null ? Instance.playerInputController : null;
+            set
+            {
+                if (Instance == null) return;   
+                Instance.playerInputController = value;
+            }
         }
-    }
     
-    public static SceneHandler SceneHandler
-    {
-        get => instance != null ? instance.sceneHandler : null;
-        set
+        public static SceneHandler.SceneHandler SceneHandler
         {
-            if (instance == null) return;
-            instance.sceneHandler = value;
+            get => Instance != null ? Instance.sceneHandler : null;
+            set
+            {
+                if (Instance == null) return;
+                Instance.sceneHandler = value;
+            }
         }
-    }
 
-    public static MessageRouter MessageRouter => instance != null ? instance.messageRouter : null;
-
-    private void Awake()
-    {
-        if (instance != null && instance != this)
+        public static LevelHandler LevelHandler
         {
-            Destroy(gameObject);
+            get => Instance != null ? Instance.levelHandler : null;
+            set
+            {
+                if (Instance == null) return;
+                Instance.levelHandler = value;
+            }
         }
-        else
+
+        public static MessageRouter MessageRouter
         {
-            instance = this;
-            DontDestroyOnLoad(instance);
+            get => Instance != null ? Instance.messageRouter : null;
+        }
+
+        public static RoomManager RoomManager
+        {
+            get => Instance != null ? Instance.roomManager : null;
+            set
+            {
+                if (Instance == null) return;
+                Instance.roomManager = value;
+            }
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+            Task initializationTask = UnityServices.InitializeAsync();
+#endif
         }
     }
 }

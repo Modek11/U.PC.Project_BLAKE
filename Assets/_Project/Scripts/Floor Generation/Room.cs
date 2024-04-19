@@ -3,8 +3,19 @@ using UnityEngine;
 using Unity.AI.Navigation;
 using System;
 
+public enum RoomType
+{
+    Base,
+    Treasure,
+    Shop,
+    Boss
+}
+
 public class Room : MonoBehaviour
 {
+    [SerializeField]
+    private RoomType roomType = RoomType.Base;
+
     [SerializeField]
     private RoomConnector[] doors;
 
@@ -41,6 +52,22 @@ public class Room : MonoBehaviour
     private List<RoomTrigger> triggers = new List<RoomTrigger>();
     private List<RoomOverlapTrigger> fogTriggers = new List<RoomOverlapTrigger>();
     private RoomsDoneCounter roomsDoneCounter;
+    private List<GameObject> instantiatedWeapons;
+
+    [HideInInspector]
+    public int gCost;
+    [HideInInspector]
+    public int hCost;
+    [HideInInspector]
+    public int fCost;
+
+    [HideInInspector]
+    public Room cameFromRoom;
+
+    public void CalculateFCost()
+    {
+        fCost = gCost + hCost;
+    }
 
     [Serializable]
     public struct EnemySpawner
@@ -53,6 +80,17 @@ public class Room : MonoBehaviour
     private void Awake()
     {
         roomsDoneCounter = FindObjectOfType<RoomsDoneCounter>();
+        instantiatedWeapons = new List<GameObject>();
+
+    }
+
+    public void SetupDoorConnectors()
+    {
+        foreach (RoomConnector door in doors)
+        {
+            door.SetRoom(this);
+            door.SetDoor();
+        }
     }
 
     public void InitializeRoom(RoomManager rm)
@@ -63,15 +101,16 @@ public class Room : MonoBehaviour
         {
             randomObject.InitializeRandomObject();
         }
-        foreach(RoomConnector door in doors)
-        {
-            door.SetRoom(this);
-            door.SetDoor();
-        }
+        
 
         if(minimapRoom != null && roomManager.GetMinimapFloor() != null)
         {
             minimapRoom.transform.parent = roomManager.GetMinimapFloor();
+        }
+
+        if(fog != null)
+        {
+            fog.SetActive(true);
         }
 
         //Build NavMesh
@@ -81,11 +120,11 @@ public class Room : MonoBehaviour
             surface.BuildNavMesh();
         }
 
-        SpawnEnemies();
 
         foreach (RoomConnector roomConnector in doors)
         {
-            roomConnector.OpenDoor();
+            roomConnector.UnlockDoor();
+            roomConnector.CloseDoor();
         }
         isInitialized = true;
 
@@ -97,13 +136,20 @@ public class Room : MonoBehaviour
         foreach (EnemySpawner enemy in spawners)
         {
             GameObject spawnedEnemy = Instantiate(enemy.EnemyToSpawn.gameObject, enemy.EnemySpawnPoint.transform.position, enemy.EnemySpawnPoint.rotation, this.transform);
-            spawnedEnemy.GetComponent<EnemyAIManager>().SetWaypoints(enemy.EnemyWaypoints);
+            spawnedEnemy.GetComponent<AIController>().SetWaypoints(enemy.EnemyWaypoints);
+            spawnedEnemy.GetComponent<EnemyCharacter>().SpawnedInRoom = this;
             spawnedEnemies.Add(spawnedEnemy);
         }
     }
 
-    public void BeatLevel()
+    public RoomType GetRoomType()
     {
+        return roomType;
+    }
+
+    private void BeatLevel()
+    {
+        player.GetComponent<BlakeCharacter>().onRespawn += ResetRoom;
         roomsDoneCounter.AddBeatenRoom();
         isBeaten = true;
         minimapRoom.CompleteRoom();
@@ -132,20 +178,43 @@ public class Room : MonoBehaviour
         fog.SetActive(true);
     }
 
+    public void DisableRoom()
+    {
+        gameObject.SetActive(false);
+        var toDelete = new List<GameObject>();
+        foreach(var weapon in instantiatedWeapons)
+        {
+            if (weapon != null)
+            {
+                weapon.gameObject.SetActive(false);
+            } else
+            {
+                toDelete.Add(weapon);
+            }
+        }
+
+        foreach(var delete in toDelete)
+        {
+            instantiatedWeapons.Remove(delete);
+        }
+    }
+
     public void EnterRoom()
     {
         if (IsPlayerInside()) return;
-        minimapRoom.VisitRoom();
         Room activeRoom = roomManager.GetActiveRoom();
-        if (activeRoom != null && activeRoom != this)
+        if (activeRoom == this) return;
+        minimapRoom.VisitRoom();
+        fog.SetActive(false);
+        /*if (activeRoom != null && activeRoom != this)
         {
             List<Room> roomsToDisable = activeRoom.GetNeigbours();
             if (roomsToDisable.Contains(this)) roomsToDisable.Remove(this);
             foreach (Room room in roomsToDisable)
             {
-                room.gameObject.SetActive(false);
+                room.DisableRoom();
             }
-        }
+        }*/
         List<Room> roomsToActivate = GetNeigbours();
         if (roomsToActivate.Contains(activeRoom)) roomsToActivate.Remove(activeRoom);
 
@@ -156,19 +225,13 @@ public class Room : MonoBehaviour
             room.gameObject.SetActive(true);
         }
 
+        roomManager.SetPreviousRoom(roomManager.GetActiveRoom());
         roomManager.SetActiveRoom(this);
-
-        foreach(GameObject enemy in spawnedEnemies)
-        {
-            if (enemy == null) continue;
-            enemy.GetComponent<EnemyAIManager>().UpdatePlayerRef();
-            enemy.GetComponent<EnemyFOV>().FindPlayer();
-        }
-
-        
 
         if (!isBeaten)
         {
+            SpawnEnemies();
+
             if (spawnedEnemies.Count == 0)
             {
                 BeatLevel();
@@ -177,13 +240,41 @@ public class Room : MonoBehaviour
             {
                 foreach (RoomConnector roomConnector in doors)
                 {
-                    roomConnector.CloseDoor();
+                    if (roomConnector.GetConnector() != null)
+                    {
+                        roomConnector.GetConnector().LockDoor();
+                    }
+                    roomConnector.LockDoor();
                 }
             }
         }
         if (isBeaten && player != null)
         {
             player.GetComponent<BlakeCharacter>().SetRespawnPosition(GetSpawnPointPosition());
+        }
+
+        foreach (GameObject enemy in spawnedEnemies)
+        {
+            if (enemy == null) continue;
+            enemy.GetComponent<AIController>().UpdatePlayerRef();
+        }
+
+        var toDelete = new List<GameObject>();
+        foreach (var weapon in instantiatedWeapons)
+        {
+            if (weapon != null)
+            {
+                weapon.gameObject.SetActive(true);
+            }
+            else
+            {
+                toDelete.Add(weapon);
+            }
+        }
+
+        foreach (var delete in toDelete)
+        {
+            instantiatedWeapons.Remove(delete);
         }
     }
 
@@ -197,12 +288,18 @@ public class Room : MonoBehaviour
     private void ResetRoom()
     {
         if (roomManager.GetActiveRoom() != this) return;
+        roomManager.SetActiveRoom(roomManager.GetPreviousRoom());
+        if (isBeaten) return;
         foreach (RoomConnector roomConnector in doors)
         {
-            roomConnector.OpenDoor();
+            roomConnector.UnlockDoor();
+            if (roomConnector.GetConnector() != null)
+            {
+                roomConnector.GetConnector().UnlockDoor();
+            }
         }
         minimapRoom.ForgetRoom();
-
+        fog.SetActive(true);
         foreach(RoomTrigger rt in triggers)
         {
             rt.Reset();
@@ -212,7 +309,19 @@ public class Room : MonoBehaviour
         {
             rt.Reset();
         }
+
         Invoke("ResetEnemies", 0.5f);
+
+        foreach (var weapon in instantiatedWeapons.ToArray())
+        {
+            Destroy(weapon);
+            instantiatedWeapons.Remove(weapon);
+        }
+
+        if (player != null)
+        {
+            player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
+        }
     }
 
 
@@ -223,19 +332,23 @@ public class Room : MonoBehaviour
             Destroy(enemy);
         }
         spawnedEnemies.Clear();
-        SpawnEnemies();
     }
 
     private void Update()
     {
-        if(!isBeaten && isInitialized && (IsPlayerInsideFog() || IsPlayerInside()))
+        if(!isBeaten && isInitialized && (IsPlayerInsideFog() || IsPlayerInside()) && roomManager.GetActiveRoom() == this)
         {
             if(spawnedEnemies.Count == 0)
             {
+                if (player == null) return;
                 BeatLevel();
                 foreach (RoomConnector roomConnector in doors)
                 {
-                    roomConnector.OpenDoor();
+                    roomConnector.UnlockDoor();
+                    if (roomConnector.GetConnector() != null)
+                    {
+                        roomConnector.GetConnector().UnlockDoor();
+                    }
                 }
                 if(player != null)
                 {
@@ -266,6 +379,10 @@ public class Room : MonoBehaviour
 
     public void ExitRoom()
     {
+        if (player != null)
+        {
+            player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
+        }
         if (IsPlayerInside()) return;
         /*if(roomManager.GetActiveRoom() == this)
         {
@@ -337,4 +454,24 @@ public class Room : MonoBehaviour
         else return transform.position;
     }
 
+    public List<GameObject> GetSpawnedEnemies()
+    {
+        return spawnedEnemies;
+    }
+
+    public void AddSpawnedWeapon(GameObject weapon)
+    {
+        instantiatedWeapons.Add(weapon);
+    }
+
+    private void OnDestroy()
+    {
+        if (player == null) return;
+        player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
+    }
+
+    ~Room() {
+        player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
+
+    }
 }

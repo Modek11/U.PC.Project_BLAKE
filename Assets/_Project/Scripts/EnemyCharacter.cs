@@ -1,46 +1,64 @@
+using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyCharacter : BlakeCharacter
 {
     [SerializeField]
-    private GameObject weaponPickup;
+    private WeaponPickup weaponPickup;
+    
+    private AIController ai;
+    private float destroySelfTime = 2f;
+    private float dropWeaponTime = .3f;
 
-    private EnemyAIManager ai;
-
+    [HideInInspector] 
+    public Room SpawnedInRoom;
+    
     private void Awake()
     {
-        ai = GetComponent<EnemyAIManager>();
+        ai = GetComponent<AIController>();
     }
 
-    public override void Die()
+    public override void Die(GameObject killer)
     {
         //animator.SetBool("IsAlive", false);
         explosionParticleInstantiated = Instantiate(explosionParticle, transform.position, Quaternion.identity);
-        Invoke("DestroySelf", 2f);
 
-        base.Die();
+        _ = DestroySelf();
+        _ = DropWeapon();
+
+        base.Die(killer);
     }
 
-    protected override void DestroySelf()
+    private async UniTaskVoid DestroySelf()
     {
-        base.DestroySelf();
+        await UniTask.Delay(TimeSpan.FromSeconds(destroySelfTime));
+        
         Destroy(explosionParticleInstantiated);
+        Destroy(gameObject);
+    }
 
-        WeaponDefinition weaponDef = ai.GetWeaponRef().GetComponent<Weapon>()?.GetWeaponDefinition();
-
-        if (weaponDef != null)
+    private async UniTaskVoid DropWeapon()
+    {
+        if (ai.Weapon.WeaponDefinition == null)
         {
-            float drop = Random.Range(0f, 1f);
-            Debug.Log("Drop chance: " + drop + " | Treshold: " + weaponDef.dropRate);
-            if (drop <= weaponDef.dropRate)
-            {
-                GameObject weaponPickupObject = Instantiate(weaponPickup, transform.position, Quaternion.identity);
+            Debug.LogError("WeaponDefinition is not valid. " + name);
+            return;
+        }
 
-                //WeaponDefinition randomWeapon = WeaponsMagazine.GetRandomWeapon();
-                WeaponPickup weaponPickupScript = weaponPickupObject.GetComponent<WeaponPickup>();
-                weaponPickupScript.SetWeaponDefinition(weaponDef);
-                weaponPickupScript.ammo = WeaponsMagazine.GetRandomWeaponAmmo(weaponDef);
-            }
+        var weapon = ai.Weapon;
+        Destroy(ai.Weapon.gameObject);
+        
+        await UniTask.Delay(TimeSpan.FromSeconds(dropWeaponTime));
+        
+        var drop = Random.Range(0f, 1f);
+        if (drop <= weapon.WeaponDefinition.DropRate)
+        {
+            var weaponPickupInstantiated = Instantiate(weaponPickup, transform.position, Quaternion.identity);
+            weaponPickupInstantiated.WeaponDefinition = weapon.WeaponDefinition;
+            weaponPickupInstantiated.WeaponInstanceInfo = weapon.GenerateWeaponInstanceInfo(true);
+            SpawnedInRoom.AddSpawnedWeapon(weaponPickupInstantiated.gameObject);
         }
     }
 }

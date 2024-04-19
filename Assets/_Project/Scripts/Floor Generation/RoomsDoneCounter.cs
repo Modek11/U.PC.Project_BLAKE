@@ -1,10 +1,15 @@
+using System;
+using _Project.Scripts.GameHandler;
 using UnityEngine;
 
 public class RoomsDoneCounter : MonoBehaviour
 {
+    public event Action OnRoomBeaten;
     private FloorGenerator floorGenerator;
-    public int RoomsInitialized { get; private set; }
-    public int RoomsBeaten { get; private set; }
+    private int roomsInitialized;
+    private int roomsBeaten;
+    public int RoomsInitialized => roomsInitialized;
+    public int RoomsBeaten => roomsBeaten;
 
     private void Awake()
     {
@@ -13,13 +18,14 @@ public class RoomsDoneCounter : MonoBehaviour
 
     private void Start()
     {
-        RoomsInitialized = floorGenerator.GetIntRoomsInitialized();
+        roomsInitialized = floorGenerator.MaxRooms;
     }
 
     public void AddBeatenRoom()
     {
-        RoomsBeaten++;
+        roomsBeaten++;
         CheckRoomsCounter();
+        OnRoomBeaten?.Invoke();
     }
 
     private void CheckRoomsCounter()
@@ -32,8 +38,8 @@ public class RoomsDoneCounter : MonoBehaviour
 
     private void ResetValues()
     {
-        RoomsBeaten = 0;
-        RoomsInitialized = 0;
+        roomsBeaten = 0;
+        roomsInitialized = 0;
     }
     private void OnDestroy()
     {

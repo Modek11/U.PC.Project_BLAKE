@@ -8,8 +8,13 @@ public class RagdollController : MonoBehaviour
 
     [SerializeField] 
     private NavMeshAgent agent;
-    
-    private Collider[] _ragdollColliders;
+
+    [SerializeField]
+    private CapsuleCollider mainCollider;
+
+    [SerializeField]
+    private Collider[] ragdollColliders;
+
     private Rigidbody[] _ragdollRigidbodies;
 
     private BlakeCharacter _eventSubscribe;
@@ -38,11 +43,13 @@ public class RagdollController : MonoBehaviour
     {
         animator.enabled = false;
         agent.enabled = false;
+        mainCollider.enabled = false;
 
-        for (int i = 0; i < _ragdollColliders.Length; i++)
+        for (int i = 0; i < ragdollColliders.Length; i++)
         {
-            _ragdollColliders[i].enabled = true;
+            ragdollColliders[i].enabled = true;
         }
+        
 
         for (int i = 0; i < _ragdollRigidbodies.Length; i++)
         {
@@ -66,7 +73,6 @@ public class RagdollController : MonoBehaviour
     private void SetupRagdoll()
     {
         _eventSubscribe = GetComponent<BlakeCharacter>();
-        _ragdollColliders = GetComponentsInChildren<Collider>();
         _ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
     }
    

@@ -1,8 +1,7 @@
 Naming and code style tips for C# scripting in Unity: https://unity.com/how-to/naming-and-code-style-tips-c-scripting-unity
 
-// EXAMPLE: Public and private variables
+EXAMPLE: Public and private variables
 <pre><code class='language-cs'>
-// inspector visible vars should be on top
 public float DamageMultiplier = 1.5f;
 public float MaxHealth;
 public bool IsInvincible;

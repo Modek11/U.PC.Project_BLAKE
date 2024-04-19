@@ -11,6 +11,23 @@ PrefabInstance:
       propertyPath: timeBetweenShooting
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 879817029879317628, guid: b439379a8d4ee1f47a52087f53bbe13b,
+        type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 8745238448183679230, guid: f9cd9a2728488a34c8594dd64a47dd00,
+        type: 3}
+    - target: {fileID: 879817029879317628, guid: b439379a8d4ee1f47a52087f53bbe13b,
+        type: 3}
+      propertyPath: infinityAmmo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 879817029879317628, guid: b439379a8d4ee1f47a52087f53bbe13b,
+        type: 3}
+      propertyPath: WeaponDefinition
+      value: 
+      objectReference: {fileID: 11400000, guid: cb112670c3a49bc4784159c4dfb4e34e,
+        type: 2}
     - target: {fileID: 5319882019298209556, guid: b439379a8d4ee1f47a52087f53bbe13b,
         type: 3}
       propertyPath: m_Name
@@ -94,6 +111,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b439379a8d4ee1f47a52087f53bbe13b, type: 3}
+--- !u!114 &937552364003971991 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 879817029879317628, guid: b439379a8d4ee1f47a52087f53bbe13b,
+    type: 3}
+  m_PrefabInstance: {fileID: 87650889476806635}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252149925436913919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45534a2832c67be4097c3d61b065197a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5252149925436913919 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5319882019298209556, guid: b439379a8d4ee1f47a52087f53bbe13b,
@@ -107,6 +136,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -470558907172326393, guid: 20caf66ddd7209d4291d40715d756be9,
+        type: 3}
+      propertyPath: enemyValue
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -470558907172326393, guid: 20caf66ddd7209d4291d40715d756be9,
+        type: 3}
+      propertyPath: enemyTypeEnum
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -470558907172326393, guid: 20caf66ddd7209d4291d40715d756be9,
+        type: 3}
+      propertyPath: pointsForKill
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 4250661716291628405, guid: 20caf66ddd7209d4291d40715d756be9,
+        type: 3}
+      propertyPath: Weapon
+      value: 
+      objectReference: {fileID: 937552364003971991}
     - target: {fileID: 4250661716291628405, guid: 20caf66ddd7209d4291d40715d756be9,
         type: 3}
       propertyPath: weaponRef

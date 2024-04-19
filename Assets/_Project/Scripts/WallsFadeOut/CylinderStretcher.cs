@@ -1,3 +1,4 @@
+using _Project.Scripts.Floor_Generation;
 using UnityEngine;
 
 public class CylinderStretcher : MonoBehaviour
@@ -28,6 +29,7 @@ public class CylinderStretcher : MonoBehaviour
 
     void Update()
     {
+        if(playerTransform == null) return;
         if (!referencesSet) return;
         if (!playerTransform.hasChanged || !mainCameraTransform.hasChanged) return;
 

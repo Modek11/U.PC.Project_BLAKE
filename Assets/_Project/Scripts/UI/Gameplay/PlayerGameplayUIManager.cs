@@ -1,125 +1,209 @@
+using System.Collections;
+using _Project.Scripts.Floor_Generation;
+using _Project.Scripts.PointsSystem;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PlayerGameplayUIManager : MonoBehaviour
+namespace _Project.Scripts.UI.Gameplay
 {
-    [SerializeField]
-    private FloorManager _floorManager;
-
-    [SerializeField] 
-    private MinimapCameraFollow minimapCamera;
-
-    [SerializeField] 
-    private RoomsDoneCounter roomsDoneCounter;
-
-    [SerializeField, Space]
-    private TextMeshProUGUI weaponName;
-
-    [SerializeField]
-    private TextMeshProUGUI bulletsLeft;
-
-    [SerializeField]
-    private TextMeshProUGUI roomsCounter;
-
-    [SerializeField]
-    private TextMeshProUGUI healthLeft;
-
-    [SerializeField] 
-    private GameObject interactUI;
-
-    [SerializeField]
-    private GameObject mapUI;
-
-    [SerializeField] 
-    private GameObject dashCooldownUI;
-    
-    private GameObject player;
-    private WeaponsManager _weaponsManager;
-    private PlayerInteractables playerInteractables;
-    private BlakeCharacter blakeCharacter;
-    private PlayerMovement _playerMovement;
-
-    //private bool isMapShown = false;
-    
-    private void Start()
+    public class PlayerGameplayUIManager : MonoBehaviour
     {
-        _floorManager.FloorGeneratorEnd += FloorManagerOnFloorGeneratorEnd;
-        ReferenceManager.PlayerInputController.onMapPressEvent += ShowMap;
-        ReferenceManager.PlayerInputController.onMapReleaseEvent += HideMap;
-    }
+        private const string INFINITY_SYMBOL = "∞";
+    
+        [SerializeField] 
+        private FloorManager floorManager;
 
-    private void FloorManagerOnFloorGeneratorEnd(Transform playerTransform, Transform cameraFollowTransform)
-    {
-        if (player == null || _weaponsManager == null)
+        [SerializeField] 
+        private MinimapCameraFollow minimapCamera;
+
+        [SerializeField] 
+        private RoomsDoneCounter roomsDoneCounter;
+
+        [SerializeField, Space] 
+        private TextMeshProUGUI weaponName;
+
+        [SerializeField] 
+        private TextMeshProUGUI bulletsLeft;
+
+        [SerializeField] 
+        private TextMeshProUGUI roomsCounter;
+
+        [SerializeField] 
+        private TextMeshProUGUI healthLeft;
+    
+        [SerializeField] 
+        private TextMeshProUGUI pointsCounter;
+    
+        [SerializeField] 
+        private TextMeshProUGUI killsCounter;
+    
+        [SerializeField] 
+        private TextMeshProUGUI comboCounter;
+
+        [SerializeField] 
+        private GameObject interactUI;
+
+        [SerializeField]
+        private GameObject mapUI;
+
+        [SerializeField] 
+        private GameObject dashCooldownUI;
+    
+        private GameObject player;
+        private WeaponsManager weaponsManager;
+        private PlayerInteractables playerInteractables;
+        private BlakeCharacter blakeCharacter;
+        private PlayerMovement playerMovement;
+        private Image dashCooldownImage;
+
+        private void Start()
         {
-            player = playerTransform.gameObject;
-            _weaponsManager = player.GetComponent<WeaponsManager>();
-            _weaponsManager.onSuccessfulShotEvent += RefreshUI;
-            _weaponsManager.onPlayerPickupWeaponEvent += RefreshUI;
-            _weaponsManager.changeWeaponEvent += RefreshUI;
-            RefreshUI();
+            floorManager.FloorGeneratorEnd += FloorManagerOnFloorGeneratorEnd;
+        }
+
+        private void FloorManagerOnFloorGeneratorEnd(Transform playerTransform, Transform cameraFollowTransform)
+        {
+            ReferenceManager.PlayerInputController.onMapPressEvent += ShowMap;
+            ReferenceManager.PlayerInputController.onMapReleaseEvent += HideMap;
+            floorManager.FloorGeneratorEnd -= FloorManagerOnFloorGeneratorEnd;
+        
+            if (player == null || weaponsManager == null)
+            {
+                player = playerTransform.gameObject;
+                weaponsManager = player.GetComponent<WeaponsManager>();
+                weaponsManager.OnPrimaryAttack += RefreshUI;
+                weaponsManager.OnPlayerPickupWeaponEvent += RefreshUI;
+                weaponsManager.OnWeaponChangedEvent += RefreshUI;
+                RefreshUI(weaponsManager.Weapons[weaponsManager.ActiveWeaponIndex]);
+            }
+        
+            minimapCamera.SetPlayer(playerTransform);
+        
+            playerInteractables = player.GetComponent<PlayerInteractables>();
+            blakeCharacter = player.GetComponent<BlakeCharacter>();
+            playerMovement = player.GetComponent<PlayerMovement>();
+
+            playerInteractables.SetInteractUIReference(interactUI);
+            dashCooldownImage = dashCooldownUI.transform.GetChild(1).GetComponent<Image>();
+
+            EnemyDeathMediator.Instance.OnRegisteredEnemyDeath += UpdatePointsAndCombo;
+            EnemyDeathMediator.Instance.ComboController.OnComboTimerEnd += HideComboTexts;
+            HideComboTexts();
+        
+            playerMovement.OnDashPerformed += StartDashCooldownUI;
+            roomsDoneCounter.OnRoomBeaten += RoomsCounterUI;
+            blakeCharacter.OnDamageTaken += HealthLeftUI;
+            blakeCharacter.onRespawn += OnRespawnUIUpdate;
+            OnRespawnUIUpdate();
+            RoomsCounterUI();
+
+        }
+
+        private void ShowMap()
+        {
+            mapUI.SetActive(true);
+        }
+
+        private void HideMap()
+        {
+            mapUI.SetActive(false);
+        }
+
+        private void RefreshUI(global::Weapon weapon)
+        {
+            WeaponNameUI(weapon);
+            BulletsLeftUI(weapon);
+        }
+
+        private void WeaponNameUI(global::Weapon weapon)
+        {
+            weaponName.text = weapon.WeaponDefinition.WeaponName;
+        }
+
+        private void BulletsLeftUI(global::Weapon weapon)
+        {
+            RangedWeapon rangedWeapon = weapon as RangedWeapon;
+
+            bulletsLeft.text = rangedWeapon != null ? rangedWeapon.BulletsLeft.ToString() : INFINITY_SYMBOL;
         }
         
-        minimapCamera.SetPlayer(playerTransform);
+          private void RoomsCounterUI()
+        {
+            roomsCounter.text = $"Rooms Beaten : {roomsDoneCounter.RoomsBeaten}/{roomsDoneCounter.RoomsInitialized}";
+        }
+
+        private void HealthLeftUI(GameObject instigator)
+        {
+            healthLeft.text = blakeCharacter.Health.ToString();
+        }
+
+        private void OnRespawnUIUpdate()
+        {
+            healthLeft.text = blakeCharacter.Health.ToString();
+        }
+
+        private void UpdatePointsAndCombo(ComboAndPointsValues comboAndPointsValues)
+        {
+            pointsCounter.text = $"Points: {comboAndPointsValues.Points}";
+            
+            if (!comboAndPointsValues.ShouldComboStart)
+            {
+                return;
+            }
         
-        playerInteractables = player.GetComponent<PlayerInteractables>();
-        _playerMovement = player.GetComponent<PlayerMovement>();
-        blakeCharacter = player.GetComponent<BlakeCharacter>();
-
-        playerInteractables.SetInteractUIReference(interactUI);
-        _playerMovement.SetDashCooldownUIReference(dashCooldownUI);
-    }
-    
-    private void ShowMap()
-    {
-        mapUI.SetActive(true);
-    }
-
-    private void HideMap()
-    {
-        mapUI.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if (blakeCharacter is null) return;
-        //Create events which updates those values only when they're changed 
-        RoomsCounterUI();
-        HealthLeftUI();
-    }
-
-    private void RefreshUI()
-    {
-        WeaponNameUI();
-        BulletsLeftUI();
-    }
-
-    private void WeaponNameUI()
-    {
-        weaponName.text = _weaponsManager.GetWeaponDefinition(_weaponsManager.ActiveWeaponIndex).weaponName;
-    }
-
-    private void BulletsLeftUI()
-    {
-        if (weaponName.text == _weaponsManager.defaultWeapon.weaponName)
-        {
-            bulletsLeft.text = "∞";
+            var killsCounterActive = killsCounter.gameObject.activeInHierarchy;
+            var comboCounterActive = comboCounter.gameObject.activeInHierarchy;
+        
+            if (!killsCounterActive || !comboCounterActive)
+            {
+                killsCounter.gameObject.SetActive(true);
+                comboCounter.gameObject.SetActive(true);
+            }
+        
+            killsCounter.text = $"x{comboAndPointsValues.KillsCounter} KILLS";
+            comboCounter.text = $"x{comboAndPointsValues.ComboCounter} Points";
         }
-        else
+
+        private void HideComboTexts()
         {
-            Weapon weapon = _weaponsManager.GetIWeapon(_weaponsManager.ActiveWeaponIndex).GetWeapon().GetComponent<Weapon>();
-            bulletsLeft.text = weapon.BulletsLeft.ToString();
+            var killsCounterActive = killsCounter.gameObject.activeInHierarchy;
+            var comboCounterActive = comboCounter.gameObject.activeInHierarchy;
+            if (killsCounterActive || comboCounterActive)
+            {
+                killsCounter.gameObject.SetActive(false);
+                comboCounter.gameObject.SetActive(false);
+            }
+        }
+
+        private void StartDashCooldownUI()
+        {
+            StartCoroutine(DashCooldownUI());
+        }
+
+        private IEnumerator DashCooldownUI()
+        {
+            dashCooldownUI.SetActive(true);
+        
+            while(playerMovement.DashCooldownCountdown > 0)
+            {
+                dashCooldownImage.fillAmount = playerMovement.DashCooldownCountdown/playerMovement.DashCooldown;
+                dashCooldownUI.transform.position = player.transform.position + Vector3.up * 0.6f;
+                dashCooldownUI.transform.LookAt(Camera.main.transform);
+
+                yield return new WaitForEndOfFrame();
+            }
+        
+            dashCooldownUI.SetActive(false);
+            dashCooldownImage.fillAmount = 0;
+        }
+
+        private void OnDestroy()
+        {
+            playerMovement.OnDashPerformed -= StartDashCooldownUI;
+            roomsDoneCounter.OnRoomBeaten -= RoomsCounterUI;
+            blakeCharacter.OnDamageTaken -= HealthLeftUI;
+            blakeCharacter.onRespawn -= OnRespawnUIUpdate;
         }
     }
-    
-    private void RoomsCounterUI()
-    {
-        roomsCounter.text = $"Rooms Beaten : {roomsDoneCounter.RoomsBeaten}/{roomsDoneCounter.RoomsInitialized}";
-    }
-
-    private void HealthLeftUI()
-    {
-        healthLeft.text = blakeCharacter.Health.ToString();
-    }
-    
 }

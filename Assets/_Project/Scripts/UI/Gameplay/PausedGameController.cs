@@ -1,12 +1,19 @@
+using _Project.Scripts;
+using _Project.Scripts.Floor_Generation;
+using _Project.Scripts.GameHandler;
 using UnityEngine;
 
 public class PausedGameController : MonoBehaviour
 {
+
+    [SerializeField]
+    private FloorManager floorManager;
+
     private bool _gamePaused = false;
     
     private void Start()
     {
-        ReferenceManager.PlayerInputController.escapeButtonEvent += PauseGame;
+        floorManager.FloorGeneratorEnd += FloorManagerOnFloorGeneratorEnd;
     }
 
     public void PauseGame()
@@ -24,4 +31,10 @@ public class PausedGameController : MonoBehaviour
             Time.timeScale = 1f;
         }
     }
+
+    private void FloorManagerOnFloorGeneratorEnd(Transform playerTransform, Transform cameraFollowTransform)
+    {
+        ReferenceManager.PlayerInputController.escapeButtonEvent += PauseGame;
+    }
+
 }

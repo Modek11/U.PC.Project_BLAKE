@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 2250193661021338524}
   - component: {fileID: 2250193661021338525}
   - component: {fileID: 8762673793604440}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: WeaponPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,10 +74,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2250193661021338515}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8762673793604440
 MonoBehaviour:
@@ -93,10 +93,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiHolder: {fileID: 2250193660661487361}
   interactable: 1
-  weaponToPickup: {fileID: 11400000, guid: 19c1a32b1bc1109468e8be4e59aa5d1b, type: 2}
+  WeaponDefinition: {fileID: 0}
   pickupGameObject: {fileID: 4758205076925276579}
   rotateForce: 5
-  ammo: -1
+  SendAnalyticsDataOnPickup: 0
 --- !u!1 &4758205076925276579
 GameObject:
   m_ObjectHideFlags: 0

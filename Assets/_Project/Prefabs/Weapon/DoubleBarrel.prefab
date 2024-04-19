@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4911671507717690897}
-  - component: {fileID: 4911671507717690898}
-  - component: {fileID: 4911671509393515036}
   - component: {fileID: 2267617404062443303}
+  - component: {fileID: 3541487880703571250}
   m_Layer: 0
   m_Name: DoubleBarrel
   m_TagString: Untagged
@@ -37,47 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4911671507717690898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4911671507717690896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 961f286b4752ab149a0825dd6c5a6ba6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Range: 15
-  infinityAmmo: 0
-  BulletsSpawnPoint: {fileID: 4911671507802568297}
-  BulletPrefab: {fileID: 6969907592589934767, guid: 9d1137cbb8bc7254fa284ca1f304bf0e,
-    type: 3}
-  isLastShotOver: 0
-  BulletsLeft: 10
-  As: {fileID: 0}
-  _primaryAttack:
-    _underlyingValue: {fileID: 4911671509393515036}
-  _secondaryAttack:
-    _underlyingValue: {fileID: 0}
-  weaponDefinition: {fileID: 11400000, guid: cdc2618dfa837c346a3dd1fc0d02ce9b, type: 2}
---- !u!114 &4911671509393515036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4911671507717690896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eda587f63642855459c33caf66f6478d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeBetweenShooting: 1.1
-  spread: 10
-  shotsPerTap: 1
-  bulletsPerShot: 2
 --- !u!82 &2267617404062443303
 AudioSource:
   m_ObjectHideFlags: 0
@@ -87,7 +45,8 @@ AudioSource:
   m_GameObject: {fileID: 4911671507717690896}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8048913908855039910, guid: 051cac1ae2a9c8a439448df8a83e6ded,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 8c135065671ad194aa73b65f60630dad, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.9
@@ -174,6 +133,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3541487880703571250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4911671507717690896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45534a2832c67be4097c3d61b065197a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WeaponDefinition: {fileID: 11400000, guid: cdc2618dfa837c346a3dd1fc0d02ce9b, type: 2}
+  infinityAmmo: 0
+  bulletsSpawnPoint: {fileID: 4911671507802568297}
+  bulletPrefab: {fileID: 6969907592589934767, guid: 9d1137cbb8bc7254fa284ca1f304bf0e,
+    type: 3}
+  FireDelayTime: 1.1
+  spread: 10
+  spreadMinMagnitude: 0
+  projectilesPerShot: 2
+  MagazineSize: 6
+  Range: 15
 --- !u!1 &4911671507802568296
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,6 +194,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4911671507717690897}
     m_Modifications:
+    - target: {fileID: 3636025993700825803, guid: aff676e8c741cbc4b8314666d5f6d72d,
+        type: 3}
+      propertyPath: attackPointTransform
+      value: 
+      objectReference: {fileID: 4911671507802568297}
     - target: {fileID: 3636025993700825803, guid: aff676e8c741cbc4b8314666d5f6d72d,
         type: 3}
       propertyPath: _attackPointTransform

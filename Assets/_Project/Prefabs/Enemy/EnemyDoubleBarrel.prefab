@@ -7,6 +7,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -470558907172326393, guid: 20caf66ddd7209d4291d40715d756be9,
+        type: 3}
+      propertyPath: enemyValue
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: -470558907172326393, guid: 20caf66ddd7209d4291d40715d756be9,
+        type: 3}
+      propertyPath: enemyTypeEnum
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -470558907172326393, guid: 20caf66ddd7209d4291d40715d756be9,
+        type: 3}
+      propertyPath: pointsForKill
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4250661716291628405, guid: 20caf66ddd7209d4291d40715d756be9,
+        type: 3}
+      propertyPath: Weapon
+      value: 
+      objectReference: {fileID: 5113988140216712398}
     - target: {fileID: 4250661716291628405, guid: 20caf66ddd7209d4291d40715d756be9,
         type: 3}
       propertyPath: weaponRef
@@ -92,6 +112,23 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6684149789715973956}
     m_Modifications:
+    - target: {fileID: 3541487880703571250, guid: d59ad31d5e825164385713c41e42f342,
+        type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 6969907592589934767, guid: ec2f9bd7460e984489e0a928cb5d7985,
+        type: 3}
+    - target: {fileID: 3541487880703571250, guid: d59ad31d5e825164385713c41e42f342,
+        type: 3}
+      propertyPath: infinityAmmo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541487880703571250, guid: d59ad31d5e825164385713c41e42f342,
+        type: 3}
+      propertyPath: WeaponDefinition
+      value: 
+      objectReference: {fileID: 11400000, guid: cdc2618dfa837c346a3dd1fc0d02ce9b,
+        type: 2}
     - target: {fileID: 4911671507717690896, guid: d59ad31d5e825164385713c41e42f342,
         type: 3}
       propertyPath: m_Name
@@ -186,3 +223,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8637179956268534268}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5113988140216712398 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3541487880703571250, guid: d59ad31d5e825164385713c41e42f342,
+    type: 3}
+  m_PrefabInstance: {fileID: 8637179956268534268}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743808909478535148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45534a2832c67be4097c3d61b065197a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

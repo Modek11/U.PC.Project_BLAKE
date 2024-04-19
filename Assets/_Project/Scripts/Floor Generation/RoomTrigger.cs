@@ -6,14 +6,27 @@ using UnityEngine;
 
 public class RoomTrigger : MonoBehaviour
 {
+    [SerializeField]
     private Room parent;
     private RoomManager roomManager;
     private bool playerInside = false;
 
     private void Awake()
     {
-        parent = GetComponentInParent<Room>();
+        parent = GetRoomFromParents(gameObject);
         parent.AddTrigger(this);
+    }
+
+    private Room GetRoomFromParents(GameObject p)
+    {
+        Room parent = GetComponentInParent<Room>();
+        if (parent == null)
+        {
+            if (transform.parent == null) return null;
+            parent = GetRoomFromParents(p.transform.parent.gameObject);
+        }
+        return parent;
+
     }
 
     private void OnTriggerEnter(Collider other)

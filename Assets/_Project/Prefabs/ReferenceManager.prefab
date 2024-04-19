@@ -44,3 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094ee4821ed56d749af518530fc869a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 1
+  blakeHeroCharacter: {fileID: 0}
+  playerInputController: {fileID: 0}
+  sceneHandler: {fileID: 0}
+  levelHandler: {fileID: 0}
+  roomManager: {fileID: 0}

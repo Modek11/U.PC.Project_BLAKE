@@ -1,11 +1,21 @@
 using System.Collections.Generic;
+using _Project.Scripts;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerInteractables : MonoBehaviour
 {
+    [SerializeField]
+    private float interactRadius = 10f;
+    [SerializeField]
+    private LayerMask collectMask;
+    [SerializeField]
+    private LayerMask raycastMask;
     //List of Interactable objects nearby
     [SerializeField]
     private List<IInteractable> interactables = new List<IInteractable>();
+    [SerializeField]
+    private Transform playerHead;
 
     //Object of UI to show above
     [SerializeField]
@@ -14,6 +24,7 @@ public class PlayerInteractables : MonoBehaviour
     private void Start()
     {
         ReferenceManager.PlayerInputController.interactEvent += Interact;
+        InvokeRepeating("CheckForInteractables", 0f, 0.2f);
     }
 
     /// <summary>
@@ -34,9 +45,24 @@ public class PlayerInteractables : MonoBehaviour
         interactables.Remove(interactable);
     }
 
+
+
     private void Update()
     {
         SetUI();
+    }
+
+    private void CheckForInteractables()
+    {
+        interactables.Clear();
+        Collider[] cols = Physics.OverlapSphere(transform.position, interactRadius, collectMask, QueryTriggerInteraction.Collide);
+        foreach(var col in cols)
+        {
+            if(col.GetComponent<IInteractable>() != null)
+            {
+                interactables.Add(col.GetComponent<IInteractable>());
+            }
+        }
     }
 
     private IInteractable GetClosestInteractable()
@@ -45,15 +71,59 @@ public class PlayerInteractables : MonoBehaviour
         {
             IInteractable closest = null;
             float closestDistance = float.MaxValue;
+
+            List<IInteractable> invalidInteractables = new List<IInteractable>();
+
             foreach (IInteractable interactable in interactables)
             {
                 if (!interactable.CanInteract()) continue;
-                if (Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position) < closestDistance)
+                if (interactable.GetGameObject() == null) { invalidInteractables.Add(interactable); continue; }
+
+                /*if (Physics.Raycast(new Ray(playerHead.position, interactable.GetGameObject().transform.position - playerHead.position), out RaycastHit hit))
+                {
+                    if (Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position) < closestDistance)
+                    {
+                        if (hit.transform.gameObject == interactable.GetGameObject())
+                        {
+                            closest = interactable;
+                        }
+                        else if (Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position) < 0.7f)
+                        {
+                            closest = interactable;
+                            closestDistance = Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position);
+                        }
+                    }
+                    else if (Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position) < 0.5f)
+                    {
+                        closest = interactable;
+                        closestDistance = Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position);
+                    }
+                }*/
+
+                if(Physics.Raycast(new Ray(playerHead.position, interactable.GetGameObject().transform.position - playerHead.position), out RaycastHit hit, interactRadius, raycastMask))
+                {
+                    if (hit.transform.gameObject == interactable.GetGameObject())
+                    {
+                        closest = interactable;
+                    }
+                    else if (Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position) < .5f)
+                    {
+                        closest = interactable;
+                        closestDistance = Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position);
+                    }
+                }
+                else if (Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position) < .5f)
                 {
                     closest = interactable;
                     closestDistance = Vector3.Distance(gameObject.transform.position, interactable.GetGameObject().transform.position);
                 }
             }
+
+            for(int i = 0; i < invalidInteractables.Count; i++)
+            {
+                interactables.Remove(invalidInteractables[i]);
+            }
+
             return closest;
         }
         return null;
@@ -71,6 +141,7 @@ public class PlayerInteractables : MonoBehaviour
     private void SetUI()
     {
         if (interactUI == null) return;
+
         IInteractable closest = GetClosestInteractable();
         if (closest == null)
         {

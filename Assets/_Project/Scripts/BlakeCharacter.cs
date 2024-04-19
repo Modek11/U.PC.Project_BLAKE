@@ -1,23 +1,25 @@
-using Unity.Mathematics;
-using UnityEngine; 
+using System;
+using System.Collections;
+using _Project.Scripts;
+using UnityEngine;
 
 public abstract class BlakeCharacter : MonoBehaviour, IDamageable
 {
     [SerializeField]
     protected int health = 1;
 
+    [SerializeField] 
+    protected float timeBetweenDamages = .5f;
+
     public int Health
     {
         get => health;
-        set
-        {
-            health = value;
-            if (health < 1 && !isDead)
-            {
-                Die();
-            }
-        }
+        protected set { health = value; }
     }
+
+    protected int respawnCounter = 0;
+    [SerializeField]
+    protected int maxRespawns = 3;
 
     [SerializeField] 
     protected GameObject explosionParticle;
@@ -25,9 +27,14 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
     [SerializeField] 
     protected Animator animator;
 
+#if UNITY_EDITOR
+    [SerializeField]
+    private bool godMode;
+#endif
+
     protected GameObject explosionParticleInstantiated;
     protected int defaultHealth;
-    protected float onDamageTakenCounter;
+    protected bool recentlyDamaged = false;
     protected bool isDead = false;
     protected Vector3 respawnPos;
 
@@ -35,41 +42,48 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
     public event OnDeath onDeath;
     public delegate void OnRespawn();
     public event OnRespawn onRespawn;
+    public event Action<GameObject> OnDamageTaken;
 
-    private void Update()
-    {
-        if (onDamageTakenCounter > 0)
-        {
-            onDamageTakenCounter -= Time.deltaTime;
-        }
-    }
-
-    public virtual void Die()
+    public virtual void Die(GameObject killer)
     {
         isDead = true;
+        if (respawnCounter >= maxRespawns)
+        {
+            ReferenceManager.LevelHandler.EndRun();
+            return;
+        }
         
-        //GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        //GetComponent<CapsuleCollider>().enabled = false;
+        respawnCounter++;
         onDeath?.Invoke();
-    }
-
-    protected virtual void DestroySelf()
-    {
-        Destroy(gameObject);
     }
 
     public virtual void TakeDamage(GameObject instigator, int damage)
     {
-        if (onDamageTakenCounter > 0) return;
+#if UNITY_EDITOR
+        if (godMode) return;
+#endif
+        if (recentlyDamaged) return;
         if (health < 1) { return; }
 
         Debug.Log(instigator.name + " took " + damage + " damage to " + name);
         Health -= damage;
-        onDamageTakenCounter = .5f;
+
+        if (health > 0)
+        {
+            StartCoroutine(StopTakingDamageForPeriod(timeBetweenDamages));
+        }
+        else if (!isDead)
+        {
+            Die(instigator);
+        }
+        
+        OnDamageTaken?.Invoke(instigator);
     }
 
     public virtual bool CanTakeDamage(GameObject instigator)
     {
+        if (instigator == null) return false;
+
         BlakeCharacter other = instigator.GetComponent<BlakeCharacter>();
         if(other != null)
         {
@@ -89,17 +103,28 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         return respawnPos;
     }
 
+    private IEnumerator StopTakingDamageForPeriod(float period)
+    {
+        recentlyDamaged = true;
+        yield return new WaitForSeconds(period);
+        recentlyDamaged = false;
+    }
+
     protected void Respawn()
     {
-        onRespawn?.Invoke();
         isDead = false;
-        //animator.SetBool("IsAlive", true); //only for DD we should only animate enemies
         Destroy(explosionParticleInstantiated);
         transform.position = respawnPos;
         gameObject.SetActive(true);
-        //GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionX;
-        //GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionZ;
         GetComponent<CapsuleCollider>().enabled = true;
         health = defaultHealth;
+        onRespawn?.Invoke();
     }
+
+#if UNITY_EDITOR
+    public void SetGodMode(bool isEnabled)
+    {
+        godMode = isEnabled;
+    }
+#endif
 }

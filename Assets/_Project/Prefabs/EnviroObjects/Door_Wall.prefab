@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6403655376859801927}
   - component: {fileID: 8403326911107439818}
   - component: {fileID: 673370192246167348}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SM_Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,6 +380,7 @@ MonoBehaviour:
   doorObject: {fileID: 8736427752958271802}
   wallObject: {fileID: 8189452650213142224}
   door: {fileID: 4200503237609755824}
+  mainRoom: {fileID: 0}
 --- !u!1 &8056130709787086715
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +436,8 @@ GameObject:
   m_Component:
   - component: {fileID: 559052841118044094}
   - component: {fileID: 4200503237609755824}
-  m_Layer: 0
+  - component: {fileID: 1063035006573424611}
+  m_Layer: 12
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,6 +474,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 673370192246167348}
+  connector: {fileID: 2087882301756044489}
+  interactable: 0
+  open: 0
+--- !u!65 &1063035006573424611
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8736427752958271802}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.0138843, y: 5.1899366, z: 6.987879}
+  m_Center: {x: -0.86622846, y: 0.006291628, z: 2.9939432}
 --- !u!1001 &7358955673769649775
 PrefabInstance:
   m_ObjectHideFlags: 0
