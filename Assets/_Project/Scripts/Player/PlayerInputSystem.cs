@@ -293,6 +293,34 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             ""id"": ""0ef118e9-8515-4faa-bd39-a4902eb5d0ab"",
             ""actions"": [],
             ""bindings"": []
+        },
+        {
+            ""name"": ""Debug"",
+            ""id"": ""fcb9ed7f-4ceb-488a-96b8-495de09655d2"",
+            ""actions"": [
+                {
+                    ""name"": ""PerkMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc0160f4-6c70-42cf-83aa-64d3ec0e0d19"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""7bb87301-b592-4f11-a91b-852c75fa7bed"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PerkMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -310,6 +338,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         m_Gameplay_EscapeButton = m_Gameplay.FindAction("EscapeButton", throwIfNotFound: true);
         // Loading
         m_Loading = asset.FindActionMap("Loading", throwIfNotFound: true);
+        // Debug
+        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug_PerkMenu = m_Debug.FindAction("PerkMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -515,6 +546,52 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         }
     }
     public LoadingActions @Loading => new LoadingActions(this);
+
+    // Debug
+    private readonly InputActionMap m_Debug;
+    private List<IDebugActions> m_DebugActionsCallbackInterfaces = new List<IDebugActions>();
+    private readonly InputAction m_Debug_PerkMenu;
+    public struct DebugActions
+    {
+        private @PlayerInputSystem m_Wrapper;
+        public DebugActions(@PlayerInputSystem wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PerkMenu => m_Wrapper.m_Debug_PerkMenu;
+        public InputActionMap Get() { return m_Wrapper.m_Debug; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
+        public void AddCallbacks(IDebugActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DebugActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DebugActionsCallbackInterfaces.Add(instance);
+            @PerkMenu.started += instance.OnPerkMenu;
+            @PerkMenu.performed += instance.OnPerkMenu;
+            @PerkMenu.canceled += instance.OnPerkMenu;
+        }
+
+        private void UnregisterCallbacks(IDebugActions instance)
+        {
+            @PerkMenu.started -= instance.OnPerkMenu;
+            @PerkMenu.performed -= instance.OnPerkMenu;
+            @PerkMenu.canceled -= instance.OnPerkMenu;
+        }
+
+        public void RemoveCallbacks(IDebugActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDebugActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DebugActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DebugActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DebugActions @Debug => new DebugActions(this);
     public interface IGameplayActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -529,5 +606,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     }
     public interface ILoadingActions
     {
+    }
+    public interface IDebugActions
+    {
+        void OnPerkMenu(InputAction.CallbackContext context);
     }
 }

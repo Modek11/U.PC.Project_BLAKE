@@ -271,6 +271,34 @@
             "id": "0ef118e9-8515-4faa-bd39-a4902eb5d0ab",
             "actions": [],
             "bindings": []
+        },
+        {
+            "name": "Debug",
+            "id": "fcb9ed7f-4ceb-488a-96b8-495de09655d2",
+            "actions": [
+                {
+                    "name": "PerkMenu",
+                    "type": "Button",
+                    "id": "dc0160f4-6c70-42cf-83aa-64d3ec0e0d19",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7bb87301-b592-4f11-a91b-852c75fa7bed",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PerkMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
