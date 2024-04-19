@@ -26,7 +26,9 @@ public class EnemyPointer : MonoBehaviour
         }
         if (player == null || roomManager == null) return;
         offScreenEnemies.Clear();
-        foreach (var enemy in roomManager.GetActiveRoom()?.GetSpawnedEnemies())
+        var list = roomManager.GetActiveRoom()?.GetSpawnedEnemies();
+        if (list == null) return;
+        foreach (var enemy in list)
         {
             if (enemy == null) continue;
             Vector3 viewportPosition = Camera.main.WorldToViewportPoint(enemy.transform.position);
