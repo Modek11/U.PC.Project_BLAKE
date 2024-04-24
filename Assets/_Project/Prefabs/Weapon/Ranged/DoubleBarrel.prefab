@@ -145,17 +145,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45534a2832c67be4097c3d61b065197a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponDefinition: {fileID: 11400000, guid: cdc2618dfa837c346a3dd1fc0d02ce9b, type: 2}
-  infinityAmmo: 0
+  WeaponDefinition: {fileID: 11400000, guid: 38f322b9e88f2a149a1f3d198afce634, type: 2}
   bulletsSpawnPoint: {fileID: 4911671507802568297}
-  bulletPrefab: {fileID: 6969907592589934767, guid: 9d1137cbb8bc7254fa284ca1f304bf0e,
-    type: 3}
-  FireDelayTime: 0.8
-  spread: 13
-  spreadMinMagnitude: 0
-  projectilesPerShot: 2
-  MagazineSize: 4
-  Range: 7.5
+  infinityAmmo: 0
 --- !u!1 &4911671507802568296
 GameObject:
   m_ObjectHideFlags: 0

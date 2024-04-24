@@ -17,9 +17,9 @@ public class WeaponLaser : MonoBehaviour
 
     private void Start()
     {
-        Vector3 _laserLength = new Vector3(0f, 0f, rangedWeapon.Range - 2f);
+        var laserLength = new Vector3(0f, 0f, rangedWeapon.Range - 2f);
 
         transform.position = attackPointTransform.position;
-        lineRenderer.SetPosition(1, _laserLength);   
+        lineRenderer.SetPosition(1, laserLength);
     }
 }

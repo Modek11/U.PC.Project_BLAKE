@@ -7,54 +7,41 @@ namespace _Project.Scripts.Weapon
     public class RangedWeapon : Weapon
     {
         [SerializeField]
+        private Transform bulletsSpawnPoint;
+        [SerializeField]
         private bool infinityAmmo = false;
 
-        [SerializeField]
-        private Transform bulletsSpawnPoint;
-
-        [SerializeField]
-        public GameObject bulletPrefab;
-
-        [Tooltip("Declares how often player can shoot")]
-        public float FireDelayTime = 0.4f;
-
-        [SerializeField, Tooltip("Declares range of bullet spawn")]
-        private float spread = 10f;
-
-        [SerializeField, Tooltip("Declares how fast should be character to use spread during shot")]
-        private float spreadMinMagnitude = 0f;
-
-        //[SerializeField, Tooltip("Declares how many times it should shot after one button press")]
-        //private int shotsPerTap = 1;
-
-        [SerializeField, Tooltip("Declares how many projectiles should be instantiated in one shot")]
-        public int projectilesPerShot = 1;
-
-        public int MagazineSize;
-        public float Range;
-
-        private int bulletsLeft = 0;
-        public int BulletsLeft
-        {
-            get => bulletsLeft;
-            set
-            {
-                if (bulletsLeft != value)
-                {
-                    bulletsLeft = value;
-                }
-            }
-        }
-
+        private float fireDelayTime;
+        private float spread;
+        private float spreadMinMagnitude;
+        private int projectilesPerShot;
+        private int magazineSize;
+        
+        private RangedWeaponDefinition rangedWeaponDefinition;
         private Rigidbody rb;
-
         private float lastFireTime;
+        
+        public int BulletsLeft { get; set; }
+        public float Range { get; private set; }
 
         protected override void Awake()
         {
             base.Awake();
 
-            BulletsLeft = MagazineSize;
+            if (WeaponDefinition is not RangedWeaponDefinition definition)
+            {
+                Debug.LogError("Wrong WeaponDefinition is attached to the weapon!");
+                return;
+            }
+            
+            rangedWeaponDefinition = definition;
+            fireDelayTime = rangedWeaponDefinition.FireDelayTime;
+            spread = rangedWeaponDefinition.Spread;
+            spreadMinMagnitude = rangedWeaponDefinition.SpreadMinMagnitude;
+            projectilesPerShot = rangedWeaponDefinition.ProjectilesPerShot;
+            magazineSize = rangedWeaponDefinition.MagazineSize;
+            Range = rangedWeaponDefinition.Range;
+            BulletsLeft = magazineSize;
         }
 
         public override void PrimaryAttack()
@@ -78,9 +65,9 @@ namespace _Project.Scripts.Weapon
 
         public override bool CanPrimaryAttack()
         {
-            if (Time.time - lastFireTime < FireDelayTime) return false;
+            if (Time.time - lastFireTime < fireDelayTime) return false;
 
-            if(bulletsLeft <= 0)
+            if(BulletsLeft <= 0)
             {
                 StartCoroutine("UnequipSelf");
                 return false;
@@ -115,6 +102,7 @@ namespace _Project.Scripts.Weapon
             {
                 if (BulletsLeft == 0) return false;
                 //TODO: Add pooling
+                var bulletPrefab = rangedWeaponDefinition.BasicBullet.gameObject;
                 var bullet = Instantiate(bulletPrefab, bulletsSpawnPoint.position, transform.rotation);
 
                 //Choose spread depending on player's controls
@@ -148,7 +136,7 @@ namespace _Project.Scripts.Weapon
             {
                 return new RangedWeaponInstanceInfo
                 {
-                    bulletsLeft = Random.Range(MagazineSize / 2, MagazineSize + 1)
+                    bulletsLeft = Random.Range(magazineSize / 2, magazineSize + 1)
                 };
             }
 

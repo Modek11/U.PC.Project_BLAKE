@@ -9,20 +9,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a982e479cb5e0ef4e9da5465e69574b3, type: 3}
+  m_Script: {fileID: 11500000, guid: b8b52c6e7e16fc848a76e7336673e5f2, type: 3}
   m_Name: DoubleBarrel
   m_EditorClassIdentifier: 
   WeaponPrefab: {fileID: 4911671507717690896, guid: d59ad31d5e825164385713c41e42f342,
     type: 3}
+  WeaponGFX: {fileID: 1318050290126625103, guid: 1780d87ee5d4ee24b8a12e7cf5b7f1f8,
+    type: 3}
   WeaponName: Double Barrel
+  DropRate: 0.6
   AbilitiesToGrant:
   - {fileID: 11400000, guid: c6a789a579ce8d24c9363bf0dc5a3cd4, type: 2}
-  DropRate: 0.6
   AttachSocketName: GunHandler
   LocationOffset: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0, w: 0}
   Scale: {x: 1, y: 1, z: 1}
-  WeaponGFX: {fileID: 1318050290126625103, guid: 1780d87ee5d4ee24b8a12e7cf5b7f1f8,
-    type: 3}
   PickupLocationOffset: {x: 0, y: 0, z: 0}
   PickupRotation: {x: 0, y: 0, z: 0, w: 0}
+  BasicBullet: {fileID: 6969907592589934760, guid: 9d1137cbb8bc7254fa284ca1f304bf0e,
+    type: 3}
+  FireDelayTime: 0.8
+  Spread: 13
+  SpreadMinMagnitude: 0
+  ProjectilesPerShot: 2
+  MagazineSize: 4
+  Range: 7
