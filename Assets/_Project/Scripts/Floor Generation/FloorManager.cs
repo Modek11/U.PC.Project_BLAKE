@@ -23,10 +23,12 @@ namespace _Project.Scripts.Floor_Generation
         private GameObject player;
         private CinemachineVirtualCamera virtualCamera;
         private GameObject cameraFollow;
-    
 
-        private void Awake()
+
+        protected override void Awake()
         {
+            base.Awake();
+            
             floorGenerator = GetComponent<FloorGenerator>();
         }
 
