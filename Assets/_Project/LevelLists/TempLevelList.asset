@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TempLevelList
   m_EditorClassIdentifier: 
   levelNames:
-  - Build1505
-  - Level2
+  - Floor1
+  - Floor2
