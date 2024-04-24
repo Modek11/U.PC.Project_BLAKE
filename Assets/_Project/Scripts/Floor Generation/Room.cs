@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.AI.Navigation;
 using System;
+using _Project.Scripts;
 
 public enum RoomType
 {

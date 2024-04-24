@@ -1,6 +1,7 @@
 using System.Collections;
 using _Project.Scripts.Floor_Generation;
 using _Project.Scripts.PointsSystem;
+using _Project.Scripts.Weapon;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -110,18 +111,18 @@ namespace _Project.Scripts.UI.Gameplay
             mapUI.SetActive(false);
         }
 
-        private void RefreshUI(global::Weapon weapon)
+        private void RefreshUI(Weapon.Weapon weapon)
         {
             WeaponNameUI(weapon);
             BulletsLeftUI(weapon);
         }
 
-        private void WeaponNameUI(global::Weapon weapon)
+        private void WeaponNameUI(Weapon.Weapon weapon)
         {
             weaponName.text = weapon.WeaponDefinition.WeaponName;
         }
 
-        private void BulletsLeftUI(global::Weapon weapon)
+        private void BulletsLeftUI(Weapon.Weapon weapon)
         {
             RangedWeapon rangedWeapon = weapon as RangedWeapon;
 

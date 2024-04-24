@@ -1,3 +1,4 @@
+using _Project.Scripts.Weapon;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Playables;

@@ -1,3 +1,4 @@
+using _Project.Scripts.Weapon;
 using UnityEngine;
 
 public class WeaponLaser : MonoBehaviour

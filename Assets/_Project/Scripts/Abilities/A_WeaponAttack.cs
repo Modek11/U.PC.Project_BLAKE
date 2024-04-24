@@ -1,6 +1,5 @@
 using GameFramework.Abilities;
-using System.Collections;
-using UnityEngine;
+using _Project.Scripts.Weapon;
 
 public class A_WeaponAttack : Ability
 {
