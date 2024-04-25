@@ -11,14 +11,13 @@ namespace _Project.Scripts.Weapon
         [SerializeField]
         private bool infinityAmmo = false;
 
+        private RangedWeaponDefinition rangedWeaponDefinition;
+        private Rigidbody rb;
         private float fireDelayTime;
         private float spread;
         private float spreadMinMagnitude;
         private int projectilesPerShot;
         private int magazineSize;
-        
-        private RangedWeaponDefinition rangedWeaponDefinition;
-        private Rigidbody rb;
         private float lastFireTime;
         
         public int BulletsLeft { get; set; }
@@ -28,20 +27,7 @@ namespace _Project.Scripts.Weapon
         {
             base.Awake();
 
-            if (WeaponDefinition is not RangedWeaponDefinition definition)
-            {
-                Debug.LogError("Wrong WeaponDefinition is attached to the weapon!");
-                return;
-            }
-            
-            rangedWeaponDefinition = definition;
-            fireDelayTime = rangedWeaponDefinition.FireDelayTime;
-            spread = rangedWeaponDefinition.Spread;
-            spreadMinMagnitude = rangedWeaponDefinition.SpreadMinMagnitude;
-            projectilesPerShot = rangedWeaponDefinition.ProjectilesPerShot;
-            magazineSize = rangedWeaponDefinition.MagazineSize;
-            Range = rangedWeaponDefinition.Range;
-            BulletsLeft = magazineSize;
+            SetupWeaponDefinition();
         }
 
         public override void PrimaryAttack()
@@ -144,6 +130,24 @@ namespace _Project.Scripts.Weapon
             {
                 bulletsLeft = BulletsLeft
             };
+        }
+
+        private void SetupWeaponDefinition()
+        {
+            if (WeaponDefinition is not RangedWeaponDefinition definition)
+            {
+                Debug.LogError("Wrong WeaponDefinition is attached to the weapon!");
+                return;
+            }
+            
+            rangedWeaponDefinition = definition;
+            fireDelayTime = rangedWeaponDefinition.FireDelayTime;
+            spread = rangedWeaponDefinition.Spread;
+            spreadMinMagnitude = rangedWeaponDefinition.SpreadMinMagnitude;
+            projectilesPerShot = rangedWeaponDefinition.ProjectilesPerShot;
+            magazineSize = rangedWeaponDefinition.MagazineSize;
+            Range = rangedWeaponDefinition.Range;
+            BulletsLeft = magazineSize;
         }
 
         public override void LoadWeaponInstanceInfo(WeaponInstanceInfo weaponInstanceInfo)

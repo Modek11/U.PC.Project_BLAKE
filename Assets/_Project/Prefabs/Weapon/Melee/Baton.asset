@@ -9,20 +9,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a982e479cb5e0ef4e9da5465e69574b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 23cb5b66b8f11394995cea9b29c4daac, type: 3}
   m_Name: Baton
   m_EditorClassIdentifier: 
   WeaponPrefab: {fileID: 6770924938227727370, guid: b95b54a6a09e88b4bbfc99cc710c47f7,
     type: 3}
+  WeaponGFX: {fileID: 6940019093615102882, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
+    type: 3}
   WeaponName: Baton
+  DropRate: 0
   AbilitiesToGrant:
   - {fileID: 11400000, guid: c6a789a579ce8d24c9363bf0dc5a3cd4, type: 2}
-  DropRate: 0
   AttachSocketName: GunHandler
   LocationOffset: {x: 0, y: 0.47, z: 0}
   Rotation: {x: 0, y: 0, z: 0, w: 0}
   Scale: {x: 1, y: 1, z: 1}
-  WeaponGFX: {fileID: 6940019093615102882, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
-    type: 3}
   PickupLocationOffset: {x: 0, y: 0, z: 0}
   PickupRotation: {x: 0, y: 0, z: 0, w: 0}
+  SpereCastRadius: 0.85
+  MaxDistance: 1.25
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 128

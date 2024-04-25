@@ -3237,6 +3237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b64ed9092cca9ac42a6140927d1bb94d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 0
 --- !u!114 &4151773349220175101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3272,7 +3273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attachSockets:
   - {fileID: 3772505426422216949}
-  defaultWeapon: {fileID: 11400000, guid: ba6d981959989e54081af014222d2c3f, type: 2}
+  defaultWeapon: {fileID: 11400000, guid: 6c7fe8b8bb61ce5418824310a7c889fe, type: 2}
 --- !u!114 &-7787404852900598163
 MonoBehaviour:
   m_ObjectHideFlags: 0

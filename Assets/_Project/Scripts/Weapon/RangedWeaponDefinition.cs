@@ -1,12 +1,11 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Project.Scripts.Weapon
 {
     [CreateAssetMenu(fileName = "Ranged Weapon definition", menuName = "Project BLAKE/Ranged Weapon")]
     public class RangedWeaponDefinition : WeaponDefinition
     {
-        [Space(10), Header("Base weapon statistics")] 
+        [Space(10), Header("Weapon statistics")] 
         
         public BasicBullet BasicBullet;
         
