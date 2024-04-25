@@ -5,7 +5,7 @@ namespace GameFramework.Abilities
 {
     public class WeaponAbility : Ability
     {
-        private Weapon weaponSource;
+        protected Weapon weaponSource;
 
         public override bool CanActivateAbility()
         {
