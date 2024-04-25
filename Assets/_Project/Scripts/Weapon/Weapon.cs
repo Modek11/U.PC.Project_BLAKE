@@ -30,7 +30,7 @@ namespace _Project.Scripts.Weapon
 
         public abstract void PrimaryAttack();
 
-        public virtual void OnOwnerChanged()
+        protected virtual void OnOwnerChanged()
         {
             if (Owner == null) { return; }
 
@@ -41,11 +41,9 @@ namespace _Project.Scripts.Weapon
 
         public virtual bool CanAttack()
         {
-
-            Vector3 viewportPosition = Camera.main.WorldToViewportPoint(owner.transform.position);
-            if (viewportPosition.x <= 0 || viewportPosition.x >= 1 || viewportPosition.y <= 0 || viewportPosition.y >= 1) return false;
-
-            return true;
+            var viewportPosition = Camera.main.WorldToViewportPoint(owner.transform.position);
+            return (!(viewportPosition.x <= 0) && !(viewportPosition.x >= 1) && 
+                    !(viewportPosition.y <= 0) && !(viewportPosition.y >= 1));
         }
 
         public virtual WeaponInstanceInfo GenerateWeaponInstanceInfo(bool randomize = false) => new WeaponInstanceInfo();

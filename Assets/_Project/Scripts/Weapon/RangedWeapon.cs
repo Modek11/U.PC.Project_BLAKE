@@ -42,7 +42,7 @@ namespace _Project.Scripts.Weapon
             weaponsManager?.BroadcastOnPrimaryAttack();
         }
 
-        public override void OnOwnerChanged()
+        protected override void OnOwnerChanged()
         {
             base.OnOwnerChanged();
 
