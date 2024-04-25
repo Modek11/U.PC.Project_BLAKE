@@ -24,9 +24,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Shooting",
+                    "name": "ShootBasic",
                     "type": "Button",
                     "id": "37a52238-82ff-4f62-bece-bc77ec351478",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ShootStrong",
+                    "type": "Button",
+                    "id": "000d1cf4-e132-4a47-9ba5-6c2f19c027e0",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -141,7 +150,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Shooting",
+                    "action": "ShootBasic",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -241,6 +250,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Map",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a6b380b2-f353-4486-ac5d-669c3892317b",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShootStrong",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
