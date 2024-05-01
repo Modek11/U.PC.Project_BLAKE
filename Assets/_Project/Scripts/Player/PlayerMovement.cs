@@ -38,6 +38,13 @@ public class PlayerMovement : MonoBehaviour
 
     private Camera mainCamera;
     public event Action OnDashPerformed;
+
+    private int dashCount = 0;
+    [SerializeField]
+    private int maxDashes = 1;
+    [SerializeField]
+    private float nextDashWindow = 0.5f;
+    private float nextDashTimer = 0.5f;
     
     public float DashCooldown
     {
@@ -158,18 +165,33 @@ public class PlayerMovement : MonoBehaviour
        return true;
 
    }
-
    private void Dash()
    {
-       var rbVelocity = rigidbodyCache.velocity;
+        var rbVelocity = rigidbodyCache.velocity;
+        if (rbVelocity.magnitude < minVelocityMagnitude)
+        {
+            return;
+        }
+        if (dashCount >= maxDashes)
+        {
+            return;
+        }
 
-       if (dashCooldownCountdown > 0 || rbVelocity.magnitude < minVelocityMagnitude)
-       {
-           return;
-       }
+        if (nextDashTimer >= nextDashWindow && dashCount != 0)
+        {
+            dashCount = 0;
+            return;
+        }
+
+        if (dashCooldownCountdown > 0 && dashCount == 0)
+        {
+            return;
+        }
+        
 
        var force = rigidbodyCache.velocity.normalized * CalculateSpeed() * dashForce;
        rigidbodyCache.AddForce(force, ForceMode.Impulse);
+       dashCount++;
 
        SetDashCountdowns();
    }
@@ -178,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
    {
        dashCooldownCountdown = DashCooldown;
        dashDurationCountdown = dashDuration;
+       nextDashTimer = 0;
        OnDashPerformed?.Invoke();
    }
 
@@ -191,8 +214,27 @@ public class PlayerMovement : MonoBehaviour
        if (dashCooldownCountdown > 0)
        {
            dashCooldownCountdown -= Time.deltaTime;
-       }
+       } else if (dashCount != 0)
+        {
+            dashCount = 0;
+        }
+       
+
+        if (nextDashTimer <= nextDashWindow)
+        {
+            nextDashTimer += Time.deltaTime;
+        }
    }
+
+    public void AddDashes( int dashes)
+    {
+        maxDashes += dashes;
+    }
+
+    public void RemoveDashes(int dashes)
+    {
+        maxDashes = Math.Max(1, maxDashes - dashes);
+    }
 
    private void SpeedControl()
    {
