@@ -9,7 +9,7 @@ namespace _Project.Scripts.SceneHandler
     {
         private const string mainMenu = "MainMenu";
         private const string loadingScene = "LoadingScene";
-        private const string build1505 = "Build1505";
+        private const string firstFloor = "Floor1";
 
         [HideInInspector]
         public float loadingProgress;
@@ -35,7 +35,7 @@ namespace _Project.Scripts.SceneHandler
         public void StartNewGame()
         {
             GetComponent<LevelHandler>().ResetValues();
-            StartCoroutine(LoadNewSceneAdditive(build1505));
+            StartCoroutine(LoadNewSceneAdditive(firstFloor));
         }
 
         public void LoadGame()
