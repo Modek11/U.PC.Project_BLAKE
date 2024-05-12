@@ -7,8 +7,16 @@ namespace _Project.Scripts
 {
     public class EnemyCharacter : BlakeCharacter
     {
-        [SerializeField]
-        private WeaponPickup weaponPickup;
+
+    [SerializeField]
+    private float speed = 6f;
+    [SerializeField]
+    private float additionalSpeed = 0;
+    [SerializeField]
+    private float patrolSpeed = 2.5f;
+
+    [SerializeField]
+    private WeaponPickup weaponPickup;
     
         private AIController ai;
         private float destroySelfTime = 2f;
@@ -22,10 +30,30 @@ namespace _Project.Scripts
             ai = GetComponent<AIController>();
         }
 
-        public override void Die(GameObject killer)
-        {
-            //animator.SetBool("IsAlive", false);
-            explosionParticleInstantiated = Instantiate(explosionParticle, transform.position, Quaternion.identity);
+    public float CalculateSpeed()
+    {
+        return speed + additionalSpeed;
+    }
+
+    public float GetPatrolSpeed()
+    {
+        return patrolSpeed;
+    }
+
+    public void AddAdditionalSpeed(float speed)
+    {
+        additionalSpeed += speed;
+    }
+
+    public void RemoveAdditionalSpeed(float speed)
+    {
+        additionalSpeed -= speed;
+    }
+
+    public override void Die(GameObject killer)
+    {
+        //animator.SetBool("IsAlive", false);
+        explosionParticleInstantiated = Instantiate(explosionParticle, transform.position, Quaternion.identity);
 
             _ = DestroySelf();
             _ = DropWeapon();

@@ -8,10 +8,10 @@ using UnityEngine.AI;
 public class BTT_MoveTo : Leaf
 {
     public float AcceptableDistance = 1f;
-    public float MoveSpeed = 5f;
     public Vector3Reference LocationReference = new Vector3Reference();
+    public bool isPatrolling = false;
 
-    public AIController AIController;
+    private AIController aiController;
 
     private void Awake()
     {
@@ -20,23 +20,28 @@ public class BTT_MoveTo : Leaf
 
     public override void OnEnter()
     {
-        if (AIController == null) return;
-        if (AIController.NavMeshAgent.isStopped) AIController.NavMeshAgent.isStopped = false;
+        aiController = GetComponent<AIController>();
+        if (aiController == null) return;
+        if (aiController.NavMeshAgent.isStopped) aiController.NavMeshAgent.isStopped = false;
 
-        AIController.NavMeshAgent.speed = MoveSpeed;
-        AIController.NavMeshAgent.SetDestination(LocationReference.Value);
+        float speed = (!isPatrolling) ? aiController.GetEnemyScript().CalculateSpeed() : aiController.GetEnemyScript().GetPatrolSpeed();
+        aiController.NavMeshAgent.speed = speed;
+        aiController.NavMeshAgent.SetDestination(LocationReference.Value);
     }
 
     public override NodeResult Execute()
     {
-        if (AIController.NavMeshAgent.pathStatus == NavMeshPathStatus.PathPartial) { return NodeResult.failure; }
-        if (AIController.NavMeshAgent.pathStatus == NavMeshPathStatus.PathInvalid) { return NodeResult.failure; }
-        if (!AIController.NavMeshAgent.hasPath) { return NodeResult.failure; }
-        if (AIController.NavMeshAgent.velocity.sqrMagnitude == 0f) { return NodeResult.failure; }
+        if (aiController.NavMeshAgent.pathStatus == NavMeshPathStatus.PathPartial) { return NodeResult.failure; }
+        if (aiController.NavMeshAgent.pathStatus == NavMeshPathStatus.PathInvalid) { return NodeResult.failure; }
+        if (!aiController.NavMeshAgent.hasPath) { return NodeResult.failure; }
+        if (aiController.NavMeshAgent.velocity.sqrMagnitude == 0f) { return NodeResult.failure; }
+        
+        float speed = (!isPatrolling) ? aiController.GetEnemyScript().CalculateSpeed() : aiController.GetEnemyScript().GetPatrolSpeed();
+        aiController.NavMeshAgent.speed = speed;
 
-        if (AIController.NavMeshAgent.remainingDistance <= AcceptableDistance)
+        if (aiController.NavMeshAgent.remainingDistance <= AcceptableDistance)
         {
-            AIController.NavMeshAgent.ResetPath();
+            aiController.NavMeshAgent.ResetPath();
             return NodeResult.success;
         }
         return NodeResult.running;

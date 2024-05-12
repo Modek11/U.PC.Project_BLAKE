@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd8e6aded5e6e3d43a86110c4782dde5, type: 3}
   m_Name: AgilityThreePerk
   m_EditorClassIdentifier: 
-  perkName: 
+  perkName: AgilityThree
   playerMovement: {fileID: 0}
   dashesToAdd: 1

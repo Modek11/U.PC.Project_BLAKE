@@ -3227,6 +3227,8 @@ MonoBehaviour:
   dashCooldown: 1.5
   dashDuration: 0.175
   gunHandlerTransform: {fileID: 3772505426422216946}
+  maxDashes: 1
+  nextDashWindow: 0.3
 --- !u!114 &5545414051132038907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3334,7 +3336,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   perkScripts: []
-  perksToStartWith: []
+  perksToStartWith:
+  - {fileID: 11400000, guid: 4701864d1c8f9bc4fa899f243e9cec9f, type: 2}
 --- !u!1 &8871600578562275924
 GameObject:
   m_ObjectHideFlags: 0
