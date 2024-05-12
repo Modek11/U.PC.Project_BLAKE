@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Project.Scripts.Weapon
@@ -14,11 +15,17 @@ namespace _Project.Scripts.Weapon
         private RangedWeaponDefinition rangedWeaponDefinition;
         private Rigidbody rb;
         private float fireDelayTime;
+        private SpreadType spreadType;
         private float spread;
-        private float spreadMinMagnitude;
+        private float spreadSecondaryValue;
         private int projectilesPerShot;
         private int magazineSize;
+        
         private float lastFireTime;
+        private float firstFireTime;
+        private float spreadThreshold;
+        private float negativeSpreadThreshold;
+        private float positiveSpreadThreshold;
         
         public int BulletsLeft { get; set; }
         public float Range { get; private set; }
@@ -75,45 +82,71 @@ namespace _Project.Scripts.Weapon
 
         private bool Shot()
         {
-            float spreadTmp = spread / 10f;
-            //float chosenSpread = rb.velocity.magnitude <= spreadMinMagnitude ? 0 : Random.Range(projectilesPerShot > 1 ? -spread : 0f, spread);
-            int f = -(projectilesPerShot / 2);
-            if (f == 0)
-            {
-                f = 1;
-                spreadTmp = spreadTmp * Random.value >= 0.5f ? 1f : -1f;
-            }
+            if (BulletsLeft == 0) return false;
 
-            for (int i = 0; i < projectilesPerShot; i++)
+            foreach (var bulletSpreadValue in GetCalculatedProjectilesAngles())
             {
-                if (BulletsLeft == 0) return false;
                 //TODO: Add pooling
                 var bulletPrefab = rangedWeaponDefinition.BasicBullet.gameObject;
                 var bullet = Instantiate(bulletPrefab, bulletsSpawnPoint.position, transform.rotation);
-
-                //Choose spread depending on player's controls
-                //float chosenSpread = rb.velocity.magnitude <= spreadMinMagnitude ? 0 : Random.Range(-spread, spread);
-
-                //if (projectilesPerShot <= 1)
-                //{
-                bullet.GetComponent<IBullet>().SetupBullet(f++ * spreadTmp/*chosenSpread*/, transform.parent.gameObject, Range);
-                //}
-                //else
-                //{
-                //    if (i % 2 == 0)
-                //    {
-                //        bullet.GetComponent<IBullet>().SetupBullet(chosenSpread/*Random.Range(-spread, 0)*/, transform.parent.gameObject, Range);
-                //    }
-                //    else
-                //    {
-                //        bullet.GetComponent<IBullet>().SetupBullet(chosenSpread/*Random.Range(0, spread)*/, transform.parent.gameObject, Range);
-                //    }
-                //}
+                
+                bullet.GetComponent<IBullet>().SetupBullet(bulletSpreadValue, transform.parent.gameObject, Range);
             }
 
             if (!infinityAmmo) BulletsLeft--;
 
             return true;
+        }
+
+        private List<float> GetCalculatedProjectilesAngles()
+        {
+            var projectilesAngles = new List<float>();
+            
+            if (spreadType == SpreadType.Undefined)
+            {
+                Debug.LogError($"SpreadType in {rangedWeaponDefinition.WeaponName} is Undefined!");
+            }
+
+            else if (spreadType == SpreadType.NoSpread)
+            {
+                projectilesAngles.Add(0f);
+            }
+            
+            else if (spreadType == SpreadType.Static)
+            {
+                var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
+                projectilesAngles.Add(projectileAngle);
+            }
+
+            else if (spreadType == SpreadType.StaticMultiShot)
+            {
+                var anglePerProjectile = spread / (projectilesPerShot - 1);
+
+                for (var i = 0; i < projectilesPerShot; i++)
+                {
+                    var projectileAngle = negativeSpreadThreshold + anglePerProjectile * i;
+                    projectilesAngles.Add(projectileAngle);
+                }
+            }
+
+            else if (spreadType == SpreadType.NoSpreadThenStatic)
+            {
+                if (Time.time - lastFireTime < spreadThreshold)
+                { 
+                    var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
+                    projectilesAngles.Add(projectileAngle);
+                }
+                else
+                {
+                    projectilesAngles.Add(0f);
+                }
+            }
+
+            else if (spreadType == SpreadType.GraduallyIncrease)
+            {
+            }
+
+            return projectilesAngles;
         }
 
         public override WeaponInstanceInfo GenerateWeaponInstanceInfo(bool randomize)
@@ -143,11 +176,15 @@ namespace _Project.Scripts.Weapon
             rangedWeaponDefinition = definition;
             fireDelayTime = rangedWeaponDefinition.FireDelayTime;
             spread = rangedWeaponDefinition.Spread;
-            spreadMinMagnitude = rangedWeaponDefinition.SpreadMinMagnitude;
+            spreadType = rangedWeaponDefinition.SpreadType;
+            spreadThreshold = rangedWeaponDefinition.SpreadThreshold;
             projectilesPerShot = rangedWeaponDefinition.ProjectilesPerShot;
             magazineSize = rangedWeaponDefinition.MagazineSize;
             Range = rangedWeaponDefinition.Range;
             BulletsLeft = magazineSize;
+            
+            negativeSpreadThreshold = -(spread / 2);
+            positiveSpreadThreshold = spread / 2;
         }
 
         public override void LoadWeaponInstanceInfo(WeaponInstanceInfo weaponInstanceInfo)

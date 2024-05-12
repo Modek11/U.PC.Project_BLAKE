@@ -24,12 +24,12 @@ namespace GameFramework.Abilities
         {
             base.ActivateAbility();
 
-            AbilityDescription();
+            AbilitySkill();
 
             EndAbility();
         }
 
-        protected virtual void AbilityDescription()
+        protected virtual void AbilitySkill()
         {
             Debug.LogError("Method is not overriden, using base PrimaryAttack on weapon");
             weaponSource.PrimaryAttack();

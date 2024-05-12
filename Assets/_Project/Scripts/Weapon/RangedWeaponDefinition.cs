@@ -11,12 +11,17 @@ namespace _Project.Scripts.Weapon
         
         [Tooltip("Declares how often player can shoot")]
         public float FireDelayTime = 0.4f;
+
+        [Tooltip("Declares type of spread")] 
+        public SpreadType SpreadType = SpreadType.Undefined;
         
         [Tooltip("Declares range of bullet spawn")]
         public float Spread = 10f;
         
-        [Tooltip("Declares how fast should be character to use spread during shot")]
-        public float SpreadMinMagnitude = 0f;
+        [Tooltip("Declares in seconds how fast spread threshold should reset. Used only for: (default: -1) \n" +
+                 "   -NoSpreadThenStatic\n" +
+                 "   -GraduallyIncrease")]
+        public float SpreadThreshold = -1f;
         
         [Tooltip("Declares how many projectiles should be instantiated in one shot")]
         public int ProjectilesPerShot = 1;

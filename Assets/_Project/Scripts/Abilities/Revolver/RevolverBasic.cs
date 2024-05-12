@@ -9,9 +9,9 @@ namespace _Project.Scripts.Abilities.Revolver
             return base.CanActivateAbility();
         }
         
-        protected override void AbilityDescription()
+        protected override void AbilitySkill()
         {
-            base.AbilityDescription();
+            base.AbilitySkill();
         }
     }
 }
