@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5241348274939121156}
   - component: {fileID: 5241348274939121157}
   - component: {fileID: 5241348274939121158}
+  - component: {fileID: 1601041519742388656}
   m_Layer: 0
   m_Name: DevConsoleCommands
   m_TagString: Untagged
@@ -74,3 +75,19 @@ MonoBehaviour:
     type: 3}
   weaponDefinitionHolder: {fileID: 11400000, guid: 1cc4e21e814b3d64abc15afeb3719c22,
     type: 2}
+--- !u!114 &1601041519742388656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5241348274939121159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02cb5934bbe433848a88d956f477a177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  perkList:
+  - {fileID: 11400000, guid: 0741bc707a94a6b48926828e95310ce9, type: 2}
+  - {fileID: 11400000, guid: 5d6655bfc274aad41bca777b94acd3c0, type: 2}
+  - {fileID: 11400000, guid: 4701864d1c8f9bc4fa899f243e9cec9f, type: 2}

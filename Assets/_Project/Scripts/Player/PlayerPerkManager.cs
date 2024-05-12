@@ -24,7 +24,7 @@ public class PlayerPerkManager : MonoBehaviour
 
     public void RemovePerkByName(string name)
     {
-        var perksToRemove = perkScripts.Where(x => x.name == name).ToList();
+        var perksToRemove = perkScripts.Where(x => x.perkName == name).ToList();
 
         foreach (var perk in perksToRemove)
         {

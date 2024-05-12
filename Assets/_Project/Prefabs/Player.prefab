@@ -3336,8 +3336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   perkScripts: []
-  perksToStartWith:
-  - {fileID: 11400000, guid: 4701864d1c8f9bc4fa899f243e9cec9f, type: 2}
+  perksToStartWith: []
 --- !u!1 &8871600578562275924
 GameObject:
   m_ObjectHideFlags: 0
