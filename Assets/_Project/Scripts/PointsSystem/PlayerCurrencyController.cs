@@ -6,6 +6,8 @@ namespace _Project.Scripts.PointsSystem
     public class PlayerCurrencyController : MonoBehaviour
     {
         [SerializeField] private ComboController comboController;
+        public delegate void AddedPointsDeleagte(float addedPoints);
+        public event AddedPointsDeleagte onAddPoints;
         
         private float points = 0;
 
@@ -13,7 +15,14 @@ namespace _Project.Scripts.PointsSystem
 
         public void RegisterEnemyDeath(int pointsForKill)
         {
-            points += pointsForKill * comboController.ComboCounter;
+            float pointsToAdd = pointsForKill * comboController.ComboCounter;
+            points += pointsToAdd;
+            onAddPoints?.Invoke(pointsToAdd);
+        }
+
+        public void AddPoints(float points)
+        {
+            this.points += points;
         }
     }
 }
