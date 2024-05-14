@@ -16,6 +16,7 @@ public class BlakeHeroCharacter : BlakeCharacter
         defaultHealth = ReferenceManager.SceneHandler.isNormalDifficulty ? 3 : 1;
         health = defaultHealth;
         respawnCounter = 0;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnDestroy()

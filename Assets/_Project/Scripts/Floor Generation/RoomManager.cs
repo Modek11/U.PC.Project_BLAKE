@@ -47,8 +47,8 @@ public class RoomManager : MonoBehaviour
     {
         return minimapFloor;
     }
-
-    private void OnDestroy()
+    /*
+    public void OnDestroy()
     {
         Delegate[] delegateList = onRoomEnter.GetInvocationList();
         foreach(var d in delegateList)
@@ -61,5 +61,5 @@ public class RoomManager : MonoBehaviour
         {
             onRoomLeave -= (d as EnteredRoom);
         }
-    }
+    }*/
 }

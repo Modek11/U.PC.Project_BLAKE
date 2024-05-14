@@ -96,6 +96,11 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         return true;
     }
 
+    public void AddRespawnCounter()
+    {
+        maxRespawns++;
+    }
+
     public void SetRespawnPosition(Vector3 position)
     {
         respawnPos = position;

@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 374b5414df8901a41a8146bca9edec28, type: 3}
-  m_Name: SavageOnePerk
+  m_Script: {fileID: 11500000, guid: eb61d6d4e18d137468c434f321b5670b, type: 3}
+  m_Name: PermanenceTwoPerk
   m_EditorClassIdentifier: 
-  perkName: SavageOne
-  multiplierPercent: 50
+  perkName: PermanenceTwo
