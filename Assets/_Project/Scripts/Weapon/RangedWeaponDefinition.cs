@@ -18,10 +18,18 @@ namespace _Project.Scripts.Weapon
         [Tooltip("Declares range of bullet spawn")]
         public float Spread = 10f;
         
+        [Tooltip("Declares a step of increasing spread. Used only for: (default: -1) \n" +
+                 "   -GraduallyIncrease")]
+        public float SpreadStep = -1f;
+        
+        [Tooltip("Declares a threshold for a spread. Used only for: (default: -1) \n" +
+                 "   -GraduallyIncrease")]
+        public float SpreadThreshold = -1f;
+        
         [Tooltip("Declares in seconds how fast spread threshold should reset. Used only for: (default: -1) \n" +
                  "   -NoSpreadThenStatic\n" +
                  "   -GraduallyIncrease")]
-        public float SpreadThreshold = -1f;
+        public float SpreadResetThreshold = -1f;
         
         [Tooltip("Declares how many projectiles should be instantiated in one shot")]
         public int ProjectilesPerShot = 1;

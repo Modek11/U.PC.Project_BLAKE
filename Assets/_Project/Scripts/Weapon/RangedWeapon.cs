@@ -1,9 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 namespace _Project.Scripts.Weapon
 {
+    public struct RangedWeaponStatistics
+    {
+        public RangedWeaponStatistics(SpreadType spreadType, float spread, float spreadResetThreshold, int projectilesPerShot, float range, float fireDelayTime = 0)
+        {
+            SpreadType = spreadType;
+            Spread = spread;
+            SpreadResetThreshold = spreadResetThreshold;
+            ProjectilesPerShot = projectilesPerShot;
+            Range = range;
+            FireDelayTime = fireDelayTime;
+        }
+        
+        public SpreadType SpreadType;
+        public float Spread;
+        public float SpreadResetThreshold;
+        public int ProjectilesPerShot;
+        public float Range;
+        public float FireDelayTime;
+    }
+    
     [RequireComponent(typeof(AudioSource))]
     public class RangedWeapon : Weapon
     {
@@ -12,23 +33,28 @@ namespace _Project.Scripts.Weapon
         [SerializeField]
         private bool infinityAmmo = false;
 
+        private RangedWeaponStatistics savedRangedWeaponStatistics;
         private RangedWeaponDefinition rangedWeaponDefinition;
         private Rigidbody rb;
         private float fireDelayTime;
         private SpreadType spreadType;
         private float spread;
-        private float spreadSecondaryValue;
+        private float spreadStep;
+        private float spreadThreshold;
+        private float spreadResetThreshold;
         private int projectilesPerShot;
         private int magazineSize;
+        private float range;
         
         private float lastFireTime;
         private float firstFireTime;
-        private float spreadThreshold;
         private float negativeSpreadThreshold;
         private float positiveSpreadThreshold;
+        private float currentSpread;
         
+        public float Range => range;
         public int BulletsLeft { get; set; }
-        public float Range { get; private set; }
+        public SpreadType CurrentSpreadType { get; set; }
 
         protected override void Awake()
         {
@@ -58,13 +84,13 @@ namespace _Project.Scripts.Weapon
 
         public override bool CanPrimaryAttack()
         {
-            if (Time.time - lastFireTime < fireDelayTime) return false;
-
             if(BulletsLeft <= 0)
             {
                 StartCoroutine("UnequipSelf");
                 return false;
             }
+            
+            if (Time.time - lastFireTime < fireDelayTime) return false;
 
             return true;
         }
@@ -90,7 +116,8 @@ namespace _Project.Scripts.Weapon
                 var bulletPrefab = rangedWeaponDefinition.BasicBullet.gameObject;
                 var bullet = Instantiate(bulletPrefab, bulletsSpawnPoint.position, transform.rotation);
                 
-                bullet.GetComponent<IBullet>().SetupBullet(bulletSpreadValue, transform.parent.gameObject, Range);
+                bullet.GetComponent<IBullet>().SetupBullet(bulletSpreadValue, transform.parent.gameObject, range);
+                Debug.Log(bulletSpreadValue + " ||| " + spreadType);
             }
 
             if (!infinityAmmo) BulletsLeft--;
@@ -131,7 +158,7 @@ namespace _Project.Scripts.Weapon
 
             else if (spreadType == SpreadType.NoSpreadThenStatic)
             {
-                if (Time.time - lastFireTime < spreadThreshold)
+                if (Time.time - lastFireTime < spreadResetThreshold)
                 { 
                     var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
                     projectilesAngles.Add(projectileAngle);
@@ -144,6 +171,16 @@ namespace _Project.Scripts.Weapon
 
             else if (spreadType == SpreadType.GraduallyIncrease)
             {
+                if (Time.time - lastFireTime < fireDelayTime + 0.1f)
+                {
+                    ResetSpread();
+                }
+                
+                projectilesAngles.Add(currentSpread);
+                if (currentSpread < spreadThreshold)
+                {
+                    currentSpread += spreadStep;
+                }
             }
 
             return projectilesAngles;
@@ -175,14 +212,45 @@ namespace _Project.Scripts.Weapon
             
             rangedWeaponDefinition = definition;
             fireDelayTime = rangedWeaponDefinition.FireDelayTime;
-            spread = rangedWeaponDefinition.Spread;
             spreadType = rangedWeaponDefinition.SpreadType;
+            spread = rangedWeaponDefinition.Spread;
+            spreadStep = rangedWeaponDefinition.SpreadStep;
             spreadThreshold = rangedWeaponDefinition.SpreadThreshold;
+            spreadResetThreshold = rangedWeaponDefinition.SpreadResetThreshold;
             projectilesPerShot = rangedWeaponDefinition.ProjectilesPerShot;
             magazineSize = rangedWeaponDefinition.MagazineSize;
-            Range = rangedWeaponDefinition.Range;
+            range = rangedWeaponDefinition.Range;
             BulletsLeft = magazineSize;
             
+            ResetSpread();
+        }
+
+        public RangedWeaponStatistics SaveAndGetRangedWeaponStatistics()
+        {
+            return savedRangedWeaponStatistics = new RangedWeaponStatistics(spreadType, spread, spreadResetThreshold, projectilesPerShot, range, fireDelayTime);
+        }
+
+        public void ApplyRangedWeaponStatistics(RangedWeaponStatistics rangedWeaponStatistics)
+        {
+            spreadType = rangedWeaponStatistics.SpreadType;
+            spread = rangedWeaponStatistics.Spread;
+            spreadResetThreshold = rangedWeaponStatistics.SpreadResetThreshold;
+            projectilesPerShot = rangedWeaponStatistics.ProjectilesPerShot;
+            range = rangedWeaponStatistics.Range;
+            fireDelayTime = rangedWeaponStatistics.FireDelayTime;
+            lastFireTime = Time.time;
+
+            ResetSpread();
+        }
+
+        public void RestoreRangedWeaponStatistics()
+        {
+            ApplyRangedWeaponStatistics(savedRangedWeaponStatistics);
+        }
+
+        private void ResetSpread()
+        {
+            currentSpread = spread;
             negativeSpreadThreshold = -(spread / 2);
             positiveSpreadThreshold = spread / 2;
         }

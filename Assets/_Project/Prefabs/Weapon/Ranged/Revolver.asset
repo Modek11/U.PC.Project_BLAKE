@@ -31,8 +31,7 @@ MonoBehaviour:
     type: 3}
   FireDelayTime: 0.5
   SpreadType: 1
-  Spread: 0
-  SpreadSecondaryValue: -1
+  Spread: 15
   SpreadThreshold: -1
   ProjectilesPerShot: 1
   MagazineSize: 6

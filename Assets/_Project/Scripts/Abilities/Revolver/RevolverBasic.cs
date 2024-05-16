@@ -11,7 +11,7 @@ namespace _Project.Scripts.Abilities.Revolver
         
         protected override void AbilitySkill()
         {
-            base.AbilitySkill();
+            weaponSource.PrimaryAttack();
         }
     }
 }

@@ -31,7 +31,8 @@ MonoBehaviour:
   FireDelayTime: 0.8
   SpreadType: 1
   Spread: 0
-  SpreadThreshold: -1
+  SpreadStep: -1
+  SpreadResetThreshold: -1
   ProjectilesPerShot: 1
   MagazineSize: 6
   Range: 40

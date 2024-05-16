@@ -31,7 +31,7 @@ namespace GameFramework.Abilities
 
         protected virtual void AbilitySkill()
         {
-            Debug.LogError("Method is not overriden, using base PrimaryAttack on weapon");
+            Debug.LogError("Method is not overriden, using PrimaryAttack on weapon");
             weaponSource.PrimaryAttack();
         }
     }

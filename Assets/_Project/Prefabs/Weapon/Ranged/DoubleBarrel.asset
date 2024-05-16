@@ -34,4 +34,4 @@ MonoBehaviour:
   SpreadThreshold: -1
   ProjectilesPerShot: 2
   MagazineSize: 4
-  Range: 10
+  Range: 5
