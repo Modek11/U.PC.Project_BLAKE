@@ -4596,6 +4596,11 @@ PrefabInstance:
       propertyPath: mainRoom
       value: 
       objectReference: {fileID: 4084803205270209872}
+    - target: {fileID: 2087882301756044489, guid: be02f6d2c5654034ebec1a2859efb68b,
+        type: 3}
+      propertyPath: wallObject
+      value: 
+      objectReference: {fileID: 3430090703374834153}
     - target: {fileID: 5761699083240367011, guid: be02f6d2c5654034ebec1a2859efb68b,
         type: 3}
       propertyPath: m_Name
@@ -4670,6 +4675,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe291cc298258b4fb57bdcd2dfa0b87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3430090703374834153 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4331371079676472112, guid: be02f6d2c5654034ebec1a2859efb68b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1406880507593159385}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8357424505802157464 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6952914682734288705, guid: be02f6d2c5654034ebec1a2859efb68b,
@@ -7628,6 +7639,11 @@ PrefabInstance:
       propertyPath: mainRoom
       value: 
       objectReference: {fileID: 4084803205270209872}
+    - target: {fileID: 2087882301756044489, guid: be02f6d2c5654034ebec1a2859efb68b,
+        type: 3}
+      propertyPath: wallObject
+      value: 
+      objectReference: {fileID: 2793910840664313709}
     - target: {fileID: 5761699083240367011, guid: be02f6d2c5654034ebec1a2859efb68b,
         type: 3}
       propertyPath: m_Name
@@ -7702,6 +7718,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe291cc298258b4fb57bdcd2dfa0b87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2793910840664313709 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4331371079676472112, guid: be02f6d2c5654034ebec1a2859efb68b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1934832701310559325}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8837292856446384924 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6952914682734288705, guid: be02f6d2c5654034ebec1a2859efb68b,
@@ -9080,6 +9102,11 @@ PrefabInstance:
       propertyPath: mainRoom
       value: 
       objectReference: {fileID: 4084803205270209872}
+    - target: {fileID: 2087882301756044489, guid: be02f6d2c5654034ebec1a2859efb68b,
+        type: 3}
+      propertyPath: wallObject
+      value: 
+      objectReference: {fileID: 2793910839282228379}
     - target: {fileID: 5761699083240367011, guid: be02f6d2c5654034ebec1a2859efb68b,
         type: 3}
       propertyPath: m_Name
@@ -9154,6 +9181,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe291cc298258b4fb57bdcd2dfa0b87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2793910839282228379 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4331371079676472112, guid: be02f6d2c5654034ebec1a2859efb68b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1934832702142543787}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8837292855681247466 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6952914682734288705, guid: be02f6d2c5654034ebec1a2859efb68b,
