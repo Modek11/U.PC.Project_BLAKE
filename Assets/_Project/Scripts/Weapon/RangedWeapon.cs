@@ -115,10 +115,10 @@ namespace _Project.Scripts.Weapon
             foreach (var bulletSpreadValue in GetCalculatedProjectilesAngles())
             {
                 //TODO: Add pooling
-                var bulletPrefab = rangedWeaponDefinition.BasicBullet.gameObject;
+                var bulletPrefab = rangedWeaponDefinition.BasicBullet;
                 var bullet = Instantiate(bulletPrefab, bulletsSpawnPoint.position, transform.rotation);
                 
-                bullet.GetComponent<IBullet>().SetupBullet(bulletSpreadValue, transform.parent.gameObject, range, bulletType);
+                bullet.SetupBullet(bulletSpreadValue, transform.parent.gameObject, range, bulletType);
             }
 
             if (!infinityAmmo) BulletsLeft--;
