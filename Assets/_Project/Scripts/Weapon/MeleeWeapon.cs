@@ -1,3 +1,4 @@
+using _Project.Scripts.Interfaces;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -48,7 +49,7 @@ namespace _Project.Scripts.Weapon
                 IDamageable damageable = hit.transform.GetComponentInParent<IDamageable>();
                 if (damageable != null)
                 {
-                    damageable.TakeDamage(transform.parent.gameObject, 1);
+                    damageable.TryTakeDamage(transform.parent.gameObject, 1);
                 }
             }
         }

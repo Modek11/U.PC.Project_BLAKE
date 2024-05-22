@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 
 namespace _Project.Scripts.Weapon
 {
     public struct RangedWeaponStatistics
     {
-        public RangedWeaponStatistics(SpreadType spreadType, float spread, float spreadResetThreshold, int projectilesPerShot, float range, float fireDelayTime = 0)
+        public RangedWeaponStatistics(BulletType bulletType, SpreadType spreadType, float spread, float spreadResetThreshold, int projectilesPerShot, float range, float fireDelayTime)
         {
+            BulletType = bulletType;
             SpreadType = spreadType;
             Spread = spread;
             SpreadResetThreshold = spreadResetThreshold;
@@ -16,7 +16,8 @@ namespace _Project.Scripts.Weapon
             Range = range;
             FireDelayTime = fireDelayTime;
         }
-        
+
+        public BulletType BulletType;
         public SpreadType SpreadType;
         public float Spread;
         public float SpreadResetThreshold;
@@ -37,6 +38,7 @@ namespace _Project.Scripts.Weapon
         private RangedWeaponDefinition rangedWeaponDefinition;
         private Rigidbody rb;
         private float fireDelayTime;
+        private BulletType bulletType;
         private SpreadType spreadType;
         private float spread;
         private float spreadStep;
@@ -116,8 +118,7 @@ namespace _Project.Scripts.Weapon
                 var bulletPrefab = rangedWeaponDefinition.BasicBullet.gameObject;
                 var bullet = Instantiate(bulletPrefab, bulletsSpawnPoint.position, transform.rotation);
                 
-                bullet.GetComponent<IBullet>().SetupBullet(bulletSpreadValue, transform.parent.gameObject, range);
-                Debug.Log(bulletSpreadValue + " ||| " + spreadType);
+                bullet.GetComponent<IBullet>().SetupBullet(bulletSpreadValue, transform.parent.gameObject, range, bulletType);
             }
 
             if (!infinityAmmo) BulletsLeft--;
@@ -212,6 +213,7 @@ namespace _Project.Scripts.Weapon
             
             rangedWeaponDefinition = definition;
             fireDelayTime = rangedWeaponDefinition.FireDelayTime;
+            bulletType = rangedWeaponDefinition.BulletType;
             spreadType = rangedWeaponDefinition.SpreadType;
             spread = rangedWeaponDefinition.Spread;
             spreadStep = rangedWeaponDefinition.SpreadStep;
@@ -227,11 +229,12 @@ namespace _Project.Scripts.Weapon
 
         public RangedWeaponStatistics SaveAndGetRangedWeaponStatistics()
         {
-            return savedRangedWeaponStatistics = new RangedWeaponStatistics(spreadType, spread, spreadResetThreshold, projectilesPerShot, range, fireDelayTime);
+            return savedRangedWeaponStatistics = new RangedWeaponStatistics(bulletType, spreadType, spread, spreadResetThreshold, projectilesPerShot, range, fireDelayTime);
         }
 
         public void ApplyRangedWeaponStatistics(RangedWeaponStatistics rangedWeaponStatistics)
         {
+            bulletType = rangedWeaponStatistics.BulletType;
             spreadType = rangedWeaponStatistics.SpreadType;
             spread = rangedWeaponStatistics.Spread;
             spreadResetThreshold = rangedWeaponStatistics.SpreadResetThreshold;

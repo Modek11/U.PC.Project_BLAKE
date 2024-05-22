@@ -30,9 +30,12 @@ MonoBehaviour:
   BasicBullet: {fileID: 8745238448183679225, guid: 6737c19ee0289854f924664298e930db,
     type: 3}
   FireDelayTime: 0.5
+  BulletType: 1
   SpreadType: 1
   Spread: 15
+  SpreadStep: -1
   SpreadThreshold: -1
+  SpreadResetThreshold: -1
   ProjectilesPerShot: 1
   MagazineSize: 6
   Range: 20

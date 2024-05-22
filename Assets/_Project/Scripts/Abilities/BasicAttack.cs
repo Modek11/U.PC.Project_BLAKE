@@ -1,8 +1,8 @@
 using GameFramework.Abilities;
 
-namespace _Project.Scripts.Abilities.Revolver
+namespace _Project.Scripts.Abilities
 {
-    public class RevolverBasic : WeaponAbility
+    public class BasicAttack : WeaponAbility
     {
         public override bool CanActivateAbility()
         {

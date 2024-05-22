@@ -1,70 +1,94 @@
+using _Project.Scripts.Interfaces;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(Rigidbody))]
-public class BasicBullet : MonoBehaviour, IBullet
+namespace _Project.Scripts.Weapon
 {
-    [SerializeField]
-    private float bulletSpeed;
-
-    [SerializeField, Tooltip("Time after bullet will be destroyed")]
-    private float destroyTime;
-
-    [SerializeField, Tooltip("How many enemies bullet should penetrate 0 = destroy at first hit")]
-    private int penetrateAmount;
-
-    private Rigidbody rb;
-
-    public GameObject _instigator;
-
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody))]
+    public class BasicBullet : MonoBehaviour, IBullet
     {
-        rb = GetComponent<Rigidbody>();
-    }
+        [SerializeField]
+        private float bulletSpeed;
 
-    //TODO: Add magic function handler
-    private void Update()
-    {
-        rb.velocity = transform.forward * bulletSpeed;
-    }
+        [SerializeField, Tooltip("Time after bullet will be destroyed")]
+        private float destroyTime;
 
-    /// <summary>
-    /// Use it on instantiate to declare base stats which are weapon related
-    /// </summary>
-    /// <param name="xSpread">Spread range (it declares range of (-xSpread, xSpread))</param>
-    public void SetupBullet(float xSpread, GameObject instigator, float range)
-    {
-        destroyTime = range / bulletSpeed;
-        //TODO: Instead of changing spawn pos, change rotation
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + xSpread/*Random.Range(transform.eulerAngles.y-xSpread, transform.eulerAngles.y+xSpread)*/, 0);
-        _instigator = instigator;
-        Destroy(gameObject, destroyTime);
-    }
+        [SerializeField, Tooltip("How many enemies bullet should penetrate 0 = destroy at first hit")]
+        private int penetrateAmount;
+        
+        [SerializeField]
+        private BulletExplosion explosionPrefab;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        IDamageable damageable = collision.gameObject.GetComponentInParent<IDamageable>();
-        if (damageable != null && collision.gameObject != _instigator)
+        private Rigidbody rb;
+
+        private GameObject instigator;
+        private BulletType bulletType;
+
+        private void Awake()
         {
-            if (damageable.CanTakeDamage(_instigator))
-            {
-                //TODO: Add IDamagable interface on enemies, keeping damage on bullets (even if enemies are one shot one kill) will help us in future if we will be adding destroyable elements, which will require different strength
-                damageable.TakeDamage(_instigator, 1/*damage*/);
-            }
+            rb = GetComponent<Rigidbody>();
+        }
 
-            if (penetrateAmount > 0)
+        //TODO: Add magic function handler
+        private void Update()
+        {
+            rb.velocity = transform.forward * bulletSpeed;
+        }
+
+        /// <summary>
+        /// Use it on instantiate to declare base stats which are weapon related
+        /// </summary>
+        /// <param name="xSpread">Spread range (it declares range of (-xSpread, xSpread))</param>
+        public void SetupBullet(float xSpread, GameObject instigator, float range, BulletType bulletType)
+        {
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + xSpread, 0);
+            
+            this.instigator = instigator;
+            this.bulletType = bulletType;
+            destroyTime = range / bulletSpeed;
+            Destroy(gameObject, destroyTime);
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            var damageable = collision.gameObject.GetComponentInParent<IDamageable>();
+            if (damageable != null && collision.gameObject != instigator)
             {
-                penetrateAmount--;
+                damageable.TryTakeDamage(instigator, 1);
+
+                if (bulletType == BulletType.Explosive)
+                {
+                    Destroy(gameObject);
+                }
+
+                if (penetrateAmount > 0)
+                {
+                    penetrateAmount--;
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
             else
             {
                 Destroy(gameObject);
             }
         }
-        else
+        
+        public void OnDestroy()
         {
-            Destroy(gameObject);
+            switch (bulletType)
+            {
+                case BulletType.Undefined:
+                    Debug.LogError($"BulletType in {name} is Undefined!");
+                    break;
+                case BulletType.Basic:
+                    break;
+                case BulletType.Explosive:
+                    var explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                    explosion.Explode(instigator);
+                    break;
+            }
         }
     }
-    
 }

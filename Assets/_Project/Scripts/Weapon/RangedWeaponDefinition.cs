@@ -11,6 +11,9 @@ namespace _Project.Scripts.Weapon
         
         [Tooltip("Declares how often player can shoot")]
         public float FireDelayTime = 0.4f;
+        
+        [Tooltip("Declares type of bullet")] 
+        public BulletType BulletType = BulletType.Undefined;
 
         [Tooltip("Declares type of spread")] 
         public SpreadType SpreadType = SpreadType.Undefined;
