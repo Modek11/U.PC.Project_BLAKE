@@ -207,4 +207,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoomOutValue: 1.5
-  duration: 1
+  zoomingDuration: 1
+  zoomResetDuration: 3
