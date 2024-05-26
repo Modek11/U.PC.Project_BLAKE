@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 using GameFramework.Abilities;
 using UnityEngine;
 
-namespace _Project.Scripts.Abilities.Revolver
+namespace _Project.Scripts.Abilities
 {
     public class RevolverStrong : WeaponAbility
     {
