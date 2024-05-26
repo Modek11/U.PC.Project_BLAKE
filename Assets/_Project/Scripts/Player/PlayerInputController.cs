@@ -9,8 +9,10 @@ namespace _Project.Scripts.Player
     {
         private PlayerInputSystem inputSystem;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             inputSystem = new PlayerInputSystem();
             inputSystem.Gameplay.SetCallbacks(this);
             SetUpControls();

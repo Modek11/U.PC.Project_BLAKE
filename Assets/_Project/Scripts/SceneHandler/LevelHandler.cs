@@ -1,60 +1,61 @@
 using System.Linq;
-using _Project.Scripts;
 using _Project.Scripts.Patterns;
-using _Project.Scripts.SceneHandler;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(SceneHandler))]
-public class LevelHandler : Singleton<LevelHandler>
+namespace _Project.Scripts.SceneHandler
 {
-    [SerializeField]
-    private int levelIndex = 0;
-    [SerializeField]
-    private LevelList levelNames;
-    private SceneHandler sceneHandler;
-
-    private void Start()
+    [RequireComponent(typeof(SceneHandler))]
+    public class LevelHandler : Singleton<LevelHandler>
     {
-        ReferenceManager.LevelHandler = this;
+        [SerializeField]
+        private int levelIndex = 0;
+        [SerializeField]
+        private LevelList levelNames;
+        private SceneHandler sceneHandler;
 
-        sceneHandler = ReferenceManager.SceneHandler;
-
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        if (levelNames.levelNames.Contains(currentSceneName))
+        private void Start()
         {
-            for (int i = 0; i < levelNames.levelNames.Length; i++)
+            ReferenceManager.LevelHandler = this;
+
+            sceneHandler = ReferenceManager.SceneHandler;
+
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            if (levelNames.levelNames.Contains(currentSceneName))
             {
-                if (levelNames.levelNames[i] == currentSceneName)
+                for (int i = 0; i < levelNames.levelNames.Length; i++)
                 {
-                    levelIndex = i;
-                    break;
+                    if (levelNames.levelNames[i] == currentSceneName)
+                    {
+                        levelIndex = i;
+                        break;
+                    }
                 }
             }
         }
-    }
 
-    public void GoToNextLevel()
-    {
-        if (levelIndex == levelNames.levelNames.Length - 1)
+        public void GoToNextLevel()
         {
-            EndRun();
-            return;
+            if (levelIndex == levelNames.levelNames.Length - 1)
+            {
+                EndRun();
+                return;
+            }
+
+            levelIndex++;
+            sceneHandler.LoadNewLevel(levelNames.levelNames[levelIndex]);
         }
 
-        levelIndex++;
-        sceneHandler.LoadNewLevel(levelNames.levelNames[levelIndex]);
-    }
+        public void EndRun()
+        {
+            levelIndex = 0;
+            Destroy(ReferenceManager.PlayerInputController.gameObject);
+            sceneHandler.LoadMainMenu();
+        }
 
-    public void EndRun()
-    {
-        levelIndex = 0;
-        Destroy(ReferenceManager.PlayerInputController.gameObject);
-        sceneHandler.LoadMainMenu();
-    }
-
-    public void ResetValues()
-    {
-        levelIndex = 0;
+        public void ResetValues()
+        {
+            levelIndex = 0;
+        }
     }
 }
