@@ -30,7 +30,7 @@ MonoBehaviour:
     type: 3}
   FireDelayTime: 0.8
   BulletType: 2
-  SpreadType: 3
+  SpreadType: 4
   Spread: 15
   SpreadStep: -1
   SpreadThreshold: -1

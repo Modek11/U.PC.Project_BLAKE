@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8b52c6e7e16fc848a76e7336673e5f2, type: 3}
-  m_Name: Shotgun
+  m_Name: MachineGun
   m_EditorClassIdentifier: 
-  WeaponPrefab: {fileID: 7102642101788406657, guid: 5537cce7f288ae346949b6adb82e3bbe,
+  WeaponPrefab: {fileID: 8623244368148286623, guid: 6319a1b0b2129e44fbe02b75620268c8,
     type: 3}
-  WeaponGFX: {fileID: 7630133848501499039, guid: 24876219021b8f541ae02417265e6a2c,
+  WeaponGFX: {fileID: 539712161414889713, guid: 7e0af4d7e171e6148a07c86bfa73cbee,
     type: 3}
-  WeaponName: Shotgun
+  WeaponName: MachineGun
   DropRate: 0.6
   AbilitiesToGrant:
   - {fileID: 11400000, guid: 7c4cd691da4d0084780e7a2b16579662, type: 2}
@@ -26,15 +26,15 @@ MonoBehaviour:
   Scale: {x: 1, y: 1, z: 1}
   PickupLocationOffset: {x: 0, y: 0, z: 0}
   PickupRotation: {x: 0, y: 0, z: 0, w: 0}
-  BasicBullet: {fileID: 8745238448183679225, guid: 840b6a6b89ca7344da4b0ad530514ca7,
+  BasicBullet: {fileID: 8745238448183679225, guid: 3834453275fdaab4aa045b723129cc96,
     type: 3}
-  FireDelayTime: 0.7
+  FireDelayTime: 0.15
   BulletType: 1
-  SpreadType: 4
-  Spread: 20
-  SpreadStep: -1
-  SpreadThreshold: -1
-  SpreadResetThreshold: -1
-  ProjectilesPerShot: 3
-  MagazineSize: 6
-  Range: 12.5
+  SpreadType: 6
+  Spread: 5
+  SpreadStep: 1
+  SpreadThreshold: 15
+  SpreadResetThreshold: 0.2
+  ProjectilesPerShot: 1
+  MagazineSize: 15
+  Range: 17.5

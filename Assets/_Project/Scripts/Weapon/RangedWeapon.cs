@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace _Project.Scripts.Weapon
@@ -112,18 +113,33 @@ namespace _Project.Scripts.Weapon
         {
             if (BulletsLeft == 0) return false;
 
-            foreach (var bulletSpreadValue in GetCalculatedProjectilesAngles())
+            var list = GetCalculatedProjectilesAngles();
+            for (var index = 0; index < list.Count; index++)
             {
-                //TODO: Add pooling
-                var bulletPrefab = rangedWeaponDefinition.BasicBullet;
-                var bullet = Instantiate(bulletPrefab, bulletsSpawnPoint.position, transform.rotation);
-                
-                bullet.SetupBullet(bulletSpreadValue, transform.parent.gameObject, range, bulletType);
+                var bulletSpreadValue = list[index];
+
+                if (spreadType == SpreadType.StaticSeries)
+                {
+                    DOVirtual.DelayedCall(index / 10f, () => CreateBullet(bulletSpreadValue));
+                }
+                else
+                {
+                    CreateBullet(bulletSpreadValue);
+                }
             }
 
             if (!infinityAmmo) BulletsLeft--;
 
             return true;
+        }
+
+        private void CreateBullet(float bulletSpreadValue)
+        {
+            //TODO: Add pooling
+            var bulletPrefab = rangedWeaponDefinition.BasicBullet;
+            var bullet = Instantiate(bulletPrefab, bulletsSpawnPoint.position, transform.rotation);
+                
+            bullet.SetupBullet(bulletSpreadValue, transform.parent.gameObject, range, bulletType);
         }
 
         private List<float> GetCalculatedProjectilesAngles()
@@ -140,7 +156,7 @@ namespace _Project.Scripts.Weapon
                 projectilesAngles.Add(0f);
             }
             
-            else if (spreadType == SpreadType.Static)
+            else if (spreadType is SpreadType.Static or SpreadType.StaticSeries)
             {
                 var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
                 projectilesAngles.Add(projectileAngle);

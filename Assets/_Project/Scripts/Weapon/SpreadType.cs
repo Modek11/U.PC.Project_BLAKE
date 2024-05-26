@@ -5,8 +5,9 @@ namespace _Project.Scripts.Weapon
         Undefined = 0,
         NoSpread = 1,
         Static = 2,
-        StaticMultiShot = 3,
-        NoSpreadThenStatic = 4,
-        GraduallyIncrease = 5
+        StaticSeries = 3,
+        StaticMultiShot = 4,
+        NoSpreadThenStatic = 5,
+        GraduallyIncrease = 6,
     }
 }
