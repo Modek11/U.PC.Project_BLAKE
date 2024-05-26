@@ -19,7 +19,7 @@ MonoBehaviour:
   WeaponName: MachineGun
   DropRate: 0.6
   AbilitiesToGrant:
-  - {fileID: 11400000, guid: 7c4cd691da4d0084780e7a2b16579662, type: 2}
+  - {fileID: 11400000, guid: babcf2078afcab3428df17ef838c3ee2, type: 2}
   AttachSocketName: GunHandler
   LocationOffset: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0, w: 0}
@@ -34,7 +34,7 @@ MonoBehaviour:
   Spread: 5
   SpreadStep: 1
   SpreadThreshold: 15
-  SpreadResetThreshold: 0.2
+  SpreadResetThreshold: 0.5
   ProjectilesPerShot: 1
   MagazineSize: 15
   Range: 17.5

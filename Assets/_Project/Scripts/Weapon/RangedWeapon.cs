@@ -188,15 +188,19 @@ namespace _Project.Scripts.Weapon
 
             else if (spreadType == SpreadType.GraduallyIncrease)
             {
-                if (Time.time - lastFireTime < fireDelayTime + 0.1f)
+                if (Time.time - lastFireTime > fireDelayTime + spreadResetThreshold)
                 {
                     ResetSpread();
                 }
                 
-                projectilesAngles.Add(currentSpread);
+                var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
+                projectilesAngles.Add(projectileAngle);
+                Debug.Log($"{currentSpread}, ");
+                
                 if (currentSpread < spreadThreshold)
                 {
                     currentSpread += spreadStep;
+                    UpdateSpreadThresholds();
                 }
             }
 
@@ -270,8 +274,13 @@ namespace _Project.Scripts.Weapon
         private void ResetSpread()
         {
             currentSpread = spread;
-            negativeSpreadThreshold = -(spread / 2);
-            positiveSpreadThreshold = spread / 2;
+            UpdateSpreadThresholds();
+        }
+
+        private void UpdateSpreadThresholds()
+        {
+            negativeSpreadThreshold = -(currentSpread / 2);
+            positiveSpreadThreshold = currentSpread / 2;
         }
 
         public override void LoadWeaponInstanceInfo(WeaponInstanceInfo weaponInstanceInfo)

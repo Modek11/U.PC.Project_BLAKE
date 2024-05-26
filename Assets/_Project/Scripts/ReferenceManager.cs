@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using _Project.Scripts.Patterns;
 using _Project.Scripts.Player;
+using _Project.Scripts.SceneHandler;
 using _Project.Scripts.VirtualCamera;
 using Unity.Services.Core;
 
