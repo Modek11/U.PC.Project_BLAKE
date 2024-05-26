@@ -156,10 +156,19 @@ namespace _Project.Scripts.Weapon
                 projectilesAngles.Add(0f);
             }
             
-            else if (spreadType is SpreadType.Static or SpreadType.StaticSeries)
+            else if (spreadType is SpreadType.Static)
             {
                 var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
                 projectilesAngles.Add(projectileAngle);
+            }
+            
+            else if (spreadType is SpreadType.StaticSeries)
+            {
+                for (var i = 0; i < projectilesPerShot; i++)
+                {
+                    var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
+                    projectilesAngles.Add(projectileAngle);
+                }
             }
 
             else if (spreadType == SpreadType.StaticMultiShot)
