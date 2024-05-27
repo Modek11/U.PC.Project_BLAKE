@@ -46,9 +46,18 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Shooting"",
+                    ""name"": ""ShootBasic"",
                     ""type"": ""Button"",
                     ""id"": ""37a52238-82ff-4f62-bece-bc77ec351478"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShootStrong"",
+                    ""type"": ""Button"",
+                    ""id"": ""000d1cf4-e132-4a47-9ba5-6c2f19c027e0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -163,7 +172,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Shooting"",
+                    ""action"": ""ShootBasic"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -265,6 +274,17 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Map"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6b380b2-f353-4486-ac5d-669c3892317b"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShootStrong"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -281,7 +301,8 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
         m_Gameplay_ChangeWeapon = m_Gameplay.FindAction("ChangeWeapon", throwIfNotFound: true);
-        m_Gameplay_Shooting = m_Gameplay.FindAction("Shooting", throwIfNotFound: true);
+        m_Gameplay_ShootBasic = m_Gameplay.FindAction("ShootBasic", throwIfNotFound: true);
+        m_Gameplay_ShootStrong = m_Gameplay.FindAction("ShootStrong", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_Map = m_Gameplay.FindAction("Map", throwIfNotFound: true);
         m_Gameplay_MousePosition = m_Gameplay.FindAction("MousePosition", throwIfNotFound: true);
@@ -352,7 +373,8 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
     private readonly InputAction m_Gameplay_Movement;
     private readonly InputAction m_Gameplay_ChangeWeapon;
-    private readonly InputAction m_Gameplay_Shooting;
+    private readonly InputAction m_Gameplay_ShootBasic;
+    private readonly InputAction m_Gameplay_ShootStrong;
     private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_Map;
     private readonly InputAction m_Gameplay_MousePosition;
@@ -364,7 +386,8 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         public GameplayActions(@PlayerInputSystem wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
         public InputAction @ChangeWeapon => m_Wrapper.m_Gameplay_ChangeWeapon;
-        public InputAction @Shooting => m_Wrapper.m_Gameplay_Shooting;
+        public InputAction @ShootBasic => m_Wrapper.m_Gameplay_ShootBasic;
+        public InputAction @ShootStrong => m_Wrapper.m_Gameplay_ShootStrong;
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @Map => m_Wrapper.m_Gameplay_Map;
         public InputAction @MousePosition => m_Wrapper.m_Gameplay_MousePosition;
@@ -385,9 +408,12 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @ChangeWeapon.started += instance.OnChangeWeapon;
             @ChangeWeapon.performed += instance.OnChangeWeapon;
             @ChangeWeapon.canceled += instance.OnChangeWeapon;
-            @Shooting.started += instance.OnShooting;
-            @Shooting.performed += instance.OnShooting;
-            @Shooting.canceled += instance.OnShooting;
+            @ShootBasic.started += instance.OnShootBasic;
+            @ShootBasic.performed += instance.OnShootBasic;
+            @ShootBasic.canceled += instance.OnShootBasic;
+            @ShootStrong.started += instance.OnShootStrong;
+            @ShootStrong.performed += instance.OnShootStrong;
+            @ShootStrong.canceled += instance.OnShootStrong;
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
@@ -413,9 +439,12 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @ChangeWeapon.started -= instance.OnChangeWeapon;
             @ChangeWeapon.performed -= instance.OnChangeWeapon;
             @ChangeWeapon.canceled -= instance.OnChangeWeapon;
-            @Shooting.started -= instance.OnShooting;
-            @Shooting.performed -= instance.OnShooting;
-            @Shooting.canceled -= instance.OnShooting;
+            @ShootBasic.started -= instance.OnShootBasic;
+            @ShootBasic.performed -= instance.OnShootBasic;
+            @ShootBasic.canceled -= instance.OnShootBasic;
+            @ShootStrong.started -= instance.OnShootStrong;
+            @ShootStrong.performed -= instance.OnShootStrong;
+            @ShootStrong.canceled -= instance.OnShootStrong;
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
@@ -490,7 +519,8 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnChangeWeapon(InputAction.CallbackContext context);
-        void OnShooting(InputAction.CallbackContext context);
+        void OnShootBasic(InputAction.CallbackContext context);
+        void OnShootStrong(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnMap(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);

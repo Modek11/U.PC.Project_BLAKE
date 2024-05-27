@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: WeaponDefinitionHolder
   m_EditorClassIdentifier: 
   melee:
-  - {fileID: 11400000, guid: ba6d981959989e54081af014222d2c3f, type: 2}
-  - {fileID: 11400000, guid: 86bdf59c910aa4b4b9ee226ef679ebd5, type: 2}
+  - {fileID: 11400000, guid: 466cf86f521ace44fa65215b3bbdf104, type: 2}
+  - {fileID: 11400000, guid: 6c7fe8b8bb61ce5418824310a7c889fe, type: 2}
   ranged:
-  - {fileID: 11400000, guid: cdc2618dfa837c346a3dd1fc0d02ce9b, type: 2}
-  - {fileID: 11400000, guid: cb112670c3a49bc4784159c4dfb4e34e, type: 2}
-  - {fileID: 11400000, guid: 09dca39072925f34abe61b56ed429831, type: 2}
-  - {fileID: 11400000, guid: 84867b61f986ef5438050060175a68b8, type: 2}
-  - {fileID: 11400000, guid: 853c1e795d7565e4987cefbb9acb9301, type: 2}
+  - {fileID: 11400000, guid: 38f322b9e88f2a149a1f3d198afce634, type: 2}
+  - {fileID: 11400000, guid: 94176044a774abd47a2fdd37aeb335d7, type: 2}
+  - {fileID: 11400000, guid: 0fd0e9977afc67e45a1b4f9312d1bffd, type: 2}
+  - {fileID: 11400000, guid: ecf19a5b6ec8cdb4ea5f226c60c5385a, type: 2}
+  - {fileID: 11400000, guid: 452ffb8d558fe4d458121137d9b90341, type: 2}

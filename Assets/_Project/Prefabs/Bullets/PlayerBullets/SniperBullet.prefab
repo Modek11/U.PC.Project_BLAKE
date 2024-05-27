@@ -131,7 +131,7 @@ MonoBehaviour:
   bulletSpeed: 50
   destroyTime: 4
   penetrateAmount: 999
-  _instigator: {fileID: 0}
+  explosionPrefab: {fileID: 0}
 --- !u!96 &7393209552491094299
 TrailRenderer:
   serializedVersion: 2

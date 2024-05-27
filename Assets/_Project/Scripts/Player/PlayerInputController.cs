@@ -29,9 +29,12 @@ namespace _Project.Scripts.Player
         public event Action<Vector2> movementEvent;
         public event Action<Vector2> mousePositionEvent;
 
-        public event Action onShootStartEvent;
-        public event Action shootEvent;
-        public event Action onShootCancelEvent;
+        public event Action onShootBasicStartEvent;
+        public event Action shootBasicEvent;
+        public event Action onShootBasicCancelEvent;
+        public event Action onShootStrongStartEvent;
+        public event Action shootStrongEvent;
+        public event Action onShootStrongCancelEvent;
         public event Action<int> changeWeaponEvent;
         public event Action interactEvent;
         public event Action onMapPressEvent; 
@@ -52,14 +55,25 @@ namespace _Project.Scripts.Player
             }
         }
 
-        public void OnShooting(InputAction.CallbackContext context)
+        public void OnShootBasic(InputAction.CallbackContext context)
         {
-            if (context.started) onShootStartEvent?.Invoke();
-            if (context.canceled) onShootCancelEvent?.Invoke();
+            if (context.started) onShootBasicStartEvent?.Invoke();
+            if (context.canceled) onShootBasicCancelEvent?.Invoke();
 
             if(context.performed)
             {
-                shootEvent?.Invoke();
+                shootBasicEvent?.Invoke();
+            }
+        }
+        
+        public void OnShootStrong(InputAction.CallbackContext context)
+        {
+            if (context.started) onShootStrongStartEvent?.Invoke();
+            if (context.canceled) onShootStrongCancelEvent?.Invoke();
+
+            if(context.performed)
+            {
+                shootStrongEvent?.Invoke();
             }
         }
 

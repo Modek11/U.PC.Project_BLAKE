@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e011a979c8cc2444292152bf544c44bc, type: 3}
+  m_Name: BasicAttackHold
+  m_EditorClassIdentifier: 
+  AbilityClass:
+    GuidAssignmentFailed: 0
+    GUID: 78a3acd5e5b1ebf4588687ae44ebdc1c
+    _typeNameAndAssembly: _Project.Scripts.Abilities.BasicAttackHold, Assembly-CSharp
+    _suppressLogs: 0
+  oldAbilityClass:
+    GuidAssignmentFailed: 0
+    GUID: 78a3acd5e5b1ebf4588687ae44ebdc1c
+    _typeNameAndAssembly: _Project.Scripts.Abilities.BasicAttackHold, Assembly-CSharp
+    _suppressLogs: 0
+  abilityInstance:
+    rid: 3031250812683419649
+  InputActionReference: {fileID: 8942947751858755327, guid: 9ec00f29d6ea6eb4f8e32d4386c28b17,
+    type: 3}
+  AbilityStates: []
+  AbilitiesToCancel: []
+  AbilitiesToBlock: []
+  StatesToAdd: []
+  RequiredStates: []
+  BlockedStates: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3031250812683419649
+      type: {class: BasicAttackHold, ns: _Project.Scripts.Abilities, asm: Assembly-CSharp}
+      data:
+        AbilityDefinition: {fileID: 11400000}

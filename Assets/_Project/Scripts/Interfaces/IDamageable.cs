@@ -1,8 +1,11 @@
 
 using UnityEngine;
 
-public interface IDamageable
+namespace _Project.Scripts.Interfaces
 {
-    void TakeDamage(GameObject instigator, int damage);
-    bool CanTakeDamage(GameObject instigator);
+    public interface IDamageable
+    {
+        bool TryTakeDamage(GameObject instigator, int damage);
+        bool CanTakeDamage(GameObject instigator);
+    }
 }

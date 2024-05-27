@@ -1,30 +1,35 @@
 using GameFramework.Abilities;
-using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weapon definition", menuName = "Project BLAKE/Weapon")]
-public class WeaponDefinition : ScriptableObject
+namespace _Project.Scripts.Weapon
 {
-    public GameObject WeaponPrefab;
-
-    public string WeaponName;
-
-    public AbilityDefinition[] AbilitiesToGrant;
-
-    [Range(0f, 1f)]
-    public float DropRate = 0.6f;
-
-    public string AttachSocketName;
-
-    public Vector3 LocationOffset;
+    [CreateAssetMenu(fileName = "Weapon definition", menuName = "Project BLAKE/Weapon")]
+    public class WeaponDefinition : ScriptableObject
+    {
+        public GameObject WeaponPrefab;
     
-    public Quaternion Rotation;
+        public GameObject WeaponGFX;
 
-    public Vector3 Scale = Vector3.one;
+        public string WeaponName;
+    
+        [Range(0f, 1f)]
+        public float DropRate = 0.6f;
 
-    public GameObject WeaponGFX;
+        public AbilityDefinition[] AbilitiesToGrant;
+    
+        //[mt] to remove because we would probably have only one attachSocket
+        public string AttachSocketName = "GunHandler";
 
-    public Vector3 PickupLocationOffset = Vector3.zero;
+        [Header("On Character position")]
+        public Vector3 LocationOffset;
+    
+        public Quaternion Rotation;
 
-    public Quaternion PickupRotation;
+        public Vector3 Scale = Vector3.one;
+        
+        [Header("Pickup position")]
+        public Vector3 PickupLocationOffset = Vector3.zero;
+
+        public Quaternion PickupRotation;
+    }
 }
