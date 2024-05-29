@@ -43,5 +43,11 @@ namespace _Project.Scripts.PointsSystem
             var values = new ComboAndPointsValues(points, comboCounter, killsCounter, shouldComboStart);
             OnRegisteredEnemyDeath?.Invoke(values);
         }
+
+        public void Refresh()
+        {
+            var values = new ComboAndPointsValues(points, comboCounter, killsCounter, shouldComboStart);
+            OnRegisteredEnemyDeath?.Invoke(values);
+        }
     }
 }

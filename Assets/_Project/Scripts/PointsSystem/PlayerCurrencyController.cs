@@ -11,6 +11,11 @@ namespace _Project.Scripts.PointsSystem
         
         private float points = 0;
 
+        [SerializeField]
+        private float lostPointOnDeathPercentage = 20;
+        [SerializeField]
+        private float deathPointsModifier = 0;
+        private BlakeCharacter player;
         public float Points => points;
 
         public void RegisterEnemyDeath(int pointsForKill)
@@ -23,6 +28,17 @@ namespace _Project.Scripts.PointsSystem
         public void AddPoints(float points)
         {
             this.points += points;
+        }
+
+        public void RemovePoints(float points)
+        {
+            this.points -= points;
+        }
+
+        public void LosePointsOnDeath()
+        {
+            RemovePoints(Mathf.Round(points * (lostPointOnDeathPercentage + deathPointsModifier) / 100f));
+            EnemyDeathMediator.Instance.Refresh();
         }
     }
 }
