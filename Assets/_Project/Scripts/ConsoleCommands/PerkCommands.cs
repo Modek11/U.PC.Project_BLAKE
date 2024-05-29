@@ -21,6 +21,12 @@ namespace _Project.Scripts.ConsoleCommands
 
             DevConsole.singleton.AddCommand(command = new ActionCommand<string>(RemovePerk) { className = NAME });
             commandsHolder.Add(command);
+
+            DevConsole.singleton.AddCommand(command = new ActionCommand(RemoveAllPerks) { className = NAME });
+            commandsHolder.Add(command);
+
+            DevConsole.singleton.AddCommand(command = new ActionCommand(AddAllPerks) { className = NAME });
+            commandsHolder.Add(command);
         }
 
         private void AddPerk(string perkName)
@@ -38,6 +44,23 @@ namespace _Project.Scripts.ConsoleCommands
         private void RemovePerk(string perkName)
         {
             ReferenceManager.BlakeHeroCharacter?.GetComponent<PlayerPerkManager>()?.RemovePerkByName(perkName);
+        }
+
+        private void AddAllPerks()
+        {
+            foreach(var perk in perkList)
+            {
+                ReferenceManager.BlakeHeroCharacter?.GetComponent<PlayerPerkManager>()?.AddPerk(perk);
+            }
+        }
+
+        private void RemoveAllPerks()
+        {
+            PerkScriptableObject[] perks = ReferenceManager.BlakeHeroCharacter?.GetComponent<PlayerPerkManager>()?.GetPerkList().ToArray();
+            foreach (var perk in perks)
+            {
+                ReferenceManager.BlakeHeroCharacter?.GetComponent<PlayerPerkManager>()?.RemovePerk(perk);
+            }
         }
     }
 }

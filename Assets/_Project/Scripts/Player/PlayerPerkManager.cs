@@ -33,6 +33,11 @@ public class PlayerPerkManager : MonoBehaviour
         }
     }
 
+    public List<PerkScriptableObject> GetPerkList()
+    {
+        return perkScripts;
+    }
+
     private void Start()
     {
         foreach(var perk in perksToStartWith)
