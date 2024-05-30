@@ -10,9 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aac6368008f71cc469eb16fde59f9888, type: 3}
-  m_Name: FirstPool
+  m_Name: AT_RoomsPool_Floor1
   m_EditorClassIdentifier: 
   room:
-  - {fileID: 1934832702315492553, guid: b92ea0d0e0b7c3543a61aa1644e8faae, type: 3}
-  - {fileID: 2171126759078518847, guid: b2039613ff64d854e975fcd9fdd798ba, type: 3}
-  - {fileID: 2171126759078518847, guid: 0e862de4eaf97ea4f84b687cb0a2d908, type: 3}
+  - {fileID: 2171126759078518847, guid: d6ab481050a42e14982f8f9cf4d6482d, type: 3}
+  - {fileID: 2171126759078518847, guid: 7a191019287c7c44388ee5e3c64a35e9, type: 3}

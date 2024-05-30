@@ -400,8 +400,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745959299115149137}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.115003586, y: 2.8199997, z: -7.5999966}
-  m_LocalScale: {x: 2.915143, y: 1, z: 1.7800165}
+  m_LocalPosition: {x: -0.2687, y: 2.8199997, z: -7.5999966}
+  m_LocalScale: {x: 2.884534, y: 1, z: 1.7800165}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 462522855866356544}
@@ -745,7 +745,7 @@ GameObject:
   - component: {fileID: 2171126759078518832}
   - component: {fileID: 3506375193716711652}
   m_Layer: 0
-  m_Name: Large_Room_1
+  m_Name: AT_LargeRoom_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1486,8 +1486,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 29, y: 3, z: 18}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 28.530912, y: 3, z: 17.499645}
+  m_Center: {x: -0.01563549, y: 0, z: -0.03127241}
 --- !u!114 &7166468539070737734
 MonoBehaviour:
   m_ObjectHideFlags: 0

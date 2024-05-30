@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f60f5ee6bd64e74d992c5da4794db05, type: 3}
-  m_Name: TempLevelList
+  m_Script: {fileID: 11500000, guid: aac6368008f71cc469eb16fde59f9888, type: 3}
+  m_Name: AT_TreasureRoomsPool
   m_EditorClassIdentifier: 
-  levelNames:
-  - Floor1
-  - Floor2
+  room:
+  - {fileID: 2171126759078518847, guid: b4fdfdd519b4e904eab6d87acbfd51d7, type: 3}
+  - {fileID: 2171126759078518847, guid: b387b61f335b3d4468ac9a7b463ccdfc, type: 3}

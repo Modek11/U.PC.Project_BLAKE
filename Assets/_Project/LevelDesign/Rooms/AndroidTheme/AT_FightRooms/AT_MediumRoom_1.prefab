@@ -830,7 +830,7 @@ GameObject:
   - component: {fileID: 2171126759078518832}
   - component: {fileID: 3506375193716711652}
   m_Layer: 0
-  m_Name: Medium_Room_1
+  m_Name: AT_MediumRoom_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1654,8 +1654,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 21.75, y: 3, z: 16}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 21.287804, y: 3, z: 15.504789}
+  m_Center: {x: 0, y: 0, z: -0.016508102}
 --- !u!114 &7166468539070737734
 MonoBehaviour:
   m_ObjectHideFlags: 0
