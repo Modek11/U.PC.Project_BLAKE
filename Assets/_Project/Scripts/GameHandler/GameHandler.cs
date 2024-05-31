@@ -20,8 +20,7 @@ namespace _Project.Scripts.GameHandler
 
         public void PlayerWin()
         {
-            Time.timeScale = 0f;
-            OpenPlayerUICanvas("YouWin_Canvas");
+            Debug.LogError("PlayerWin logic is missing");
         }
 
         public void PlayerLose()
