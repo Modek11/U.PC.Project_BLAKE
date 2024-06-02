@@ -8,14 +8,13 @@ namespace _Project.Scripts.SceneHandler
 {
     [RequireComponent(typeof(SceneHandler))]
     public class LevelHandler : Singleton<LevelHandler>
-    public event Action onNextLevel;
     {
         [SerializeField]
         private int levelIndex = 0;
         [SerializeField]
         private LevelList levelNames;
         private SceneHandler sceneHandler;
-
+        public event Action onNextLevel;
         private void Start()
         {
             ReferenceManager.LevelHandler = this;
