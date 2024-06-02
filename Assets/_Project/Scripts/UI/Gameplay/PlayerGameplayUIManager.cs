@@ -18,9 +18,6 @@ namespace _Project.Scripts.UI.Gameplay
         [SerializeField] 
         private MinimapCameraFollow minimapCamera;
 
-        [SerializeField] 
-        private RoomsDoneCounter roomsDoneCounter;
-
         [SerializeField, Space] 
         private TextMeshProUGUI weaponName;
 
@@ -93,12 +90,9 @@ namespace _Project.Scripts.UI.Gameplay
             HideComboTexts();
         
             playerMovement.OnDashPerformed += StartDashCooldownUI;
-            roomsDoneCounter.OnRoomBeaten += RoomsCounterUI;
             blakeCharacter.OnDamageTaken += HealthLeftUI;
             blakeCharacter.onRespawn += OnRespawnUIUpdate;
             OnRespawnUIUpdate();
-            RoomsCounterUI();
-
         }
 
         private void ShowMap()
@@ -127,11 +121,6 @@ namespace _Project.Scripts.UI.Gameplay
             RangedWeapon rangedWeapon = weapon as RangedWeapon;
 
             bulletsLeft.text = rangedWeapon != null ? rangedWeapon.BulletsLeft.ToString() : INFINITY_SYMBOL;
-        }
-        
-          private void RoomsCounterUI()
-        {
-            roomsCounter.text = $"Rooms Beaten : {roomsDoneCounter.RoomsBeaten}/{roomsDoneCounter.RoomsInitialized}";
         }
 
         private void HealthLeftUI(GameObject instigator)
@@ -202,7 +191,6 @@ namespace _Project.Scripts.UI.Gameplay
         private void OnDestroy()
         {
             playerMovement.OnDashPerformed -= StartDashCooldownUI;
-            roomsDoneCounter.OnRoomBeaten -= RoomsCounterUI;
             blakeCharacter.OnDamageTaken -= HealthLeftUI;
             blakeCharacter.onRespawn -= OnRespawnUIUpdate;
         }
