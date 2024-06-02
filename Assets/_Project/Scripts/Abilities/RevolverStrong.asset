@@ -15,15 +15,15 @@ MonoBehaviour:
   AbilityClass:
     GuidAssignmentFailed: 0
     GUID: 5ee4bf7a83dc7874a94189a6e7703fdf
-    _typeNameAndAssembly: _Project.Scripts.Abilities.Revolver.RevolverStrong, Assembly-CSharp
+    _typeNameAndAssembly: _Project.Scripts.Abilities.RevolverStrong, Assembly-CSharp
     _suppressLogs: 0
   oldAbilityClass:
     GuidAssignmentFailed: 0
     GUID: 5ee4bf7a83dc7874a94189a6e7703fdf
-    _typeNameAndAssembly: _Project.Scripts.Abilities.Revolver.RevolverStrong, Assembly-CSharp
+    _typeNameAndAssembly: _Project.Scripts.Abilities.RevolverStrong, Assembly-CSharp
     _suppressLogs: 0
   abilityInstance:
-    rid: 1302969136014426127
+    rid: 3031250832819224576
   InputActionReference: {fileID: -408139493696313495, guid: 9ec00f29d6ea6eb4f8e32d4386c28b17,
     type: 3}
   AbilityStates: []
@@ -35,7 +35,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1302969136014426127
-      type: {class: RevolverStrong, ns: _Project.Scripts.Abilities.Revolver, asm: Assembly-CSharp}
+    - rid: 3031250832819224576
+      type: {class: RevolverStrong, ns: _Project.Scripts.Abilities, asm: Assembly-CSharp}
       data:
         AbilityDefinition: {fileID: 11400000}

@@ -375,12 +375,6 @@ PrefabInstance:
       propertyPath: attackSpeed
       value: 0.25
       objectReference: {fileID: 0}
-    - target: {fileID: 2584845723702579843, guid: b95b54a6a09e88b4bbfc99cc710c47f7,
-        type: 3}
-      propertyPath: WeaponDefinition
-      value: 
-      objectReference: {fileID: 11400000, guid: 86bdf59c910aa4b4b9ee226ef679ebd5,
-        type: 2}
     - target: {fileID: 6142990783774354892, guid: b95b54a6a09e88b4bbfc99cc710c47f7,
         type: 3}
       propertyPath: m_RootOrder

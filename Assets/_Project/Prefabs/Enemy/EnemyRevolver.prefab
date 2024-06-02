@@ -104,12 +104,6 @@ PrefabInstance:
       propertyPath: infinityAmmo
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4035988739716000790, guid: 7bafbe8de9e5c224f9c91487d46efe98,
-        type: 3}
-      propertyPath: WeaponDefinition
-      value: 
-      objectReference: {fileID: 11400000, guid: 09dca39072925f34abe61b56ed429831,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bafbe8de9e5c224f9c91487d46efe98, type: 3}
 --- !u!114 &1638259113527234632 stripped
