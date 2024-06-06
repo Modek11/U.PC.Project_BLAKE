@@ -9,8 +9,12 @@ namespace _Project.Scripts.Weapon
         
         public float SpereCastRadius;
         
-        public float MaxDistance;
+        [Tooltip("Value in degrees from front of object")]
+        public int MaxSpreadRange;
         
         public LayerMask LayerMask;
+
+        [Tooltip("Performance value: \n -higher value store more data \n -too low value can cause not damaging enemy")]
+        public int MaxNumberOfEnemies;
     }
 }

@@ -8,10 +8,16 @@ namespace _Project.Scripts.Weapon
     public class MeleeWeapon : Weapon
     {
         private MeleeWeaponDefinition meleeWeaponDefinition;
-        private float spereCastRadius;
-        private float maxDistance;
-        private LayerMask layerMask;
         private PlayableDirector playableDirector;
+        private Transform characterTransform;
+
+        private float sphereCastRadius;
+        private int maxSpreadRange;
+        private LayerMask layerMask;
+        private int maxNumberOfEnemies;
+        
+        private Collider[] raycastCollidersFound;
+        private int maxSpreadRangePerSide;
 
         private void OnDisable()
         {
@@ -25,6 +31,7 @@ namespace _Project.Scripts.Weapon
             SetupWeaponDefinition();
 
             playableDirector = GetComponent<PlayableDirector>();
+            characterTransform = transform.GetComponentInParent<BlakeCharacter>().transform;
         }
 
         public override bool CanPrimaryAttack()
@@ -37,21 +44,43 @@ namespace _Project.Scripts.Weapon
             playableDirector.Play();
             audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
             audioSource.Play();
-            Invoke("MakeRaycast", 0.27f); // XD  
+
+            MakeRaycast();
         }
 
         private void MakeRaycast()
         {
-            RaycastHit[] hits = Physics.SphereCastAll(transform.position, spereCastRadius, transform.forward, maxDistance, layerMask);
-            foreach (RaycastHit hit in hits)
+            var characterForwardDir = characterTransform.forward;
+            characterForwardDir.y = 0;
+            
+            var collidersFoundNumber = Physics.OverlapSphereNonAlloc(characterTransform.position, sphereCastRadius, raycastCollidersFound, layerMask);
+            for (var i = 0; i < collidersFoundNumber; i++)
             {
-                Debug.Log(hit.transform.gameObject.name);
-                IDamageable damageable = hit.transform.GetComponentInParent<IDamageable>();
-                if (damageable != null)
+                var colliderFound = raycastCollidersFound[i];
+                if (colliderFound is null)
                 {
-                    damageable.TryTakeDamage(transform.parent.gameObject, 1);
+                    break;
                 }
+                
+                var targetDir = colliderFound.transform.position - characterTransform.position;
+                targetDir.y = 0;
+                    
+                var angle = Vector3.Angle(characterForwardDir, targetDir);
+
+                if (angle > maxSpreadRangePerSide)
+                {
+                    continue;
+                }
+                
+                var damageable = colliderFound.transform.GetComponentInParent<IDamageable>();
+                damageable?.TryTakeDamage(transform.parent.gameObject, 1);
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(characterTransform.position, sphereCastRadius);
         }
 
         private void SetupWeaponDefinition()
@@ -63,9 +92,12 @@ namespace _Project.Scripts.Weapon
             }
             
             meleeWeaponDefinition = definition;
-            spereCastRadius = meleeWeaponDefinition.SpereCastRadius;
-            maxDistance = meleeWeaponDefinition.MaxDistance;
+            sphereCastRadius = meleeWeaponDefinition.SpereCastRadius;
+            maxSpreadRange = meleeWeaponDefinition.MaxSpreadRange;
+            maxSpreadRangePerSide = maxSpreadRange / 2;
             layerMask = meleeWeaponDefinition.LayerMask;
+            maxNumberOfEnemies = meleeWeaponDefinition.MaxNumberOfEnemies;
+            raycastCollidersFound = new Collider[maxNumberOfEnemies];
         }
 
         public override void LoadWeaponInstanceInfo(WeaponInstanceInfo weaponInstanceInfo)

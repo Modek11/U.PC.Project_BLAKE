@@ -27,7 +27,8 @@ MonoBehaviour:
   PickupLocationOffset: {x: 0, y: 0, z: 0}
   PickupRotation: {x: 0, y: 0, z: 0, w: 0}
   SpereCastRadius: 0.85
-  MaxDistance: 1.25
+  MaxSpreadRange: 90
   LayerMask:
     serializedVersion: 2
     m_Bits: 128
+  MaxNumberOfEnemies: 1
