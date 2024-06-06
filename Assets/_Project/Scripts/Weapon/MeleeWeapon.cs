@@ -77,11 +77,19 @@ namespace _Project.Scripts.Weapon
             }
         }
 
-        private void OnDrawGizmos()
+#if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
         {
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+            
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(characterTransform.position, sphereCastRadius);
         }
+#endif
+        
 
         private void SetupWeaponDefinition()
         {
