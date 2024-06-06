@@ -37,7 +37,6 @@ namespace _Project.Scripts.Weapon
 
         private RangedWeaponStatistics savedRangedWeaponStatistics;
         private RangedWeaponDefinition rangedWeaponDefinition;
-        private Rigidbody rb;
         private float fireDelayTime;
         private BulletType bulletType;
         private SpreadType spreadType;
@@ -50,7 +49,6 @@ namespace _Project.Scripts.Weapon
         private float range;
         
         private float lastFireTime;
-        private float firstFireTime;
         private float negativeSpreadThreshold;
         private float positiveSpreadThreshold;
         private float currentSpread;
@@ -81,8 +79,6 @@ namespace _Project.Scripts.Weapon
         protected override void OnOwnerChanged()
         {
             base.OnOwnerChanged();
-
-            rb = Owner.GetComponent<Rigidbody>();
         }
 
         public override bool CanPrimaryAttack()

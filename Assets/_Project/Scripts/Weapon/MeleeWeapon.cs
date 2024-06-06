@@ -11,6 +11,7 @@ namespace _Project.Scripts.Weapon
         private PlayableDirector playableDirector;
         private Transform characterTransform;
 
+        private float attackDelayTime;
         private float sphereCastRadius;
         private int maxSpreadRange;
         private LayerMask layerMask;
@@ -18,6 +19,7 @@ namespace _Project.Scripts.Weapon
         
         private Collider[] raycastCollidersFound;
         private int maxSpreadRangePerSide;
+        private float lastAttackTime;
 
         private void OnDisable()
         {
@@ -36,14 +38,17 @@ namespace _Project.Scripts.Weapon
 
         public override bool CanPrimaryAttack()
         {
-            return playableDirector.state != PlayState.Playing;
+            return Time.time - lastAttackTime > attackDelayTime;
         }
 
         public override void PrimaryAttack()
         {
+            playableDirector.Stop();
             playableDirector.Play();
             audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
             audioSource.Play();
+            
+            lastAttackTime = Time.time;
 
             MakeRaycast();
         }
@@ -100,6 +105,7 @@ namespace _Project.Scripts.Weapon
             }
             
             meleeWeaponDefinition = definition;
+            attackDelayTime = meleeWeaponDefinition.AttackDelayTime;
             sphereCastRadius = meleeWeaponDefinition.SpereCastRadius;
             maxSpreadRange = meleeWeaponDefinition.MaxSpreadRange;
             maxSpreadRangePerSide = maxSpreadRange / 2;

@@ -26,6 +26,7 @@ MonoBehaviour:
   Scale: {x: 1, y: 1, z: 1}
   PickupLocationOffset: {x: 0, y: 0, z: 0}
   PickupRotation: {x: 0, y: 0, z: 0, w: 0}
+  AttackDelayTime: 0.4
   SpereCastRadius: 0.85
   MaxSpreadRange: 90
   LayerMask:
