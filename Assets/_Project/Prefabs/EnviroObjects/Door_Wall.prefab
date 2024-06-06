@@ -473,7 +473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connectedDoor: {fileID: 0}
   doorObject: {fileID: 8736427752958271802}
-  wallObject: {fileID: 0}
+  wallObject: {fileID: 4331371079676472112}
   door: {fileID: 4200503237609755824}
   mainRoom: {fileID: 0}
 --- !u!1 &8056130709787086715
@@ -688,6 +688,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c260e63d18282294a9d53d3f257279b4, type: 3}
+--- !u!1 &4331371079676472112 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8331424936873644121, guid: c260e63d18282294a9d53d3f257279b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 5729482365553310569}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8223455277879291090 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4439600197586458555, guid: c260e63d18282294a9d53d3f257279b4,
