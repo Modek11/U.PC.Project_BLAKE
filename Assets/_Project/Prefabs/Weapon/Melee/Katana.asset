@@ -26,10 +26,10 @@ MonoBehaviour:
   Scale: {x: 1, y: 1, z: 1}
   PickupLocationOffset: {x: 0, y: 0, z: 0}
   PickupRotation: {x: 0, y: 0, z: 0, w: 0}
-  AttackDelayTime: 0.4
-  SpereCastRadius: 3
+  AttackDelayTime: 0.25
+  SpereCastRadius: 2
   MaxSpreadRange: 90
   LayerMask:
     serializedVersion: 2
     m_Bits: 512
-  MaxNumberOfEnemies: 10
+  MaxNumberOfEnemies: 5

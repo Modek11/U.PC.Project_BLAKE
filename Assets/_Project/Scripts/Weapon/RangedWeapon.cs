@@ -76,11 +76,6 @@ namespace _Project.Scripts.Weapon
             weaponsManager?.BroadcastOnPrimaryAttack();
         }
 
-        protected override void OnOwnerChanged()
-        {
-            base.OnOwnerChanged();
-        }
-
         public override bool CanPrimaryAttack()
         {
             if(BulletsLeft <= 0)

@@ -95,7 +95,6 @@ namespace _Project.Scripts.Weapon
         }
 #endif
         
-
         private void SetupWeaponDefinition()
         {
             if (WeaponDefinition is not MeleeWeaponDefinition definition)
