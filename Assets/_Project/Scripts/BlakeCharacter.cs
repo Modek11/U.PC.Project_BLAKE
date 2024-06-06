@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using _Project.Scripts;
+using _Project.Scripts.Interfaces;
 using UnityEngine;
 
 public abstract class BlakeCharacter : MonoBehaviour, IDamageable
@@ -57,13 +58,14 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         onDeath?.Invoke();
     }
 
-    public virtual void TakeDamage(GameObject instigator, int damage)
+    public virtual bool TryTakeDamage(GameObject instigator, int damage)
     {
 #if UNITY_EDITOR
-        if (godMode) return;
+        if (godMode) return false;
 #endif
-        if (recentlyDamaged) return;
-        if (health < 1) { return; }
+        if (recentlyDamaged) return false;
+        if (health < 1) return false;
+        if(!CanTakeDamage(instigator)) return false;
 
         Debug.Log(instigator.name + " took " + damage + " damage to " + name);
         Health -= damage;
@@ -76,8 +78,9 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         {
             Die(instigator);
         }
-        
+
         OnDamageTaken?.Invoke(instigator);
+        return true;
     }
 
     public virtual bool CanTakeDamage(GameObject instigator)

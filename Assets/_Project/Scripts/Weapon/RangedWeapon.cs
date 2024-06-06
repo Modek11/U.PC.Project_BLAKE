@@ -1,175 +1,312 @@
 using System.Collections;
+using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-public class RangedWeapon : Weapon
+namespace _Project.Scripts.Weapon
 {
-    [SerializeField]
-    private bool infinityAmmo = false;
-
-    [SerializeField]
-    private Transform bulletsSpawnPoint;
-
-    [SerializeField]
-    public GameObject bulletPrefab;
-
-    [Tooltip("Declares how often player can shoot")]
-    public float FireDelayTime = 0.4f;
-
-    [SerializeField, Tooltip("Declares range of bullet spawn")]
-    private float spread = 10f;
-
-    [SerializeField, Tooltip("Declares how fast should be character to use spread during shot")]
-    private float spreadMinMagnitude = 0f;
-
-    //[SerializeField, Tooltip("Declares how many times it should shot after one button press")]
-    //private int shotsPerTap = 1;
-
-    [SerializeField, Tooltip("Declares how many projectiles should be instantiated in one shot")]
-    public int projectilesPerShot = 1;
-
-    public int MagazineSize;
-    public float Range;
-
-    private int bulletsLeft = 0;
-    public int BulletsLeft
+    public struct RangedWeaponStatistics
     {
-        get => bulletsLeft;
-        set
+        public RangedWeaponStatistics(BulletType bulletType, SpreadType spreadType, float spread, float spreadResetThreshold, int projectilesPerShot, float range, float fireDelayTime)
         {
-            if (bulletsLeft != value)
+            BulletType = bulletType;
+            SpreadType = spreadType;
+            Spread = spread;
+            SpreadResetThreshold = spreadResetThreshold;
+            ProjectilesPerShot = projectilesPerShot;
+            Range = range;
+            FireDelayTime = fireDelayTime;
+        }
+
+        public BulletType BulletType;
+        public SpreadType SpreadType;
+        public float Spread;
+        public float SpreadResetThreshold;
+        public int ProjectilesPerShot;
+        public float Range;
+        public float FireDelayTime;
+    }
+    
+    [RequireComponent(typeof(AudioSource))]
+    public class RangedWeapon : Weapon
+    {
+        [SerializeField]
+        private Transform bulletsSpawnPoint;
+        [SerializeField]
+        private bool infinityAmmo = false;
+
+        private RangedWeaponStatistics savedRangedWeaponStatistics;
+        private RangedWeaponDefinition rangedWeaponDefinition;
+        private Rigidbody rb;
+        private float fireDelayTime;
+        private BulletType bulletType;
+        private SpreadType spreadType;
+        private float spread;
+        private float spreadStep;
+        private float spreadThreshold;
+        private float spreadResetThreshold;
+        private int projectilesPerShot;
+        private int magazineSize;
+        private float range;
+        
+        private float lastFireTime;
+        private float firstFireTime;
+        private float negativeSpreadThreshold;
+        private float positiveSpreadThreshold;
+        private float currentSpread;
+        
+        public float Range => range;
+        public int BulletsLeft { get; set; }
+        public SpreadType CurrentSpreadType { get; set; }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            SetupWeaponDefinition();
+        }
+
+        public override void PrimaryAttack()
+        {
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.PlayOneShot(audioSource.clip);
+        
+            Shot();
+
+            lastFireTime = Time.time;
+
+            weaponsManager?.BroadcastOnPrimaryAttack();
+        }
+
+        protected override void OnOwnerChanged()
+        {
+            base.OnOwnerChanged();
+
+            rb = Owner.GetComponent<Rigidbody>();
+        }
+
+        public override bool CanPrimaryAttack()
+        {
+            if(BulletsLeft <= 0)
             {
-                bulletsLeft = value;
+                StartCoroutine("UnequipSelf");
+                return false;
+            }
+            
+            if (Time.time - lastFireTime < fireDelayTime) return false;
+
+            return true;
+        }
+
+        private IEnumerator UnequipSelf()
+        {
+            yield return new WaitForEndOfFrame();
+
+            if (Owner.TryGetComponent(out WeaponsManager weaponsManager))
+            {
+                weaponsManager.Unequip(weaponsManager.ActiveWeaponIndex);
+                weaponsManager.SetActiveIndex(weaponsManager.ActiveWeaponIndex - 1);
             }
         }
-    }
 
-    private Rigidbody rb;
-
-    private float lastFireTime;
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        BulletsLeft = MagazineSize;
-    }
-
-    public override void PrimaryAttack()
-    {
-        audioSource.pitch = Random.Range(0.9f, 1.1f);
-        audioSource.PlayOneShot(audioSource.clip);
-        
-        Shot();
-
-        lastFireTime = Time.time;
-
-        weaponsManager?.BroadcastOnPrimaryAttack();
-    }
-
-    public override void OnOwnerChanged()
-    {
-        base.OnOwnerChanged();
-
-        rb = Owner.GetComponent<Rigidbody>();
-    }
-
-    public override bool CanPrimaryAttack()
-    {
-        if (Time.time - lastFireTime < FireDelayTime) return false;
-
-        if(bulletsLeft <= 0)
-        {
-            StartCoroutine("UnequipSelf");
-            return false;
-        }
-
-        return true;
-    }
-
-    private IEnumerator UnequipSelf()
-    {
-        yield return new WaitForEndOfFrame();
-
-        if (Owner.TryGetComponent(out WeaponsManager weaponsManager))
-        {
-            weaponsManager.Unequip(weaponsManager.ActiveWeaponIndex);
-            weaponsManager.SetActiveIndex(weaponsManager.ActiveWeaponIndex - 1);
-        }
-    }
-
-    private bool Shot()
-    {
-        float spreadTmp = spread / 10f;
-        //float chosenSpread = rb.velocity.magnitude <= spreadMinMagnitude ? 0 : Random.Range(projectilesPerShot > 1 ? -spread : 0f, spread);
-        int f = -(projectilesPerShot / 2);
-        if (f == 0)
-        {
-            f = 1;
-            spreadTmp = spreadTmp * Random.value >= 0.5f ? 1f : -1f;
-        }
-
-        for (int i = 0; i < projectilesPerShot; i++)
+        private bool Shot()
         {
             if (BulletsLeft == 0) return false;
-            //TODO: Add pooling
-            var bullet = Instantiate(bulletPrefab, bulletsSpawnPoint.position, transform.rotation);
 
-            //Choose spread depending on player's controls
-            //float chosenSpread = rb.velocity.magnitude <= spreadMinMagnitude ? 0 : Random.Range(-spread, spread);
+            var list = GetCalculatedProjectilesAngles();
+            for (var index = 0; index < list.Count; index++)
+            {
+                var bulletSpreadValue = list[index];
 
-            //if (projectilesPerShot <= 1)
-            //{
-                bullet.GetComponent<IBullet>().SetupBullet(f++ * spreadTmp/*chosenSpread*/, transform.parent.gameObject, Range);
-            //}
-            //else
-            //{
-            //    if (i % 2 == 0)
-            //    {
-            //        bullet.GetComponent<IBullet>().SetupBullet(chosenSpread/*Random.Range(-spread, 0)*/, transform.parent.gameObject, Range);
-            //    }
-            //    else
-            //    {
-            //        bullet.GetComponent<IBullet>().SetupBullet(chosenSpread/*Random.Range(0, spread)*/, transform.parent.gameObject, Range);
-            //    }
-            //}
+                if (spreadType == SpreadType.StaticSeries)
+                {
+                    DOVirtual.DelayedCall(index / 10f, () => CreateBullet(bulletSpreadValue));
+                }
+                else
+                {
+                    CreateBullet(bulletSpreadValue);
+                }
+            }
+
+            if (!infinityAmmo) BulletsLeft--;
+
+            return true;
         }
 
-        if (!infinityAmmo) BulletsLeft--;
-
-        return true;
-    }
-
-    public override WeaponInstanceInfo GenerateWeaponInstanceInfo(bool randomize)
-    {
-        if(randomize)
+        private void CreateBullet(float bulletSpreadValue)
         {
+            //TODO: Add pooling
+            var bulletPrefab = rangedWeaponDefinition.BasicBullet;
+            var bullet = Instantiate(bulletPrefab, bulletsSpawnPoint.position, transform.rotation);
+                
+            bullet.SetupBullet(bulletSpreadValue, transform.parent.gameObject, range, bulletType);
+        }
+
+        private List<float> GetCalculatedProjectilesAngles()
+        {
+            var projectilesAngles = new List<float>();
+            
+            if (spreadType == SpreadType.Undefined)
+            {
+                Debug.LogError($"SpreadType in {rangedWeaponDefinition.WeaponName} is Undefined!");
+            }
+
+            else if (spreadType == SpreadType.NoSpread)
+            {
+                projectilesAngles.Add(0f);
+            }
+            
+            else if (spreadType is SpreadType.Static)
+            {
+                var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
+                projectilesAngles.Add(projectileAngle);
+            }
+            
+            else if (spreadType is SpreadType.StaticSeries)
+            {
+                for (var i = 0; i < projectilesPerShot; i++)
+                {
+                    var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
+                    projectilesAngles.Add(projectileAngle);
+                }
+            }
+
+            else if (spreadType == SpreadType.StaticMultiShot)
+            {
+                var anglePerProjectile = spread / (projectilesPerShot - 1);
+
+                for (var i = 0; i < projectilesPerShot; i++)
+                {
+                    var projectileAngle = negativeSpreadThreshold + anglePerProjectile * i;
+                    projectilesAngles.Add(projectileAngle);
+                }
+            }
+
+            else if (spreadType == SpreadType.NoSpreadThenStatic)
+            {
+                if (Time.time - lastFireTime < spreadResetThreshold)
+                { 
+                    var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
+                    projectilesAngles.Add(projectileAngle);
+                }
+                else
+                {
+                    projectilesAngles.Add(0f);
+                }
+            }
+
+            else if (spreadType == SpreadType.GraduallyIncrease)
+            {
+                if (Time.time - lastFireTime > fireDelayTime + spreadResetThreshold)
+                {
+                    ResetSpread();
+                }
+                
+                var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
+                projectilesAngles.Add(projectileAngle);
+                Debug.Log($"{currentSpread}, ");
+                
+                if (currentSpread < spreadThreshold)
+                {
+                    currentSpread += spreadStep;
+                    UpdateSpreadThresholds();
+                }
+            }
+
+            return projectilesAngles;
+        }
+
+        public override WeaponInstanceInfo GenerateWeaponInstanceInfo(bool randomize)
+        {
+            if(randomize)
+            {
+                return new RangedWeaponInstanceInfo
+                {
+                    bulletsLeft = Random.Range(magazineSize / 2, magazineSize + 1)
+                };
+            }
+
             return new RangedWeaponInstanceInfo
             {
-                bulletsLeft = Random.Range(MagazineSize / 2, MagazineSize + 1)
+                bulletsLeft = BulletsLeft
             };
         }
 
-        return new RangedWeaponInstanceInfo
+        private void SetupWeaponDefinition()
         {
-            bulletsLeft = BulletsLeft
-        };
-    }
-
-    public override void LoadWeaponInstanceInfo(WeaponInstanceInfo weaponInstanceInfo)
-    {
-        RangedWeaponInstanceInfo rangedWeaponInstanceInfo = weaponInstanceInfo as RangedWeaponInstanceInfo;
-        if (rangedWeaponInstanceInfo != null)
-        {
-            BulletsLeft = rangedWeaponInstanceInfo.bulletsLeft;
+            if (WeaponDefinition is not RangedWeaponDefinition definition)
+            {
+                Debug.LogError("Wrong WeaponDefinition is attached to the weapon!");
+                return;
+            }
+            
+            rangedWeaponDefinition = definition;
+            fireDelayTime = rangedWeaponDefinition.FireDelayTime;
+            bulletType = rangedWeaponDefinition.BulletType;
+            spreadType = rangedWeaponDefinition.SpreadType;
+            spread = rangedWeaponDefinition.Spread;
+            spreadStep = rangedWeaponDefinition.SpreadStep;
+            spreadThreshold = rangedWeaponDefinition.SpreadThreshold;
+            spreadResetThreshold = rangedWeaponDefinition.SpreadResetThreshold;
+            projectilesPerShot = rangedWeaponDefinition.ProjectilesPerShot;
+            magazineSize = rangedWeaponDefinition.MagazineSize;
+            range = rangedWeaponDefinition.Range;
+            BulletsLeft = magazineSize;
+            
+            ResetSpread();
         }
-    }
+
+        public RangedWeaponStatistics SaveAndGetRangedWeaponStatistics()
+        {
+            return savedRangedWeaponStatistics = new RangedWeaponStatistics(bulletType, spreadType, spread, spreadResetThreshold, projectilesPerShot, range, fireDelayTime);
+        }
+
+        public void ApplyRangedWeaponStatistics(RangedWeaponStatistics rangedWeaponStatistics)
+        {
+            bulletType = rangedWeaponStatistics.BulletType;
+            spreadType = rangedWeaponStatistics.SpreadType;
+            spread = rangedWeaponStatistics.Spread;
+            spreadResetThreshold = rangedWeaponStatistics.SpreadResetThreshold;
+            projectilesPerShot = rangedWeaponStatistics.ProjectilesPerShot;
+            range = rangedWeaponStatistics.Range;
+            fireDelayTime = rangedWeaponStatistics.FireDelayTime;
+            lastFireTime = Time.time;
+
+            ResetSpread();
+        }
+
+        public void RestoreRangedWeaponStatistics()
+        {
+            ApplyRangedWeaponStatistics(savedRangedWeaponStatistics);
+        }
+
+        private void ResetSpread()
+        {
+            currentSpread = spread;
+            UpdateSpreadThresholds();
+        }
+
+        private void UpdateSpreadThresholds()
+        {
+            negativeSpreadThreshold = -(currentSpread / 2);
+            positiveSpreadThreshold = currentSpread / 2;
+        }
+
+        public override void LoadWeaponInstanceInfo(WeaponInstanceInfo weaponInstanceInfo)
+        {
+            RangedWeaponInstanceInfo rangedWeaponInstanceInfo = weaponInstanceInfo as RangedWeaponInstanceInfo;
+            if (rangedWeaponInstanceInfo != null)
+            {
+                BulletsLeft = rangedWeaponInstanceInfo.bulletsLeft;
+            }
+        }
 
 #if UNITY_EDITOR
-    public void SetInfiniteAmmo(bool setInfinite)
-    {
-        infinityAmmo = setInfinite;
-    }
+        public void SetInfiniteAmmo(bool setInfinite)
+        {
+            infinityAmmo = setInfinite;
+        }
 #endif
     
+    }
 }

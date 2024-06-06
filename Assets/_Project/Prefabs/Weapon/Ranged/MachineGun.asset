@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b52c6e7e16fc848a76e7336673e5f2, type: 3}
+  m_Name: MachineGun
+  m_EditorClassIdentifier: 
+  WeaponPrefab: {fileID: 8623244368148286623, guid: 6319a1b0b2129e44fbe02b75620268c8,
+    type: 3}
+  WeaponGFX: {fileID: 539712161414889713, guid: 7e0af4d7e171e6148a07c86bfa73cbee,
+    type: 3}
+  WeaponName: MachineGun
+  DropRate: 0.6
+  AbilitiesToGrant:
+  - {fileID: 11400000, guid: babcf2078afcab3428df17ef838c3ee2, type: 2}
+  AttachSocketName: GunHandler
+  LocationOffset: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 0, z: 0, w: 0}
+  Scale: {x: 1, y: 1, z: 1}
+  PickupLocationOffset: {x: 0, y: 0, z: 0}
+  PickupRotation: {x: 0, y: 0, z: 0, w: 0}
+  BasicBullet: {fileID: 8745238448183679225, guid: 3834453275fdaab4aa045b723129cc96,
+    type: 3}
+  FireDelayTime: 0.15
+  BulletType: 1
+  SpreadType: 6
+  Spread: 5
+  SpreadStep: 1
+  SpreadThreshold: 15
+  SpreadResetThreshold: 0.5
+  ProjectilesPerShot: 1
+  MagazineSize: 15
+  Range: 17.5

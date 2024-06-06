@@ -1,6 +1,7 @@
 using System.Collections;
 using _Project.Scripts.Floor_Generation;
 using _Project.Scripts.PointsSystem;
+using _Project.Scripts.Weapon;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,9 +17,6 @@ namespace _Project.Scripts.UI.Gameplay
 
         [SerializeField] 
         private MinimapCameraFollow minimapCamera;
-
-        [SerializeField] 
-        private RoomsDoneCounter roomsDoneCounter;
 
         [SerializeField, Space] 
         private TextMeshProUGUI weaponName;
@@ -92,12 +90,9 @@ namespace _Project.Scripts.UI.Gameplay
             HideComboTexts();
         
             playerMovement.OnDashPerformed += StartDashCooldownUI;
-            roomsDoneCounter.OnRoomBeaten += RoomsCounterUI;
             blakeCharacter.OnDamageTaken += HealthLeftUI;
             blakeCharacter.onRespawn += OnRespawnUIUpdate;
             OnRespawnUIUpdate();
-            RoomsCounterUI();
-
         }
 
         private void ShowMap()
@@ -110,27 +105,22 @@ namespace _Project.Scripts.UI.Gameplay
             mapUI.SetActive(false);
         }
 
-        private void RefreshUI(global::Weapon weapon)
+        private void RefreshUI(Weapon.Weapon weapon)
         {
             WeaponNameUI(weapon);
             BulletsLeftUI(weapon);
         }
 
-        private void WeaponNameUI(global::Weapon weapon)
+        private void WeaponNameUI(Weapon.Weapon weapon)
         {
             weaponName.text = weapon.WeaponDefinition.WeaponName;
         }
 
-        private void BulletsLeftUI(global::Weapon weapon)
+        private void BulletsLeftUI(Weapon.Weapon weapon)
         {
             RangedWeapon rangedWeapon = weapon as RangedWeapon;
 
             bulletsLeft.text = rangedWeapon != null ? rangedWeapon.BulletsLeft.ToString() : INFINITY_SYMBOL;
-        }
-        
-          private void RoomsCounterUI()
-        {
-            roomsCounter.text = $"Rooms Beaten : {roomsDoneCounter.RoomsBeaten}/{roomsDoneCounter.RoomsInitialized}";
         }
 
         private void HealthLeftUI(GameObject instigator)
@@ -201,7 +191,6 @@ namespace _Project.Scripts.UI.Gameplay
         private void OnDestroy()
         {
             playerMovement.OnDashPerformed -= StartDashCooldownUI;
-            roomsDoneCounter.OnRoomBeaten -= RoomsCounterUI;
             blakeCharacter.OnDamageTaken -= HealthLeftUI;
             blakeCharacter.onRespawn -= OnRespawnUIUpdate;
         }

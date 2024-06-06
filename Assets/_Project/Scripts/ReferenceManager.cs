@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using _Project.Scripts.Patterns;
 using _Project.Scripts.Player;
 using _Project.Scripts.SceneHandler;
+using _Project.Scripts.VirtualCamera;
 using Unity.Services.Core;
 
 namespace _Project.Scripts
@@ -14,6 +15,7 @@ namespace _Project.Scripts
         private LevelHandler levelHandler;
         private MessageRouter messageRouter = new();
         private RoomManager roomManager;
+        private MainVirtualCameraController mainVirtualCameraController;
 
         public static BlakeHeroCharacter BlakeHeroCharacter
         {
@@ -67,6 +69,16 @@ namespace _Project.Scripts
             {
                 if (Instance == null) return;
                 Instance.roomManager = value;
+            }
+        }
+        
+        public static MainVirtualCameraController MainVirtualCameraController
+        {
+            get => Instance != null ? Instance.mainVirtualCameraController : null;
+            set
+            {
+                if (Instance == null) return;
+                Instance.mainVirtualCameraController = value;
             }
         }
 

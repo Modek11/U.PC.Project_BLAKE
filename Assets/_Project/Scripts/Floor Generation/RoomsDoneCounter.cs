@@ -25,6 +25,7 @@ public class RoomsDoneCounter : MonoBehaviour
     {
         roomsBeaten++;
         CheckRoomsCounter();
+        Debug.Log($"Beaten rooms: {RoomsBeaten}/{RoomsInitialized}");
         OnRoomBeaten?.Invoke();
     }
 

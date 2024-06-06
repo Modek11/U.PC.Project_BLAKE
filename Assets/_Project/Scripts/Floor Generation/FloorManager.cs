@@ -1,5 +1,6 @@
 using System;
 using _Project.Scripts.Patterns;
+using _Project.Scripts.VirtualCamera;
 using Cinemachine;
 using UnityEngine;
 
@@ -57,6 +58,7 @@ namespace _Project.Scripts.Floor_Generation
             cameraFollow = Instantiate(cameraFollowPrefab);
         
             virtualCamera.Follow = cameraFollow.transform;
+            ReferenceManager.MainVirtualCameraController = virtualCamera.GetComponent<MainVirtualCameraController>();
             cameraFollow.GetComponent<CameraFollowScript>().SetPlayerReference(player.transform);
         
             FloorGeneratorEnd?.Invoke(player.transform, cameraFollow.transform);

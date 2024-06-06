@@ -18,12 +18,6 @@ PrefabInstance:
       propertyPath: infinityAmmo
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1362863765141256286, guid: 5537cce7f288ae346949b6adb82e3bbe,
-        type: 3}
-      propertyPath: WeaponDefinition
-      value: 
-      objectReference: {fileID: 11400000, guid: 84867b61f986ef5438050060175a68b8,
-        type: 2}
     - target: {fileID: 3492432856493546786, guid: 5537cce7f288ae346949b6adb82e3bbe,
         type: 3}
       propertyPath: m_IsActive

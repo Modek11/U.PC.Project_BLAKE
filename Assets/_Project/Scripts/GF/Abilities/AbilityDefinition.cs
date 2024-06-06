@@ -13,7 +13,7 @@ namespace GameFramework.Abilities
     [CreateAssetMenu(menuName = "GameFramework/Abilities/AbilityDefinition")]
     public class AbilityDefinition : ScriptableObject
     {
-        [Inherits(typeof(Ability), IncludeBaseType = true, ShowNoneElement = false)]
+        [Inherits(typeof(Ability), IncludeBaseType = true, ShowNoneElement = false, ShortName = true)]
         public TypeReference AbilityClass = new(typeof(Ability));
 
         [SerializeField, HideInInspector]

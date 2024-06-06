@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cb5b66b8f11394995cea9b29c4daac, type: 3}
+  m_Name: Baton
+  m_EditorClassIdentifier: 
+  WeaponPrefab: {fileID: 6770924938227727370, guid: b95b54a6a09e88b4bbfc99cc710c47f7,
+    type: 3}
+  WeaponGFX: {fileID: 6940019093615102882, guid: ee856d6bf0a40ae4b82b64f7d7f70ce3,
+    type: 3}
+  WeaponName: Baton
+  DropRate: 0
+  AbilitiesToGrant:
+  - {fileID: 11400000, guid: 7c4cd691da4d0084780e7a2b16579662, type: 2}
+  AttachSocketName: GunHandler
+  LocationOffset: {x: 0, y: 0.47, z: 0}
+  Rotation: {x: 0, y: 0, z: 0, w: 0}
+  Scale: {x: 1, y: 1, z: 1}
+  PickupLocationOffset: {x: 0, y: 0, z: 0}
+  PickupRotation: {x: 0, y: 0, z: 0, w: 0}
+  SpereCastRadius: 0.85
+  MaxDistance: 1.25
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 128

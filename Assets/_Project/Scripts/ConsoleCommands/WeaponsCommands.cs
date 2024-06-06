@@ -86,7 +86,7 @@ namespace _Project.Scripts.ConsoleCommands
             }
         }
 
-        private void OnPlayerPickupWeapon(global::Weapon weapon)
+        private void OnPlayerPickupWeapon(Weapon.Weapon weapon)
         {
             if (weapon != null && weapon is RangedWeapon rangedWeapon)
             {

@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b52c6e7e16fc848a76e7336673e5f2, type: 3}
+  m_Name: DoubleBarrel
+  m_EditorClassIdentifier: 
+  WeaponPrefab: {fileID: 4911671507717690896, guid: d59ad31d5e825164385713c41e42f342,
+    type: 3}
+  WeaponGFX: {fileID: 1318050290126625103, guid: 1780d87ee5d4ee24b8a12e7cf5b7f1f8,
+    type: 3}
+  WeaponName: Double Barrel
+  DropRate: 0.6
+  AbilitiesToGrant:
+  - {fileID: 11400000, guid: 7c4cd691da4d0084780e7a2b16579662, type: 2}
+  AttachSocketName: GunHandler
+  LocationOffset: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 0, z: 0, w: 0}
+  Scale: {x: 1, y: 1, z: 1}
+  PickupLocationOffset: {x: 0, y: 0, z: 0}
+  PickupRotation: {x: 0, y: 0, z: 0, w: 0}
+  BasicBullet: {fileID: 6969907592589934760, guid: 9d1137cbb8bc7254fa284ca1f304bf0e,
+    type: 3}
+  FireDelayTime: 0.8
+  BulletType: 2
+  SpreadType: 4
+  Spread: 15
+  SpreadStep: -1
+  SpreadThreshold: -1
+  SpreadResetThreshold: -1
+  ProjectilesPerShot: 2
+  MagazineSize: 4
+  Range: 5
