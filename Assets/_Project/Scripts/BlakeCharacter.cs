@@ -18,6 +18,8 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         protected set { health = value; }
     }
 
+    public int RespawnsLeft => maxRespawns - respawnCounter;
+
     protected int respawnCounter = 0;
     [SerializeField]
     protected int maxRespawns = 3;

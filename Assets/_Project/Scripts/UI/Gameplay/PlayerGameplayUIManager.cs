@@ -25,10 +25,10 @@ namespace _Project.Scripts.UI.Gameplay
         private TextMeshProUGUI bulletsLeft;
 
         [SerializeField] 
-        private TextMeshProUGUI roomsCounter;
-
-        [SerializeField] 
         private TextMeshProUGUI healthLeft;
+        
+        [SerializeField] 
+        private TextMeshProUGUI respawnsLeft;
     
         [SerializeField] 
         private TextMeshProUGUI pointsCounter;
@@ -51,7 +51,7 @@ namespace _Project.Scripts.UI.Gameplay
         private GameObject player;
         private WeaponsManager weaponsManager;
         private PlayerInteractables playerInteractables;
-        private BlakeCharacter blakeCharacter;
+        private BlakeHeroCharacter blakeHeroCharacter;
         private PlayerMovement playerMovement;
         private Image dashCooldownImage;
 
@@ -79,7 +79,7 @@ namespace _Project.Scripts.UI.Gameplay
             minimapCamera.SetPlayer(playerTransform);
         
             playerInteractables = player.GetComponent<PlayerInteractables>();
-            blakeCharacter = player.GetComponent<BlakeCharacter>();
+            blakeHeroCharacter = player.GetComponent<BlakeHeroCharacter>();
             playerMovement = player.GetComponent<PlayerMovement>();
 
             playerInteractables.SetInteractUIReference(interactUI);
@@ -90,8 +90,8 @@ namespace _Project.Scripts.UI.Gameplay
             HideComboTexts();
         
             playerMovement.OnDashPerformed += StartDashCooldownUI;
-            blakeCharacter.OnDamageTaken += HealthLeftUI;
-            blakeCharacter.onRespawn += OnRespawnUIUpdate;
+            blakeHeroCharacter.OnDamageTaken += HealthLeftUI;
+            blakeHeroCharacter.onRespawn += OnRespawnUIUpdate;
             OnRespawnUIUpdate();
         }
 
@@ -125,12 +125,13 @@ namespace _Project.Scripts.UI.Gameplay
 
         private void HealthLeftUI(GameObject instigator)
         {
-            healthLeft.text = blakeCharacter.Health.ToString();
+            healthLeft.text = blakeHeroCharacter.Health.ToString();
         }
 
         private void OnRespawnUIUpdate()
         {
-            healthLeft.text = blakeCharacter.Health.ToString();
+            HealthLeftUI(null);
+            respawnsLeft.text = blakeHeroCharacter.RespawnsLeft.ToString();
         }
 
         private void UpdatePointsAndCombo(ComboAndPointsValues comboAndPointsValues)
@@ -184,15 +185,15 @@ namespace _Project.Scripts.UI.Gameplay
                 yield return new WaitForEndOfFrame();
             }
         
-            dashCooldownUI.SetActive(false);
+            dashCooldownUI.SetActive(false
             dashCooldownImage.fillAmount = 0;
         }
 
         private void OnDestroy()
         {
             playerMovement.OnDashPerformed -= StartDashCooldownUI;
-            blakeCharacter.OnDamageTaken -= HealthLeftUI;
-            blakeCharacter.onRespawn -= OnRespawnUIUpdate;
+            blakeHeroCharacter.OnDamageTaken -= HealthLeftUI;
+            blakeHeroCharacter.onRespawn -= OnRespawnUIUpdate;
         }
     }
 }
