@@ -181,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
        }
    }
    
-   private void Die()
+   private void Die(BlakeCharacter blakeCharacter)
     {
         ReferenceManager.PlayerInputController.enabled = false;
         this.enabled = false;

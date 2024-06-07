@@ -38,7 +38,7 @@ public class Room : MonoBehaviour
     private List<EnemySpawner> spawners = new List<EnemySpawner>();
 
     [SerializeField]
-    private List<GameObject> spawnedEnemies = new List<GameObject>();
+    private List<EnemyCharacter> spawnedEnemies;
 
     [SerializeField]
     private bool isInitialized = false;
@@ -54,6 +54,7 @@ public class Room : MonoBehaviour
     private List<RoomOverlapTrigger> fogTriggers = new List<RoomOverlapTrigger>();
     private RoomsDoneCounter roomsDoneCounter;
     private List<GameObject> instantiatedWeapons;
+    private bool anyEnemyAlive = false;
 
     [HideInInspector]
     public int gCost;
@@ -97,7 +98,7 @@ public class Room : MonoBehaviour
     public void InitializeRoom(RoomManager rm)
     {
         roomManager = rm;
-        spawnedEnemies = new List<GameObject>();
+        
         foreach(RandomizedRoomObject randomObject in randomObjects)
         {
             randomObject.InitializeRandomObject();
@@ -127,19 +128,29 @@ public class Room : MonoBehaviour
             roomConnector.UnlockDoor();
             roomConnector.CloseDoor();
         }
+        
         isInitialized = true;
-
     }
 
     private void SpawnEnemies()
     {
+        if (spawners.Count <= 0)
+        {
+            return;
+        }
+        
+        anyEnemyAlive = true;
+        
         //Spawn enemies
         foreach (EnemySpawner enemy in spawners)
         {
-            GameObject spawnedEnemy = Instantiate(enemy.EnemyToSpawn.gameObject, enemy.EnemySpawnPoint.transform.position, enemy.EnemySpawnPoint.rotation, this.transform);
-            spawnedEnemy.GetComponent<AIController>().SetWaypoints(enemy.EnemyWaypoints);
-            spawnedEnemy.GetComponent<EnemyCharacter>().SpawnedInRoom = this;
-            spawnedEnemies.Add(spawnedEnemy);
+            var spawnedEnemyCharacter =
+                Instantiate(enemy.EnemyToSpawn.gameObject, enemy.EnemySpawnPoint.transform.position,
+                    enemy.EnemySpawnPoint.rotation, this.transform).GetComponent<EnemyCharacter>();
+            spawnedEnemyCharacter.GetComponent<AIController>().SetWaypoints(enemy.EnemyWaypoints);
+            spawnedEnemyCharacter.SpawnedInRoom = this;
+            spawnedEnemyCharacter.onDeath += RemoveEnemyFromList;
+            spawnedEnemies.Add(spawnedEnemyCharacter);
         }
     }
 
@@ -254,7 +265,7 @@ public class Room : MonoBehaviour
             blakeHeroCharacter.SetRespawnPosition(GetSpawnPointPosition());
         }
 
-        foreach (GameObject enemy in spawnedEnemies)
+        foreach (var enemy in spawnedEnemies)
         {
             if (enemy == null) continue;
             enemy.GetComponent<AIController>().UpdatePlayerRef();
@@ -325,13 +336,13 @@ public class Room : MonoBehaviour
         }
     }
 
-
     private void ResetEnemies()
     {
-        foreach (GameObject enemy in spawnedEnemies)
+        foreach (var enemy in spawnedEnemies)
         {
-            Destroy(enemy);
+            Destroy(enemy.gameObject);
         }
+        
         spawnedEnemies.Clear();
     }
 
@@ -354,17 +365,6 @@ public class Room : MonoBehaviour
                 if(blakeHeroCharacter != null)
                 {
                     blakeHeroCharacter.SetRespawnPosition(GetSpawnPointPosition());
-                }
-            }
-        }
-
-        if(spawnedEnemies.Count > 0)
-        {
-            for(int i = spawnedEnemies.Count -1; i >= 0; i--)
-            {
-                if (spawnedEnemies[i] == null)
-                {
-                    spawnedEnemies.RemoveAt(i);
                 }
             }
         }
@@ -392,8 +392,6 @@ public class Room : MonoBehaviour
         }*/
         
     }
-
-
 
     public List<Room> GetNeigbours()
     {
@@ -455,9 +453,19 @@ public class Room : MonoBehaviour
         else return transform.position;
     }
 
-    public List<GameObject> GetSpawnedEnemies()
+    public List<EnemyCharacter> GetSpawnedEnemies()
     {
         return spawnedEnemies;
+    }
+
+    private void RemoveEnemyFromList(BlakeCharacter blakeCharacter)
+    {
+        spawnedEnemies.Remove(blakeCharacter as EnemyCharacter);
+
+        if (spawnedEnemies.Count <= 0)
+        {
+            anyEnemyAlive = false;
+        }
     }
 
     public void AddSpawnedWeapon(GameObject weapon)
