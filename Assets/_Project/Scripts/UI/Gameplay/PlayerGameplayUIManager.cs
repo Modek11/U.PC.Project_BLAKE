@@ -185,7 +185,7 @@ namespace _Project.Scripts.UI.Gameplay
                 yield return new WaitForEndOfFrame();
             }
         
-            dashCooldownUI.SetActive(false
+            dashCooldownUI.SetActive(false);
             dashCooldownImage.fillAmount = 0;
         }
 
