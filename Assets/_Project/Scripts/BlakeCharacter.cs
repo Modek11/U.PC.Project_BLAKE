@@ -71,7 +71,7 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         if(hasShield)
         {
             DeactivateShield();
-            return;
+            return false;
         }
         Debug.Log(instigator.name + " took " + damage + " damage to " + name);
         Health -= damage;
