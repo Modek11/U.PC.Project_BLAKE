@@ -1,5 +1,6 @@
 using _Project.Scripts;
 using _Project.Scripts.PointsSystem;
+using _Project.Scripts.Weapon;
 using SickDev.DevConsole.Example;
 using System.Collections;
 using System.Collections.Generic;

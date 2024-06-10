@@ -42,15 +42,11 @@ namespace _Project.Scripts.SceneHandler
                 EndRun();
                 return;
             }
-
+            onNextLevel?.Invoke();
             levelIndex++;
             sceneHandler.LoadNewLevel(levelNames.levelNames[levelIndex]);
         }
 
-        onNextLevel?.Invoke();
-        levelIndex++;
-        sceneHandler.LoadNewLevel(levelNames.levelNames[levelIndex]);
-    }
         public void EndRun()
         {
             levelIndex = 0;
