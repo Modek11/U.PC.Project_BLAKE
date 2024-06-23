@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Project.Scripts;
@@ -7,6 +8,9 @@ public class RoomManager : MonoBehaviour
 {
     private Room activeRoom;
     private Room previousRoom;
+    public delegate void EnteredRoom(Room room);
+    public event EnteredRoom onRoomEnter;
+    public event EnteredRoom onRoomLeave;
 
     [SerializeField]
     private Transform minimapFloor;
@@ -19,6 +23,7 @@ public class RoomManager : MonoBehaviour
     public void SetActiveRoom(Room newRoom)
     {
         activeRoom = newRoom;
+        onRoomEnter?.Invoke(activeRoom);
     }
 
     public Room GetActiveRoom()
@@ -28,7 +33,9 @@ public class RoomManager : MonoBehaviour
 
     public void SetPreviousRoom(Room newRoom)
     {
+        if (newRoom == null) return;
         previousRoom = newRoom;
+        onRoomLeave?.Invoke(previousRoom);
     }
 
     public Room GetPreviousRoom()
@@ -40,4 +47,19 @@ public class RoomManager : MonoBehaviour
     {
         return minimapFloor;
     }
+    /*
+    public void OnDestroy()
+    {
+        Delegate[] delegateList = onRoomEnter.GetInvocationList();
+        foreach(var d in delegateList)
+        {
+            onRoomEnter -= (d as EnteredRoom);
+        }
+
+        delegateList = onRoomLeave.GetInvocationList();
+        foreach (var d in delegateList)
+        {
+            onRoomLeave -= (d as EnteredRoom);
+        }
+    }*/
 }

@@ -65,6 +65,9 @@ public class Room : MonoBehaviour
     [HideInInspector]
     public Room cameFromRoom;
 
+    public delegate void OnEnemySpawn(EnemyCharacter character);
+    public event OnEnemySpawn enemySpawned;
+
     public void CalculateFCost()
     {
         fCost = gCost + hCost;
@@ -140,6 +143,7 @@ public class Room : MonoBehaviour
             spawnedEnemy.GetComponent<AIController>().SetWaypoints(enemy.EnemyWaypoints);
             spawnedEnemy.GetComponent<EnemyCharacter>().SpawnedInRoom = this;
             spawnedEnemies.Add(spawnedEnemy);
+            enemySpawned?.Invoke(spawnedEnemy.GetComponent<EnemyCharacter>());
         }
     }
 

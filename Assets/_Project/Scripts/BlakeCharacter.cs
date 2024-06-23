@@ -18,6 +18,8 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         protected set { health = value; }
     }
 
+    private bool hasShield = false;
+
     protected int respawnCounter = 0;
     [SerializeField]
     protected int maxRespawns = 3;
@@ -66,7 +68,11 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         if (recentlyDamaged) return false;
         if (health < 1) return false;
         if(!CanTakeDamage(instigator)) return false;
-
+        if(hasShield)
+        {
+            DeactivateShield();
+            return false;
+        }
         Debug.Log(instigator.name + " took " + damage + " damage to " + name);
         Health -= damage;
 
@@ -94,6 +100,21 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         }
 
         return true;
+    }
+
+    public void AddRespawnCounter()
+    {
+        maxRespawns++;
+    }
+
+    public void ActivateShield()
+    {
+        hasShield = true;
+    }
+
+    public void DeactivateShield()
+    {
+        hasShield = false;
     }
 
     public void SetRespawnPosition(Vector3 position)
