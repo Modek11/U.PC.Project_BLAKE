@@ -34,12 +34,18 @@ namespace _Project.Scripts.PointsSystem
         public event Action<ComboAndPointsValues> OnRegisteredEnemyDeath;
 
         public ComboController ComboController => comboController;
-        
+        public PlayerCurrencyController PlayerCurrencyController => playerCurrencyController;
         public void RegisterEnemyDeath(int pointsForKill, EnemyTypeEnum enemyTypeEnum)
         {
             comboController.RegisterEnemyDeath();
             playerCurrencyController.RegisterEnemyDeath(pointsForKill);
 
+            var values = new ComboAndPointsValues(points, comboCounter, killsCounter, shouldComboStart);
+            OnRegisteredEnemyDeath?.Invoke(values);
+        }
+
+        public void Refresh()
+        {
             var values = new ComboAndPointsValues(points, comboCounter, killsCounter, shouldComboStart);
             OnRegisteredEnemyDeath?.Invoke(values);
         }

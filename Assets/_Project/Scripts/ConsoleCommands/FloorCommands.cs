@@ -12,11 +12,19 @@ namespace _Project.Scripts.ConsoleCommands
             
             DevConsole.singleton.AddCommand(command = new ActionCommand(ResetFloor) { className = NAME });
             commandsHolder.Add(command);
+
+            DevConsole.singleton.AddCommand(command = new ActionCommand(NextLevel) { className = NAME });
+            commandsHolder.Add(command);
         }
 
         private void ResetFloor()
         {
             ReferenceManager.SceneHandler.StartNewGame();
+        }
+
+        private void NextLevel()
+        {
+            ReferenceManager.LevelHandler.GoToNextLevel();
         }
     }
 }

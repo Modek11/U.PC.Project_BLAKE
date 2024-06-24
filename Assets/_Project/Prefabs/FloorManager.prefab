@@ -80,15 +80,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seed: 0
-  baseRoomPool: {fileID: 11400000, guid: 2f6c31fbe21948b409c2407b247e8ad8, type: 2}
+  baseRoomPool: {fileID: 11400000, guid: 5e77de56a8d844d45946353e6a21ed8d, type: 2}
   maxBaseRooms: 3
   treasureRoomPool: {fileID: 0}
   treasureRoomsAmount: 1
+  endRoom: {fileID: 0}
   startingRoom: {fileID: 6958249082703235447, guid: 98c96ee576ece6c4a9dcf0c7a59ca6ec,
     type: 3}
   layerMask:
     serializedVersion: 2
     m_Bits: 8
+  debugOverlapping: 0
+  debugRoomFinding: 0
 --- !u!114 &3194443941187315575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c42993414f4354c8ba99f2b9d613fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 0
   playerPrefab: {fileID: 8608387976418621433, guid: a24e9759e8bef9e4384a70a6af30732f,
     type: 3}
   virtualCameraPrefab: {fileID: 3792045546653812228, guid: 53f2b00a162a66a49b5664d40319a492,
