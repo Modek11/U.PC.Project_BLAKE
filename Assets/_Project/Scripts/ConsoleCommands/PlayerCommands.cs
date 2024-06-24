@@ -1,3 +1,4 @@
+using _Project.Scripts.PointsSystem;
 using SickDev.CommandSystem;
 using SickDev.DevConsole;
 
@@ -19,6 +20,9 @@ namespace _Project.Scripts.ConsoleCommands
             
             DevConsole.singleton.AddCommand(command = new ActionCommand<bool>(ShortDash) { className = NAME });
             commandsHolder.Add(command);
+
+            DevConsole.singleton.AddCommand(command = new ActionCommand(MaxCombo) { className = NAME });
+            commandsHolder.Add(command);
         }
 
         private void GodMode(bool isEnabled)
@@ -36,6 +40,13 @@ namespace _Project.Scripts.ConsoleCommands
             }
 
             playerMovement.SetDashValue(isEnabled ? shortDashValue : baseDashValue);
+        }
+
+        private void MaxCombo()
+        {
+            EnemyDeathMediator.Instance.ComboController.SetMaxCombo();
+            EnemyDeathMediator.Instance.RegisterEnemyDeath(1, EnemyTypeEnum.EnemyBatonMelee);
+            EnemyDeathMediator.Instance.RegisterEnemyDeath(1, EnemyTypeEnum.EnemyBatonMelee);
         }
     }
 }

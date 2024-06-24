@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aac6368008f71cc469eb16fde59f9888, type: 3}
+  m_Name: AT_TreasureRoomsPool
+  m_EditorClassIdentifier: 
+  room:
+  - {fileID: 2171126759078518847, guid: 93d03a33366798a418754774d4d465dc, type: 3}
+  - {fileID: 2171126759078518847, guid: b387b61f335b3d4468ac9a7b463ccdfc, type: 3}
+  - {fileID: 2171126759078518847, guid: b4fdfdd519b4e904eab6d87acbfd51d7, type: 3}

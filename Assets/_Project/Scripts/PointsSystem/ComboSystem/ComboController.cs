@@ -6,7 +6,7 @@ namespace _Project.Scripts.PointsSystem.ComboSystem
     public class ComboController : MonoBehaviour
     {
         private const float MAX_TIMER_VALUE = 3f;
-        private const float MAX_COMBO_COUNT = 2f;
+        private const float MAX_COMBO_COUNT = 5f;
         private const float MIN_COMBO_COUNT = 1f;
         private const float COMBO_INCREASE_STEP = .1f;
         private const int MIN_KILLS_TO_START_COMBO = 2;
@@ -21,6 +21,8 @@ namespace _Project.Scripts.PointsSystem.ComboSystem
         public float ComboCounter => comboCounter;
         public int KillsCounter => killsCounter;
         public bool ShouldComboStart => killsCounter >= MIN_KILLS_TO_START_COMBO;
+
+        public event Action<float> comboShieldEvent;
 
         private void Update()
         {
@@ -38,8 +40,18 @@ namespace _Project.Scripts.PointsSystem.ComboSystem
             {
                 comboCounter += COMBO_INCREASE_STEP;
             }
+            comboShieldEvent?.Invoke(comboCounter);
+
         }
-    
+
+        public void SetMaxCombo()
+        {
+            timer = MAX_TIMER_VALUE;
+            isComboActive = true;
+            comboCounter = MAX_COMBO_COUNT;
+
+        }
+
         private void CountdownTime()
         {
             if (!isComboActive)
