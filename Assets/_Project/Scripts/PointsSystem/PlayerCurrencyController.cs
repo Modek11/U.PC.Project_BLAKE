@@ -34,7 +34,7 @@ namespace _Project.Scripts.PointsSystem
             this.points -= points;
         }
 
-        public void LosePointsOnDeath()
+        public void LosePointsOnDeath(BlakeCharacter blakeCharacter)
         {
             var value = Mathf.Max((lostPointOnDeathPercentage + deathPointsModifier) / 100f, 0f);
             RemovePoints(Mathf.Round(points * value));
