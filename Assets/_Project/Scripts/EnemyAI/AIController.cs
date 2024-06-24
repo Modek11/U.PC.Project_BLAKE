@@ -44,7 +44,7 @@ public class AIController : MonoBehaviour
         ReferenceManager.BlakeHeroCharacter.onDeath -= OnPlayerDeath;
     }
 
-    private void Die()
+    private void Die(BlakeCharacter blakeCharacter)
     {
         this.enabled = false;
         NavMeshAgent.isStopped = true;
@@ -112,7 +112,7 @@ public class AIController : MonoBehaviour
         CombatStateReference.GetVariable().Value = CombatState.Patrol;
     }
 
-    private void OnPlayerDeath()
+    private void OnPlayerDeath(BlakeCharacter blakeCharacter)
     {
         ClearPlayerFocus();
     }

@@ -41,7 +41,7 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
     protected bool isDead = false;
     protected Vector3 respawnPos;
 
-    public delegate void OnDeath();
+    public delegate void OnDeath(BlakeCharacter blakeCharacter);
     public event OnDeath onDeath;
     public delegate void OnRespawn();
     public event OnRespawn onRespawn;
@@ -57,7 +57,7 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         }
         
         respawnCounter++;
-        onDeath?.Invoke();
+        onDeath?.Invoke(this);
     }
 
     public virtual bool TryTakeDamage(GameObject instigator, int damage)

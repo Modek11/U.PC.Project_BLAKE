@@ -38,7 +38,7 @@ public class Room : MonoBehaviour
     private List<EnemySpawner> spawners = new List<EnemySpawner>();
 
     [SerializeField]
-    private List<GameObject> spawnedEnemies = new List<GameObject>();
+    private List<EnemyCharacter> spawnedEnemies;
 
     [SerializeField]
     private bool isInitialized = false;
@@ -49,11 +49,12 @@ public class Room : MonoBehaviour
     [SerializeField]
     private Transform spawnPoint;
 
-    private GameObject player;
+    private BlakeHeroCharacter blakeHeroCharacter;
     private List<RoomTrigger> triggers = new List<RoomTrigger>();
     private List<RoomOverlapTrigger> fogTriggers = new List<RoomOverlapTrigger>();
     private RoomsDoneCounter roomsDoneCounter;
     private List<GameObject> instantiatedWeapons;
+    private bool anyEnemyAlive = false;
 
     [HideInInspector]
     public int gCost;
@@ -100,7 +101,7 @@ public class Room : MonoBehaviour
     public void InitializeRoom(RoomManager rm)
     {
         roomManager = rm;
-        spawnedEnemies = new List<GameObject>();
+        
         foreach(RandomizedRoomObject randomObject in randomObjects)
         {
             randomObject.InitializeRandomObject();
@@ -130,20 +131,30 @@ public class Room : MonoBehaviour
             roomConnector.UnlockDoor();
             roomConnector.CloseDoor();
         }
+        
         isInitialized = true;
-
     }
 
     private void SpawnEnemies()
     {
+        if (spawners.Count <= 0)
+        {
+            return;
+        }
+        
+        anyEnemyAlive = true;
+        
         //Spawn enemies
         foreach (EnemySpawner enemy in spawners)
         {
-            GameObject spawnedEnemy = Instantiate(enemy.EnemyToSpawn.gameObject, enemy.EnemySpawnPoint.transform.position, enemy.EnemySpawnPoint.rotation, this.transform);
-            spawnedEnemy.GetComponent<AIController>().SetWaypoints(enemy.EnemyWaypoints);
-            spawnedEnemy.GetComponent<EnemyCharacter>().SpawnedInRoom = this;
-            spawnedEnemies.Add(spawnedEnemy);
-            enemySpawned?.Invoke(spawnedEnemy.GetComponent<EnemyCharacter>());
+            var spawnedEnemyCharacter =
+                Instantiate(enemy.EnemyToSpawn.gameObject, enemy.EnemySpawnPoint.transform.position,
+                    enemy.EnemySpawnPoint.rotation, this.transform).GetComponent<EnemyCharacter>();
+            spawnedEnemyCharacter.GetComponent<AIController>().SetWaypoints(enemy.EnemyWaypoints);
+            spawnedEnemyCharacter.SpawnedInRoom = this;
+            spawnedEnemyCharacter.onDeath += RemoveEnemyFromList;
+            spawnedEnemies.Add(spawnedEnemyCharacter);
+            enemySpawned?.Invoke(spawnedEnemyCharacter);
         }
     }
 
@@ -154,7 +165,7 @@ public class Room : MonoBehaviour
 
     private void BeatLevel()
     {
-        player.GetComponent<BlakeCharacter>().onRespawn += ResetRoom;
+        blakeHeroCharacter.onRespawn += ResetRoom;
         roomsDoneCounter.AddBeatenRoom();
         isBeaten = true;
         minimapRoom.CompleteRoom();
@@ -253,12 +264,12 @@ public class Room : MonoBehaviour
                 }
             }
         }
-        if (isBeaten && player != null)
+        if (isBeaten && blakeHeroCharacter != null)
         {
-            player.GetComponent<BlakeCharacter>().SetRespawnPosition(GetSpawnPointPosition());
+            blakeHeroCharacter.SetRespawnPosition(GetSpawnPointPosition());
         }
 
-        foreach (GameObject enemy in spawnedEnemies)
+        foreach (var enemy in spawnedEnemies)
         {
             if (enemy == null) continue;
             enemy.GetComponent<AIController>().UpdatePlayerRef();
@@ -283,10 +294,10 @@ public class Room : MonoBehaviour
         }
     }
 
-    public void SetPlayer(GameObject _player)
+    public void SetPlayer(GameObject player)
     {
-        player = _player;
-        player.GetComponent<BlakeCharacter>().onRespawn += ResetRoom;
+        blakeHeroCharacter = player.GetComponent<BlakeHeroCharacter>();
+        blakeHeroCharacter.onRespawn += ResetRoom;
 
     }
 
@@ -323,19 +334,19 @@ public class Room : MonoBehaviour
             instantiatedWeapons.Remove(weapon);
         }
 
-        if (player != null)
+        if (blakeHeroCharacter != null)
         {
-            player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
+            blakeHeroCharacter.onRespawn -= ResetRoom;
         }
     }
 
-
     private void ResetEnemies()
     {
-        foreach (GameObject enemy in spawnedEnemies)
+        foreach (var enemy in spawnedEnemies)
         {
-            Destroy(enemy);
+            Destroy(enemy.gameObject);
         }
+        
         spawnedEnemies.Clear();
     }
 
@@ -345,7 +356,7 @@ public class Room : MonoBehaviour
         {
             if(spawnedEnemies.Count == 0)
             {
-                if (player == null) return;
+                if (blakeHeroCharacter == null) return;
                 BeatLevel();
                 foreach (RoomConnector roomConnector in doors)
                 {
@@ -355,20 +366,9 @@ public class Room : MonoBehaviour
                         roomConnector.GetConnector().UnlockDoor();
                     }
                 }
-                if(player != null)
+                if(blakeHeroCharacter != null)
                 {
-                    player.GetComponent<BlakeCharacter>().SetRespawnPosition(GetSpawnPointPosition());
-                }
-            }
-        }
-
-        if(spawnedEnemies.Count > 0)
-        {
-            for(int i = spawnedEnemies.Count -1; i >= 0; i--)
-            {
-                if (spawnedEnemies[i] == null)
-                {
-                    spawnedEnemies.RemoveAt(i);
+                    blakeHeroCharacter.SetRespawnPosition(GetSpawnPointPosition());
                 }
             }
         }
@@ -384,9 +384,9 @@ public class Room : MonoBehaviour
 
     public void ExitRoom()
     {
-        if (player != null)
+        if (blakeHeroCharacter != null)
         {
-            player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
+            blakeHeroCharacter.onRespawn -= ResetRoom;
         }
         if (IsPlayerInside()) return;
         /*if(roomManager.GetActiveRoom() == this)
@@ -396,8 +396,6 @@ public class Room : MonoBehaviour
         }*/
         
     }
-
-
 
     public List<Room> GetNeigbours()
     {
@@ -459,9 +457,19 @@ public class Room : MonoBehaviour
         else return transform.position;
     }
 
-    public List<GameObject> GetSpawnedEnemies()
+    public List<EnemyCharacter> GetSpawnedEnemies()
     {
         return spawnedEnemies;
+    }
+
+    private void RemoveEnemyFromList(BlakeCharacter blakeCharacter)
+    {
+        spawnedEnemies.Remove(blakeCharacter as EnemyCharacter);
+
+        if (spawnedEnemies.Count <= 0)
+        {
+            anyEnemyAlive = false;
+        }
     }
 
     public void AddSpawnedWeapon(GameObject weapon)
@@ -471,12 +479,11 @@ public class Room : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (player == null) return;
-        player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
+        if (blakeHeroCharacter == null) return;
+        blakeHeroCharacter.onRespawn -= ResetRoom;
     }
 
     ~Room() {
-        player.GetComponent<BlakeCharacter>().onRespawn -= ResetRoom;
-
+        blakeHeroCharacter.onRespawn -= ResetRoom;
     }
 }

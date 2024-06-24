@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MechanicalDoor : Door, IInteractable
@@ -18,7 +16,10 @@ public class MechanicalDoor : Door, IInteractable
     private void Awake()
     {
         if(animator == null)
-        animator = GetComponent<Animator>();
+        {
+            animator = GetComponent<Animator>();
+        }
+        
         LockDoor();
     }
 
@@ -37,7 +38,6 @@ public class MechanicalDoor : Door, IInteractable
         CloseDoor();
     }
 
-
     public void Interact(GameObject interacter)
     {
         if (!CanInteract()) return;
@@ -46,11 +46,11 @@ public class MechanicalDoor : Door, IInteractable
         {
             CloseDoor();
             connector.GetConnector().CloseDoor();
-        } else
+        } 
+        else
         {
             OpenDoor();
             connector.GetConnector().OpenDoor();
-
         }
     }
 
@@ -65,24 +65,34 @@ public class MechanicalDoor : Door, IInteractable
     }
     public override void OpenDoor()
     {
+        if (IsAnyAnimationPlaying())
+        {
+            return;
+        }
+        
         animator.SetBool("closed", false);
-        //if (open) return;
         open = true;
-
     }
 
     public override void CloseDoor()
     {
-        animator.SetBool("closed", true);
-        //if (!open) return;
-
-        open = false;
+        if (IsAnyAnimationPlaying())
+        {
+            return;
+        }
         
+        animator.SetBool("closed", true);
+        open = false;
     }
 
     public Vector3 GetPositionForUI()
     {
         return uiHolder.position;
     }
-
+    
+    private bool IsAnyAnimationPlaying()
+    {
+        var currentState = animator.GetCurrentAnimatorStateInfo(0);
+        return currentState.normalizedTime < 1 && animator.GetCurrentAnimatorClipInfo(0).Length > 0;
+    }
 }
