@@ -12,10 +12,18 @@ public enum RoomType
     Boss
 }
 
+public enum RoomSize
+{
+    Small,
+    Medium,
+    Large
+}
+
 public class Room : MonoBehaviour
 {
     [SerializeField]
     private RoomType roomType = RoomType.Base;
+    public RoomSize roomSize = RoomSize.Small;
 
     [SerializeField]
     private RoomConnector[] doors;

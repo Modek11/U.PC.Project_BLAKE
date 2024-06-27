@@ -16,7 +16,16 @@ public class FloorGenerator : MonoBehaviour
     [SerializeField]
     private RoomPool baseRoomPool;
     [SerializeField]
-    private int maxBaseRooms = 3;
+    private int smallRoomAmount = 3;
+    private int smallRoomCount = 0;
+
+    [SerializeField]
+    private int mediumRoomAmount = 3;
+    private int mediumRoomCount = 0;
+
+    [SerializeField]
+    private int largeRoomAmount = 3;
+    private int largeRoomCount = 0;
 
     [Header("Treasure Room Settings")]
     [SerializeField]
@@ -34,7 +43,7 @@ public class FloorGenerator : MonoBehaviour
     [SerializeField]
     private LayerMask layerMask;
 
-    private int roomCounter = 1;
+    private int roomCounter = 0;
 
     private RoomManager roomManager;
     private FloorManager floorManager;
@@ -57,7 +66,7 @@ public class FloorGenerator : MonoBehaviour
 
     public IEnumerator GenerateFloor()
     {
-        maxRooms = maxBaseRooms + treasureRoomsAmount;
+        maxRooms = smallRoomAmount + mediumRoomAmount + largeRoomAmount + treasureRoomsAmount;
         if (ReferenceManager.SceneHandler != null)
         {
             ReferenceManager.SceneHandler.roomsToGenerate = maxRooms - 1;
@@ -80,7 +89,7 @@ public class FloorGenerator : MonoBehaviour
 
         tries = 0;
         //Generate Base Floors
-        yield return StartCoroutine(GenerateBaseRoomsFromPool(baseRoomPool, maxBaseRooms));
+        yield return StartCoroutine(GenerateBaseRoomsFromPool(baseRoomPool, smallRoomAmount + mediumRoomAmount + largeRoomAmount));
 
         //Generate End Room
         tries = 0;
@@ -119,6 +128,45 @@ public class FloorGenerator : MonoBehaviour
         return map;
     }
 
+    private GameObject GetRandomSizedRoom(RoomPool pool)
+    {
+        List<RoomSize> availableSizes = new List<RoomSize>();
+
+        if (smallRoomCount < smallRoomAmount)
+            availableSizes.Add(RoomSize.Small);
+        if (mediumRoomCount < mediumRoomAmount)
+            availableSizes.Add(RoomSize.Medium);
+        if (largeRoomCount < largeRoomAmount)
+            availableSizes.Add(RoomSize.Large);
+
+        if (availableSizes.Count == 0)
+        {
+            Debug.LogError("No available rooms of any size left!");
+            return null;
+        }
+
+        RoomSize selectedSize = availableSizes[Random.Range(0, availableSizes.Count)];
+        GameObject selectedRoom = pool.GetRandomRoomOfSize(selectedSize);
+        if(selectedRoom == null)
+        {
+            switch (selectedSize)
+            {
+                case RoomSize.Small:
+                    smallRoomAmount = 0;
+                    break;
+                case RoomSize.Medium:
+                    mediumRoomAmount = 0;
+                    break;
+                case RoomSize.Large:
+                    largeRoomAmount = 0;
+                    break;
+            }
+            return GetRandomSizedRoom(pool);
+        }
+        
+        return selectedRoom;
+    }
+
     private IEnumerator GenerateBaseRoomsFromPool(RoomPool pool, int amountOfRooms)
     {
         int tempCounter = 0;
@@ -141,7 +189,9 @@ public class FloorGenerator : MonoBehaviour
                 int randomNumber = Random.Range(0, roomScript.GetDoors().Length);
                 RoomConnector door = roomScript.GetDoors()[randomNumber];
                 if (door.GetConnector() != null) continue;
-                GameObject newRoom = Instantiate(pool.GetRandomRoomFromPool());
+                GameObject roomToSpawn = GetRandomSizedRoom(pool);
+                if (roomToSpawn == null) roomToSpawn = pool.GetRandomRoomFromPool();
+                var newRoom = Instantiate(roomToSpawn);
                 int randomDoor = Random.Range(0, newRoom.GetComponent<Room>().GetDoors().Length);
                 RoomConnector newDoor = newRoom.GetComponent<Room>().GetDoors()[randomDoor];
 
@@ -150,6 +200,19 @@ public class FloorGenerator : MonoBehaviour
                 if (success)
                 {
                     FinalizeRoomPlacement(newRoom, door, newDoor, map);
+                    // Update the count based on the selected size
+                    switch (newRoom.GetComponent<Room>().roomSize)
+                    {
+                        case RoomSize.Small:
+                            smallRoomCount++;
+                            break;
+                        case RoomSize.Medium:
+                            mediumRoomCount++;
+                            break;
+                        case RoomSize.Large:
+                            largeRoomCount++;
+                            break;
+                    }
                     toAdd.Add(newRoom);
                     tempCounter++;
                 }
@@ -217,7 +280,6 @@ public class FloorGenerator : MonoBehaviour
                 RoomConnector newDoor = newRoom.GetComponent<Room>().GetDoors()[randomDoor];
 
                 bool success = TryPositionRoom(room, newRoom, door, newDoor);
-
                 if (success)
                 {
                     FinalizeRoomPlacement(newRoom, door, newDoor, map);
@@ -311,6 +373,7 @@ public class FloorGenerator : MonoBehaviour
 
         // Calculate the rotation needed to match the new door with the door to connect
         Quaternion rotationToMatchDoors = Quaternion.LookRotation(-doorToConnect.transform.forward);
+        newRoom.transform.rotation = Quaternion.identity;
         newRoom.transform.rotation = rotationToMatchDoors * Quaternion.Inverse(newDoor.transform.rotation);
 
         // Calculate the position offset to match the new door with the door to connect
