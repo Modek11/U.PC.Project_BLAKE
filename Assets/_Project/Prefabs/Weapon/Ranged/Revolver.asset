@@ -29,7 +29,7 @@ MonoBehaviour:
   PickupRotation: {x: 0, y: 0, z: 0, w: 0}
   BasicBullet: {fileID: 8745238448183679225, guid: 6737c19ee0289854f924664298e930db,
     type: 3}
-  FireDelayTime: 0.5
+  WaitingTimeForNextShoot: 0.4
   BulletType: 1
   SpreadType: 1
   Spread: 15
@@ -39,3 +39,5 @@ MonoBehaviour:
   ProjectilesPerShot: 1
   MagazineSize: 6
   Range: 20
+  EffectDuration: 0
+  ShootDelayTime: 0
