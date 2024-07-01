@@ -41,6 +41,12 @@ public class FloorGenerator : MonoBehaviour
     private GameObject startingRoom;
 
     [SerializeField]
+    private GameObject characterShop;
+
+    [SerializeField]
+    private GameObject weaponShop;
+
+    [SerializeField]
     private LayerMask layerMask;
 
     private int roomCounter = 0;
@@ -91,14 +97,21 @@ public class FloorGenerator : MonoBehaviour
         //Generate Base Floors
         yield return StartCoroutine(GenerateBaseRoomsFromPool(baseRoomPool, smallRoomAmount + mediumRoomAmount + largeRoomAmount));
 
-        //Generate End Room
-        tries = 0;
-        GenerateEndRoom();
+
 
         tries = 0;
         //Generate TreasureRooms
         yield return StartCoroutine(GenerateSpecialRoomsFromPool(treasureRoomPool, treasureRoomsAmount));
 
+        tries = 0;
+        GenerateCharacterShop();
+
+        tries = 0;
+        GenerateWeaponShop();
+
+        //Generate End Room
+        tries = 0;
+        GenerateEndRoom();
 
         foreach (GameObject room in spawnedRooms)
         {
@@ -141,7 +154,7 @@ public class FloorGenerator : MonoBehaviour
 
         if (availableSizes.Count == 0)
         {
-            Debug.LogError("No available rooms of any size left!");
+            //Debug.LogError("No available rooms of any size left!");
             return null;
         }
 
@@ -310,6 +323,74 @@ public class FloorGenerator : MonoBehaviour
     {
         int tempCounter = 0;
         FloorPathfinding floorPathfinding = new FloorPathfinding(spawnedRooms);
+        var list = pathLength.OrderBy(key => key.Value).Reverse().Select(key => key.Key.gameObject).ToList();
+
+        if (tries >= 200)
+        {
+            Debug.LogWarning("Broken generation due to too many tries");
+            return;
+        }
+
+
+        List<GameObject> toAdd = new List<GameObject>();
+
+        foreach (GameObject room in list)
+        {
+            Room roomScript = room.GetComponent<Room>();
+            bool success = false;
+            foreach (var door in roomScript.GetDoors())
+            {
+                if (door.GetConnector() != null) continue;
+                GameObject newRoom = Instantiate(endRoom);
+                int randomDoor = Random.Range(0, newRoom.GetComponent<Room>().GetDoors().Length);
+                RoomConnector newDoor = newRoom.GetComponent<Room>().GetDoors()[randomDoor];
+
+                success = TryPositionRoom(room, newRoom, door, newDoor);
+
+                if (success)
+                {
+                    FinalizeRoomPlacement(newRoom, door, newDoor, map);
+                    toAdd.Add(newRoom);
+                    tempCounter++;
+                    break;
+                }
+                else
+                {
+                    Destroy(newRoom);
+                }
+            }
+            if (success) break;
+        }
+
+        if(toAdd.Count == 0)
+        {
+            if(endRoomTries < 100)
+            {
+                endRoomTries++;
+                GenerateEndRoom();
+                return;
+            }
+            Debug.LogError("END ROOM DIDN'T SPAWNED");
+        }
+
+        foreach (GameObject room in toAdd)
+        {
+            spawnedRooms.Add(room);
+            spawnedBaseRooms.Add(room);
+            if (pathLength.ContainsKey(room.GetComponent<Room>())) continue;
+            floorPathfinding = new FloorPathfinding(spawnedRooms);
+            List<Room> path = floorPathfinding.FindPath(spawnedRooms[0], room);
+            pathLength.Add(room.GetComponent<Room>(), path.Count);
+        }
+    }
+
+    int shopTries = 0;
+    public void GenerateWeaponShop()
+    {
+        if (weaponShop == null) return;
+        shopTries = 0;
+        int tempCounter = 0;
+        FloorPathfinding floorPathfinding = new FloorPathfinding(spawnedRooms);
 
         if (tries >= 200)
         {
@@ -326,7 +407,7 @@ public class FloorGenerator : MonoBehaviour
             int randomNumber = Random.Range(0, roomScript.GetDoors().Length);
             RoomConnector door = roomScript.GetDoors()[randomNumber];
             if (door.GetConnector() != null) continue;
-            GameObject newRoom = Instantiate(endRoom);
+            GameObject newRoom = Instantiate(weaponShop);
             int randomDoor = Random.Range(0, newRoom.GetComponent<Room>().GetDoors().Length);
             RoomConnector newDoor = newRoom.GetComponent<Room>().GetDoors()[randomDoor];
 
@@ -346,15 +427,80 @@ public class FloorGenerator : MonoBehaviour
 
         }
 
-        if(toAdd.Count == 0)
+        if (toAdd.Count == 0)
         {
-            if(endRoomTries < 100)
+            if (shopTries < 100)
             {
-                endRoomTries++;
-                GenerateEndRoom();
+                shopTries++;
+                GenerateWeaponShop();
                 return;
             }
-            Debug.LogError("END ROOM DIDN'T SPAWNED");
+            Debug.LogError("WEAPON SHOP DIDN'T SPAWNED");
+        }
+
+        foreach (GameObject room in toAdd)
+        {
+            spawnedRooms.Add(room);
+            spawnedBaseRooms.Add(room);
+            if (pathLength.ContainsKey(room.GetComponent<Room>())) continue;
+            floorPathfinding = new FloorPathfinding(spawnedRooms);
+            List<Room> path = floorPathfinding.FindPath(spawnedRooms[0], room);
+            pathLength.Add(room.GetComponent<Room>(), path.Count);
+        }
+    }
+
+    public void GenerateCharacterShop()
+    {
+        if (characterShop == null) return;
+        shopTries = 0;
+
+        int tempCounter = 0;
+        FloorPathfinding floorPathfinding = new FloorPathfinding(spawnedRooms);
+
+        if (tries >= 200)
+        {
+            Debug.LogWarning("Broken generation due to too many tries");
+            return;
+        }
+
+
+        List<GameObject> toAdd = new List<GameObject>();
+
+        foreach (GameObject room in spawnedRooms)
+        {
+            Room roomScript = room.GetComponent<Room>();
+            int randomNumber = Random.Range(0, roomScript.GetDoors().Length);
+            RoomConnector door = roomScript.GetDoors()[randomNumber];
+            if (door.GetConnector() != null) continue;
+            GameObject newRoom = Instantiate(characterShop);
+            int randomDoor = Random.Range(0, newRoom.GetComponent<Room>().GetDoors().Length);
+            RoomConnector newDoor = newRoom.GetComponent<Room>().GetDoors()[randomDoor];
+
+            bool success = TryPositionRoom(room, newRoom, door, newDoor);
+
+            if (success)
+            {
+                FinalizeRoomPlacement(newRoom, door, newDoor, map);
+                toAdd.Add(newRoom);
+                tempCounter++;
+                break;
+            }
+            else
+            {
+                Destroy(newRoom);
+            }
+
+        }
+
+        if (toAdd.Count == 0)
+        {
+            if (shopTries < 100)
+            {
+                shopTries++;
+                GenerateCharacterShop();
+                return;
+            }
+            Debug.LogError("CHARACTER SHOP DIDN'T SPAWNED");
         }
 
         foreach (GameObject room in toAdd)

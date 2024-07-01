@@ -185,6 +185,16 @@ public class Room : MonoBehaviour
         return doors;
     }
 
+    public RoomConnector[] GetFreeDoors()
+    {
+        List<RoomConnector> freeDoors = new List<RoomConnector>();
+        foreach(RoomConnector door in doors)
+        {
+            if(door.GetConnector() == null) freeDoors.Add(door);
+        }
+        return freeDoors.ToArray();
+    }
+
     public void SeeRoom()
     {
         minimapRoom.ShowRoom();
