@@ -62,6 +62,7 @@ namespace _Project.Scripts.Weapon
         //Enemy only
         private float effectDuration = 0f;
         private float shootDelayTime = 0f;
+        private bool isTryingToShoot = false;
         
         public float Range => range;
         public int BulletsLeft { get; set; }
@@ -72,6 +73,7 @@ namespace _Project.Scripts.Weapon
             base.Awake();
 
             SetupWeaponDefinition();
+            TryStopEnemyMuzzleFlashVFX();
         }
 
         public override void PrimaryAttack()
@@ -81,27 +83,39 @@ namespace _Project.Scripts.Weapon
 
         private async UniTaskVoid CastPrimaryAttack()
         {
+            isTryingToShoot = true;
             if (weaponOwnerIsEnemy)
             {
-                lastFireTime *= 2;
-                await UniTask.Delay(TimeSpan.FromSeconds(shootDelayTime));
                 CastEnemyWeaponVFX();
+                await UniTask.Delay(TimeSpan.FromSeconds(shootDelayTime));
             }
             
             audioSource.pitch = Random.Range(0.9f, 1.1f);
             audioSource.PlayOneShot(audioSource.clip);
-        
+            
             Shot();
 
             lastFireTime = Time.time;
 
             weaponsManager?.BroadcastOnPrimaryAttack();
+            isTryingToShoot = false;
         }
 
         private void CastEnemyWeaponVFX()
         {
             muzzleFlashEffect.Play();
-            DOVirtual.DelayedCall(effectDuration, () => muzzleFlashEffect.Stop());
+            DOVirtual.DelayedCall(effectDuration, TryStopEnemyMuzzleFlashVFX);
+        }
+
+        private void TryStopEnemyMuzzleFlashVFX()
+        {
+            if (!weaponOwnerIsEnemy)
+            {
+                return;
+            }
+            
+            muzzleFlashEffect.Clear();
+            muzzleFlashEffect.Pause();
         }
 
         public override bool CanPrimaryAttack()
@@ -113,6 +127,7 @@ namespace _Project.Scripts.Weapon
             }
             
             if (Time.time - lastFireTime < masterShootDelayTime) return false;
+            if (isTryingToShoot) return false;
 
             return true;
         }

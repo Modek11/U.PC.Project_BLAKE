@@ -39,5 +39,5 @@ MonoBehaviour:
   ProjectilesPerShot: 1
   MagazineSize: 6
   Range: 40
-  EffectDuration: 0
-  ShootDelayTime: 0
+  EffectDuration: 0.5
+  ShootDelayTime: 0.5
