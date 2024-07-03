@@ -23,6 +23,8 @@ namespace _Project.Scripts.Weapon
         public WeaponDefinition defaultWeapon;
         private AbilityManager abilityManager;
 
+        public bool throwOnNoAmmo = true;
+
         private void Awake()
         {
             if (defaultWeapon == null)

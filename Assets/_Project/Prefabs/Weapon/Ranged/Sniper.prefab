@@ -179,6 +179,8 @@ MonoBehaviour:
   WeaponDefinition: {fileID: 11400000, guid: 452ffb8d558fe4d458121137d9b90341, type: 2}
   bulletsSpawnPoint: {fileID: 8623244367694195942}
   infinityAmmo: 0
+  throwableWeapon: {fileID: 2687323088996113468, guid: 87d2308fcbd07604ea09fa0ca282b68e,
+    type: 3}
 --- !u!1001 &652459094325318487
 PrefabInstance:
   m_ObjectHideFlags: 0
