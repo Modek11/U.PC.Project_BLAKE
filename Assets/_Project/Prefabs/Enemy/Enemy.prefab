@@ -3272,6 +3272,8 @@ GameObject:
   - component: {fileID: -3707185606851980299}
   - component: {fileID: 2611339117920508267}
   - component: {fileID: -470558907172326393}
+  - component: {fileID: 893637976758665190}
+  - component: {fileID: 4415879650037009705}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -3483,7 +3485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 8714531647565827507}
+  selectedEditorNode: {fileID: 0}
   repeatOnFinish: 1
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -3674,7 +3676,7 @@ MonoBehaviour:
     height: 45
   parent: {fileID: -8901199169982741344}
   children:
-  - {fileID: -1274732412291600798}
+  - {fileID: 893637976758665190}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -3858,7 +3860,6 @@ MonoBehaviour:
     key: AimLocation
     constantValue: {x: 0, y: 0, z: 0}
   isPatrolling: 1
-  aiController: {fileID: 0}
 --- !u!114 &38267842173792834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3922,7 +3923,6 @@ MonoBehaviour:
     key: AimLocation
     constantValue: {x: 0, y: 0, z: 0}
   isPatrolling: 0
-  aiController: {fileID: 4250661716291628405}
 --- !u!114 &7161793314436595745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4011,8 +4011,8 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: 597
-    y: 503
+    x: 600
+    y: 540
     width: 160
     height: 45
   parent: {fileID: -6067202371559989259}
@@ -4040,7 +4040,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 780
-    y: 615
+    y: 640
     width: 160
     height: 45
   parent: {fileID: -669197665866827864}
@@ -4161,8 +4161,8 @@ MonoBehaviour:
   title: Repeater
   rect:
     serializedVersion: 2
-    x: 598
-    y: 439
+    x: 600
+    y: 480
     width: 160
     height: 45
   parent: {fileID: -1274732412291600798}
@@ -4188,11 +4188,11 @@ MonoBehaviour:
   title: Shoot
   rect:
     serializedVersion: 2
-    x: 599
-    y: 371
+    x: 600
+    y: 420
     width: 160
     height: 45
-  parent: {fileID: -1019468932509090006}
+  parent: {fileID: 893637976758665190}
   children:
   - {fileID: -6067202371559989259}
   behaviourTree: {fileID: 0}
@@ -4245,8 +4245,8 @@ MonoBehaviour:
   title: Run EQS query
   rect:
     serializedVersion: 2
-    x: 409
-    y: 612
+    x: 400
+    y: 640
     width: 160
     height: 45
   parent: {fileID: -669197665866827864}
@@ -4276,8 +4276,8 @@ MonoBehaviour:
   title: Move To
   rect:
     serializedVersion: 2
-    x: 596
-    y: 615
+    x: 600
+    y: 640
     width: 160
     height: 45
   parent: {fileID: -669197665866827864}
@@ -4293,7 +4293,6 @@ MonoBehaviour:
     key: AimLocation
     constantValue: {x: 0, y: 0, z: 0}
   isPatrolling: 0
-  aiController: {fileID: 4250661716291628405}
 --- !u!114 &-470558907172326393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4309,6 +4308,65 @@ MonoBehaviour:
   enemyCharacter: {fileID: 6426853079096780474}
   enemyTypeEnum: 0
   pointsForKill: -1
+--- !u!114 &893637976758665190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7446312994107534779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 600
+    y: 360
+    width: 160
+    height: 45
+  parent: {fileID: -1019468932509090006}
+  children:
+  - {fileID: 4415879650037009705}
+  - {fileID: -1274732412291600798}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &4415879650037009705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7446312994107534779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58fe7bc6a9b18e148b82820c7c1c0a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Wait
+  rect:
+    serializedVersion: 2
+    x: 420
+    y: 420
+    width: 160
+    height: 45
+  parent: {fileID: 893637976758665190}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  time:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0.3
+  randomDeviation: 0.1
+  continueOnRestart: 0
 --- !u!1 &7728173451198980118
 GameObject:
   m_ObjectHideFlags: 0
