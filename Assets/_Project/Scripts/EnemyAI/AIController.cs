@@ -4,7 +4,7 @@ using MBT;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(BlakeCharacter))]
+[RequireComponent(typeof(EnemyCharacter))]
 public class AIController : MonoBehaviour
 {
     public Weapon Weapon;
@@ -14,6 +14,7 @@ public class AIController : MonoBehaviour
 
     private GameObject playerRef;
     private Animator animator;
+    private EnemyCharacter character;
 
     public CombatStateReference CombatStateReference;
     public BoolReference HasLineOfSightReference;
@@ -27,8 +28,9 @@ public class AIController : MonoBehaviour
 
         NavMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        character = GetComponent<EnemyCharacter>();
 
-        GetComponent<BlakeCharacter>().onDeath += Die;
+        character.onDeath += Die;
         GetComponent<EnemyFOV>().OnCanSeePlayerChanged += OnCanSeePlayerChanged;
     }
 
@@ -42,7 +44,7 @@ public class AIController : MonoBehaviour
         ReferenceManager.BlakeHeroCharacter.onDeath -= OnPlayerDeath;
     }
 
-    private void Die()
+    private void Die(BlakeCharacter blakeCharacter)
     {
         this.enabled = false;
         NavMeshAgent.isStopped = true;
@@ -60,6 +62,11 @@ public class AIController : MonoBehaviour
     public void UpdatePlayerRef()
     {
         playerRef = ReferenceManager.BlakeHeroCharacter?.gameObject;
+    }
+
+    public EnemyCharacter GetEnemyScript()
+    {
+        return character;
     }
 
     public void SetWaypoints(Waypoints waypoints)
@@ -105,7 +112,7 @@ public class AIController : MonoBehaviour
         CombatStateReference.GetVariable().Value = CombatState.Patrol;
     }
 
-    private void OnPlayerDeath()
+    private void OnPlayerDeath(BlakeCharacter blakeCharacter)
     {
         ClearPlayerFocus();
     }

@@ -3438,6 +3438,9 @@ MonoBehaviour:
     type: 3}
   animator: {fileID: 4250661716291628411}
   godMode: 0
+  speed: 6
+  additionalSpeed: 0
+  patrolSpeed: 2.5
   weaponPickup: {fileID: 8762673793604440, guid: 533ffb6a79d6ba94ca899689f9df94f3,
     type: 3}
   SpawnedInRoom: {fileID: 0}
@@ -3480,7 +3483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: -1274732412291600798}
+  selectedEditorNode: {fileID: 8714531647565827507}
   repeatOnFinish: 1
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -3848,14 +3851,14 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   AcceptableDistance: 1
-  MoveSpeed: 2.5
   LocationReference:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 2944841440345444223}
     key: AimLocation
     constantValue: {x: 0, y: 0, z: 0}
-  AIController: {fileID: 4250661716291628405}
+  isPatrolling: 1
+  aiController: {fileID: 0}
 --- !u!114 &38267842173792834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3912,14 +3915,14 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   AcceptableDistance: 1
-  MoveSpeed: 6
   LocationReference:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 2944841440345444223}
     key: AimLocation
     constantValue: {x: 0, y: 0, z: 0}
-  AIController: {fileID: 4250661716291628405}
+  isPatrolling: 0
+  aiController: {fileID: 4250661716291628405}
 --- !u!114 &7161793314436595745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4283,14 +4286,14 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   AcceptableDistance: 1
-  MoveSpeed: 6
   LocationReference:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 2944841440345444223}
     key: AimLocation
     constantValue: {x: 0, y: 0, z: 0}
-  AIController: {fileID: 4250661716291628405}
+  isPatrolling: 0
+  aiController: {fileID: 4250661716291628405}
 --- !u!114 &-470558907172326393
 MonoBehaviour:
   m_ObjectHideFlags: 0

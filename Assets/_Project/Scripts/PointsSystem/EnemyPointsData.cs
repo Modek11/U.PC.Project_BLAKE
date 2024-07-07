@@ -25,7 +25,7 @@ namespace _Project.Scripts.PointsSystem
             pointsForKill = value;
         }
 
-        private void EnemyCharacterOnDeath()
+        private void EnemyCharacterOnDeath(BlakeCharacter blakeCharacter)
         {
             EnemyDeathMediator.Instance.RegisterEnemyDeath(pointsForKill, enemyTypeEnum);
             UnregisterEvent();

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _Project.Scripts;
+using _Project.Scripts.PointsSystem;
 using Unity.Mathematics;
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
@@ -9,6 +10,7 @@ using UnityEngine;
 
 public class BlakeHeroCharacter : BlakeCharacter
 {
+
     private void Awake()
     {
         ReferenceManager.BlakeHeroCharacter = this;
@@ -16,6 +18,12 @@ public class BlakeHeroCharacter : BlakeCharacter
         defaultHealth = ReferenceManager.SceneHandler.isNormalDifficulty ? 3 : 1;
         health = defaultHealth;
         respawnCounter = 0;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        onDeath += EnemyDeathMediator.Instance.PlayerCurrencyController.LosePointsOnDeath;
     }
 
     private void OnDestroy()

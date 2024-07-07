@@ -39,7 +39,7 @@ public class RagdollController : MonoBehaviour
         _eventSubscribe.onDeath -= EnableRagdoll;
     }
 
-    private void EnableRagdoll()
+    private void EnableRagdoll(BlakeCharacter blakeCharacter)
     {
         animator.enabled = false;
         agent.enabled = false;

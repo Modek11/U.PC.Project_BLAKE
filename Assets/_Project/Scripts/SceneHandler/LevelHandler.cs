@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using _Project.Scripts.Patterns;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace _Project.Scripts.SceneHandler
         [SerializeField]
         private LevelList levelNames;
         private SceneHandler sceneHandler;
-
+        public event Action onNextLevel;
         private void Start()
         {
             ReferenceManager.LevelHandler = this;
@@ -41,7 +42,7 @@ namespace _Project.Scripts.SceneHandler
                 EndRun();
                 return;
             }
-
+            onNextLevel?.Invoke();
             levelIndex++;
             sceneHandler.LoadNewLevel(levelNames.levelNames[levelIndex]);
         }

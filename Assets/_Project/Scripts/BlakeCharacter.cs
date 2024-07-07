@@ -18,6 +18,10 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         protected set { health = value; }
     }
 
+    public int RespawnsLeft => maxRespawns - respawnCounter;
+
+    private bool hasShield = false;
+
     protected int respawnCounter = 0;
     [SerializeField]
     protected int maxRespawns = 3;
@@ -39,7 +43,7 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
     protected bool isDead = false;
     protected Vector3 respawnPos;
 
-    public delegate void OnDeath();
+    public delegate void OnDeath(BlakeCharacter blakeCharacter);
     public event OnDeath onDeath;
     public delegate void OnRespawn();
     public event OnRespawn onRespawn;
@@ -55,7 +59,7 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         }
         
         respawnCounter++;
-        onDeath?.Invoke();
+        onDeath?.Invoke(this);
     }
 
     public virtual bool TryTakeDamage(GameObject instigator, int damage)
@@ -66,8 +70,13 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         if (recentlyDamaged) return false;
         if (health < 1) return false;
         if(!CanTakeDamage(instigator)) return false;
-
-        Debug.Log(instigator.name + " took " + damage + " damage to " + name);
+        
+        if(hasShield)
+        {
+            DeactivateShield();
+            return false;
+        }
+        Debug.Log(instigator.name + " dealt " + damage + " damage to " + name);
         Health -= damage;
 
         if (health > 0)
@@ -94,6 +103,21 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
         }
 
         return true;
+    }
+
+    public void AddRespawnCounter()
+    {
+        maxRespawns++;
+    }
+
+    public void ActivateShield()
+    {
+        hasShield = true;
+    }
+
+    public void DeactivateShield()
+    {
+        hasShield = false;
     }
 
     public void SetRespawnPosition(Vector3 position)
