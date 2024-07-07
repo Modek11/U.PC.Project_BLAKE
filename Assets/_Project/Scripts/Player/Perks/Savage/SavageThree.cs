@@ -14,6 +14,23 @@ public class SavageThree : PerkScriptableObject
         base.OnPickup(player);
         weaponsManager = ReferenceManager.BlakeHeroCharacter.GetComponent<WeaponsManager>();
         weaponsManager.AddThirdWeaponSlot();
+        ReferenceManager.RoomManager.onRoomEnter += SubscribeToRoom;
+        ReferenceManager.RoomManager.onRoomLeave += UnsubscribeToRoom;
+    }
+
+    private void SubscribeToRoom(Room room)
+    {
+        room.enemySpawned += BoostEnemy;
+    }
+
+    private void UnsubscribeToRoom(Room room)
+    {
+        room.enemySpawned -= BoostEnemy;
+    }
+
+    private void BoostEnemy(EnemyCharacter enemy)
+    {
+        enemy.savageThreeActivated = true;
     }
 
     public override void OnRemove()
