@@ -1,13 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.Weapon
 {
     public struct RangedWeaponStatistics
     {
-        public RangedWeaponStatistics(BulletType bulletType, SpreadType spreadType, float spread, float spreadResetThreshold, int projectilesPerShot, float range, float fireDelayTime)
+        public RangedWeaponStatistics(BulletType bulletType, SpreadType spreadType, float spread, float spreadResetThreshold, int projectilesPerShot, float range, float waitingTimeForNextShoot)
         {
             BulletType = bulletType;
             SpreadType = spreadType;
@@ -15,7 +18,7 @@ namespace _Project.Scripts.Weapon
             SpreadResetThreshold = spreadResetThreshold;
             ProjectilesPerShot = projectilesPerShot;
             Range = range;
-            FireDelayTime = fireDelayTime;
+            WaitingTimeForNextShoot = waitingTimeForNextShoot;
         }
 
         public BulletType BulletType;
@@ -24,7 +27,7 @@ namespace _Project.Scripts.Weapon
         public float SpreadResetThreshold;
         public int ProjectilesPerShot;
         public float Range;
-        public float FireDelayTime;
+        public float WaitingTimeForNextShoot;
     }
     
     [RequireComponent(typeof(AudioSource))]
@@ -33,11 +36,13 @@ namespace _Project.Scripts.Weapon
         [SerializeField]
         private Transform bulletsSpawnPoint;
         [SerializeField]
+        public ParticleSystem muzzleFlashEffect;
+        [SerializeField]
         private bool infinityAmmo = false;
 
         private RangedWeaponStatistics savedRangedWeaponStatistics;
         private RangedWeaponDefinition rangedWeaponDefinition;
-        private float fireDelayTime;
+        private float waitingTimeForNextShoot;
         private BulletType bulletType;
         private SpreadType spreadType;
         private float spread;
@@ -52,6 +57,12 @@ namespace _Project.Scripts.Weapon
         private float negativeSpreadThreshold;
         private float positiveSpreadThreshold;
         private float currentSpread;
+        private float masterShootDelayTime => waitingTimeForNextShoot + shootDelayTime;
+
+        //Enemy only
+        private float effectDuration = 0f;
+        private float shootDelayTime = 0f;
+        private bool isTryingToShoot = false;
         
         public float Range => range;
         public int BulletsLeft { get; set; }
@@ -62,18 +73,49 @@ namespace _Project.Scripts.Weapon
             base.Awake();
 
             SetupWeaponDefinition();
+            TryStopEnemyMuzzleFlashVFX();
         }
 
         public override void PrimaryAttack()
         {
+            _ = CastPrimaryAttack();
+        }
+
+        private async UniTaskVoid CastPrimaryAttack()
+        {
+            isTryingToShoot = true;
+            if (weaponOwnerIsEnemy)
+            {
+                CastEnemyWeaponVFX();
+                await UniTask.Delay(TimeSpan.FromSeconds(shootDelayTime));
+            }
+            
             audioSource.pitch = Random.Range(0.9f, 1.1f);
             audioSource.PlayOneShot(audioSource.clip);
-        
+            
             Shot();
 
             lastFireTime = Time.time;
 
             weaponsManager?.BroadcastOnPrimaryAttack();
+            isTryingToShoot = false;
+        }
+
+        private void CastEnemyWeaponVFX()
+        {
+            muzzleFlashEffect.Play();
+            DOVirtual.DelayedCall(effectDuration, TryStopEnemyMuzzleFlashVFX);
+        }
+
+        private void TryStopEnemyMuzzleFlashVFX()
+        {
+            if (!weaponOwnerIsEnemy)
+            {
+                return;
+            }
+            
+            muzzleFlashEffect.Clear();
+            muzzleFlashEffect.Pause();
         }
 
         public override bool CanPrimaryAttack()
@@ -84,7 +126,8 @@ namespace _Project.Scripts.Weapon
                 return false;
             }
             
-            if (Time.time - lastFireTime < fireDelayTime) return false;
+            if (Time.time - lastFireTime < masterShootDelayTime) return false;
+            if (isTryingToShoot) return false;
 
             return true;
         }
@@ -188,7 +231,7 @@ namespace _Project.Scripts.Weapon
 
             else if (spreadType == SpreadType.GraduallyIncrease)
             {
-                if (Time.time - lastFireTime > fireDelayTime + spreadResetThreshold)
+                if (Time.time - lastFireTime > masterShootDelayTime + spreadResetThreshold)
                 {
                     ResetSpread();
                 }
@@ -232,7 +275,7 @@ namespace _Project.Scripts.Weapon
             }
             
             rangedWeaponDefinition = definition;
-            fireDelayTime = rangedWeaponDefinition.FireDelayTime;
+            waitingTimeForNextShoot = rangedWeaponDefinition.WaitingTimeForNextShoot;
             bulletType = rangedWeaponDefinition.BulletType;
             spreadType = rangedWeaponDefinition.SpreadType;
             spread = rangedWeaponDefinition.Spread;
@@ -243,13 +286,19 @@ namespace _Project.Scripts.Weapon
             magazineSize = rangedWeaponDefinition.MagazineSize;
             range = rangedWeaponDefinition.Range;
             BulletsLeft = magazineSize;
+
+            if (weaponOwnerIsEnemy)
+            { 
+                effectDuration = rangedWeaponDefinition.EffectDuration; 
+                shootDelayTime = rangedWeaponDefinition.ShootDelayTime;
+            }
             
             ResetSpread();
         }
 
         public RangedWeaponStatistics SaveAndGetRangedWeaponStatistics()
         {
-            return savedRangedWeaponStatistics = new RangedWeaponStatistics(bulletType, spreadType, spread, spreadResetThreshold, projectilesPerShot, range, fireDelayTime);
+            return savedRangedWeaponStatistics = new RangedWeaponStatistics(bulletType, spreadType, spread, spreadResetThreshold, projectilesPerShot, range, waitingTimeForNextShoot);
         }
 
         public void ApplyRangedWeaponStatistics(RangedWeaponStatistics rangedWeaponStatistics)
@@ -260,7 +309,7 @@ namespace _Project.Scripts.Weapon
             spreadResetThreshold = rangedWeaponStatistics.SpreadResetThreshold;
             projectilesPerShot = rangedWeaponStatistics.ProjectilesPerShot;
             range = rangedWeaponStatistics.Range;
-            fireDelayTime = rangedWeaponStatistics.FireDelayTime;
+            waitingTimeForNextShoot = rangedWeaponStatistics.WaitingTimeForNextShoot;
             lastFireTime = Time.time;
 
             ResetSpread();
