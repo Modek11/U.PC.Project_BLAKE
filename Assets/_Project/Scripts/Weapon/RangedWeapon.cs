@@ -80,10 +80,10 @@ namespace _Project.Scripts.Weapon
 
         public override bool CanPrimaryAttack()
         {
-            if(BulletsLeft <= 0 && !weaponsManager.throwOnNoAmmo)
+            if(BulletsLeft <= 1 && !weaponsManager.throwOnNoAmmo)
             {
                 StartCoroutine("UnequipSelf");
-                return false;
+                return BulletsLeft == 1;
             }
             
             if (Time.time - lastFireTime < fireDelayTime) return false;
