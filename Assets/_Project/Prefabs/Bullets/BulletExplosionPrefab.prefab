@@ -4916,4 +4916,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionRadius: 1.5
-  particleSystem: {fileID: 9026685342541066919}
+  particles: {fileID: 9026685342541066919}
