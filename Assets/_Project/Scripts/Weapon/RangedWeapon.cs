@@ -8,28 +8,6 @@ using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.Weapon
 {
-    public struct RangedWeaponStatistics
-    {
-        public RangedWeaponStatistics(BulletType bulletType, SpreadType spreadType, float spread, float spreadResetThreshold, int projectilesPerShot, float range, float waitingTimeForNextShoot)
-        {
-            BulletType = bulletType;
-            SpreadType = spreadType;
-            Spread = spread;
-            SpreadResetThreshold = spreadResetThreshold;
-            ProjectilesPerShot = projectilesPerShot;
-            Range = range;
-            WaitingTimeForNextShoot = waitingTimeForNextShoot;
-        }
-
-        public BulletType BulletType;
-        public SpreadType SpreadType;
-        public float Spread;
-        public float SpreadResetThreshold;
-        public int ProjectilesPerShot;
-        public float Range;
-        public float WaitingTimeForNextShoot;
-    }
-    
     [RequireComponent(typeof(AudioSource))]
     public class RangedWeapon : Weapon
     {
@@ -40,8 +18,8 @@ namespace _Project.Scripts.Weapon
         [SerializeField]
         private bool infinityAmmo = false;
 
+        private RangedWeaponDefinition rangedWeaponDefinition; 
         private RangedWeaponStatistics savedRangedWeaponStatistics;
-        private RangedWeaponDefinition rangedWeaponDefinition;
         private float waitingTimeForNextShoot;
         private BulletType bulletType;
         private SpreadType spreadType;
@@ -67,6 +45,7 @@ namespace _Project.Scripts.Weapon
         public float Range => range;
         public int BulletsLeft { get; set; }
         public SpreadType CurrentSpreadType { get; set; }
+        
 
         protected override void Awake()
         {
@@ -298,18 +277,21 @@ namespace _Project.Scripts.Weapon
 
         public RangedWeaponStatistics SaveAndGetRangedWeaponStatistics()
         {
-            return savedRangedWeaponStatistics = new RangedWeaponStatistics(bulletType, spreadType, spread, spreadResetThreshold, projectilesPerShot, range, waitingTimeForNextShoot);
+            return savedRangedWeaponStatistics = new RangedWeaponStatistics(waitingTimeForNextShoot, bulletType, 
+                spreadType, spread, spreadStep, spreadResetThreshold, projectilesPerShot, magazineSize, range);
         }
 
         public void ApplyRangedWeaponStatistics(RangedWeaponStatistics rangedWeaponStatistics)
         {
+            waitingTimeForNextShoot = rangedWeaponStatistics.WaitingTimeForNextShoot;
             bulletType = rangedWeaponStatistics.BulletType;
             spreadType = rangedWeaponStatistics.SpreadType;
             spread = rangedWeaponStatistics.Spread;
+            spreadStep = rangedWeaponStatistics.SpreadStep;
             spreadResetThreshold = rangedWeaponStatistics.SpreadResetThreshold;
             projectilesPerShot = rangedWeaponStatistics.ProjectilesPerShot;
+            magazineSize = rangedWeaponStatistics.MagazineSize;
             range = rangedWeaponStatistics.Range;
-            waitingTimeForNextShoot = rangedWeaponStatistics.WaitingTimeForNextShoot;
             lastFireTime = Time.time;
 
             ResetSpread();
@@ -334,8 +316,7 @@ namespace _Project.Scripts.Weapon
 
         public override void LoadWeaponInstanceInfo(WeaponInstanceInfo weaponInstanceInfo)
         {
-            RangedWeaponInstanceInfo rangedWeaponInstanceInfo = weaponInstanceInfo as RangedWeaponInstanceInfo;
-            if (rangedWeaponInstanceInfo != null)
+            if (weaponInstanceInfo is RangedWeaponInstanceInfo rangedWeaponInstanceInfo)
             {
                 BulletsLeft = rangedWeaponInstanceInfo.bulletsLeft;
             }

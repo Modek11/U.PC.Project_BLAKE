@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78a6aac9b7ab0a248add5fa4daf0ca14, type: 3}
+  m_Name: RifleUpgrades
+  m_EditorClassIdentifier: 
+  weaponDefinition: {fileID: 11400000, guid: 5e20d309039b82b4298dc99a0d35a518, type: 2}
+  rangedUpgradeData: []
+  meleeUpgradeData:
+  - weaponUpgradeTier: 0
+    meleeWeaponStatistics:
+      AttackDelayTime: 0
+      SphereCastRadius: 0
+      MaxSpreadRange: 0
+      LayerMask:
+        serializedVersion: 2
+        m_Bits: 0
+      MaxNumberOfEnemies: 0

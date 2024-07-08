@@ -11,6 +11,7 @@ namespace _Project.Scripts.Weapon
         private PlayableDirector playableDirector;
         private Transform characterTransform;
 
+        private MeleeWeaponStatistics savedMeleeWeaponStatistics;
         private float attackDelayTime;
         private float sphereCastRadius;
         private int maxSpreadRange;
@@ -111,6 +112,26 @@ namespace _Project.Scripts.Weapon
             layerMask = meleeWeaponDefinition.LayerMask;
             maxNumberOfEnemies = meleeWeaponDefinition.MaxNumberOfEnemies;
             raycastCollidersFound = new Collider[maxNumberOfEnemies];
+        }
+        
+        public MeleeWeaponStatistics SaveAndGetMeleeWeaponStatistics()
+        {
+            return savedMeleeWeaponStatistics = new MeleeWeaponStatistics(attackDelayTime, sphereCastRadius, 
+                maxSpreadRange, layerMask, maxNumberOfEnemies);
+        }
+
+        public void ApplyMeleeWeaponStatistics(MeleeWeaponStatistics meleeWeaponStatistics)
+        {
+            attackDelayTime = meleeWeaponStatistics.AttackDelayTime;
+            sphereCastRadius = meleeWeaponStatistics.SphereCastRadius;
+            maxSpreadRange = meleeWeaponStatistics.MaxSpreadRange;
+            layerMask = meleeWeaponStatistics.LayerMask;
+            maxNumberOfEnemies = meleeWeaponStatistics.MaxNumberOfEnemies;
+        }
+
+        public void RestoreMeleeWeaponStatistics()
+        {
+            ApplyMeleeWeaponStatistics(savedMeleeWeaponStatistics);
         }
 
         public override void LoadWeaponInstanceInfo(WeaponInstanceInfo weaponInstanceInfo)
