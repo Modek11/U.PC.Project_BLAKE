@@ -10,7 +10,7 @@ namespace _Project.Scripts.Weapon
         public BasicBullet BasicBullet;
         
         [Tooltip("Declares how often player can shoot")]
-        public float FireDelayTime = 0.4f;
+        public float WaitingTimeForNextShoot = 0.4f;
         
         [Tooltip("Declares type of bullet")] 
         public BulletType BulletType = BulletType.Undefined;
@@ -40,5 +40,11 @@ namespace _Project.Scripts.Weapon
         public int MagazineSize;
         
         public float Range;
+        
+        [Space(10), Header("ENEMY ONLY")] 
+        [Header("Muzzle flash")]
+        public float EffectDuration;
+        
+        public float ShootDelayTime;
     }
 }
