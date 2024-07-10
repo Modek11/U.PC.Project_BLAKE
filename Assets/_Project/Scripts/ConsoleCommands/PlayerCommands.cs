@@ -1,3 +1,4 @@
+using _Project.Scripts.GlobalHandlers;
 using _Project.Scripts.PointsSystem;
 using SickDev.CommandSystem;
 using SickDev.DevConsole;

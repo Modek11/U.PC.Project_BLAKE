@@ -1,5 +1,5 @@
 using System;
-using _Project.Scripts.GameHandler;
+using _Project.Scripts.GlobalHandlers;
 using UnityEngine;
 
 public class RoomsDoneCounter : MonoBehaviour

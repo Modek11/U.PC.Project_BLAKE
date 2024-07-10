@@ -1,4 +1,5 @@
 using _Project.Scripts;
+using _Project.Scripts.GlobalHandlers;
 using DG.Tweening.Core.Easing;
 using MBT;
 using UnityEngine;

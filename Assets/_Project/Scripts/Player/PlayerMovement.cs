@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using _Project.Scripts;
+using _Project.Scripts.GlobalHandlers;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour

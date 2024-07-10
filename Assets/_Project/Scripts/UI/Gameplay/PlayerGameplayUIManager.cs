@@ -1,5 +1,6 @@
 using System.Collections;
 using _Project.Scripts.Floor_Generation;
+using _Project.Scripts.GlobalHandlers;
 using _Project.Scripts.PointsSystem;
 using _Project.Scripts.Weapon;
 using TMPro;

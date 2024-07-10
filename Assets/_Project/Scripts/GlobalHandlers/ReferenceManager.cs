@@ -5,7 +5,7 @@ using _Project.Scripts.SceneHandler;
 using _Project.Scripts.VirtualCamera;
 using Unity.Services.Core;
 
-namespace _Project.Scripts
+namespace _Project.Scripts.GlobalHandlers
 {
     public class ReferenceManager : Singleton<ReferenceManager>
     {

@@ -1,3 +1,4 @@
+using _Project.Scripts.GlobalHandlers;
 using UnityEngine;
 using UnityEngine.UI;
 

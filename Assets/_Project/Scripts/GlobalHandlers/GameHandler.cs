@@ -1,21 +1,29 @@
 using _Project.Scripts.Patterns;
 using UnityEngine;
 
-namespace _Project.Scripts.GameHandler
+namespace _Project.Scripts.GlobalHandlers
 {
     public class GameHandler : Singleton<GameHandler>
     {
         [SerializeField]
         private GameObject pausedGameCanvas;
 
+        private bool isGamePaused = false;
+        
+        public bool IsGamePaused
+        {
+            get => isGamePaused;
+
+            private set
+            {
+                isGamePaused = value;
+                Time.timeScale = isGamePaused ? 0f : 1f;
+            }
+        }
+
         private void Start()
         {
             ShowPlayerControlsPopup();
-        }
-
-        public void PlayerPause()
-        {
-            OpenPlayerUICanvas("PauseGame_Canvas");
         }
 
         public void PlayerWin()
@@ -25,16 +33,25 @@ namespace _Project.Scripts.GameHandler
 
         public void PlayerLose()
         {
-            Time.timeScale = 0f;
             OpenPlayerUICanvas("YouLose_Canvas");
+        }
+        
+        public void OpenPauseGameCanvas()
+        {
+            OpenPlayerUICanvas("PauseGame_Canvas");
+        }
+        
+        public void OpenWeaponUpgradesCanvas()
+        {
+            OpenPlayerUICanvas("WeaponUpgrade_Canvas");
         }
 
         public void ShowPlayerControlsPopup()
         {
-            OpenPlayerUICanvas("ControlsPopup_Canvas");
+            OpenPlayerUICanvas("ControlsPopup_Canvas", false);
         }
 
-        private void OpenPlayerUICanvas(string canvasName)
+        private void OpenPlayerUICanvas(string canvasName, bool pauseGame = true)
         {
             for(int i = 0; i < pausedGameCanvas.transform.childCount; i++)
             {
@@ -42,9 +59,11 @@ namespace _Project.Scripts.GameHandler
                 child.SetActive(child.name == canvasName);
             }
             pausedGameCanvas.SetActive(true);
+
+            IsGamePaused = pauseGame;
         }
     
-        public void ClosePausedGameCanvas()
+        public void CloseAllCanvasAndUnpause()
         {
             pausedGameCanvas.SetActive(false);
             for(int i = 0; i < pausedGameCanvas.transform.childCount; i++)
@@ -52,12 +71,13 @@ namespace _Project.Scripts.GameHandler
                 var child = pausedGameCanvas.transform.GetChild(i).gameObject;
                 child.SetActive(false);
             }
-            Time.timeScale = 1f;
+
+            IsGamePaused = false;
         }
 
         private void OnDestroy()
         {
-            Time.timeScale = 1f;
+            IsGamePaused = false;
         }
     }
 }
