@@ -27,7 +27,7 @@ namespace _Project.Scripts.Abilities
 
         private async UniTaskVoid MultiShoot(RangedWeapon rangedWeapon)
         {
-            var statistics = rangedWeapon.SaveAndGetRangedWeaponStatistics();
+            var statistics = rangedWeapon.CurrentRangedWeaponStatistics;
             statistics.SpreadType = SpreadType.NoSpreadThenStatic;
             statistics.Spread = 45f;
             statistics.SpreadResetThreshold = 5f;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _Project.Scripts.Weapon.Upgrades;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -18,34 +19,26 @@ namespace _Project.Scripts.Weapon
         [SerializeField]
         private bool infinityAmmo = false;
 
-        private RangedWeaponDefinition rangedWeaponDefinition; 
-        private RangedWeaponStatistics savedRangedWeaponStatistics;
-        private float waitingTimeForNextShoot;
-        private BulletType bulletType;
-        private SpreadType spreadType;
-        private float spread;
-        private float spreadStep;
-        private float spreadThreshold;
-        private float spreadResetThreshold;
-        private int projectilesPerShot;
-        private int magazineSize;
-        private float range;
+        private RangedWeaponDefinition rangedWeaponDefinition;
+        private RangedWeaponStatistics baseWeaponStats;
+        private PlayerWeaponUpgradesManager playerWeaponUpgradesManager;
+        private RangedWeaponStatistics currentWeaponStats;
         
         private float lastFireTime;
         private float negativeSpreadThreshold;
         private float positiveSpreadThreshold;
         private float currentSpread;
-        private float masterShootDelayTime => waitingTimeForNextShoot + shootDelayTime;
+        private float masterShootDelayTime => currentWeaponStats.WaitingTimeForNextShoot + shootDelayTime;
 
         //Enemy only
         private float effectDuration = 0f;
         private float shootDelayTime = 0f;
         private bool isTryingToShoot = false;
         
-        public float Range => range;
+        public float Range => currentWeaponStats.Range;
         public int BulletsLeft { get; set; }
-        public SpreadType CurrentSpreadType { get; set; }
-        
+        public RangedWeaponStatistics CurrentRangedWeaponStatistics => currentWeaponStats;
+
 
         protected override void Awake()
         {
@@ -131,7 +124,7 @@ namespace _Project.Scripts.Weapon
             {
                 var bulletSpreadValue = list[index];
 
-                if (spreadType == SpreadType.StaticSeries)
+                if (currentWeaponStats.SpreadType == SpreadType.StaticSeries)
                 {
                     DOVirtual.DelayedCall(index / 10f, () => CreateBullet(bulletSpreadValue));
                 }
@@ -152,52 +145,52 @@ namespace _Project.Scripts.Weapon
             var bulletPrefab = rangedWeaponDefinition.BasicBullet;
             var bullet = Instantiate(bulletPrefab, bulletsSpawnPoint.position, transform.rotation);
                 
-            bullet.SetupBullet(bulletSpreadValue, transform.parent.gameObject, range, bulletType);
+            bullet.SetupBullet(bulletSpreadValue, transform.parent.gameObject, currentWeaponStats.Range, currentWeaponStats.BulletType);
         }
 
         private List<float> GetCalculatedProjectilesAngles()
         {
             var projectilesAngles = new List<float>();
             
-            if (spreadType == SpreadType.Undefined)
+            if (currentWeaponStats.SpreadType == SpreadType.Undefined)
             {
                 Debug.LogError($"SpreadType in {rangedWeaponDefinition.WeaponName} is Undefined!");
             }
 
-            else if (spreadType == SpreadType.NoSpread)
+            else if (currentWeaponStats.SpreadType == SpreadType.NoSpread)
             {
                 projectilesAngles.Add(0f);
             }
             
-            else if (spreadType is SpreadType.Static)
+            else if (currentWeaponStats.SpreadType is SpreadType.Static)
             {
                 var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
                 projectilesAngles.Add(projectileAngle);
             }
             
-            else if (spreadType is SpreadType.StaticSeries)
+            else if (currentWeaponStats.SpreadType is SpreadType.StaticSeries)
             {
-                for (var i = 0; i < projectilesPerShot; i++)
+                for (var i = 0; i < currentWeaponStats.ProjectilesPerShot; i++)
                 {
                     var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
                     projectilesAngles.Add(projectileAngle);
                 }
             }
 
-            else if (spreadType == SpreadType.StaticMultiShot)
+            else if (currentWeaponStats.SpreadType == SpreadType.StaticMultiShot)
             {
-                var anglePerProjectile = spread / (projectilesPerShot - 1);
+                var anglePerProjectile = currentWeaponStats.Spread / (currentWeaponStats.ProjectilesPerShot - 1);
 
-                for (var i = 0; i < projectilesPerShot; i++)
+                for (var i = 0; i < currentWeaponStats.ProjectilesPerShot; i++)
                 {
                     var projectileAngle = negativeSpreadThreshold + anglePerProjectile * i;
                     projectilesAngles.Add(projectileAngle);
                 }
             }
 
-            else if (spreadType == SpreadType.NoSpreadThenStatic)
+            else if (currentWeaponStats.SpreadType == SpreadType.NoSpreadThenStatic)
             {
-                if (Time.time - lastFireTime < spreadResetThreshold)
+                if (Time.time - lastFireTime < currentWeaponStats.SpreadResetThreshold)
                 { 
                     var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
                     projectilesAngles.Add(projectileAngle);
@@ -208,9 +201,9 @@ namespace _Project.Scripts.Weapon
                 }
             }
 
-            else if (spreadType == SpreadType.GraduallyIncrease)
+            else if (currentWeaponStats.SpreadType == SpreadType.GraduallyIncrease)
             {
-                if (Time.time - lastFireTime > masterShootDelayTime + spreadResetThreshold)
+                if (Time.time - lastFireTime > masterShootDelayTime + currentWeaponStats.SpreadResetThreshold)
                 {
                     ResetSpread();
                 }
@@ -219,9 +212,9 @@ namespace _Project.Scripts.Weapon
                 projectilesAngles.Add(projectileAngle);
                 Debug.Log($"{currentSpread}, ");
                 
-                if (currentSpread < spreadThreshold)
+                if (currentSpread < currentWeaponStats.SpreadThreshold)
                 {
-                    currentSpread += spreadStep;
+                    currentSpread += currentWeaponStats.SpreadStep;
                     UpdateSpreadThresholds();
                 }
             }
@@ -235,7 +228,7 @@ namespace _Project.Scripts.Weapon
             {
                 return new RangedWeaponInstanceInfo
                 {
-                    bulletsLeft = Random.Range(magazineSize / 2, magazineSize + 1)
+                    bulletsLeft = Random.Range(currentWeaponStats.MagazineSize / 2, currentWeaponStats.MagazineSize + 1)
                 };
             }
 
@@ -254,17 +247,21 @@ namespace _Project.Scripts.Weapon
             }
             
             rangedWeaponDefinition = definition;
-            waitingTimeForNextShoot = rangedWeaponDefinition.WaitingTimeForNextShoot;
-            bulletType = rangedWeaponDefinition.BulletType;
-            spreadType = rangedWeaponDefinition.SpreadType;
-            spread = rangedWeaponDefinition.Spread;
-            spreadStep = rangedWeaponDefinition.SpreadStep;
-            spreadThreshold = rangedWeaponDefinition.SpreadThreshold;
-            spreadResetThreshold = rangedWeaponDefinition.SpreadResetThreshold;
-            projectilesPerShot = rangedWeaponDefinition.ProjectilesPerShot;
-            magazineSize = rangedWeaponDefinition.MagazineSize;
-            range = rangedWeaponDefinition.Range;
-            BulletsLeft = magazineSize;
+
+            baseWeaponStats = new RangedWeaponStatistics(
+                rangedWeaponDefinition.WaitingTimeForNextShoot,
+                rangedWeaponDefinition.BulletType,
+                rangedWeaponDefinition.SpreadType,
+                rangedWeaponDefinition.Spread,
+                rangedWeaponDefinition.SpreadStep,
+                rangedWeaponDefinition.SpreadThreshold,
+                rangedWeaponDefinition.SpreadResetThreshold,
+                rangedWeaponDefinition.ProjectilesPerShot,
+                rangedWeaponDefinition.MagazineSize,
+                rangedWeaponDefinition.Range);
+
+            currentWeaponStats = baseWeaponStats;
+            BulletsLeft = currentWeaponStats.MagazineSize;
 
             if (weaponOwnerIsEnemy)
             { 
@@ -275,36 +272,26 @@ namespace _Project.Scripts.Weapon
             ResetSpread();
         }
 
-        public RangedWeaponStatistics SaveAndGetRangedWeaponStatistics()
-        {
-            return savedRangedWeaponStatistics = new RangedWeaponStatistics(waitingTimeForNextShoot, bulletType, 
-                spreadType, spread, spreadStep, spreadResetThreshold, projectilesPerShot, magazineSize, range);
-        }
-
         public void ApplyRangedWeaponStatistics(RangedWeaponStatistics rangedWeaponStatistics)
         {
-            waitingTimeForNextShoot = rangedWeaponStatistics.WaitingTimeForNextShoot;
-            bulletType = rangedWeaponStatistics.BulletType;
-            spreadType = rangedWeaponStatistics.SpreadType;
-            spread = rangedWeaponStatistics.Spread;
-            spreadStep = rangedWeaponStatistics.SpreadStep;
-            spreadResetThreshold = rangedWeaponStatistics.SpreadResetThreshold;
-            projectilesPerShot = rangedWeaponStatistics.ProjectilesPerShot;
-            magazineSize = rangedWeaponStatistics.MagazineSize;
-            range = rangedWeaponStatistics.Range;
-            lastFireTime = Time.time;
+            currentWeaponStats = rangedWeaponStatistics;
 
             ResetSpread();
         }
 
+        public void CombineAndSaveWeaponStats(RangedWeaponStatistics stats1, RangedWeaponStatistics stats2)
+        {
+            currentWeaponStats = stats1 + stats2;
+        }
+
         public void RestoreRangedWeaponStatistics()
         {
-            ApplyRangedWeaponStatistics(savedRangedWeaponStatistics);
+            currentWeaponStats = baseWeaponStats; 
         }
 
         private void ResetSpread()
         {
-            currentSpread = spread;
+            currentSpread = currentWeaponStats.Spread;
             UpdateSpreadThresholds();
         }
 
