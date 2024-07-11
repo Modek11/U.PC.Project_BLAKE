@@ -3,19 +3,19 @@ using UnityEngine;
 
 namespace _Project.Scripts.Weapon.Upgrades
 {
-    public class WeaponUpgradesInteractable : MonoBehaviour, IInteractable
+    public class WeaponUpgradeInteractable : MonoBehaviour, IInteractable
     {
         [SerializeField]
         private Transform UIHolderTransform;
         
         public bool CanInteract()
         {
-            return true;
+            return ReferenceManager.WeaponUpgradeManager.IsUpgradeAvailable;
         }
         
         public void Interact(GameObject interacter)
         {
-            GameHandler.Instance.OpenWeaponUpgradesCanvas();
+            ReferenceManager.WeaponUpgradeManager.TryShowWeaponUpgrades();
         }
 
         public GameObject GetGameObject()

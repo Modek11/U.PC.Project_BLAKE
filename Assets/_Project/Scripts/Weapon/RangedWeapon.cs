@@ -21,7 +21,7 @@ namespace _Project.Scripts.Weapon
 
         private RangedWeaponDefinition rangedWeaponDefinition;
         private RangedWeaponStatistics baseWeaponStats;
-        private PlayerWeaponUpgradesManager playerWeaponUpgradesManager;
+        private PlayerWeaponUpgradeManager playerWeaponUpgradeManager;
         private RangedWeaponStatistics currentWeaponStats;
         
         private float lastFireTime;

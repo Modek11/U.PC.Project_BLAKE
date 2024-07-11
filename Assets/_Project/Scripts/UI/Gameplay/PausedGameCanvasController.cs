@@ -19,11 +19,11 @@ namespace _Project.Scripts.UI.Gameplay
         {
             if (GameHandler.Instance.IsGamePaused)
             {
-                GameHandler.Instance.OpenPauseGameCanvas();
+                GameHandler.Instance.CloseAllCanvasAndUnpause();
             }
             else
             {
-                GameHandler.Instance.CloseAllCanvasAndUnpause();
+                GameHandler.Instance.OpenPauseGameCanvas();
             }
         }
 

@@ -3,6 +3,7 @@ using _Project.Scripts.Patterns;
 using _Project.Scripts.Player;
 using _Project.Scripts.SceneHandler;
 using _Project.Scripts.VirtualCamera;
+using _Project.Scripts.Weapon.Upgrades;
 using Unity.Services.Core;
 
 namespace _Project.Scripts.GlobalHandlers
@@ -16,6 +17,7 @@ namespace _Project.Scripts.GlobalHandlers
         private MessageRouter messageRouter = new();
         private RoomManager roomManager;
         private MainVirtualCameraController mainVirtualCameraController;
+        private WeaponUpgradeManager weaponUpgradeManager;
 
         public static BlakeHeroCharacter BlakeHeroCharacter
         {
@@ -79,6 +81,16 @@ namespace _Project.Scripts.GlobalHandlers
             {
                 if (Instance == null) return;
                 Instance.mainVirtualCameraController = value;
+            }
+        }
+        
+        public static WeaponUpgradeManager WeaponUpgradeManager
+        {
+            get => Instance != null ? Instance.weaponUpgradeManager : null;
+            set
+            {
+                if (Instance == null) return;
+                Instance.weaponUpgradeManager = value;
             }
         }
 

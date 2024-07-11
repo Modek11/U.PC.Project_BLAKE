@@ -31,36 +31,46 @@ namespace _Project.Scripts.GlobalHandlers
             Debug.LogError("PlayerWin logic is missing");
         }
 
-        public void PlayerLose()
+        public GameObject PlayerLose()
         {
-            OpenPlayerUICanvas("YouLose_Canvas");
+            return OpenPlayerUICanvas("YouLose_Canvas");
         }
         
-        public void OpenPauseGameCanvas()
+        public GameObject OpenPauseGameCanvas()
         {
-            OpenPlayerUICanvas("PauseGame_Canvas");
+            return OpenPlayerUICanvas("PauseGame_Canvas");
         }
         
-        public void OpenWeaponUpgradesCanvas()
+        public GameObject OpenWeaponUpgradesCanvas()
         {
-            OpenPlayerUICanvas("WeaponUpgrade_Canvas");
+            return OpenPlayerUICanvas("WeaponUpgrade_Canvas");
         }
 
-        public void ShowPlayerControlsPopup()
+        public GameObject ShowPlayerControlsPopup()
         {
-            OpenPlayerUICanvas("ControlsPopup_Canvas", false);
+            return OpenPlayerUICanvas("ControlsPopup_Canvas", false);
         }
 
-        private void OpenPlayerUICanvas(string canvasName, bool pauseGame = true)
+        private GameObject OpenPlayerUICanvas(string canvasName, bool pauseGame = true)
         {
-            for(int i = 0; i < pausedGameCanvas.transform.childCount; i++)
+            GameObject openedCanvas = null;
+            for (var i = 0; i < pausedGameCanvas.transform.childCount; i++)
             {
                 var child = pausedGameCanvas.transform.GetChild(i).gameObject;
-                child.SetActive(child.name == canvasName);
+                var canvasFound = child.name == canvasName;
+                
+                if(canvasFound)
+                {
+                    openedCanvas = child;
+                }
+                
+                child.SetActive(canvasFound);
             }
+
             pausedGameCanvas.SetActive(true);
 
             IsGamePaused = pauseGame;
+            return openedCanvas;
         }
     
         public void CloseAllCanvasAndUnpause()

@@ -119,7 +119,7 @@ namespace _Project.Scripts.UI.Gameplay
 
         private void BulletsLeftUI(Weapon.Weapon weapon)
         {
-            RangedWeapon rangedWeapon = weapon as RangedWeapon;
+            var rangedWeapon = weapon as RangedWeapon;
 
             bulletsLeft.text = rangedWeapon != null ? rangedWeapon.BulletsLeft.ToString() : INFINITY_SYMBOL;
         }
