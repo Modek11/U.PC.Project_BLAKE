@@ -1,6 +1,6 @@
 namespace _Project.Scripts.Weapon.Upgrades
 {
-    public enum WeaponUpgradeTierEnum
+    public enum WeaponUpgradeRarityEnum
     {
         Undefined = 0,
         Common = 1,

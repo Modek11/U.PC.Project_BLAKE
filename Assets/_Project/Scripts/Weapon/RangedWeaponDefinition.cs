@@ -1,3 +1,4 @@
+using _Project.Scripts.Weapon.Upgrades.Bullet;
 using UnityEngine;
 
 namespace _Project.Scripts.Weapon

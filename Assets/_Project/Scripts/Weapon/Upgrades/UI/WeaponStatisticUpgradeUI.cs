@@ -8,7 +8,10 @@ namespace _Project.Scripts.Weapon.Upgrades.UI
         [SerializeField] private TextMeshProUGUI upgradeName;
         [SerializeField] private TextMeshProUGUI upgradeValue;
         
-        public TextMeshProUGUI UpgradeName => upgradeName;
-        public TextMeshProUGUI UpgradeValue => upgradeValue;
+        public void SetupStatistic(string upgradeName, string upgradeValue)
+        {
+            this.upgradeName.text = upgradeName;
+            this.upgradeValue.text = upgradeValue;
+        }
     }
 }

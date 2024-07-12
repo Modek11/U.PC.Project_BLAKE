@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using _Project.Scripts.Weapon.Upgrades.Bullet;
 using UnityEngine;
 
 namespace _Project.Scripts.Weapon
@@ -54,6 +56,43 @@ namespace _Project.Scripts.Weapon
                 a.MagazineSize + b.MagazineSize,
                 a.Range + b.Range
             );
+        }
+        
+        public Dictionary<string, float> GetNonZeroFields()
+        {
+            var result = new Dictionary<string, float>();
+
+            if (WaitingTimeForNextShoot != 0)
+                result.Add(nameof(WaitingTimeForNextShoot), WaitingTimeForNextShoot);
+
+            if (BulletType != BulletType.Undefined)
+                result.Add(nameof(BulletType), (float)BulletType);
+
+            if (SpreadType != SpreadType.Undefined)
+                result.Add(nameof(SpreadType), (float)SpreadType);
+
+            if (Spread != 0)
+                result.Add(nameof(Spread), Spread);
+
+            if (SpreadStep != 0)
+                result.Add(nameof(SpreadStep), SpreadStep);
+
+            if (SpreadThreshold != 0)
+                result.Add(nameof(SpreadThreshold), SpreadThreshold);
+
+            if (SpreadResetThreshold != 0)
+                result.Add(nameof(SpreadResetThreshold), SpreadResetThreshold);
+
+            if (ProjectilesPerShot != 0)
+                result.Add(nameof(ProjectilesPerShot), ProjectilesPerShot);
+
+            if (MagazineSize != 0)
+                result.Add(nameof(MagazineSize), MagazineSize);
+
+            if (Range != 0)
+                result.Add(nameof(Range), Range);
+
+            return result;
         }
     }
 }

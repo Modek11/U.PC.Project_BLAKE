@@ -1,4 +1,4 @@
-namespace _Project.Scripts.Weapon
+namespace _Project.Scripts.Weapon.Upgrades.Bullet
 {
     public enum BulletType
     {

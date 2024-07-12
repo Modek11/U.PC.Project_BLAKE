@@ -5,8 +5,7 @@ namespace _Project.Scripts.Weapon.Upgrades.Data
     [Serializable]
     public class MeleeWeaponUpgradeData : IWeaponUpgradeData
     {
-        public string displayedDescription;
-        public WeaponUpgradeTierEnum weaponUpgradeTier;
+        public WeaponUpgradeRarityEnum weaponUpgradeRarity;
         public MeleeWeaponStatistics meleeWeaponStatistics;
     }
 }

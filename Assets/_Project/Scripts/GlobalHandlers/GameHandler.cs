@@ -5,6 +5,11 @@ namespace _Project.Scripts.GlobalHandlers
 {
     public class GameHandler : Singleton<GameHandler>
     {
+        private const string YOU_LOSE = "YouLose_Canvas";
+        private const string PAUSE_GAME = "PauseGame_Canvas";
+        private const string WEAPON_UPGRADE = "WeaponUpgrade_Canvas";
+        private const string CONTROLS_POPUP = "ControlsPopup_Canvas";
+        
         [SerializeField]
         private GameObject pausedGameCanvas;
 
@@ -33,22 +38,22 @@ namespace _Project.Scripts.GlobalHandlers
 
         public GameObject PlayerLose()
         {
-            return OpenPlayerUICanvas("YouLose_Canvas");
+            return OpenPlayerUICanvas(YOU_LOSE);
         }
         
         public GameObject OpenPauseGameCanvas()
         {
-            return OpenPlayerUICanvas("PauseGame_Canvas");
+            return OpenPlayerUICanvas(PAUSE_GAME);
         }
         
         public GameObject OpenWeaponUpgradesCanvas()
         {
-            return OpenPlayerUICanvas("WeaponUpgrade_Canvas");
+            return OpenPlayerUICanvas(WEAPON_UPGRADE);
         }
 
         public GameObject ShowPlayerControlsPopup()
         {
-            return OpenPlayerUICanvas("ControlsPopup_Canvas", false);
+            return OpenPlayerUICanvas(CONTROLS_POPUP, false);
         }
 
         private GameObject OpenPlayerUICanvas(string canvasName, bool pauseGame = true)
