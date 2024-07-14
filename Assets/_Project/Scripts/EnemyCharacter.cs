@@ -87,6 +87,7 @@ namespace _Project.Scripts
                 {
                     foreach (var w in wm.Weapons)
                     {
+                        if (w == null) continue;
                         if (weapon.WeaponDefinition == w.WeaponDefinition)
                         {
                             return;
