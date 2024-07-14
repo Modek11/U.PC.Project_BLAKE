@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cbb9f02dc030ff46a95ea9ba90dcdc8, type: 3}
   m_Name: SavageThreePerk
   m_EditorClassIdentifier: 
-  perkName: 
+  perkName: SavageThree

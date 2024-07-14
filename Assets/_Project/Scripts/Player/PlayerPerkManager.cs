@@ -19,6 +19,7 @@ public class PlayerPerkManager : MonoBehaviour
     public void RemovePerk(PerkScriptableObject perk)
     {
         perkScripts.Remove(perk);
+        if (perk == null) return;
         perk.OnRemove();
     }
 
