@@ -21,7 +21,7 @@ namespace _Project.Scripts.Weapon.Upgrades.UI
             for (var i = 0; i < upgradeCardParent.childCount; i++)
             {
                 var card = upgradeCardParent.GetChild(i);
-                Destroy(card);
+                Destroy(card.gameObject);
             }
         }
     }
