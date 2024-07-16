@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5416683870368078568}
   - component: {fileID: 3599339183966247465}
-  - component: {fileID: 6613920700152475305}
-  - component: {fileID: 1861947882221756935}
   m_Layer: 0
   m_Name: ReferenceManager
   m_TagString: Untagged
@@ -47,36 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
---- !u!114 &6613920700152475305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564071697913430037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e72c7f554aabeb240a8620a90e4f11a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 0
-  loadingProgress: 0
-  isSceneLoadedProperly: 1
-  roomsGenerated: 0
-  roomsToGenerate: 0
-  isNormalDifficulty: 1
---- !u!114 &1861947882221756935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564071697913430037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f4fe7f1208fb144181faa8ecef1bf1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 0
-  levelIndex: 0
-  levelNames: {fileID: 11400000, guid: 984345e1921682f4a9f4b3d0a5d0befb, type: 2}
+  blakeHeroCharacter: {fileID: 0}
+  playerInputController: {fileID: 0}
+  sceneHandler: {fileID: 0}
+  levelHandler: {fileID: 0}
+  roomManager: {fileID: 0}
