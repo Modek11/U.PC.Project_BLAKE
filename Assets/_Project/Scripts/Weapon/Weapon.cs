@@ -8,8 +8,8 @@ namespace _Project.Scripts.Weapon
         public WeaponDefinition WeaponDefinition;
 
         //BlakeCharacter
-        private GameObject owner;
-        public GameObject Owner
+        private BlakeCharacter owner;
+        public BlakeCharacter Owner
         {
             get => owner;
             set
@@ -22,6 +22,7 @@ namespace _Project.Scripts.Weapon
 
         protected AudioSource audioSource;
         protected WeaponsManager weaponsManager;
+        protected bool weaponOwnerIsEnemy;
 
         protected virtual void Awake()
         {
@@ -34,7 +35,8 @@ namespace _Project.Scripts.Weapon
         {
             if (Owner == null) { return; }
 
-            weaponsManager = Owner.GetComponent<WeaponsManager>();
+            weaponsManager = owner.GetComponent<WeaponsManager>();
+            weaponOwnerIsEnemy = owner is EnemyCharacter;
         }
 
         public virtual bool CanPrimaryAttack() => true;

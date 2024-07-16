@@ -9,12 +9,12 @@ namespace _Project.Scripts.Weapon
         private float explosionRadius;
 
         [SerializeField] 
-        private ParticleSystem particleSystem;
+        private ParticleSystem particles;
 
         public void Explode(GameObject instigator)
         {
-            Destroy(gameObject, particleSystem.main.duration);
-            particleSystem.Play();
+            Destroy(gameObject, particles.main.duration);
+            particles.Play();
             
             var colliders = Physics.OverlapSphere(transform.position, explosionRadius);
             foreach (var collider in colliders)
