@@ -11,6 +11,8 @@ namespace _Project.Scripts.Weapon.Upgrades
         //[SerializeField] public Dictionary<WeaponDefinition, RangedWeaponStatistics> rangedWeaponsUpgrades = new Dictionary<WeaponDefinition, RangedWeaponStatistics>();
         //[SerializeField] private Dictionary<WeaponDefinition, MeleeWeaponStatistics> meleeWeaponsUpgrades = new Dictionary<WeaponDefinition, MeleeWeaponStatistics>();
 
+        public event Action<WeaponDefinition, IWeaponStatistics> OnWeaponUpgradeChanged;
+        
         [UDictionary.Split(30, 70)]
         public MeleeWeaponsUDictionary meleeWeaponsUpgrades;
         [Serializable]
@@ -24,6 +26,7 @@ namespace _Project.Scripts.Weapon.Upgrades
         private void Start()
         {
             PrepareClearDictionaries();
+            GetComponent<WeaponsManager>().OnPlayerPickupWeaponEvent += OnPlayerPickupWeaponEvent;
         }
 
         private void PrepareClearDictionaries()
@@ -37,35 +40,81 @@ namespace _Project.Scripts.Weapon.Upgrades
                 rangedWeaponsUpgrades.Add(weapon, new RangedWeaponStatistics());
             }
         }
-
-        public void AddWeaponUpgrade(string weaponName, RangedWeaponStatistics weaponStatistics)
+        
+        private void OnPlayerPickupWeaponEvent(Weapon weapon)
         {
-            var passedWeaponName = weaponName.ToLower().Replace(" ", "");
-            foreach (var weaponUpgrade in rangedWeaponsUpgrades)
+            if (weapon is RangedWeapon rangedWeapon)
             {
-                var weaponDefinitionName = weaponUpgrade.Key.WeaponName.ToLower().Replace(" ", "");
-                if (passedWeaponName == weaponDefinitionName)
+                var definition = rangedWeapon.WeaponDefinition;
+                if(rangedWeaponsUpgrades.TryGetValue(definition, out var statistics))
                 {
-                    var upgradedValues = weaponUpgrade.Value + weaponStatistics;
-                    rangedWeaponsUpgrades[weaponUpgrade.Key] = upgradedValues;
-                    return;
+                    weapon.CalculateWeaponStatsWithUpgrades(definition, statistics);
                 }
+            }
+            else if (weapon is MeleeWeapon meleeWeapon)
+            {
+                var definition = meleeWeapon.WeaponDefinition;
+                if(meleeWeaponsUpgrades.TryGetValue(definition, out var statistics))
+                {
+                    weapon.CalculateWeaponStatsWithUpgrades(definition, statistics);
+                }
+            }
+            else
+            {
+                Debug.LogError($"Weapon is not valid!");
             }
         }
-        
-        public void AddWeaponUpgrade(string weaponName, MeleeWeaponStatistics weaponStatistics)
+
+        public void AddWeaponUpgrade(string weaponName, IWeaponStatistics weaponStatistics)
+        {
+            if (weaponStatistics is RangedWeaponStatistics rangedStatistics)
+            {
+                AddRangedWeaponUpgrade(weaponName, rangedStatistics);
+            }
+            else if (weaponStatistics is MeleeWeaponStatistics meleeStatistics)
+            {
+                AddMeleeWeaponUpgrade(weaponName, meleeStatistics);
+            }
+            else
+            {
+                Debug.LogError("Wrong weapon statistics!");
+            }
+        }
+
+        private void AddRangedWeaponUpgrade(string weaponName, RangedWeaponStatistics weaponStatistics)
         {
             var passedWeaponName = weaponName.ToLower().Replace(" ", "");
-            foreach (var weaponUpgrade in meleeWeaponsUpgrades)
+            foreach (var (weaponDefinition, statistics) in rangedWeaponsUpgrades)
             {
-                var weaponDefinitionName = weaponUpgrade.Key.WeaponName.ToLower().Replace(" ", "");
+                var weaponDefinitionName = weaponDefinition.WeaponName.ToLower().Replace(" ", "");
                 if (passedWeaponName == weaponDefinitionName)
                 {
-                    var upgradedValues = weaponUpgrade.Value + weaponStatistics;
-                    meleeWeaponsUpgrades[weaponUpgrade.Key] = upgradedValues;
+                    var upgradedValues = statistics + weaponStatistics;
+                    rangedWeaponsUpgrades[weaponDefinition] = upgradedValues;
+                    OnWeaponUpgradeChanged?.Invoke(weaponDefinition, upgradedValues);
                     return;
                 }
             }
+            
+            Debug.LogError($"Missing weapon called {weaponName}");
+        }
+        
+        private void AddMeleeWeaponUpgrade(string weaponName, MeleeWeaponStatistics weaponStatistics)
+        {
+            var passedWeaponName = weaponName.ToLower().Replace(" ", "");
+            foreach (var (weaponDefinition, statistics) in meleeWeaponsUpgrades)
+            {
+                var weaponDefinitionName = weaponDefinition.WeaponName.ToLower().Replace(" ", "");
+                if (passedWeaponName == weaponDefinitionName)
+                {
+                    var upgradedValues = statistics + weaponStatistics;
+                    meleeWeaponsUpgrades[weaponDefinition] = upgradedValues;
+                    OnWeaponUpgradeChanged?.Invoke(weaponDefinition, upgradedValues);
+                    return;
+                }
+            }
+            
+            Debug.LogError($"Missing weapon called {weaponName}");
         }
 
 

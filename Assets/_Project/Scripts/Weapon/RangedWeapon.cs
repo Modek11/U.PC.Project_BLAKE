@@ -20,8 +20,9 @@ namespace _Project.Scripts.Weapon
         private bool infinityAmmo = false;
 
         private RangedWeaponDefinition rangedWeaponDefinition;
-        private RangedWeaponStatistics baseWeaponStats;
         private PlayerWeaponUpgradeManager playerWeaponUpgradeManager;
+        private RangedWeaponStatistics baseWeaponStats;
+        private RangedWeaponStatistics weaponUpgrades;
         private RangedWeaponStatistics currentWeaponStats;
         
         private float lastFireTime;
@@ -260,16 +261,14 @@ namespace _Project.Scripts.Weapon
                 rangedWeaponDefinition.MagazineSize,
                 rangedWeaponDefinition.Range);
 
-            currentWeaponStats = baseWeaponStats;
-            BulletsLeft = currentWeaponStats.MagazineSize;
-
             if (weaponOwnerIsEnemy)
             { 
                 effectDuration = rangedWeaponDefinition.EffectDuration; 
                 shootDelayTime = rangedWeaponDefinition.ShootDelayTime;
             }
-            
-            ResetSpread();
+
+            BulletsLeft = baseWeaponStats.MagazineSize;
+            RestoreRangedWeaponStatistics();
         }
 
         public void ApplyRangedWeaponStatistics(RangedWeaponStatistics rangedWeaponStatistics)
@@ -279,14 +278,32 @@ namespace _Project.Scripts.Weapon
             ResetSpread();
         }
 
-        public void CombineAndSaveWeaponStats(RangedWeaponStatistics stats1, RangedWeaponStatistics stats2)
+        public override void CalculateWeaponStatsWithUpgrades(WeaponDefinition weaponDefinition, IWeaponStatistics weaponStatistics)
         {
-            currentWeaponStats = stats1 + stats2;
+            if (rangedWeaponDefinition is not null)
+            {
+                if(weaponDefinition != rangedWeaponDefinition)
+                {
+                    return;
+                }
+            }
+            else if (weaponDefinition != (RangedWeaponDefinition)WeaponDefinition)
+            {
+                return;
+            }
+
+            var statistics = (RangedWeaponStatistics)weaponStatistics;
+
+            weaponUpgrades = statistics;
+
+            RestoreRangedWeaponStatistics();
         }
 
         public void RestoreRangedWeaponStatistics()
         {
-            currentWeaponStats = baseWeaponStats; 
+            currentWeaponStats = baseWeaponStats + weaponUpgrades;
+            
+            ResetSpread();
         }
 
         private void ResetSpread()

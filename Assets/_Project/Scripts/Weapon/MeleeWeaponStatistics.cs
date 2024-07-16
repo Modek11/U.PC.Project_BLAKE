@@ -5,7 +5,7 @@ using UnityEngine;
 namespace _Project.Scripts.Weapon
 {
     [Serializable]
-    public struct MeleeWeaponStatistics
+    public struct MeleeWeaponStatistics : IWeaponStatistics
     {
         public MeleeWeaponStatistics(float attackDelayTime, float sphereCastRadius, 
             int maxSpreadRange, LayerMask layerMask, int maxNumberOfEnemies)
@@ -55,5 +55,15 @@ namespace _Project.Scripts.Weapon
 
             return result;
         }
+        
+        public bool IsNullOrEmpty()
+        {
+            return AttackDelayTime != 0 ||
+                   SphereCastRadius != 0 ||
+                   MaxSpreadRange != 0 ||
+                   LayerMask != 0 ||
+                   MaxNumberOfEnemies != 0;
+        }
+
     }
 }

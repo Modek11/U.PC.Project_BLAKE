@@ -6,7 +6,7 @@ using UnityEngine;
 namespace _Project.Scripts.Weapon
 {
     [Serializable]
-    public struct RangedWeaponStatistics
+    public struct RangedWeaponStatistics : IWeaponStatistics
     {
         public RangedWeaponStatistics(float waitingTimeForNextShoot, BulletType bulletType, 
             SpreadType spreadType, float spread, float spreadStep, float spreadThreshold, float spreadResetThreshold, 
@@ -93,6 +93,20 @@ namespace _Project.Scripts.Weapon
                 result.Add(nameof(Range), Range);
 
             return result;
+        }
+        
+        public bool IsNullOrEmpty()
+        {
+            return WaitingTimeForNextShoot != 0 ||
+                   BulletType != BulletType.Undefined ||
+                   SpreadType != SpreadType.Undefined ||
+                   Spread != 0 ||
+                   SpreadStep != 0 ||
+                   SpreadThreshold != 0 ||
+                   SpreadResetThreshold != 0 ||
+                   ProjectilesPerShot != 0 ||
+                   MagazineSize != 0 ||
+                   Range != 0;
         }
     }
 }

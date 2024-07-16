@@ -54,6 +54,11 @@ namespace _Project.Scripts.Weapon
             MakeRaycast();
         }
 
+        public override void CalculateWeaponStatsWithUpgrades(WeaponDefinition weaponDefinition, IWeaponStatistics weaponStatistics)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private void MakeRaycast()
         {
             var characterForwardDir = characterTransform.forward;

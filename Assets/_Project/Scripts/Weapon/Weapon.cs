@@ -1,3 +1,4 @@
+using _Project.Scripts.Weapon.Upgrades;
 using UnityEngine;
 
 namespace _Project.Scripts.Weapon
@@ -30,6 +31,8 @@ namespace _Project.Scripts.Weapon
         }
 
         public abstract void PrimaryAttack();
+        
+        public abstract void CalculateWeaponStatsWithUpgrades(WeaponDefinition weaponDefinition, IWeaponStatistics weaponStatistics);
 
         protected virtual void OnOwnerChanged()
         {
@@ -37,6 +40,12 @@ namespace _Project.Scripts.Weapon
 
             weaponsManager = owner.GetComponent<WeaponsManager>();
             weaponOwnerIsEnemy = owner is EnemyCharacter;
+
+            if (!weaponOwnerIsEnemy)
+            {
+                owner.GetComponent<PlayerWeaponUpgradeManager>().OnWeaponUpgradeChanged +=
+                    CalculateWeaponStatsWithUpgrades;
+            }
         }
 
         public virtual bool CanPrimaryAttack() => true;
