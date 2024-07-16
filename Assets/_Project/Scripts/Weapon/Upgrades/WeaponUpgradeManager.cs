@@ -13,7 +13,8 @@ namespace _Project.Scripts.Weapon.Upgrades
         [SerializeField] private WeaponUpgradeHolder weaponUpgradeHolder;
         [SerializeField] private WeaponUpgradeCardUI upgradeCardPrefab;
         [SerializeField] private WeaponStatisticUpgradeUI statisticUpgradePrefab;
-        
+
+        private Dictionary<WeaponUpgradeCardUI, RangedWeaponStatistics> dictionaryOfUpgrades = new ();
         private WeaponUpgradeUIManager weaponUpgradeUIManager;
         private bool isUpgradeAvailable = true;
 
@@ -44,11 +45,9 @@ namespace _Project.Scripts.Weapon.Upgrades
             if (weaponUpgradeUIManager is null)
             { 
                 weaponUpgradeUIManager = GameHandler.Instance.OpenWeaponUpgradesCanvas().GetComponent<WeaponUpgradeUIManager>();
-                weaponUpgradeUIManager.RerollButton.onClick.AddListener(RerollUpgrades);
-                CreateCards();
-                CreateCards();
-                CreateCards();
-                CreateCards();
+                
+                RerollUpgrades();
+                weaponUpgradeUIManager.RerollButton.onClick.AddListener(() => RerollUpgrades(true));
             }
             else
             {
@@ -56,7 +55,7 @@ namespace _Project.Scripts.Weapon.Upgrades
             }
         }
 
-        private void CreateCards()
+        private void CreateUpgrade()
         {
             var randomWeaponNumber = Random.Range(0, weaponUpgradeHolder.ranged.Count);
             var drawnWeapon = weaponUpgradeHolder.ranged[randomWeaponNumber];
@@ -65,19 +64,23 @@ namespace _Project.Scripts.Weapon.Upgrades
             
             var weaponName = drawnWeapon.weaponDefinition.WeaponName;
             var weaponRarity = upgradeData.weaponUpgradeRarity;
-            var weaponStatistics = upgradeData.rangedWeaponStatistics.GetNonZeroFields();
+            
+            var weaponStatistics = upgradeData.rangedWeaponStatistics;
             
             
             CreateCard(weaponName, weaponRarity, weaponStatistics);
         }
 
-        private void CreateCard(string weaponName, WeaponUpgradeRarityEnum weaponRarity, Dictionary<string,float> weaponStatistics)
+        private void CreateCard(string weaponName, WeaponUpgradeRarityEnum weaponRarity, RangedWeaponStatistics weaponStatistics)
         {
             var instantiatedCard = weaponUpgradeUIManager.CreateNewUpgradeCard(upgradeCardPrefab);
             instantiatedCard.SetupCard(weaponName, weaponRarity);
             
-
-            foreach (var statistic in weaponStatistics)
+            dictionaryOfUpgrades.Add(instantiatedCard, weaponStatistics);
+            
+            instantiatedCard.BuyButton.onClick.AddListener(() => ApplyUpgrades(instantiatedCard));
+            
+            foreach (var statistic in weaponStatistics.GetNonZeroFields())
             {
                 CreateStatistic(instantiatedCard, statistic.Key, statistic.Value.ToString());
             }
@@ -90,9 +93,32 @@ namespace _Project.Scripts.Weapon.Upgrades
             instantiatedStatistic.SetupStatistic(upgradeName, upgradeValue);
         }
         
-        private void RerollUpgrades()
+        private void ApplyUpgrades(WeaponUpgradeCardUI card)
         {
-            Debug.LogError("Reroll is not implemented");
+            
+            if (dictionaryOfUpgrades.TryGetValue(card, out var statistics))
+            {
+                ReferenceManager.BlakeHeroCharacter.GetComponent<PlayerWeaponUpgradeManager>()
+                    .AddWeaponUpgrade(card.WeaponName.text, statistics);
+            }
+            else
+            {
+                Debug.LogError("No statistics found!");
+            }
+        }
+        
+        private void RerollUpgrades(bool rerolledByPlayer = false)
+        {
+            weaponUpgradeUIManager.DestroyCards();
+            dictionaryOfUpgrades.Clear();
+            CreateUpgrade();
+            CreateUpgrade();
+            CreateUpgrade();
+            CreateUpgrade();
+
+            if (rerolledByPlayer)
+            {
+            }
         }
         
         private void UpgradeAvailabilityChanged()

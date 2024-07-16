@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Project.Scripts.Weapon.Upgrades.UI
@@ -18,6 +17,7 @@ namespace _Project.Scripts.Weapon.Upgrades.UI
         [SerializeField] private Button buyButton;
 
         public Button BuyButton => buyButton;
+        public TextMeshProUGUI WeaponName => weaponName;
 
         public WeaponStatisticUpgradeUI CreateNewUpgradeStatistic(WeaponStatisticUpgradeUI weaponStatisticUpgradeUI)
         {

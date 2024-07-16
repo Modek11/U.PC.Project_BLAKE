@@ -13,9 +13,21 @@ MonoBehaviour:
   m_Name: MachineGunUpgrades
   m_EditorClassIdentifier: 
   weaponDefinition: {fileID: 11400000, guid: b28b7753b120ddc43ac3235dbc8a19c4, type: 2}
-  rangedUpgradeData: []
+  rangedUpgradeData:
+  - weaponUpgradeRarity: 1
+    rangedWeaponStatistics:
+      WaitingTimeForNextShoot: 0
+      BulletType: 0
+      SpreadType: 0
+      Spread: 0
+      SpreadStep: 0
+      SpreadThreshold: 0
+      SpreadResetThreshold: 0
+      ProjectilesPerShot: 5
+      MagazineSize: 0
+      Range: 0
   meleeUpgradeData:
-  - weaponUpgradeTier: 0
+  - weaponUpgradeRarity: 0
     meleeWeaponStatistics:
       AttackDelayTime: 0
       SphereCastRadius: 0

@@ -13,9 +13,21 @@ MonoBehaviour:
   m_Name: ShotgunUpgrades
   m_EditorClassIdentifier: 
   weaponDefinition: {fileID: 11400000, guid: ecf19a5b6ec8cdb4ea5f226c60c5385a, type: 2}
-  rangedUpgradeData: []
+  rangedUpgradeData:
+  - weaponUpgradeRarity: 1
+    rangedWeaponStatistics:
+      WaitingTimeForNextShoot: 0
+      BulletType: 0
+      SpreadType: 0
+      Spread: 0
+      SpreadStep: 0
+      SpreadThreshold: 4
+      SpreadResetThreshold: 0
+      ProjectilesPerShot: 0
+      MagazineSize: 6
+      Range: 5
   meleeUpgradeData:
-  - weaponUpgradeTier: 0
+  - weaponUpgradeRarity: 0
     meleeWeaponStatistics:
       AttackDelayTime: 0
       SphereCastRadius: 0

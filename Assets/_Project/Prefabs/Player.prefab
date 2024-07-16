@@ -3149,6 +3149,7 @@ GameObject:
   - component: {fileID: -66852236823653447}
   - component: {fileID: 7331389265025813093}
   - component: {fileID: -985876670150846625}
+  - component: {fileID: 6132240196863767253}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -3337,6 +3338,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   perkScripts: []
   perksToStartWith: []
+--- !u!114 &6132240196863767253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8608387976418621433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab7ca476a823ee74d94006f1927fd2c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponDefinitionHolder: {fileID: 11400000, guid: 1cc4e21e814b3d64abc15afeb3719c22,
+    type: 2}
+  meleeWeaponsUpgrades:
+    keys: []
+    values: []
+  rangedWeaponsUpgrades:
+    keys: []
+    values: []
 --- !u!1 &8871600578562275924
 GameObject:
   m_ObjectHideFlags: 0

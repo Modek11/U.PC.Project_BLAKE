@@ -13,9 +13,21 @@ MonoBehaviour:
   m_Name: RifleUpgrades
   m_EditorClassIdentifier: 
   weaponDefinition: {fileID: 11400000, guid: 5e20d309039b82b4298dc99a0d35a518, type: 2}
-  rangedUpgradeData: []
+  rangedUpgradeData:
+  - weaponUpgradeRarity: 4
+    rangedWeaponStatistics:
+      WaitingTimeForNextShoot: 0
+      BulletType: 0
+      SpreadType: 0
+      Spread: 0
+      SpreadStep: 0
+      SpreadThreshold: 4
+      SpreadResetThreshold: 0
+      ProjectilesPerShot: 0
+      MagazineSize: 6
+      Range: 5
   meleeUpgradeData:
-  - weaponUpgradeTier: 0
+  - weaponUpgradeRarity: 0
     meleeWeaponStatistics:
       AttackDelayTime: 0
       SphereCastRadius: 0
