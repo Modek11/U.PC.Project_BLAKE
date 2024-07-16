@@ -89,10 +89,13 @@ namespace _Project.Scripts.Weapon
                 CastEnemyWeaponVFX();
                 await UniTask.Delay(TimeSpan.FromSeconds(shootDelayTime));
             }
-            
-            audioSource.pitch = Random.Range(0.9f, 1.1f);
-            audioSource.PlayOneShot(audioSource.clip);
-            
+
+            if (audioSource != null)
+            {
+                audioSource.pitch = Random.Range(0.9f, 1.1f);
+                audioSource.PlayOneShot(audioSource.clip);
+            }
+
             Shot();
 
             lastFireTime = Time.time;
