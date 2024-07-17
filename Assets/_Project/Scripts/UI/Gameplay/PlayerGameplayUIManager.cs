@@ -194,6 +194,9 @@ namespace _Project.Scripts.UI.Gameplay
             playerMovement.OnDashPerformed -= StartDashCooldownUI;
             blakeHeroCharacter.OnDamageTaken -= HealthLeftUI;
             blakeHeroCharacter.onRespawn -= OnRespawnUIUpdate;
+
+            ReferenceManager.PlayerInputController.onMapPressEvent -= ShowMap;
+            ReferenceManager.PlayerInputController.onMapReleaseEvent -= HideMap;
         }
     }
 }
