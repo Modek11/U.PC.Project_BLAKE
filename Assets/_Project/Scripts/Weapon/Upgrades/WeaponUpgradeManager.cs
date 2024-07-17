@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using _Project.Scripts.GlobalHandlers;
 using _Project.Scripts.Patterns;
+using _Project.Scripts.Weapon.Upgrades.Data;
 using _Project.Scripts.Weapon.Upgrades.UI;
 using UnityEngine;
 
@@ -9,12 +10,14 @@ namespace _Project.Scripts.Weapon.Upgrades
     public class WeaponUpgradeManager : Singleton<WeaponUpgradeManager>
     {
         private const int NUMBER_OF_CARDS = 4;
+        private const int UPGRADES_REROLL_MAX_TRIES = 100;
         
         [SerializeField] private WeaponUpgradeHolder weaponUpgradeHolder;
         [SerializeField] private WeaponUpgradeCardUI upgradeCardPrefab;
         [SerializeField] private WeaponStatisticUpgradeUI statisticUpgradePrefab;
+        [SerializeField] private float meleeWeaponDrawChance;
 
-        private Dictionary<WeaponUpgradeCardUI, RangedWeaponStatistics> dictionaryOfUpgrades = new ();
+        private Dictionary<WeaponUpgradeData, IWeaponStatistics> dictionaryOfUpgrades = new ();
         private WeaponUpgradeUIManager weaponUpgradeUIManager;
         private bool isUpgradeAvailable = true;
 
@@ -54,31 +57,77 @@ namespace _Project.Scripts.Weapon.Upgrades
                 GameHandler.Instance.OpenWeaponUpgradesCanvas();
             }
         }
+        
+        private void RerollUpgrades(bool rerolledByPlayer = false)
+        {
+            
+            weaponUpgradeUIManager.DestroyCards();
+            dictionaryOfUpgrades.Clear();
+
+            for (var i = 0; i < NUMBER_OF_CARDS; i++)
+            {
+                CreateUpgrade();
+            }
+
+            if (rerolledByPlayer)
+            {
+            }
+        }
 
         private void CreateUpgrade()
         {
-            var randomWeaponNumber = Random.Range(0, weaponUpgradeHolder.ranged.Count);
-            var drawnWeapon = weaponUpgradeHolder.ranged[randomWeaponNumber];
-            var randomStatisticNumber = Random.Range(0, drawnWeapon.rangedUpgradeData.Count);
-            var upgradeData = drawnWeapon.rangedUpgradeData[randomStatisticNumber];
+            for (var i = 0; i < UPGRADES_REROLL_MAX_TRIES; i++)
+            {
+                var upgradeData = GetUpgradeData(true);
+                
+                if (!dictionaryOfUpgrades.TryAdd(upgradeData.Item1, upgradeData.Item2))
+                {
+                    continue;
+                }
+                
+                CreateCard(upgradeData.Item1, upgradeData.Item2);
+                Debug.Log(upgradeData.Item1.WeaponDefinition.WeaponName);
+                return;
+            }
             
-            var weaponName = drawnWeapon.weaponDefinition.WeaponName;
-            var weaponRarity = upgradeData.weaponUpgradeRarity;
-            
-            var weaponStatistics = upgradeData.rangedWeaponStatistics;
-            
-            
-            CreateCard(weaponName, weaponRarity, weaponStatistics);
+            Debug.LogError($"Cannot find available upgrade!");
         }
 
-        private void CreateCard(string weaponName, WeaponUpgradeRarityEnum weaponRarity, RangedWeaponStatistics weaponStatistics)
+        private (WeaponUpgradeData, IWeaponStatistics) GetUpgradeData(bool lookForRangedWeapon)
+        {
+            WeaponUpgradeData upgradeData;
+            IWeaponStatistics weaponStatistics;
+            
+            if(Random.value > meleeWeaponDrawChance)
+            {
+                var randomWeaponNumber = Random.Range(0, weaponUpgradeHolder.ranged.Count);
+                var drawnWeapon = weaponUpgradeHolder.ranged[randomWeaponNumber];
+                var randomStatisticNumber = Random.Range(0, drawnWeapon.rangedUpgradeData.Count);
+                upgradeData = drawnWeapon.rangedUpgradeData[randomStatisticNumber];
+
+                var rangedUpgradeData = (RangedWeaponUpgradeData)upgradeData;
+                weaponStatistics = rangedUpgradeData.rangedWeaponStatistics;
+            }
+            else
+            {
+                var randomWeaponNumber = Random.Range(0, weaponUpgradeHolder.melee.Count);
+                var drawnWeapon = weaponUpgradeHolder.melee[randomWeaponNumber];
+                var randomStatisticNumber = Random.Range(0, drawnWeapon.meleeUpgradeData.Count);
+                upgradeData = drawnWeapon.meleeUpgradeData[randomStatisticNumber];
+
+                var rangedUpgradeData = (MeleeWeaponUpgradeData)upgradeData;
+                weaponStatistics = rangedUpgradeData.meleeWeaponStatistics;
+            }
+            
+            return (upgradeData, weaponStatistics);
+        }
+
+        private void CreateCard(WeaponUpgradeData upgradeData, IWeaponStatistics weaponStatistics)
         {
             var instantiatedCard = weaponUpgradeUIManager.CreateNewUpgradeCard(upgradeCardPrefab);
-            instantiatedCard.SetupCard(weaponName, weaponRarity);
+            instantiatedCard.SetupCard(upgradeData.WeaponDefinition.WeaponName, upgradeData.WeaponUpgradeRarity);
             
-            dictionaryOfUpgrades.Add(instantiatedCard, weaponStatistics);
-            
-            instantiatedCard.BuyButton.onClick.AddListener(() => ApplyUpgrades(instantiatedCard));
+            instantiatedCard.BuyButton.onClick.AddListener(() => ApplyUpgrades(upgradeData));
             
             foreach (var statistic in weaponStatistics.GetNonZeroFields())
             {
@@ -93,31 +142,17 @@ namespace _Project.Scripts.Weapon.Upgrades
             instantiatedStatistic.SetupStatistic(upgradeName, upgradeValue);
         }
         
-        private void ApplyUpgrades(WeaponUpgradeCardUI card)
+        private void ApplyUpgrades(WeaponUpgradeData upgradeData)
         {
             
-            if (dictionaryOfUpgrades.TryGetValue(card, out var statistics))
+            if (dictionaryOfUpgrades.TryGetValue(upgradeData, out var statistics))
             {
                 ReferenceManager.BlakeHeroCharacter.GetComponent<PlayerWeaponUpgradeManager>()
-                    .AddWeaponUpgrade(card.WeaponName.text, statistics);
+                    .AddWeaponUpgrade(upgradeData.WeaponDefinition.WeaponName, statistics);
             }
             else
             {
                 Debug.LogError("No statistics found!");
-            }
-        }
-        
-        private void RerollUpgrades(bool rerolledByPlayer = false)
-        {
-            weaponUpgradeUIManager.DestroyCards();
-            dictionaryOfUpgrades.Clear();
-            CreateUpgrade();
-            CreateUpgrade();
-            CreateUpgrade();
-            CreateUpgrade();
-
-            if (rerolledByPlayer)
-            {
             }
         }
         

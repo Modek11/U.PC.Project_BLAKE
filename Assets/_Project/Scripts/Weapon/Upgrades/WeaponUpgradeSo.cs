@@ -10,5 +10,18 @@ namespace _Project.Scripts.Weapon.Upgrades
         public WeaponDefinition weaponDefinition;
         public List<RangedWeaponUpgradeData> rangedUpgradeData;
         public List<MeleeWeaponUpgradeData> meleeUpgradeData;
+        
+        private void OnValidate()
+        {
+            foreach (var upgradeData in meleeUpgradeData)
+            {
+                upgradeData.WeaponDefinition = weaponDefinition;
+            }
+            
+            foreach (var upgradeData in rangedUpgradeData)
+            {
+                upgradeData.WeaponDefinition = weaponDefinition;
+            }
+        }
     }
 }

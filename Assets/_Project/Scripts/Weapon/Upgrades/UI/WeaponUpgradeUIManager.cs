@@ -1,10 +1,9 @@
-using _Project.Scripts.Weapon.Upgrades.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace _Project.Scripts.Weapon.Upgrades.UI
 {
-    public class WeaponUpgradeUIManager : MonoBehaviour, IWeaponUpgradeData
+    public class WeaponUpgradeUIManager : MonoBehaviour
     {
         [SerializeField] private Transform upgradeCardParent;
         [SerializeField] private Button rerollButton;

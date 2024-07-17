@@ -3,9 +3,8 @@ using System;
 namespace _Project.Scripts.Weapon.Upgrades.Data
 {
     [Serializable]
-    public class RangedWeaponUpgradeData : IWeaponUpgradeData
+    public class RangedWeaponUpgradeData : WeaponUpgradeData
     {
-        public WeaponUpgradeRarityEnum weaponUpgradeRarity;
         public RangedWeaponStatistics rangedWeaponStatistics;
     }
 }
