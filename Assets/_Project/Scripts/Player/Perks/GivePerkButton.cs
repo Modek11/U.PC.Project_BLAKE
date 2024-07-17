@@ -14,7 +14,7 @@ public class GivePerkButton : MonoBehaviour
         var player = ReferenceManager.BlakeHeroCharacter?.GetComponent<PlayerPerkManager>();
         if (player == null) return;
 
-        if(activated)
+        if(!activated)
         {
             player.AddPerk(perk);
         } else

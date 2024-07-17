@@ -23,6 +23,9 @@ namespace _Project.Scripts.Weapon
         public WeaponDefinition defaultWeapon;
         private AbilityManager abilityManager;
 
+        public bool throwOnNoAmmo = true;
+        private bool haveThirdWeaponSlot = false;
+
         private void Awake()
         {
             if (defaultWeapon == null)
@@ -34,7 +37,7 @@ namespace _Project.Scripts.Weapon
             abilityManager = GetComponent<AbilityManager>();
 
             Equip(defaultWeapon, 0);
-        
+
             if (ReferenceManager.PlayerInputController != null)
             {
                 ReferenceManager.PlayerInputController.changeWeaponEvent += SetActiveIndex;
@@ -49,7 +52,7 @@ namespace _Project.Scripts.Weapon
             Unequip(index);
             SpawnWeapon(weaponDefinition, index);
 
-            if(index == activeWeaponIndex)
+            if (index == activeWeaponIndex)
             {
                 GiveWeaponAbilities();
                 OnWeaponChangedEvent?.Invoke(weapons[activeWeaponIndex]);
@@ -108,7 +111,7 @@ namespace _Project.Scripts.Weapon
         {
             int freeIndex = -1;
 
-            for(int i = 0; i < weapons.Count; i++)
+            for (int i = 0; i < weapons.Count; i++)
             {
                 if (weapons[i] == null)
                 {
@@ -122,9 +125,9 @@ namespace _Project.Scripts.Weapon
         private void SpawnWeapon(WeaponDefinition weaponDefinition, int index)
         {
             Transform socketTransform = transform;
-            foreach(var socket in attachSockets)
+            foreach (var socket in attachSockets)
             {
-                if(socket.name == weaponDefinition.AttachSocketName)
+                if (socket.name == weaponDefinition.AttachSocketName)
                 {
                     socketTransform = socket.transform;
                     break;
@@ -161,5 +164,26 @@ namespace _Project.Scripts.Weapon
                 abilityManager.RemoveAbility(ability);
             }
         }
+
+        public void AddThirdWeaponSlot()
+        {
+            if (!haveThirdWeaponSlot)
+            {
+                weapons.Add(null);
+                haveThirdWeaponSlot = true;
+            }
+        }
+
+        public void RemoveThirdWeaponSlot()
+        {
+            if (haveThirdWeaponSlot)
+            {
+                if (activeWeaponIndex == 2) SetActiveIndex(1);
+                Equip(null, 2);
+                weapons.RemoveAt(2);
+                haveThirdWeaponSlot = false;
+            }
+        }
+
     }
 }

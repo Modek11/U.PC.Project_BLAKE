@@ -181,6 +181,8 @@ MonoBehaviour:
   bulletsSpawnPoint: {fileID: 2211575096222883456}
   muzzleFlashEffect: {fileID: 3460599249909903366}
   infinityAmmo: 0
+  throwableWeapon: {fileID: 2687323088996113468, guid: 87d2308fcbd07604ea09fa0ca282b68e,
+    type: 3}
 --- !u!1001 &2488213421074405073
 PrefabInstance:
   m_ObjectHideFlags: 0
