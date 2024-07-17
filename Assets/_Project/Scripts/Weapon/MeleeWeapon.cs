@@ -56,7 +56,20 @@ namespace _Project.Scripts.Weapon
 
         public override void CalculateWeaponStatsWithUpgrades(WeaponDefinition weaponDefinition, IWeaponStatistics weaponStatistics)
         {
-            throw new System.NotImplementedException();
+            if (meleeWeaponDefinition is not null)
+            {
+                if(weaponDefinition != meleeWeaponDefinition)
+                {
+                    return;
+                }
+            }
+            else if (weaponDefinition != (RangedWeaponDefinition)WeaponDefinition)
+            {
+                return;
+            }
+
+            var statistics = (MeleeWeaponStatistics)weaponStatistics;
+
         }
 
         private void MakeRaycast()

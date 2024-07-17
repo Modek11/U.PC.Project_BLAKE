@@ -86,7 +86,6 @@ namespace _Project.Scripts.Weapon.Upgrades
                 }
                 
                 CreateCard(upgradeData.Item1, upgradeData.Item2);
-                Debug.Log(upgradeData.Item1.WeaponDefinition.WeaponName);
                 return;
             }
             
