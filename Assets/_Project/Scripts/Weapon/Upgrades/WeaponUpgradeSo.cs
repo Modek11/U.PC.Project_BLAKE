@@ -22,6 +22,16 @@ namespace _Project.Scripts.Weapon.Upgrades
             {
                 upgradeData.WeaponDefinition = weaponDefinition;
             }
+
+            switch (weaponDefinition)
+            {
+                case RangedWeaponDefinition:
+                    meleeUpgradeData.Clear();
+                    break;
+                case MeleeWeaponDefinition:
+                    rangedUpgradeData.Clear();
+                    break;
+            }
         }
     }
 }
