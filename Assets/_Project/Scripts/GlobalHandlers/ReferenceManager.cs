@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using _Project.Scripts.Patterns;
 using _Project.Scripts.Player;
+using _Project.Scripts.PointsSystem;
 using _Project.Scripts.SceneHandler;
 using _Project.Scripts.VirtualCamera;
 using _Project.Scripts.Weapon.Upgrades;
@@ -18,6 +19,7 @@ namespace _Project.Scripts.GlobalHandlers
         private RoomManager roomManager;
         private MainVirtualCameraController mainVirtualCameraController;
         private WeaponUpgradeManager weaponUpgradeManager;
+        private PlayerCurrencyController playerCurrencyController;
 
         public static BlakeHeroCharacter BlakeHeroCharacter
         {
@@ -91,6 +93,16 @@ namespace _Project.Scripts.GlobalHandlers
             {
                 if (Instance == null) return;
                 Instance.weaponUpgradeManager = value;
+            }
+        }
+        
+        public static PlayerCurrencyController PlayerCurrencyController
+        {
+            get => Instance != null ? Instance.playerCurrencyController : null;
+            set
+            {
+                if (Instance == null) return;
+                Instance.playerCurrencyController = value;
             }
         }
 

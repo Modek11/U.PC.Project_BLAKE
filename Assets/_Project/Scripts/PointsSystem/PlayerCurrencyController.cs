@@ -1,3 +1,5 @@
+using System;
+using _Project.Scripts.GlobalHandlers;
 using _Project.Scripts.PointsSystem.ComboSystem;
 using UnityEngine;
 
@@ -8,6 +10,7 @@ namespace _Project.Scripts.PointsSystem
         [SerializeField] private ComboController comboController;
         public delegate void AddedPointsDeleagte(float addedPoints);
         public event AddedPointsDeleagte onAddPoints;
+        public event Action<float> OnPointsChanged;
         
         private float points = 0;
 
@@ -16,22 +19,34 @@ namespace _Project.Scripts.PointsSystem
         [SerializeField]
         private float deathPointsModifier = 0;
         public float Points => points;
+        
+        private void Awake()
+        {
+            ReferenceManager.PlayerCurrencyController = this;
+        }
 
         public void RegisterEnemyDeath(int pointsForKill)
         {
             float pointsToAdd = pointsForKill * comboController.ComboCounter;
-            points += pointsToAdd;
+            AddPoints(pointsToAdd);
             onAddPoints?.Invoke(pointsToAdd);
         }
 
         public void AddPoints(float points)
         {
             this.points += points;
+            OnPointsChanged?.Invoke(this.points);
         }
 
         public void RemovePoints(float points)
         {
             this.points -= points;
+            OnPointsChanged?.Invoke(this.points);
+        }
+
+        public bool HasPlayerEnoughPoints(float pointsToSpend)
+        {
+            return points >= pointsToSpend;
         }
 
         public void LosePointsOnDeath(BlakeCharacter blakeCharacter)

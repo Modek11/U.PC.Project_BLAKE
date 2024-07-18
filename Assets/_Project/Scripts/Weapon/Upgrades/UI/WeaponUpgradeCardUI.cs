@@ -1,3 +1,5 @@
+using _Project.Scripts.GlobalHandlers;
+using _Project.Scripts.Weapon.Upgrades.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +8,8 @@ namespace _Project.Scripts.Weapon.Upgrades.UI
 {
     public class WeaponUpgradeCardUI : MonoBehaviour
     {
+        private const string BUY_BUTTON_PREFIX = "Buy:";
+        
         private readonly Color COLOR_GRAY = Color.gray;
         private readonly Color COLOR_BLUE = Color.blue;
         private readonly Color COLOR_PURPLE = new Color(0.5f, 0f, 0.5f, 1f);
@@ -15,19 +19,42 @@ namespace _Project.Scripts.Weapon.Upgrades.UI
         [SerializeField] private Transform statisticParent;
         [SerializeField] private Image borderImage;
         [SerializeField] private Button buyButton;
+        [SerializeField] private TextMeshProUGUI buyButtonText;
+
+        private float upgradeCost = float.MaxValue;
 
         public Button BuyButton => buyButton;
         public TextMeshProUGUI WeaponName => weaponName;
+
+        private void OnEnable()
+        {
+            SwitchBuyButtonInteractable();
+        }
 
         public WeaponStatisticUpgradeUI CreateNewUpgradeStatistic(WeaponStatisticUpgradeUI weaponStatisticUpgradeUI)
         {
             return Instantiate(weaponStatisticUpgradeUI, statisticParent, false);
         }
 
-        public void SetupCard(string weaponName, WeaponUpgradeRarityEnum weaponRarity)
+        public void SetupCard(WeaponUpgradeData upgradeData, WeaponUpgradeRarityEnum weaponRarity)
         {
             borderImage.color = GetColorByRarity(weaponRarity);
-            this.weaponName.text = weaponName;
+            weaponName.text = upgradeData.WeaponDefinition.WeaponName;
+            buyButtonText.text = $"{BUY_BUTTON_PREFIX} {upgradeData.UpgradeCost}";
+            
+            if(upgradeData.UpgradeCost >= 0)
+            {
+                upgradeCost = upgradeData.UpgradeCost;
+            }
+            
+            SwitchBuyButtonInteractable();
+        }
+
+        private void SwitchBuyButtonInteractable()
+        {
+            var isEnoughPoints =
+                ReferenceManager.PlayerCurrencyController.HasPlayerEnoughPoints(upgradeCost);
+            buyButton.interactable = isEnoughPoints;
         }
         
         private Color GetColorByRarity(WeaponUpgradeRarityEnum weaponRarity)

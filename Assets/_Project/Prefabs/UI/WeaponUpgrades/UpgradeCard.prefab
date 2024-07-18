@@ -307,9 +307,9 @@ MonoBehaviour:
   m_fontSize: 50
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 50
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -443,6 +443,7 @@ MonoBehaviour:
   statisticParent: {fileID: 426624667934016427}
   borderImage: {fileID: 307201432050920754}
   buyButton: {fileID: 7120331551211902177}
+  buyButtonText: {fileID: 5411046629566645383}
 --- !u!1 &6030091678719184043
 GameObject:
   m_ObjectHideFlags: 0

@@ -52,3 +52,5 @@ MonoBehaviour:
   statisticUpgradePrefab: {fileID: 7841235560872325844, guid: ed1afbd75036f2249bbd6fbd8508f4c1,
     type: 3}
   meleeWeaponDrawChance: 0.1
+  rerollCost: 40
+  rerollMultiplier: 2

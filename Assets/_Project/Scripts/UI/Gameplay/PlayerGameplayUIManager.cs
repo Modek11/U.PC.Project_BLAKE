@@ -87,6 +87,7 @@ namespace _Project.Scripts.UI.Gameplay
             dashCooldownImage = dashCooldownUI.transform.GetChild(1).GetComponent<Image>();
 
             EnemyDeathMediator.Instance.OnRegisteredEnemyDeath += UpdatePointsAndCombo;
+            ReferenceManager.PlayerCurrencyController.OnPointsChanged += RefreshPoints;
             EnemyDeathMediator.Instance.ComboController.OnComboTimerEnd += HideComboTexts;
             HideComboTexts();
         
@@ -137,7 +138,7 @@ namespace _Project.Scripts.UI.Gameplay
 
         private void UpdatePointsAndCombo(ComboAndPointsValues comboAndPointsValues)
         {
-            pointsCounter.text = $"Points: {comboAndPointsValues.Points}";
+            RefreshPoints(comboAndPointsValues.Points);
             
             if (!comboAndPointsValues.ShouldComboStart)
             {
@@ -155,6 +156,11 @@ namespace _Project.Scripts.UI.Gameplay
         
             killsCounter.text = $"x{comboAndPointsValues.KillsCounter} KILLS";
             comboCounter.text = $"x{comboAndPointsValues.ComboCounter} Points";
+        }
+
+        private void RefreshPoints(float points)
+        {
+            pointsCounter.text = $"Points: {points}";
         }
 
         private void HideComboTexts()
