@@ -6,8 +6,8 @@ namespace _Project.Scripts.Weapon.Upgrades.UI
 {
     public class WeaponUpgradeCardUI : MonoBehaviour
     {
-        private readonly Color COLOR_GRAY = Color.blue;
-        private readonly Color COLOR_BLUE = Color.gray;
+        private readonly Color COLOR_GRAY = Color.gray;
+        private readonly Color COLOR_BLUE = Color.blue;
         private readonly Color COLOR_PURPLE = new Color(0.5f, 0f, 0.5f, 1f);
         private readonly Color COLOR_GOLD = new Color(0.831f, 0.686f, 0.216f, 1f);
         
