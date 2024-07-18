@@ -156,6 +156,8 @@ namespace _Project.Scripts.Weapon.Upgrades
                     .AddWeaponUpgrade(upgradeData.WeaponDefinition.WeaponName, statistics);
 
                 ReferenceManager.PlayerCurrencyController.RemovePoints(upgradeData.UpgradeCost);
+                
+                IsUpgradeAvailable = false;
             }
             else
             {
