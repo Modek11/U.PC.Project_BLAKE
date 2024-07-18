@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using _Project.Scripts.Weapon.Upgrades;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -20,7 +19,6 @@ namespace _Project.Scripts.Weapon
         private bool infinityAmmo = false;
 
         private RangedWeaponDefinition rangedWeaponDefinition;
-        private PlayerWeaponUpgradeManager playerWeaponUpgradeManager;
         private RangedWeaponStatistics baseWeaponStats;
         private RangedWeaponStatistics weaponUpgrades;
         private RangedWeaponStatistics currentWeaponStats;
@@ -271,13 +269,6 @@ namespace _Project.Scripts.Weapon
             RestoreRangedWeaponStatistics();
         }
 
-        public void ApplyRangedWeaponStatistics(RangedWeaponStatistics rangedWeaponStatistics)
-        {
-            currentWeaponStats = rangedWeaponStatistics;
-
-            ResetSpread();
-        }
-
         public override void CalculateWeaponStatsWithUpgrades(WeaponDefinition weaponDefinition, IWeaponStatistics weaponStatistics)
         {
             if (rangedWeaponDefinition is not null)
@@ -293,10 +284,16 @@ namespace _Project.Scripts.Weapon
             }
 
             var statistics = (RangedWeaponStatistics)weaponStatistics;
-
             weaponUpgrades = statistics;
 
             RestoreRangedWeaponStatistics();
+        }
+
+        public void ApplyRangedWeaponStatistics(RangedWeaponStatistics rangedWeaponStatistics)
+        {
+            currentWeaponStats = rangedWeaponStatistics;
+
+            ResetSpread();
         }
 
         public void RestoreRangedWeaponStatistics()
