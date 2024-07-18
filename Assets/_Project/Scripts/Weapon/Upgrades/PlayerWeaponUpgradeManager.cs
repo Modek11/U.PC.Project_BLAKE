@@ -1,4 +1,6 @@
 using System;
+using _Project.Scripts.Weapon.Definition;
+using _Project.Scripts.Weapon.Statistics;
 using UnityEngine;
 
 namespace _Project.Scripts.Weapon.Upgrades

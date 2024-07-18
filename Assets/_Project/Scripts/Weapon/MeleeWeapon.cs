@@ -1,4 +1,6 @@
 using _Project.Scripts.Interfaces;
+using _Project.Scripts.Weapon.Definition;
+using _Project.Scripts.Weapon.Statistics;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Playables;

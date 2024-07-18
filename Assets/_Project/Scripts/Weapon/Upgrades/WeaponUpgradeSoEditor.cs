@@ -1,3 +1,4 @@
+using _Project.Scripts.Weapon.Definition;
 using UnityEditor;
 
 namespace _Project.Scripts.Weapon.Upgrades

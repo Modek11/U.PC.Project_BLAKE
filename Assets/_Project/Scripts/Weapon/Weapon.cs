@@ -1,3 +1,5 @@
+using _Project.Scripts.Weapon.Definition;
+using _Project.Scripts.Weapon.Statistics;
 using _Project.Scripts.Weapon.Upgrades;
 using UnityEngine;
 

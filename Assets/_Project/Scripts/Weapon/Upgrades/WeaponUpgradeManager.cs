@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using _Project.Scripts.GlobalHandlers;
 using _Project.Scripts.Patterns;
+using _Project.Scripts.Weapon.Statistics;
 using _Project.Scripts.Weapon.Upgrades.Data;
 using _Project.Scripts.Weapon.Upgrades.UI;
 using UnityEngine;

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace _Project.Scripts.Weapon
+namespace _Project.Scripts.Weapon.Statistics
 {
     public interface IWeaponStatistics
     {

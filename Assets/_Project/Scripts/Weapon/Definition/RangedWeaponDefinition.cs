@@ -1,7 +1,7 @@
 using _Project.Scripts.Weapon.Upgrades.Bullet;
 using UnityEngine;
 
-namespace _Project.Scripts.Weapon
+namespace _Project.Scripts.Weapon.Definition
 {
     [CreateAssetMenu(fileName = "Ranged Weapon definition", menuName = "Project BLAKE/Ranged Weapon")]
     public class RangedWeaponDefinition : WeaponDefinition

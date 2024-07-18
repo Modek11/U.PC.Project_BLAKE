@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Project.Scripts.Weapon
+namespace _Project.Scripts.Weapon.Definition
 {
     [CreateAssetMenu(fileName = "Melee Weapon definition", menuName = "Project BLAKE/Melee Weapon")]
     public class MeleeWeaponDefinition : WeaponDefinition

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using _Project.Scripts.Weapon.Upgrades.Bullet;
 using UnityEngine;
 
-namespace _Project.Scripts.Weapon
+namespace _Project.Scripts.Weapon.Statistics
 {
     [Serializable]
     public struct RangedWeaponStatistics : IWeaponStatistics

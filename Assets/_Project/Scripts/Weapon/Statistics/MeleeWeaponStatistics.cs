@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Project.Scripts.Weapon
+namespace _Project.Scripts.Weapon.Statistics
 {
     [Serializable]
     public struct MeleeWeaponStatistics : IWeaponStatistics

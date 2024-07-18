@@ -1,7 +1,7 @@
 using GameFramework.Abilities;
 using UnityEngine;
 
-namespace _Project.Scripts.Weapon
+namespace _Project.Scripts.Weapon.Definition
 {
     [CreateAssetMenu(fileName = "Weapon definition", menuName = "Project BLAKE/Weapon")]
     public class WeaponDefinition : ScriptableObject

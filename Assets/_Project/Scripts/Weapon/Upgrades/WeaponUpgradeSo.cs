@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _Project.Scripts.Weapon.Definition;
 using _Project.Scripts.Weapon.Upgrades.Data;
 using UnityEngine;
 

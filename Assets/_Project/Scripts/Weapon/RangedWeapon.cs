@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _Project.Scripts.Weapon.Definition;
+using _Project.Scripts.Weapon.Statistics;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;

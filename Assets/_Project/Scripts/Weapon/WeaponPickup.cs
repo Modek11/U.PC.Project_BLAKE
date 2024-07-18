@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _Project.Scripts.Weapon;
+using _Project.Scripts.Weapon.Definition;
 using UnityEngine;
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS

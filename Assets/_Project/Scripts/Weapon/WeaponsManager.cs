@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using _Project.Scripts.GlobalHandlers;
+using _Project.Scripts.Weapon.Definition;
 using GameFramework.Abilities;
 using UnityEngine;
 
