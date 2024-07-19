@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using _Project.Scripts.Patterns;
 using _Project.Scripts.Player;
@@ -20,6 +21,8 @@ namespace _Project.Scripts.GlobalHandlers
         private MainVirtualCameraController mainVirtualCameraController;
         private WeaponUpgradeManager weaponUpgradeManager;
         private PlayerCurrencyController playerCurrencyController;
+
+        public event Action OnFloorLoad;
 
         public static BlakeHeroCharacter BlakeHeroCharacter
         {
@@ -112,6 +115,11 @@ namespace _Project.Scripts.GlobalHandlers
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
             Task initializationTask = UnityServices.InitializeAsync();
 #endif
+        }
+
+        public void OnFloorGenEnd()
+        {
+            OnFloorLoad?.Invoke();
         }
     }
 }

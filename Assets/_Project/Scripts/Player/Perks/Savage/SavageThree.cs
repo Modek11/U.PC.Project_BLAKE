@@ -15,6 +15,14 @@ public class SavageThree : PerkScriptableObject
         weaponsManager.AddThirdWeaponSlot();
         ReferenceManager.RoomManager.onRoomEnter += SubscribeToRoom;
         ReferenceManager.RoomManager.onRoomLeave += UnsubscribeToRoom;
+        ReferenceManager.Instance.OnFloorLoad += Refresh;
+
+    }
+
+    private void Refresh()
+    {
+        ReferenceManager.RoomManager.onRoomEnter += SubscribeToRoom;
+        ReferenceManager.RoomManager.onRoomLeave += UnsubscribeToRoom;
     }
 
     private void SubscribeToRoom(Room room)
@@ -35,6 +43,7 @@ public class SavageThree : PerkScriptableObject
     public override void OnRemove()
     {
         weaponsManager.RemoveThirdWeaponSlot();
+        ReferenceManager.Instance.OnFloorLoad -= Refresh;
 
     }
 }

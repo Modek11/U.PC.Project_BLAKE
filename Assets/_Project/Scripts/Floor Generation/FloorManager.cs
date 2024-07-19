@@ -63,6 +63,7 @@ namespace _Project.Scripts.Floor_Generation
             cameraFollow.GetComponent<CameraFollowScript>().SetPlayerReference(player.transform);
         
             FloorGeneratorEnd?.Invoke(player.transform, cameraFollow.transform);
+            ReferenceManager.Instance.OnFloorGenEnd();
         }
     }
 }
