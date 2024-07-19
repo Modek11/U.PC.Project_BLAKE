@@ -54,3 +54,8 @@ MonoBehaviour:
   baseMeleeWeaponDrawChance: 0.1
   baseRerollCost: 40
   baseRerollMultiplier: 2
+  commonRarityDropChance: 0.4
+  rareRarityDropChance: 0.3
+  epicRarityDropChance: 0.2
+  legendaryRarityDropChance: 0.1
+  rarityDropChance: 1

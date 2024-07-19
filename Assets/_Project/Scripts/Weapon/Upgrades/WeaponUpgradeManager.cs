@@ -5,6 +5,7 @@ using _Project.Scripts.Weapon.Statistics;
 using _Project.Scripts.Weapon.Upgrades.Data;
 using _Project.Scripts.Weapon.Upgrades.UI;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.Weapon.Upgrades
 {
@@ -12,6 +13,8 @@ namespace _Project.Scripts.Weapon.Upgrades
     {
         private const int NUMBER_OF_CARDS = 4;
         private const int UPGRADES_REROLL_MAX_TRIES = 100;
+        private const int MAX_TIMES_FOR_ROLL_UPGRADE_BY_RARITY = 100;
+        
         
         [SerializeField] private WeaponUpgradeHolder weaponUpgradeHolder;
         [SerializeField] private WeaponUpgradeCardUI upgradeCardPrefab;
@@ -19,6 +22,11 @@ namespace _Project.Scripts.Weapon.Upgrades
         [SerializeField] private float baseMeleeWeaponDrawChance;
         [SerializeField] private int baseRerollCost;
         [SerializeField] private float baseRerollMultiplier;
+        [SerializeField] private float commonRarityDropChance = 0.4f;
+        [SerializeField] private float rareRarityDropChance = 0.3f;
+        [SerializeField] private float epicRarityDropChance = 0.2f;
+        [SerializeField] private float legendaryRarityDropChance = 0.1f;
+        [SerializeField] private float rarityDropChance;
 
         private PlayerWeaponUpgradeManager playerWeaponUpgradeManager;
         private WeaponUpgradeUIManager weaponUpgradeUIManager;
@@ -28,6 +36,7 @@ namespace _Project.Scripts.Weapon.Upgrades
         private float currentMeleeWeaponDrawChance;
         private int currentRerollCost;
         private float currentRerollMultiplier;
+        private float rarityDropChanceSum;
 
         public bool IsUpgradeAvailable => isUpgradeAvailable;
 
@@ -107,31 +116,74 @@ namespace _Project.Scripts.Weapon.Upgrades
 
         private (WeaponUpgradeData, IWeaponStatistics) GetUpgradeData()
         {
-            WeaponUpgradeData upgradeData;
-            IWeaponStatistics weaponStatistics;
+            var upgradeRarityToSearchFor = GetRandomizedRarityForUpgrade();
+            WeaponUpgradeSo drawnWeapon;
             
             if(Random.value > currentMeleeWeaponDrawChance)
             {
                 var randomWeaponNumber = Random.Range(0, weaponUpgradeHolder.ranged.Count);
-                var drawnWeapon = weaponUpgradeHolder.ranged[randomWeaponNumber];
-                var randomStatisticNumber = Random.Range(0, drawnWeapon.rangedUpgradeData.Count);
-                upgradeData = drawnWeapon.rangedUpgradeData[randomStatisticNumber];
+                drawnWeapon = weaponUpgradeHolder.ranged[randomWeaponNumber];
+                var upgradeData = new RangedWeaponUpgradeData();
 
-                var rangedUpgradeData = (RangedWeaponUpgradeData)upgradeData;
-                weaponStatistics = rangedUpgradeData.rangedWeaponStatistics;
+                for (var i = 0; i < MAX_TIMES_FOR_ROLL_UPGRADE_BY_RARITY; i++)
+                {
+                    var randomStatisticNumber = Random.Range(0, drawnWeapon.rangedUpgradeData.Count);
+                    upgradeData = drawnWeapon.rangedUpgradeData[randomStatisticNumber];
+
+                    if (upgradeData.WeaponUpgradeRarity != upgradeRarityToSearchFor) continue;
+                    
+                    var weaponStatistics = upgradeData.rangedWeaponStatistics;
+                    return (upgradeData, weaponStatistics);
+                }
             }
             else
             {
                 var randomWeaponNumber = Random.Range(0, weaponUpgradeHolder.melee.Count);
-                var drawnWeapon = weaponUpgradeHolder.melee[randomWeaponNumber];
-                var randomStatisticNumber = Random.Range(0, drawnWeapon.meleeUpgradeData.Count);
-                upgradeData = drawnWeapon.meleeUpgradeData[randomStatisticNumber];
+                drawnWeapon = weaponUpgradeHolder.melee[randomWeaponNumber];
+                var upgradeData = new MeleeWeaponUpgradeData();
 
-                var rangedUpgradeData = (MeleeWeaponUpgradeData)upgradeData;
-                weaponStatistics = rangedUpgradeData.meleeWeaponStatistics;
+                for (var i = 0; i < MAX_TIMES_FOR_ROLL_UPGRADE_BY_RARITY; i++)
+                {
+                    var randomStatisticNumber = Random.Range(0, drawnWeapon.meleeUpgradeData.Count);
+                    upgradeData = drawnWeapon.meleeUpgradeData[randomStatisticNumber];
+                    
+                    if (upgradeData.WeaponUpgradeRarity != upgradeRarityToSearchFor) continue;
+
+                    var weaponStatistics = upgradeData.meleeWeaponStatistics;
+                    return (upgradeData, weaponStatistics);
+                }
             }
             
-            return (upgradeData, weaponStatistics);
+            Debug.LogError($"Probably {drawnWeapon.weaponDefinition.WeaponName} don't have specified upgrade rarity: {upgradeRarityToSearchFor}");
+            return (null, null);
+        }
+
+        private WeaponUpgradeRarityEnum GetRandomizedRarityForUpgrade()
+        {
+            var randomValue = Random.value;
+            var baseValue = 0f;
+            
+            if ((baseValue += commonRarityDropChance) > randomValue)
+            {
+                return WeaponUpgradeRarityEnum.Common;
+            }
+            
+            if ((baseValue += rareRarityDropChance) > randomValue)
+            {
+                return WeaponUpgradeRarityEnum.Rare;
+            }
+            
+            if ((baseValue += epicRarityDropChance) > randomValue)
+            {
+                return WeaponUpgradeRarityEnum.Epic;
+            }
+            
+            if ((baseValue += legendaryRarityDropChance) > randomValue)
+            {
+                return WeaponUpgradeRarityEnum.Legendary;
+            }
+
+            return WeaponUpgradeRarityEnum.Undefined;
         }
 
         private void CreateCard(WeaponUpgradeData upgradeData, IWeaponStatistics weaponStatistics)
@@ -201,6 +253,16 @@ namespace _Project.Scripts.Weapon.Upgrades
             weaponUpgradeUIManager?.RerollButton?.onClick?.RemoveAllListeners();
             weaponUpgradeUIManager = null;
         }
-        
+
+        private void OnValidate()
+        {
+            rarityDropChance = commonRarityDropChance + rareRarityDropChance + epicRarityDropChance +
+                               legendaryRarityDropChance;
+
+            if (!Mathf.Approximately(rarityDropChance, 1))
+            {
+                Debug.Log($"Sum of rarity drop chances are different than 1 in {name}");
+            }
+        }
     }
 }
