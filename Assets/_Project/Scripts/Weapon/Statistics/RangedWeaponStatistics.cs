@@ -95,6 +95,40 @@ namespace _Project.Scripts.Weapon.Statistics
             return result;
         }
         
+        public float GetValueByName(string fieldName)
+        {
+            var value = GetValueByNameNullable(fieldName);
+
+            if (value is not null)
+            {
+                return value.Value;
+            }
+            else
+            {
+                Debug.LogError($"Value in {nameof(RangedWeaponStatistics)} called {fieldName} doesn't exist!");
+                return float.MinValue;
+            }
+        }
+        
+        public float? GetValueByNameNullable(string fieldName)
+        {
+            return fieldName switch
+            {
+                nameof(WaitingTimeForNextShoot) => WaitingTimeForNextShoot,
+                nameof(BulletType) => (float)BulletType,
+                nameof(SpreadType) => (float)SpreadType,
+                nameof(Spread) => Spread,
+                nameof(SpreadStep) => SpreadStep,
+                nameof(SpreadThreshold) => SpreadThreshold,
+                nameof(SpreadResetThreshold) => SpreadResetThreshold,
+                nameof(ProjectilesPerShot) => ProjectilesPerShot,
+                nameof(MagazineSize) => MagazineSize,
+                nameof(Range) => Range,
+                _ => null
+            };
+        }
+
+        
         public bool IsNullOrEmpty()
         {
             return WaitingTimeForNextShoot != 0 ||

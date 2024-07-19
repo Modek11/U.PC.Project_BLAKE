@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using _Project.Scripts.Weapon.Definition;
 using _Project.Scripts.Weapon.Statistics;
 using UnityEngine;
@@ -9,20 +10,10 @@ namespace _Project.Scripts.Weapon.Upgrades
     {
         [SerializeField] private WeaponDefinitionHolder weaponDefinitionHolder;
 
-        //[SerializeField] public Dictionary<WeaponDefinition, RangedWeaponStatistics> rangedWeaponsUpgrades = new Dictionary<WeaponDefinition, RangedWeaponStatistics>();
-        //[SerializeField] private Dictionary<WeaponDefinition, MeleeWeaponStatistics> meleeWeaponsUpgrades = new Dictionary<WeaponDefinition, MeleeWeaponStatistics>();
-
+        private Dictionary<WeaponDefinition, RangedWeaponStatistics> rangedWeaponsUpgrades = new ();
+        private Dictionary<WeaponDefinition, MeleeWeaponStatistics> meleeWeaponsUpgrades = new ();
+        
         public event Action<WeaponDefinition, IWeaponStatistics> OnWeaponUpgradeChanged;
-        
-        [UDictionary.Split(30, 70)]
-        public MeleeWeaponsUDictionary meleeWeaponsUpgrades;
-        [Serializable]
-        public class MeleeWeaponsUDictionary : UDictionary<WeaponDefinition, MeleeWeaponStatistics> { }
-        
-        [UDictionary.Split(30, 70)]
-        public RangedWeaponsUDictionary rangedWeaponsUpgrades;
-        [Serializable]
-        public class RangedWeaponsUDictionary : UDictionary<WeaponDefinition, RangedWeaponStatistics> { }
         
         private void Start()
         {
@@ -118,18 +109,40 @@ namespace _Project.Scripts.Weapon.Upgrades
             Debug.LogError($"Missing weapon called {weaponName}");
         }
 
-
-        public RangedWeaponStatistics GetRangedWeaponStatistics(WeaponDefinition weaponDefinition)
+        public IWeaponStatistics GetCurrentWeaponStatistics(WeaponDefinition weaponDefinition)
         {
-            if(rangedWeaponsUpgrades.TryGetValue(weaponDefinition, out var statistics))
+            switch (weaponDefinition)
             {
-                return statistics;
+                case RangedWeaponDefinition rangedWeaponDefinition:
+                    return GetCurrentWeaponStatistics(rangedWeaponDefinition);
+                case MeleeWeaponDefinition meleeWeaponDefinition:
+                    return GetCurrentWeaponStatistics(meleeWeaponDefinition);
+                default:
+                    Debug.LogError("STATISTICS ARE EMPTY");
+                    return null;
             }
-            //TODO: check if its working correctly and combine with RangedWeapon.cs
+        }
+        
+        private RangedWeaponStatistics? GetCurrentWeaponStatistics(RangedWeaponDefinition weaponDefinition)
+        {
+            var rangedIndex = weaponDefinitionHolder.ranged.IndexOf(weaponDefinition);
+            var definition = weaponDefinitionHolder.ranged[rangedIndex] as RangedWeaponDefinition;
+            var baseStatistics = definition.GetWeaponStatistics();
 
-            Debug.LogError("STATISTICS ARE EMPTY");
-
-            return statistics;
+            rangedWeaponsUpgrades.TryGetValue(weaponDefinition, out var upgradedStatistics);
+            
+            return baseStatistics + upgradedStatistics;
+        }
+        
+        private MeleeWeaponStatistics? GetCurrentWeaponStatistics(MeleeWeaponDefinition weaponDefinition)
+        {
+            var meleeIndex = weaponDefinitionHolder.melee.IndexOf(weaponDefinition);
+            var definition = weaponDefinitionHolder.melee[meleeIndex] as MeleeWeaponDefinition;
+            var baseStatistics = definition.GetWeaponStatistics();
+            
+            meleeWeaponsUpgrades.TryGetValue(weaponDefinition, out var upgradedStatistics);
+            
+            return baseStatistics + upgradedStatistics;
         }
     }
 }

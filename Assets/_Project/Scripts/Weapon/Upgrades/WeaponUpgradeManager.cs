@@ -20,8 +20,9 @@ namespace _Project.Scripts.Weapon.Upgrades
         [SerializeField] private int baseRerollCost;
         [SerializeField] private float baseRerollMultiplier;
 
-        private Dictionary<WeaponUpgradeData, IWeaponStatistics> dictionaryOfUpgrades = new ();
+        private PlayerWeaponUpgradeManager playerWeaponUpgradeManager;
         private WeaponUpgradeUIManager weaponUpgradeUIManager;
+        private Dictionary<WeaponUpgradeData, IWeaponStatistics> dictionaryOfUpgrades = new ();
         private bool isUpgradeAvailable = true;
 
         private float currentMeleeWeaponDrawChance;
@@ -47,6 +48,12 @@ namespace _Project.Scripts.Weapon.Upgrades
             if (!IsUpgradeAvailable)
             {
                 return;
+            }
+
+            if (playerWeaponUpgradeManager is null)
+            {
+                playerWeaponUpgradeManager =
+                    ReferenceManager.BlakeHeroCharacter.GetComponent<PlayerWeaponUpgradeManager>();
             }
 
             if (weaponUpgradeUIManager is null)
@@ -133,29 +140,36 @@ namespace _Project.Scripts.Weapon.Upgrades
             instantiatedCard.SetupCard(upgradeData, upgradeData.WeaponUpgradeRarity);
             
             instantiatedCard.BuyButton.onClick.AddListener(() => OnUpgradeBought(upgradeData));
-            instantiatedCard.BuyButton.onClick.AddListener(() => weaponUpgradeUIManager.CloseUI());
             
-            foreach (var statistic in weaponStatistics.GetNonZeroFields())
+            foreach (var (statName, upgradeValue) in weaponStatistics.GetNonZeroFields())
             {
-                CreateStatistic(instantiatedCard, statistic.Key, statistic.Value.ToString());
+                var currentValue = playerWeaponUpgradeManager.GetCurrentWeaponStatistics(upgradeData.WeaponDefinition)
+                    .GetValueByName(statName);
+                
+                CreateStatistic(upgradeData, instantiatedCard, statName, currentValue, upgradeValue);
             }
         }
 
-        private void CreateStatistic(WeaponUpgradeCardUI instantiatedCard, string upgradeName, string upgradeValue)
+        private void CreateStatistic(WeaponUpgradeData upgradeData, WeaponUpgradeCardUI instantiatedCard,
+            string upgradeName, float currentValue, float upgradeValue)
         {
             var instantiatedStatistic = instantiatedCard.CreateNewUpgradeStatistic(statisticUpgradePrefab);
             
-            instantiatedStatistic.SetupStatistic(upgradeName, upgradeValue);
+            instantiatedStatistic.SetupStatistic(upgradeName, currentValue, upgradeValue);
         }
         
         private void OnUpgradeBought(WeaponUpgradeData upgradeData)
         {
+            weaponUpgradeUIManager.CloseUI();
+            
             if (dictionaryOfUpgrades.TryGetValue(upgradeData, out var statistics))
             {
                 ReferenceManager.BlakeHeroCharacter.GetComponent<PlayerWeaponUpgradeManager>()
                     .AddWeaponUpgrade(upgradeData.WeaponDefinition.WeaponName, statistics);
 
                 ReferenceManager.PlayerCurrencyController.RemovePoints(upgradeData.UpgradeCost);
+                
+                ResetAllValues();
                 
                 isUpgradeAvailable = false;
             }
@@ -184,7 +198,7 @@ namespace _Project.Scripts.Weapon.Upgrades
             currentRerollMultiplier = baseRerollMultiplier;
             
             DestroyCards();
-            weaponUpgradeUIManager.RerollButton.onClick.RemoveAllListeners();
+            weaponUpgradeUIManager?.RerollButton?.onClick?.RemoveAllListeners();
             weaponUpgradeUIManager = null;
         }
         

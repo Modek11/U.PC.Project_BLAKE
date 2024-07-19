@@ -56,6 +56,35 @@ namespace _Project.Scripts.Weapon.Statistics
             return result;
         }
         
+        public float GetValueByName(string fieldName)
+        {
+            var value = GetValueByNameNullable(fieldName);
+
+            if (value is not null)
+            {
+                return value.Value;
+            }
+            else
+            {
+                Debug.LogError($"Value in {nameof(MeleeWeaponStatistics)} called {fieldName} doesn't exist!");
+                return float.MinValue;
+            }
+        }
+        
+        public float? GetValueByNameNullable(string fieldName)
+        {
+            return fieldName switch
+            {
+                nameof(AttackDelayTime) => AttackDelayTime,
+                nameof(SphereCastRadius) => SphereCastRadius,
+                nameof(MaxSpreadRange) => MaxSpreadRange,
+                nameof(LayerMask) => LayerMask.value,
+                nameof(MaxNumberOfEnemies) => MaxNumberOfEnemies,
+                _ => null
+            };
+        }
+
+        
         public bool IsNullOrEmpty()
         {
             return AttackDelayTime != 0 ||

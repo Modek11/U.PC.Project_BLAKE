@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _Project.Scripts.Weapon.Definition;
+using _Project.Scripts.Weapon.Upgrades.Bullet;
 using _Project.Scripts.Weapon.Upgrades.Data;
 using UnityEngine;
 
@@ -17,11 +18,14 @@ namespace _Project.Scripts.Weapon.Upgrades
             foreach (var upgradeData in meleeUpgradeData)
             {
                 upgradeData.WeaponDefinition = weaponDefinition;
+                upgradeData.meleeWeaponStatistics.LayerMask = 0;
             }
             
             foreach (var upgradeData in rangedUpgradeData)
             {
                 upgradeData.WeaponDefinition = weaponDefinition;
+                upgradeData.rangedWeaponStatistics.BulletType = BulletType.Undefined;
+                upgradeData.rangedWeaponStatistics.SpreadType = SpreadType.Undefined;
             }
 
             switch (weaponDefinition)
