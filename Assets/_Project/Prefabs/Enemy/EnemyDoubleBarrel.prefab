@@ -50,7 +50,7 @@ PrefabInstance:
     - target: {fileID: -470558907172326393, guid: 20caf66ddd7209d4291d40715d756be9,
         type: 3}
       propertyPath: pointsForKill
-      value: 200
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 893637976758665190, guid: 20caf66ddd7209d4291d40715d756be9,
         type: 3}
@@ -212,6 +212,12 @@ PrefabInstance:
       propertyPath: infinityAmmo
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3541487880703571250, guid: d59ad31d5e825164385713c41e42f342,
+        type: 3}
+      propertyPath: WeaponDefinition
+      value: 
+      objectReference: {fileID: 11400000, guid: e690c2b63cb4dea408415e1af4c9668c,
+        type: 2}
     - target: {fileID: 4911671507717690896, guid: d59ad31d5e825164385713c41e42f342,
         type: 3}
       propertyPath: m_Name

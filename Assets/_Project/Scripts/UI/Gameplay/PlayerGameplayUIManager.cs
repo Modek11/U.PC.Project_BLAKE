@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using _Project.Scripts.Floor_Generation;
 using _Project.Scripts.PointsSystem;
 using _Project.Scripts.Weapon;
@@ -47,6 +48,9 @@ namespace _Project.Scripts.UI.Gameplay
 
         [SerializeField] 
         private GameObject dashCooldownUI;
+        [SerializeField]
+        private GameObject dashCooldownSprite;
+        private Dictionary<GameObject, Dash> dashSprites = new Dictionary<GameObject, Dash>();
     
         private GameObject player;
         private WeaponsManager weaponsManager;
@@ -83,16 +87,33 @@ namespace _Project.Scripts.UI.Gameplay
             playerMovement = player.GetComponent<PlayerMovement>();
 
             playerInteractables.SetInteractUIReference(interactUI);
-            dashCooldownImage = dashCooldownUI.transform.GetChild(1).GetComponent<Image>();
+            //dashCooldownImage = dashCooldownUI.transform.GetChild(1).GetComponent<Image>();
 
             EnemyDeathMediator.Instance.OnRegisteredEnemyDeath += UpdatePointsAndCombo;
             EnemyDeathMediator.Instance.ComboController.OnComboTimerEnd += HideComboTexts;
             HideComboTexts();
         
             playerMovement.OnDashPerformed += StartDashCooldownUI;
+            playerMovement.OnDashAdded += OnAddDash;
+            playerMovement.OnDashRemoved += OnRemoveDash;
             blakeHeroCharacter.OnDamageTaken += HealthLeftUI;
             blakeHeroCharacter.onRespawn += OnRespawnUIUpdate;
             OnRespawnUIUpdate();
+            RefreshDashUI();
+        }
+
+        private void RefreshDashUI()
+        {
+            foreach(var dash in dashSprites)
+            {
+                Destroy(dash.Key);
+            }
+            dashSprites.Clear();
+            foreach(var dash in playerMovement.Dashes)
+            {
+                GameObject sprite = Instantiate(dashCooldownSprite, dashCooldownUI.transform);
+                dashSprites.Add(sprite, dash);
+            }
         }
 
         private void ShowMap()
@@ -167,16 +188,58 @@ namespace _Project.Scripts.UI.Gameplay
             }
         }
 
+        private void OnAddDash(Dash dash)
+        {
+            GameObject sprite = Instantiate(dashCooldownSprite, dashCooldownUI.transform);
+            dashSprites.Add(sprite, dash);
+        }
+
+        private void OnRemoveDash(Dash dash)
+        {
+            List<GameObject> toRemove = new List<GameObject>();
+            foreach(var keyValue in dashSprites)
+            {
+                if(keyValue.Value == dash)
+                {
+                    toRemove.Add(keyValue.Key);
+                }
+            }
+            foreach(var keyValue in toRemove)
+            {
+                dashSprites.Remove(keyValue);
+                Destroy(keyValue);
+            }
+        }
+
         private void StartDashCooldownUI()
         {
+            StopCoroutine(DashCooldownUI());
             StartCoroutine(DashCooldownUI());
         }
 
         private IEnumerator DashCooldownUI()
         {
             dashCooldownUI.SetActive(true);
-        
-            while(playerMovement.DashCooldownCountdown > 0)
+            bool showUI = true;
+            while(showUI)
+            {
+                bool allOffCooldown = false;
+                foreach(var dash in dashSprites)
+                {
+                    dash.Key.GetComponent<Image>().fillAmount = (playerMovement.DashCooldown - dash.Value.dashTimer) / playerMovement.DashCooldown;
+                    if(dash.Value.dashTimer > 0)
+                    {
+                        allOffCooldown = true;
+                    }
+                }
+                dashCooldownUI.transform.position = player.transform.position - Camera.main.transform.forward * 2f;
+                dashCooldownUI.transform.LookAt(Camera.main.transform);
+                if (!allOffCooldown) showUI = false;
+                yield return new WaitForEndOfFrame();
+
+            }
+
+            /*while(playerMovement.DashCooldownCountdown > 0)
             {
                 dashCooldownImage.fillAmount = playerMovement.DashCooldownCountdown/playerMovement.DashCooldown;
                 dashCooldownUI.transform.position = player.transform.position + Vector3.up * 0.2f;
@@ -185,15 +248,21 @@ namespace _Project.Scripts.UI.Gameplay
                 yield return new WaitForEndOfFrame();
             }
         
+            dashCooldownImage.fillAmount = 0;*/
             dashCooldownUI.SetActive(false);
-            dashCooldownImage.fillAmount = 0;
         }
 
         private void OnDestroy()
         {
             playerMovement.OnDashPerformed -= StartDashCooldownUI;
+
+            playerMovement.OnDashAdded -= OnAddDash;
+            playerMovement.OnDashRemoved -= OnRemoveDash;
             blakeHeroCharacter.OnDamageTaken -= HealthLeftUI;
             blakeHeroCharacter.onRespawn -= OnRespawnUIUpdate;
+
+            ReferenceManager.PlayerInputController.onMapPressEvent -= ShowMap;
+            ReferenceManager.PlayerInputController.onMapReleaseEvent -= HideMap;
         }
     }
 }

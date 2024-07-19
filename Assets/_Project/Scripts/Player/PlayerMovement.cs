@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using _Project.Scripts;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -38,13 +40,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Camera mainCamera;
     public event Action OnDashPerformed;
+    public event Action<Dash> OnDashAdded;
+    public event Action<Dash> OnDashRemoved;
 
-    private int dashCount = 0;
-    [SerializeField]
-    private int maxDashes = 1;
-    [SerializeField]
-    private float nextDashWindow = 0.5f;
-    private float nextDashTimer = 0.5f;
+    private List<Dash> dashes = new List<Dash>() { new Dash() };
     
     public float DashCooldown
     {
@@ -55,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public float DashCooldownCountdown => dashCooldownCountdown;
+
+    public List<Dash> Dashes => dashes;
 
     private void Awake()
     {
@@ -165,75 +166,76 @@ public class PlayerMovement : MonoBehaviour
        return true;
 
    }
-   private void Dash()
-   {
+    private void Dash()
+    {
         var rbVelocity = rigidbodyCache.velocity;
         if (rbVelocity.magnitude < minVelocityMagnitude)
         {
             return;
         }
-        if (dashCount >= maxDashes)
+
+        bool canDash = false;
+        foreach (Dash dash in dashes)
         {
-            return;
+            if (dash.CanUse())
+            {
+                dash.dashTimer = DashCooldown;
+                canDash = true;
+                break;
+            }
         }
+        if (!canDash) return;
 
-        if (nextDashTimer >= nextDashWindow && dashCount != 0)
-        {
-            dashCount = 0;
-            return;
-        }
+        var force = rigidbodyCache.velocity.normalized * CalculateSpeed() * dashForce;
+        rigidbodyCache.AddForce(force, ForceMode.Impulse);
 
-        if (dashCooldownCountdown > 0 && dashCount == 0)
-        {
-            return;
-        }
-        
-
-       var force = rigidbodyCache.velocity.normalized * CalculateSpeed() * dashForce;
-       rigidbodyCache.AddForce(force, ForceMode.Impulse);
-       dashCount++;
-
-       SetDashCountdowns();
-   }
+        OnDashPerformed?.Invoke();
+        SetDashCountdowns();
+    }
    
    private void SetDashCountdowns()
    {
        dashCooldownCountdown = DashCooldown;
        dashDurationCountdown = dashDuration;
-       nextDashTimer = 0;
-       OnDashPerformed?.Invoke();
    }
 
-   private void DashCountdown()
-   {
-       if (dashDurationCountdown > 0)
-       {
-           dashDurationCountdown -= Time.deltaTime;
-       }
-
-       if (dashCooldownCountdown > 0)
-       {
-           dashCooldownCountdown -= Time.deltaTime;
-       } else if (dashCount != 0)
-        {
-            dashCount = 0;
-        }
-       
-
-        if (nextDashTimer <= nextDashWindow)
-        {
-            nextDashTimer += Time.deltaTime;
-        }
-   }
-
-    public void AddDashes( int dashes)
+    private void DashCountdown()
     {
-        maxDashes += dashes;
+        foreach (Dash dash in dashes)
+        {
+            if (dash.dashTimer > 0)
+            {
+                dash.dashTimer -= Time.deltaTime;
+            }
+        }
+
+        if (dashDurationCountdown > 0)
+        {
+            dashDurationCountdown -= Time.deltaTime;
+        }
     }
 
-    public void RemoveDashes(int dashes)
+    public void AddDashes( int dashesToAdd)
     {
-        maxDashes = Math.Max(1, maxDashes - dashes);
+        for(int i = 0; i < dashesToAdd; i++)
+        {
+            Dash newDash = new Dash();
+            dashes.Add(newDash);
+            OnDashAdded?.Invoke(newDash);
+        }
+    }
+
+    public void RemoveDashes(int dashesToRemove)
+    {
+        for(int i = 0; i < dashesToRemove; i++)
+        {
+            if(dashes.Count > 0)
+            {
+                var dashToRemove = dashes[dashes.Count - 1];
+                OnDashRemoved?.Invoke(dashToRemove);
+                dashes.Remove(dashToRemove);
+            }
+        }
     }
 
    private void SpeedControl()
@@ -285,4 +287,14 @@ public class PlayerMovement : MonoBehaviour
         dashCooldown = dashValue;
     }
 #endif
+}
+
+public class Dash
+{
+    public float dashTimer = 0;
+
+    public bool CanUse()
+    {
+        return dashTimer <= 0;
+    }
 }

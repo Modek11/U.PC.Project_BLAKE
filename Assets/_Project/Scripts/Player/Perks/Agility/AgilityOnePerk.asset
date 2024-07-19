@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   perkName: AgilityOne
   playerMovement: {fileID: 0}
-  speedBoost: 5
+  speedBoost: 0.95

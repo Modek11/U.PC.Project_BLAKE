@@ -16,14 +16,14 @@ MonoBehaviour:
   - enemyTypeEnum: 0
     pointsForKill: -1
   - enemyTypeEnum: 1
-    pointsForKill: 100
-  - enemyTypeEnum: 2
-    pointsForKill: 200
+    pointsForKill: 30
   - enemyTypeEnum: 3
-    pointsForKill: 300
+    pointsForKill: 50
   - enemyTypeEnum: 4
-    pointsForKill: 400
-  - enemyTypeEnum: 5
-    pointsForKill: 500
+    pointsForKill: 80
+  - enemyTypeEnum: 2
+    pointsForKill: 150
   - enemyTypeEnum: 6
-    pointsForKill: 600
+    pointsForKill: 150
+  - enemyTypeEnum: 5
+    pointsForKill: 200

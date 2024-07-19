@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b52c6e7e16fc848a76e7336673e5f2, type: 3}
+  m_Name: EnemyGlock
+  m_EditorClassIdentifier: 
+  WeaponPrefab: {fileID: 5319882019298209556, guid: b439379a8d4ee1f47a52087f53bbe13b,
+    type: 3}
+  WeaponGFX: {fileID: 899293860116181753, guid: ef357f2648604d04f8dcd9d3b7af440f,
+    type: 3}
+  WeaponName: Glock
+  DropRate: 0.6
+  AbilitiesToGrant:
+  - {fileID: 11400000, guid: 7c4cd691da4d0084780e7a2b16579662, type: 2}
+  AttachSocketName: GunHandler
+  LocationOffset: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 0, z: 0, w: 0}
+  Scale: {x: 1, y: 1, z: 1}
+  PickupLocationOffset: {x: 0, y: 0, z: 0}
+  PickupRotation: {x: 0, y: 0, z: 0, w: 0}
+  BasicBullet: {fileID: 8745238448183679225, guid: a068551a7488b474fa34d68d5f97afbe,
+    type: 3}
+  WaitingTimeForNextShoot: 0.4
+  BulletType: 1
+  SpreadType: 5
+  Spread: 10
+  SpreadStep: -1
+  SpreadThreshold: -1
+  SpreadResetThreshold: 3
+  ProjectilesPerShot: 1
+  MagazineSize: 6
+  Range: 12
+  EffectDuration: 0.5
+  ShootDelayTime: 0.5

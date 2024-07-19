@@ -257,9 +257,9 @@ public class FloorGenerator : MonoBehaviour
         if(debugRoomFinding) Debug.Log("Furthest room is: " + list[0].gameObject.name);
         while (tempCounter < amountOfRooms)
         {
-            if (tries >= 50)
+            if (tries >= 1000)
             {
-                Debug.LogWarning("Broken generation due to too many tries");
+                Debug.LogWarning("Broken generation on special rooms due to too many tries");
                 break;
             }
 
@@ -293,11 +293,13 @@ public class FloorGenerator : MonoBehaviour
                 RoomConnector newDoor = newRoom.GetComponent<Room>().GetDoors()[randomDoor];
 
                 bool success = TryPositionRoom(room, newRoom, door, newDoor);
+
                 if (success)
                 {
                     FinalizeRoomPlacement(newRoom, door, newDoor, map);
                     toAdd.Add(newRoom);
                     tempCounter++;
+                    tries = 0;
                 }
                 else
                 {
@@ -539,7 +541,8 @@ public class FloorGenerator : MonoBehaviour
     private bool CheckForOverlap(GameObject room, GameObject newRoom)
     {
 
-        BoxCollider[] roomColliders = newRoom.GetComponentsInChildren<BoxCollider>();
+        BoxCollider[] roomColliders = newRoom.GetComponent<Room>()?.GetOverlapColliders();
+        if (roomColliders == null || roomColliders.Length == 0) return true;
         foreach (BoxCollider collider in roomColliders)
         {
             Collider[] overlaps = Physics.OverlapBox(
