@@ -7,6 +7,7 @@ namespace _Project.Scripts.ConsoleCommands
 {
     public class PlayerCommands : BaseCommand
     {
+#if UNITY_EDITOR
         private readonly string NAME = "Player";
 
         private float shortDashValue = 0.3f;
@@ -49,5 +50,6 @@ namespace _Project.Scripts.ConsoleCommands
             EnemyDeathMediator.Instance.RegisterEnemyDeath(1, EnemyTypeEnum.EnemyBatonMelee);
             EnemyDeathMediator.Instance.RegisterEnemyDeath(1, EnemyTypeEnum.EnemyBatonMelee);
         }
+#endif
     }
 }

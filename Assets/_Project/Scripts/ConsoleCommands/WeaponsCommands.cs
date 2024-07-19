@@ -8,6 +8,7 @@ namespace _Project.Scripts.ConsoleCommands
 {
     public class WeaponsCommands : BaseCommand
     {
+#if UNITY_EDITOR
         private readonly string NAME = "Weapons";
         
         [SerializeField]
@@ -94,5 +95,6 @@ namespace _Project.Scripts.ConsoleCommands
                 rangedWeapon.SetInfiniteAmmo(infiniteAmmo);
             }
         }
+#endif
     }
 }
