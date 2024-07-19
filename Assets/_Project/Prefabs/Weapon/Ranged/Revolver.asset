@@ -37,7 +37,7 @@ MonoBehaviour:
   SpreadThreshold: -1
   SpreadResetThreshold: -1
   ProjectilesPerShot: 1
-  MagazineSize: 6
-  Range: 20
+  MagazineSize: 5
+  Range: 8
   EffectDuration: 0.5
   ShootDelayTime: 0.5

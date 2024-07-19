@@ -44,8 +44,16 @@ public class WeaponPickup : Interactable
             Debug.LogWarning("WeaponsManager is not valid");
             return;
         }
-
-        int index = weaponsManager.ActiveWeaponIndex == 0 ? 1 : weaponsManager.ActiveWeaponIndex;
+        int index = 0;
+        index = weaponsManager.ActiveWeaponIndex == 0 ? 1 : weaponsManager.ActiveWeaponIndex;
+        for (int i = 0; i < weaponsManager.Weapons.Count; i++)
+        {
+            if (weaponsManager.Weapons[i] == null)
+            {
+                index = i;
+                break;
+            }
+        }
 
         WeaponDefinition weaponDefinition = null;
         if(weaponsManager.Weapons[index] != null)

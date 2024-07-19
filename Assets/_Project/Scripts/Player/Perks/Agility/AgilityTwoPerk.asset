@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   perkName: Agility Two
   playerMovement: {fileID: 0}
-  dashReduction: 0.3
+  dashReduction: 0.9

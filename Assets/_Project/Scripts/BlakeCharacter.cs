@@ -32,6 +32,12 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
     [SerializeField] 
     protected GameObject explosionParticle;
 
+    [SerializeField]
+    private GameObject shieldParticle;
+
+    [SerializeField]
+    private GameObject shieldExplosionParticle;
+
     [SerializeField] 
     protected Animator animator;
 
@@ -40,6 +46,7 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
     private bool godMode;
 #endif
 
+    private GameObject shieldExplosionParticleInstantiated;
     protected GameObject explosionParticleInstantiated;
     protected int defaultHealth;
     protected bool recentlyDamaged = false;
@@ -116,11 +123,19 @@ public abstract class BlakeCharacter : MonoBehaviour, IDamageable
     public void ActivateShield()
     {
         hasShield = true;
+        shieldParticle.gameObject.SetActive(true);
+
+        if (shieldExplosionParticleInstantiated != null)
+        {
+            Destroy(shieldExplosionParticleInstantiated);
+        }
     }
 
     public void DeactivateShield()
     {
         hasShield = false;
+        shieldParticle.gameObject.SetActive(false);
+        shieldExplosionParticleInstantiated = Instantiate(shieldExplosionParticle, transform.position, Quaternion.identity);
     }
 
     public void SetRespawnPosition(Vector3 position)

@@ -150,6 +150,8 @@ MonoBehaviour:
   bulletsSpawnPoint: {fileID: 4911671507802568297}
   muzzleFlashEffect: {fileID: 2991482714960598805}
   infinityAmmo: 0
+  throwableWeapon: {fileID: 2687323088996113468, guid: 87d2308fcbd07604ea09fa0ca282b68e,
+    type: 3}
 --- !u!1 &4911671507802568296
 GameObject:
   m_ObjectHideFlags: 0

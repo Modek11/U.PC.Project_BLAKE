@@ -35,6 +35,8 @@ namespace _Project.Scripts.Weapon
         private float effectDuration = 0f;
         private float shootDelayTime = 0f;
         private bool isTryingToShoot = false;
+
+        public ThrowableWeapon throwableWeapon;
         
         public float Range => currentWeaponStats.Range;
         public int BulletsLeft { get; set; }
@@ -67,10 +69,13 @@ namespace _Project.Scripts.Weapon
                 CastEnemyWeaponVFX();
                 await UniTask.Delay(TimeSpan.FromSeconds(shootDelayTime));
             }
-            
-            audioSource.pitch = Random.Range(0.9f, 1.1f);
-            audioSource.PlayOneShot(audioSource.clip);
-            
+
+            if (audioSource != null)
+            {
+                audioSource.pitch = Random.Range(0.9f, 1.1f);
+                audioSource.PlayOneShot(audioSource.clip);
+            }
+
             Shot();
 
             lastFireTime = Time.time;
@@ -93,10 +98,10 @@ namespace _Project.Scripts.Weapon
 
         public override bool CanPrimaryAttack()
         {
-            if(BulletsLeft <= 0)
+            if(BulletsLeft <= 1 && !weaponsManager.throwOnNoAmmo)
             {
                 StartCoroutine("UnequipSelf");
-                return false;
+                return BulletsLeft == 1;
             }
             
             if (Time.time - lastFireTime < masterShootDelayTime) return false;
@@ -113,12 +118,23 @@ namespace _Project.Scripts.Weapon
             {
                 weaponsManager.Unequip(weaponsManager.ActiveWeaponIndex);
                 weaponsManager.SetActiveIndex(weaponsManager.ActiveWeaponIndex - 1);
+                Destroy(gameObject);
             }
         }
 
         private bool Shot()
         {
-            if (BulletsLeft == 0) return false;
+            if (BulletsLeft == 0)
+            {
+                if(!weaponsManager.throwOnNoAmmo) return false;
+                //Spawn and throw weapon
+                var spawnedThrowable = Instantiate(throwableWeapon, bulletsSpawnPoint.position, transform.rotation);
+                spawnedThrowable.transform.parent = null;
+                spawnedThrowable.SetupVFX(rangedWeaponDefinition.WeaponGFX);
+                spawnedThrowable.SetupBullet(0, transform.parent.gameObject);
+                StartCoroutine("UnequipSelf");
+                return true;
+            }
 
             var list = GetCalculatedProjectilesAngles();
             for (var index = 0; index < list.Count; index++)

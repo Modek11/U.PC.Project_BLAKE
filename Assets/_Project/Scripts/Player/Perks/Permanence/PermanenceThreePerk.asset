@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PermanenceThreePerk
   m_EditorClassIdentifier: 
   perkName: PermanenceThree
-  comboCounterForShield: 1.8
+  comboCounterForShield: 1.3
