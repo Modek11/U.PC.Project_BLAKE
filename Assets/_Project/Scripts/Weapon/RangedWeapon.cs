@@ -50,7 +50,7 @@ namespace _Project.Scripts.Weapon
             SetupWeaponDefinition();
         }
 
-        private void Start()
+        private void OnEnable()
         {
             TryStopEnemyMuzzleFlashVFX();
         }
