@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDefinition: {fileID: 11400000, guid: 38f322b9e88f2a149a1f3d198afce634, type: 2}
   rangedUpgradeData:
-  - UpgradeCost: 0
+  - UpgradeCost: 400
     WeaponDefinition: {fileID: 11400000, guid: 38f322b9e88f2a149a1f3d198afce634, type: 2}
     WeaponUpgradeRarity: 1
     rangedWeaponStatistics:
-      WaitingTimeForNextShoot: 1
+      WaitingTimeForNextShoot: -0.15
       BulletType: 0
       SpreadType: 0
       Spread: 0
@@ -28,46 +28,74 @@ MonoBehaviour:
       ProjectilesPerShot: 0
       MagazineSize: 0
       Range: 0
-  - UpgradeCost: 0
+  - UpgradeCost: 400
+    WeaponDefinition: {fileID: 11400000, guid: 38f322b9e88f2a149a1f3d198afce634, type: 2}
+    WeaponUpgradeRarity: 1
+    rangedWeaponStatistics:
+      WaitingTimeForNextShoot: 0
+      BulletType: 0
+      SpreadType: 0
+      Spread: 0
+      SpreadStep: 0
+      SpreadThreshold: 0
+      SpreadResetThreshold: 0
+      ProjectilesPerShot: 0
+      MagazineSize: 2
+      Range: 0
+  - UpgradeCost: 400
+    WeaponDefinition: {fileID: 11400000, guid: 38f322b9e88f2a149a1f3d198afce634, type: 2}
+    WeaponUpgradeRarity: 1
+    rangedWeaponStatistics:
+      WaitingTimeForNextShoot: 0
+      BulletType: 0
+      SpreadType: 0
+      Spread: 0
+      SpreadStep: 0
+      SpreadThreshold: 0
+      SpreadResetThreshold: 0
+      ProjectilesPerShot: 0
+      MagazineSize: 0
+      Range: 2
+  - UpgradeCost: 600
     WeaponDefinition: {fileID: 11400000, guid: 38f322b9e88f2a149a1f3d198afce634, type: 2}
     WeaponUpgradeRarity: 2
     rangedWeaponStatistics:
       WaitingTimeForNextShoot: 0
       BulletType: 0
       SpreadType: 0
-      Spread: 2
-      SpreadStep: 3
+      Spread: 0
+      SpreadStep: 0
       SpreadThreshold: 0
       SpreadResetThreshold: 0
       ProjectilesPerShot: 0
-      MagazineSize: 0
-      Range: 0
-  - UpgradeCost: 0
+      MagazineSize: 3
+      Range: 2
+  - UpgradeCost: 800
     WeaponDefinition: {fileID: 11400000, guid: 38f322b9e88f2a149a1f3d198afce634, type: 2}
     WeaponUpgradeRarity: 3
     rangedWeaponStatistics:
       WaitingTimeForNextShoot: 0
       BulletType: 0
       SpreadType: 0
-      Spread: 0
-      SpreadStep: 0
-      SpreadThreshold: 4
-      SpreadResetThreshold: 5
-      ProjectilesPerShot: 6
-      MagazineSize: 0
-      Range: 0
-  - UpgradeCost: 0
-    WeaponDefinition: {fileID: 11400000, guid: 38f322b9e88f2a149a1f3d198afce634, type: 2}
-    WeaponUpgradeRarity: 4
-    rangedWeaponStatistics:
-      WaitingTimeForNextShoot: 2
-      BulletType: 0
-      SpreadType: 0
-      Spread: 0
+      Spread: 2.5
       SpreadStep: 0
       SpreadThreshold: 0
       SpreadResetThreshold: 0
-      ProjectilesPerShot: 7
-      MagazineSize: 8
-      Range: 9
+      ProjectilesPerShot: 1
+      MagazineSize: 0
+      Range: 0
+  - UpgradeCost: 1500
+    WeaponDefinition: {fileID: 11400000, guid: 38f322b9e88f2a149a1f3d198afce634, type: 2}
+    WeaponUpgradeRarity: 4
+    rangedWeaponStatistics:
+      WaitingTimeForNextShoot: -0.3
+      BulletType: 0
+      SpreadType: 0
+      Spread: 2.5
+      SpreadStep: 0
+      SpreadThreshold: 0
+      SpreadResetThreshold: 0
+      ProjectilesPerShot: 1
+      MagazineSize: 4
+      Range: 3
   meleeUpgradeData: []
