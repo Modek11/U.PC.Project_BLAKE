@@ -14,4 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDefinition: {fileID: 11400000, guid: 6c7fe8b8bb61ce5418824310a7c889fe, type: 2}
   rangedUpgradeData: []
-  meleeUpgradeData: []
+  meleeUpgradeData:
+  - UpgradeCost: 0
+    WeaponDefinition: {fileID: 11400000, guid: 6c7fe8b8bb61ce5418824310a7c889fe, type: 2}
+    WeaponUpgradeRarity: 1
+    meleeWeaponStatistics:
+      AttackDelayTime: 1
+      SphereCastRadius: 0
+      MaxSpreadRange: 0
+      LayerMask:
+        serializedVersion: 2
+        m_Bits: 0
+      MaxNumberOfEnemies: 0

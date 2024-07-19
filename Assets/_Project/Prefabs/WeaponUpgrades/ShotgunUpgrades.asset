@@ -14,7 +14,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDefinition: {fileID: 11400000, guid: ecf19a5b6ec8cdb4ea5f226c60c5385a, type: 2}
   rangedUpgradeData:
-  - weaponUpgradeRarity: 1
+  - UpgradeCost: 0
+    WeaponDefinition: {fileID: 11400000, guid: ecf19a5b6ec8cdb4ea5f226c60c5385a, type: 2}
+    WeaponUpgradeRarity: 1
+    rangedWeaponStatistics:
+      WaitingTimeForNextShoot: 1
+      BulletType: 0
+      SpreadType: 0
+      Spread: 0
+      SpreadStep: 0
+      SpreadThreshold: 0
+      SpreadResetThreshold: 0
+      ProjectilesPerShot: 0
+      MagazineSize: 0
+      Range: 0
+  - UpgradeCost: 0
+    WeaponDefinition: {fileID: 11400000, guid: ecf19a5b6ec8cdb4ea5f226c60c5385a, type: 2}
+    WeaponUpgradeRarity: 2
+    rangedWeaponStatistics:
+      WaitingTimeForNextShoot: 0
+      BulletType: 0
+      SpreadType: 0
+      Spread: 2
+      SpreadStep: 3
+      SpreadThreshold: 0
+      SpreadResetThreshold: 0
+      ProjectilesPerShot: 0
+      MagazineSize: 0
+      Range: 0
+  - UpgradeCost: 0
+    WeaponDefinition: {fileID: 11400000, guid: ecf19a5b6ec8cdb4ea5f226c60c5385a, type: 2}
+    WeaponUpgradeRarity: 3
     rangedWeaponStatistics:
       WaitingTimeForNextShoot: 0
       BulletType: 0
@@ -22,17 +52,22 @@ MonoBehaviour:
       Spread: 0
       SpreadStep: 0
       SpreadThreshold: 4
+      SpreadResetThreshold: 5
+      ProjectilesPerShot: 6
+      MagazineSize: 0
+      Range: 0
+  - UpgradeCost: 0
+    WeaponDefinition: {fileID: 11400000, guid: ecf19a5b6ec8cdb4ea5f226c60c5385a, type: 2}
+    WeaponUpgradeRarity: 4
+    rangedWeaponStatistics:
+      WaitingTimeForNextShoot: 2
+      BulletType: 0
+      SpreadType: 0
+      Spread: 0
+      SpreadStep: 0
+      SpreadThreshold: 0
       SpreadResetThreshold: 0
-      ProjectilesPerShot: 0
-      MagazineSize: 6
-      Range: 5
-  meleeUpgradeData:
-  - weaponUpgradeRarity: 0
-    meleeWeaponStatistics:
-      AttackDelayTime: 0
-      SphereCastRadius: 0
-      MaxSpreadRange: 0
-      LayerMask:
-        serializedVersion: 2
-        m_Bits: 0
-      MaxNumberOfEnemies: 0
+      ProjectilesPerShot: 7
+      MagazineSize: 8
+      Range: 9
+  meleeUpgradeData: []
