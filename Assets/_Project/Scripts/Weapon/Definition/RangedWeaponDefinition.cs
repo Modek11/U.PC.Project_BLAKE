@@ -1,3 +1,4 @@
+using _Project.Scripts.Weapon.Statistics;
 using _Project.Scripts.Weapon.Upgrades.Bullet;
 using UnityEngine;
 
@@ -47,5 +48,20 @@ namespace _Project.Scripts.Weapon.Definition
         public float EffectDuration;
         
         public float ShootDelayTime;
+
+        public RangedWeaponStatistics GetWeaponStatistics()
+        {
+            return new RangedWeaponStatistics(
+                WaitingTimeForNextShoot,
+                BulletType,
+                SpreadType,
+                Spread,
+                SpreadStep,
+                SpreadThreshold,
+                SpreadResetThreshold,
+                ProjectilesPerShot,
+                MagazineSize,
+                Range);
+        }
     }
 }

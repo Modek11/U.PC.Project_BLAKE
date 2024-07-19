@@ -105,13 +105,8 @@ namespace _Project.Scripts.Weapon
             }
             
             meleeWeaponDefinition = definition;
-            
-            baseWeaponStats = new MeleeWeaponStatistics(
-                meleeWeaponDefinition.AttackDelayTime,
-                meleeWeaponDefinition.SpereCastRadius,
-                meleeWeaponDefinition.MaxSpreadRange,
-                meleeWeaponDefinition.LayerMask,
-                meleeWeaponDefinition.MaxNumberOfEnemies);
+
+            baseWeaponStats = meleeWeaponDefinition.GetWeaponStatistics();
             
             raycastCollidersFound = new Collider[meleeWeaponDefinition.MaxNumberOfEnemies];
             RestoreMeleeWeaponStatistics();

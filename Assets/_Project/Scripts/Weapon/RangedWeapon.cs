@@ -249,17 +249,7 @@ namespace _Project.Scripts.Weapon
             
             rangedWeaponDefinition = definition;
 
-            baseWeaponStats = new RangedWeaponStatistics(
-                rangedWeaponDefinition.WaitingTimeForNextShoot,
-                rangedWeaponDefinition.BulletType,
-                rangedWeaponDefinition.SpreadType,
-                rangedWeaponDefinition.Spread,
-                rangedWeaponDefinition.SpreadStep,
-                rangedWeaponDefinition.SpreadThreshold,
-                rangedWeaponDefinition.SpreadResetThreshold,
-                rangedWeaponDefinition.ProjectilesPerShot,
-                rangedWeaponDefinition.MagazineSize,
-                rangedWeaponDefinition.Range);
+            baseWeaponStats = rangedWeaponDefinition.GetWeaponStatistics();
 
             if (weaponOwnerIsEnemy)
             { 
