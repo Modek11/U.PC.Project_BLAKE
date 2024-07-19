@@ -17,6 +17,19 @@ public class BuyPerkButton : MonoBehaviour
         {
             buttonText.text = string.Format("BUY: {0}", perkCost);
         }
+
+        if(ReferenceManager.PlayerInputController != null)
+        {
+            var perks = ReferenceManager.PlayerInputController.GetComponent<PlayerPerkManager>();
+            if(perks.GetPerkList().Contains(perk))
+            {
+                if (buttonText != null)
+                {
+                    buttonText.text = "BOUGHT";
+                }
+                activated = false;
+            }
+        }
     }
 
     public void GiveOrRemove()

@@ -34,6 +34,15 @@ public class PlayerPerkManager : MonoBehaviour
         }
     }
 
+    public void RemoveAllPerks()
+    {
+        foreach(var perk in perkScripts)
+        {
+            perk.OnRemove();
+        }
+        perkScripts.Clear();
+    }
+
     public List<PerkScriptableObject> GetPerkList()
     {
         return perkScripts;

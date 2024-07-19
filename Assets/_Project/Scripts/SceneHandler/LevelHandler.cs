@@ -51,13 +51,26 @@ namespace _Project.Scripts.SceneHandler
         public void EndRun()
         {
             levelIndex = 0;
-            Destroy(ReferenceManager.PlayerInputController.gameObject);
+            if (ReferenceManager.PlayerInputController != null)
+            {
+                Destroy(ReferenceManager.PlayerInputController.gameObject);
+            }
             sceneHandler.LoadMainMenu();
         }
 
         public void ResetValues()
         {
             levelIndex = 0;
+            if (ReferenceManager.PlayerInputController != null)
+            {
+                ReferenceManager.PlayerInputController?.GetComponent<PlayerPerkManager>().RemoveAllPerks();
+                Destroy(ReferenceManager.PlayerInputController.gameObject);
+            }
+            if (ReferenceManager.PlayerCurrencyController!= null)
+            {
+
+                ReferenceManager.PlayerCurrencyController?.ResetValues();
+            }
         }
     }
 }

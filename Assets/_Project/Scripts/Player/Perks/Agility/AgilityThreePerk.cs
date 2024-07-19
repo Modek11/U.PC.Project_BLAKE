@@ -20,6 +20,13 @@ public class AgilityThreePerk : PerkScriptableObject
         playerMovement?.AddDashes(dashesToAdd);
         ReferenceManager.RoomManager.onRoomEnter += SubscribeToRoom;
         ReferenceManager.RoomManager.onRoomLeave += UnsubscribeToRoom;
+        ReferenceManager.Instance.OnFloorLoad += Refresh;
+    }
+
+    private void Refresh()
+    {
+        ReferenceManager.RoomManager.onRoomEnter += SubscribeToRoom;
+        ReferenceManager.RoomManager.onRoomLeave += UnsubscribeToRoom;
     }
 
     private void SubscribeToRoom(Room room)
@@ -40,5 +47,6 @@ public class AgilityThreePerk : PerkScriptableObject
     public override void OnRemove()
     {
         playerMovement?.RemoveDashes(dashesToAdd);
+        ReferenceManager.Instance.OnFloorLoad -= Refresh;
     }
 }
