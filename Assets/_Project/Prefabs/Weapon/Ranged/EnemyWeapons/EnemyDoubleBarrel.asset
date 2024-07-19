@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8b52c6e7e16fc848a76e7336673e5f2, type: 3}
-  m_Name: DoubleBarrel
+  m_Name: EnemyDoubleBarrel
   m_EditorClassIdentifier: 
   WeaponPrefab: {fileID: 4911671507717690896, guid: d59ad31d5e825164385713c41e42f342,
     type: 3}
@@ -28,7 +28,7 @@ MonoBehaviour:
   PickupRotation: {x: 0, y: 0, z: 0, w: 0}
   BasicBullet: {fileID: 6969907592589934760, guid: 9d1137cbb8bc7254fa284ca1f304bf0e,
     type: 3}
-  WaitingTimeForNextShoot: 0.65
+  WaitingTimeForNextShoot: 0.6
   BulletType: 2
   SpreadType: 4
   Spread: 15
@@ -37,6 +37,6 @@ MonoBehaviour:
   SpreadResetThreshold: -1
   ProjectilesPerShot: 2
   MagazineSize: 3
-  Range: 4
+  Range: 6
   EffectDuration: 0.5
   ShootDelayTime: 0.5

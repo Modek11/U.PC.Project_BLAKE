@@ -105,7 +105,7 @@ PrefabInstance:
     - target: {fileID: -470558907172326393, guid: 20caf66ddd7209d4291d40715d756be9,
         type: 3}
       propertyPath: pointsForKill
-      value: 100
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2611339117920508267, guid: 20caf66ddd7209d4291d40715d756be9,
         type: 3}
@@ -269,9 +269,7 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   AcceptableDistance: 1
-  MoveSpeed: 11
   Target: {fileID: 0}
-  AIController: {fileID: 4195407616045605612}
 --- !u!114 &-1048499141049011602
 MonoBehaviour:
   m_ObjectHideFlags: 0

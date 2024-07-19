@@ -31,12 +31,12 @@ MonoBehaviour:
   WaitingTimeForNextShoot: 0.4
   BulletType: 1
   SpreadType: 5
-  Spread: 8
+  Spread: 10
   SpreadStep: -1
   SpreadThreshold: -1
   SpreadResetThreshold: 3
   ProjectilesPerShot: 1
-  MagazineSize: 8
-  Range: 15
+  MagazineSize: 6
+  Range: 8
   EffectDuration: 0.5
   ShootDelayTime: 0.5

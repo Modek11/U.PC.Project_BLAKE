@@ -104,6 +104,12 @@ PrefabInstance:
       propertyPath: infinityAmmo
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4035988739716000790, guid: 7bafbe8de9e5c224f9c91487d46efe98,
+        type: 3}
+      propertyPath: WeaponDefinition
+      value: 
+      objectReference: {fileID: 11400000, guid: 119f9aac35063ec42b2c79eb18f80efb,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bafbe8de9e5c224f9c91487d46efe98, type: 3}
 --- !u!114 &1638259113527234632 stripped
@@ -174,7 +180,7 @@ PrefabInstance:
     - target: {fileID: -470558907172326393, guid: 20caf66ddd7209d4291d40715d756be9,
         type: 3}
       propertyPath: pointsForKill
-      value: 400
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 893637976758665190, guid: 20caf66ddd7209d4291d40715d756be9,
         type: 3}

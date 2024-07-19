@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8b52c6e7e16fc848a76e7336673e5f2, type: 3}
-  m_Name: DoubleBarrel
+  m_Name: EnemyGlock
   m_EditorClassIdentifier: 
-  WeaponPrefab: {fileID: 4911671507717690896, guid: d59ad31d5e825164385713c41e42f342,
+  WeaponPrefab: {fileID: 5319882019298209556, guid: b439379a8d4ee1f47a52087f53bbe13b,
     type: 3}
-  WeaponGFX: {fileID: 1318050290126625103, guid: 1780d87ee5d4ee24b8a12e7cf5b7f1f8,
+  WeaponGFX: {fileID: 899293860116181753, guid: ef357f2648604d04f8dcd9d3b7af440f,
     type: 3}
-  WeaponName: Double Barrel
+  WeaponName: Glock
   DropRate: 0.6
   AbilitiesToGrant:
   - {fileID: 11400000, guid: 7c4cd691da4d0084780e7a2b16579662, type: 2}
@@ -26,17 +26,17 @@ MonoBehaviour:
   Scale: {x: 1, y: 1, z: 1}
   PickupLocationOffset: {x: 0, y: 0, z: 0}
   PickupRotation: {x: 0, y: 0, z: 0, w: 0}
-  BasicBullet: {fileID: 6969907592589934760, guid: 9d1137cbb8bc7254fa284ca1f304bf0e,
+  BasicBullet: {fileID: 8745238448183679225, guid: a068551a7488b474fa34d68d5f97afbe,
     type: 3}
-  WaitingTimeForNextShoot: 0.65
-  BulletType: 2
-  SpreadType: 4
-  Spread: 15
+  WaitingTimeForNextShoot: 0.4
+  BulletType: 1
+  SpreadType: 5
+  Spread: 10
   SpreadStep: -1
   SpreadThreshold: -1
-  SpreadResetThreshold: -1
-  ProjectilesPerShot: 2
-  MagazineSize: 3
-  Range: 4
+  SpreadResetThreshold: 3
+  ProjectilesPerShot: 1
+  MagazineSize: 6
+  Range: 12
   EffectDuration: 0.5
   ShootDelayTime: 0.5
