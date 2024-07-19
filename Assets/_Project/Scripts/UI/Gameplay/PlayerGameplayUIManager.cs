@@ -111,6 +111,7 @@ namespace _Project.Scripts.UI.Gameplay
         {
             WeaponNameUI(weapon);
             BulletsLeftUI(weapon);
+            RefreshPoints(PlayerCurrencyController.Instance.Points);
         }
 
         private void WeaponNameUI(Weapon.Weapon weapon)

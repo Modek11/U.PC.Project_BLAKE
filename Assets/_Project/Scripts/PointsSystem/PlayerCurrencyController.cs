@@ -1,13 +1,12 @@
 using System;
 using _Project.Scripts.GlobalHandlers;
-using _Project.Scripts.PointsSystem.ComboSystem;
+using _Project.Scripts.Patterns;
 using UnityEngine;
 
 namespace _Project.Scripts.PointsSystem
 {
-    public class PlayerCurrencyController : MonoBehaviour
+    public class PlayerCurrencyController : Singleton<PlayerCurrencyController>
     {
-        [SerializeField] private ComboController comboController;
         public delegate void AddedPointsDeleagte(float addedPoints);
         public event AddedPointsDeleagte onAddPoints;
         public event Action<float> OnPointsChanged;
@@ -20,14 +19,16 @@ namespace _Project.Scripts.PointsSystem
         private float deathPointsModifier = 0;
         public float Points => points;
         
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             ReferenceManager.PlayerCurrencyController = this;
         }
 
         public void RegisterEnemyDeath(int pointsForKill)
         {
-            float pointsToAdd = pointsForKill * comboController.ComboCounter;
+            float pointsToAdd = pointsForKill * EnemyDeathMediator.Instance.ComboController.ComboCounter;
             AddPoints(pointsToAdd);
             onAddPoints?.Invoke(pointsToAdd);
         }

@@ -16,29 +16,30 @@ namespace _Project.Scripts.Weapon.Upgrades
         [SerializeField] private WeaponUpgradeHolder weaponUpgradeHolder;
         [SerializeField] private WeaponUpgradeCardUI upgradeCardPrefab;
         [SerializeField] private WeaponStatisticUpgradeUI statisticUpgradePrefab;
-        [SerializeField] private float meleeWeaponDrawChance;
-        [SerializeField] private int rerollCost;
-        [SerializeField] private float rerollMultiplier;
+        [SerializeField] private float baseMeleeWeaponDrawChance;
+        [SerializeField] private int baseRerollCost;
+        [SerializeField] private float baseRerollMultiplier;
 
         private Dictionary<WeaponUpgradeData, IWeaponStatistics> dictionaryOfUpgrades = new ();
         private WeaponUpgradeUIManager weaponUpgradeUIManager;
         private bool isUpgradeAvailable = true;
 
-        public bool IsUpgradeAvailable
-        {
-            get => isUpgradeAvailable;
-            private set
-            {
-                isUpgradeAvailable = value;
-                UpgradeAvailabilityChanged();
-            }
-        }
+        private float currentMeleeWeaponDrawChance;
+        private int currentRerollCost;
+        private float currentRerollMultiplier;
+
+        public bool IsUpgradeAvailable => isUpgradeAvailable;
 
         protected override void Awake()
         {
             base.Awake();
 
             ReferenceManager.WeaponUpgradeManager = this;
+            currentMeleeWeaponDrawChance = baseMeleeWeaponDrawChance;
+            currentRerollCost = baseRerollCost;
+            currentRerollMultiplier = baseRerollMultiplier;
+            
+            ReferenceManager.LevelHandler.onNextLevel += OnNextLevel;
         }
 
         public void TryShowWeaponUpgrades()
@@ -65,14 +66,13 @@ namespace _Project.Scripts.Weapon.Upgrades
         {
             if (rerolledByPlayer)
             {
-                ReferenceManager.PlayerCurrencyController.RemovePoints(rerollCost);
-                rerollCost = (int)(rerollCost * rerollMultiplier);
+                ReferenceManager.PlayerCurrencyController.RemovePoints(currentRerollCost);
+                currentRerollCost = (int)(currentRerollCost * currentRerollMultiplier);
             }
             
-            weaponUpgradeUIManager.UpdateRerollButton(rerollCost);
-            
-            weaponUpgradeUIManager.DestroyCards();
-            dictionaryOfUpgrades.Clear();
+            weaponUpgradeUIManager.UpdateRerollButton(currentRerollCost);
+
+            DestroyCards();
 
             for (var i = 0; i < NUMBER_OF_CARDS; i++)
             {
@@ -84,7 +84,7 @@ namespace _Project.Scripts.Weapon.Upgrades
         {
             for (var i = 0; i < UPGRADES_REROLL_MAX_TRIES; i++)
             {
-                var upgradeData = GetUpgradeData(true);
+                var upgradeData = GetUpgradeData();
                 
                 if (!dictionaryOfUpgrades.TryAdd(upgradeData.Item1, upgradeData.Item2))
                 {
@@ -98,12 +98,12 @@ namespace _Project.Scripts.Weapon.Upgrades
             Debug.LogError($"Cannot find available upgrade!");
         }
 
-        private (WeaponUpgradeData, IWeaponStatistics) GetUpgradeData(bool lookForRangedWeapon)
+        private (WeaponUpgradeData, IWeaponStatistics) GetUpgradeData()
         {
             WeaponUpgradeData upgradeData;
             IWeaponStatistics weaponStatistics;
             
-            if(Random.value > meleeWeaponDrawChance)
+            if(Random.value > currentMeleeWeaponDrawChance)
             {
                 var randomWeaponNumber = Random.Range(0, weaponUpgradeHolder.ranged.Count);
                 var drawnWeapon = weaponUpgradeHolder.ranged[randomWeaponNumber];
@@ -157,7 +157,7 @@ namespace _Project.Scripts.Weapon.Upgrades
 
                 ReferenceManager.PlayerCurrencyController.RemovePoints(upgradeData.UpgradeCost);
                 
-                IsUpgradeAvailable = false;
+                isUpgradeAvailable = false;
             }
             else
             {
@@ -165,11 +165,27 @@ namespace _Project.Scripts.Weapon.Upgrades
             }
         }
         
-        private void UpgradeAvailabilityChanged()
+        private void OnNextLevel()
         {
-            if (!isUpgradeAvailable)
-            {
-            }
+            isUpgradeAvailable = true;
+            ResetAllValues();
+        }
+
+        private void DestroyCards()
+        {
+            weaponUpgradeUIManager?.DestroyCards();
+            dictionaryOfUpgrades.Clear();
+        }
+
+        private void ResetAllValues()
+        {
+            currentMeleeWeaponDrawChance = baseMeleeWeaponDrawChance;
+            currentRerollCost = baseRerollCost;
+            currentRerollMultiplier = baseRerollMultiplier;
+            
+            DestroyCards();
+            weaponUpgradeUIManager.RerollButton.onClick.RemoveAllListeners();
+            weaponUpgradeUIManager = null;
         }
         
     }
