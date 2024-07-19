@@ -64,8 +64,12 @@ namespace _Project.Scripts.SceneHandler
             if (ReferenceManager.PlayerInputController != null)
             {
                 ReferenceManager.PlayerInputController?.GetComponent<PlayerPerkManager>().RemoveAllPerks();
-                ReferenceManager.PlayerCurrencyController?.ResetValues();
                 Destroy(ReferenceManager.PlayerInputController.gameObject);
+            }
+            if (ReferenceManager.PlayerCurrencyController!= null)
+            {
+
+                ReferenceManager.PlayerCurrencyController?.ResetValues();
             }
         }
     }
