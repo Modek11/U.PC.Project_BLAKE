@@ -15,47 +15,47 @@ MonoBehaviour:
   weaponDefinition: {fileID: 11400000, guid: 6c7fe8b8bb61ce5418824310a7c889fe, type: 2}
   rangedUpgradeData: []
   meleeUpgradeData:
-  - UpgradeCost: 0
+  - UpgradeCost: 400
     WeaponDefinition: {fileID: 11400000, guid: 6c7fe8b8bb61ce5418824310a7c889fe, type: 2}
     WeaponUpgradeRarity: 1
     meleeWeaponStatistics:
-      AttackDelayTime: 1
+      AttackDelayTime: -0.1
       SphereCastRadius: 0
       MaxSpreadRange: 0
       LayerMask:
         serializedVersion: 2
         m_Bits: 0
       MaxNumberOfEnemies: 0
-  - UpgradeCost: 0
+  - UpgradeCost: 600
     WeaponDefinition: {fileID: 11400000, guid: 6c7fe8b8bb61ce5418824310a7c889fe, type: 2}
     WeaponUpgradeRarity: 2
     meleeWeaponStatistics:
-      AttackDelayTime: 0
-      SphereCastRadius: 2
-      MaxSpreadRange: 3
-      LayerMask:
-        serializedVersion: 2
-        m_Bits: 0
-      MaxNumberOfEnemies: 0
-  - UpgradeCost: 0
-    WeaponDefinition: {fileID: 11400000, guid: 6c7fe8b8bb61ce5418824310a7c889fe, type: 2}
-    WeaponUpgradeRarity: 3
-    meleeWeaponStatistics:
-      AttackDelayTime: 5
-      SphereCastRadius: 6
+      AttackDelayTime: -0.2
+      SphereCastRadius: 0
       MaxSpreadRange: 0
       LayerMask:
         serializedVersion: 2
         m_Bits: 0
-      MaxNumberOfEnemies: 4
-  - UpgradeCost: 0
+      MaxNumberOfEnemies: 0
+  - UpgradeCost: 800
     WeaponDefinition: {fileID: 11400000, guid: 6c7fe8b8bb61ce5418824310a7c889fe, type: 2}
-    WeaponUpgradeRarity: 4
+    WeaponUpgradeRarity: 3
     meleeWeaponStatistics:
-      AttackDelayTime: 10
-      SphereCastRadius: 7
-      MaxSpreadRange: 8
+      AttackDelayTime: 0
+      SphereCastRadius: 0.25
+      MaxSpreadRange: 0
       LayerMask:
         serializedVersion: 2
         m_Bits: 0
-      MaxNumberOfEnemies: 9
+      MaxNumberOfEnemies: 0
+  - UpgradeCost: 1500
+    WeaponDefinition: {fileID: 11400000, guid: 6c7fe8b8bb61ce5418824310a7c889fe, type: 2}
+    WeaponUpgradeRarity: 4
+    meleeWeaponStatistics:
+      AttackDelayTime: -0.1
+      SphereCastRadius: 0.5
+      MaxSpreadRange: 90
+      LayerMask:
+        serializedVersion: 2
+        m_Bits: 0
+      MaxNumberOfEnemies: 0

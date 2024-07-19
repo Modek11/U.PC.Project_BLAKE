@@ -31,7 +31,7 @@ MonoBehaviour:
     type: 3}
   WaitingTimeForNextShoot: 0.8
   BulletType: 1
-  SpreadType: 1
+  SpreadType: 5
   Spread: 0
   SpreadStep: -1
   SpreadThreshold: -1
