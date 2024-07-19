@@ -73,6 +73,10 @@ namespace _Project.Scripts.Weapon
             base.Awake();
 
             SetupWeaponDefinition();
+        }
+
+        private void Start()
+        {
             TryStopEnemyMuzzleFlashVFX();
         }
 
@@ -84,6 +88,7 @@ namespace _Project.Scripts.Weapon
         private async UniTaskVoid CastPrimaryAttack()
         {
             isTryingToShoot = true;
+            
             if (weaponOwnerIsEnemy)
             {
                 CastEnemyWeaponVFX();
@@ -109,13 +114,8 @@ namespace _Project.Scripts.Weapon
 
         private void TryStopEnemyMuzzleFlashVFX()
         {
-            if (!weaponOwnerIsEnemy)
-            {
-                return;
-            }
-            
             muzzleFlashEffect.Clear();
-            muzzleFlashEffect.Pause();
+            muzzleFlashEffect.Stop();
         }
 
         public override bool CanPrimaryAttack()
