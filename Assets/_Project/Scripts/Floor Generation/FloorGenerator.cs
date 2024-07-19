@@ -98,6 +98,9 @@ public class FloorGenerator : MonoBehaviour
         yield return StartCoroutine(GenerateBaseRoomsFromPool(baseRoomPool, smallRoomAmount + mediumRoomAmount + largeRoomAmount));
 
 
+        //Generate End Room
+        tries = 0;
+        GenerateEndRoom();
 
         tries = 0;
         //Generate TreasureRooms
@@ -108,10 +111,6 @@ public class FloorGenerator : MonoBehaviour
 
         tries = 0;
         GenerateWeaponShop();
-
-        //Generate End Room
-        tries = 0;
-        GenerateEndRoom();
 
         foreach (GameObject room in spawnedRooms)
         {
@@ -254,6 +253,7 @@ public class FloorGenerator : MonoBehaviour
         int tempCounter = 0;
         FloorPathfinding floorPathfinding = new FloorPathfinding(spawnedRooms);
         var list = pathLength.OrderBy(key => key.Value).Reverse().Select(key => key.Key.gameObject).ToList();
+        list.Remove(endRoom);
         if(debugRoomFinding) Debug.Log("Furthest room is: " + list[0].gameObject.name);
         while (tempCounter < amountOfRooms)
         {
@@ -405,6 +405,8 @@ public class FloorGenerator : MonoBehaviour
 
         foreach (GameObject room in spawnedRooms)
         {
+            if (room == endRoom && shopTries < 90) continue;
+
             Room roomScript = room.GetComponent<Room>();
             int randomNumber = Random.Range(0, roomScript.GetDoors().Length);
             RoomConnector door = roomScript.GetDoors()[randomNumber];
@@ -470,6 +472,7 @@ public class FloorGenerator : MonoBehaviour
 
         foreach (GameObject room in spawnedRooms)
         {
+            if (room == endRoom && shopTries < 90) continue; 
             Room roomScript = room.GetComponent<Room>();
             int randomNumber = Random.Range(0, roomScript.GetDoors().Length);
             RoomConnector door = roomScript.GetDoors()[randomNumber];
