@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using _Project.Scripts.GlobalHandlers;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace _Project.Scripts.SceneHandler
@@ -23,7 +24,14 @@ namespace _Project.Scripts.SceneHandler
             
             while (objectsInActiveScene.Count > 0)
             {
-                Debug.Log($"There are still {objectsInActiveScene.Count} objects not loaded from StarterScene!");
+                var log = $"There are still {objectsInActiveScene.Count} objects not loaded from StarterScene!";
+
+                foreach (var objectToLoad in objectsInActiveScene)
+                {
+                    log += $"\n {objectToLoad}";
+                }
+                
+                Debug.Log(log);
                 await UniTask.Delay(TimeSpan.FromSeconds(delayTimeBetweenLogs));
             }
 
