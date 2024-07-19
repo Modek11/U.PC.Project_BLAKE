@@ -1,3 +1,4 @@
+using _Project.Scripts.GlobalHandlers;
 using GameFramework.Abilities;
 
 namespace _Project.Scripts.Abilities

@@ -1,8 +1,5 @@
-using _Project.Scripts.PointsSystem;
-using _Project.Scripts;
 using _Project.Scripts.Weapon;
-using System.Collections;
-using System.Collections.Generic;
+using _Project.Scripts.GlobalHandlers;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SavageTwoPerk", menuName = "Abilities/Perks/Savage Two")]

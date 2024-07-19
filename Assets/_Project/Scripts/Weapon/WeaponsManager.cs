@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using _Project.Scripts.GlobalHandlers;
+using _Project.Scripts.Weapon.Definition;
 using GameFramework.Abilities;
 using UnityEngine;
 
@@ -16,6 +18,7 @@ namespace _Project.Scripts.Weapon
 
         private int activeWeaponIndex = 0;
         public int ActiveWeaponIndex { get => activeWeaponIndex; }
+        public bool isMeleeWeaponEquipped => activeWeaponIndex == 0;
 
         private List<Weapon> weapons = new List<Weapon>() { null, null };
         public List<Weapon> Weapons { get => weapons; }

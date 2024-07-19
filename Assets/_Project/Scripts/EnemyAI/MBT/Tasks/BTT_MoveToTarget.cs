@@ -1,6 +1,7 @@
 using MBT;
 using System;
 using _Project.Scripts;
+using _Project.Scripts.GlobalHandlers;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem.XR;

@@ -2,6 +2,7 @@ using _Project.Scripts.PointsSystem;
 using _Project.Scripts;
 using System.Collections;
 using System.Collections.Generic;
+using _Project.Scripts.GlobalHandlers;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PermanenceTwoPerk", menuName = "Abilities/Perks/Permanence Two")]

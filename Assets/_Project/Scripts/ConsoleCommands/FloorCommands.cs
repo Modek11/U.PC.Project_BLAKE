@@ -1,3 +1,4 @@
+using _Project.Scripts.GlobalHandlers;
 using SickDev.CommandSystem;
 using SickDev.DevConsole;
 

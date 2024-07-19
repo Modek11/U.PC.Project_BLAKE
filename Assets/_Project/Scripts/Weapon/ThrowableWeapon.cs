@@ -1,7 +1,5 @@
 using _Project.Scripts.Interfaces;
-using _Project.Scripts.Weapon;
-using System.Collections;
-using System.Collections.Generic;
+using _Project.Scripts.Weapon.Upgrades.Bullet;
 using UnityEngine;
 
 public class ThrowableWeapon : MonoBehaviour, IBullet

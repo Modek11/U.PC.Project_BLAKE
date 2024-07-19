@@ -1,11 +1,13 @@
 using System.Threading.Tasks;
 using _Project.Scripts.Patterns;
 using _Project.Scripts.Player;
+using _Project.Scripts.PointsSystem;
 using _Project.Scripts.SceneHandler;
 using _Project.Scripts.VirtualCamera;
+using _Project.Scripts.Weapon.Upgrades;
 using Unity.Services.Core;
 
-namespace _Project.Scripts
+namespace _Project.Scripts.GlobalHandlers
 {
     public class ReferenceManager : Singleton<ReferenceManager>
     {
@@ -16,6 +18,8 @@ namespace _Project.Scripts
         private MessageRouter messageRouter = new();
         private RoomManager roomManager;
         private MainVirtualCameraController mainVirtualCameraController;
+        private WeaponUpgradeManager weaponUpgradeManager;
+        private PlayerCurrencyController playerCurrencyController;
 
         public static BlakeHeroCharacter BlakeHeroCharacter
         {
@@ -79,6 +83,26 @@ namespace _Project.Scripts
             {
                 if (Instance == null) return;
                 Instance.mainVirtualCameraController = value;
+            }
+        }
+        
+        public static WeaponUpgradeManager WeaponUpgradeManager
+        {
+            get => Instance != null ? Instance.weaponUpgradeManager : null;
+            set
+            {
+                if (Instance == null) return;
+                Instance.weaponUpgradeManager = value;
+            }
+        }
+        
+        public static PlayerCurrencyController PlayerCurrencyController
+        {
+            get => Instance != null ? Instance.playerCurrencyController : null;
+            set
+            {
+                if (Instance == null) return;
+                Instance.playerCurrencyController = value;
             }
         }
 

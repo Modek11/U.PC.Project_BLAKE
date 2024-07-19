@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using _Project.Scripts;
+using _Project.Scripts.GlobalHandlers;
 using UnityEngine;
 
 public class EnemyPointer : MonoBehaviour

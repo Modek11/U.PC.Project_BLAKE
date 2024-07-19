@@ -4,6 +4,7 @@ using _Project.Scripts.Weapon;
 using SickDev.DevConsole.Example;
 using System.Collections;
 using System.Collections.Generic;
+using _Project.Scripts.GlobalHandlers;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SavageOnePerk", menuName = "Abilities/Perks/Savage One")]

@@ -1,4 +1,6 @@
 using _Project.Scripts.Interfaces;
+using _Project.Scripts.Weapon.Definition;
+using _Project.Scripts.Weapon.Statistics;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -7,15 +9,13 @@ namespace _Project.Scripts.Weapon
 {
     public class MeleeWeapon : Weapon
     {
-        private MeleeWeaponDefinition meleeWeaponDefinition;
         private PlayableDirector playableDirector;
         private Transform characterTransform;
 
-        private float attackDelayTime;
-        private float sphereCastRadius;
-        private int maxSpreadRange;
-        private LayerMask layerMask;
-        private int maxNumberOfEnemies;
+        private MeleeWeaponDefinition meleeWeaponDefinition;
+        private MeleeWeaponStatistics baseWeaponStats;
+        private MeleeWeaponStatistics weaponUpgrades;
+        private MeleeWeaponStatistics currentWeaponStats;
         
         private Collider[] raycastCollidersFound;
         private int maxSpreadRangePerSide;
@@ -38,7 +38,7 @@ namespace _Project.Scripts.Weapon
 
         public override bool CanPrimaryAttack()
         {
-            return Time.time - lastAttackTime > attackDelayTime;
+            return Time.time - lastAttackTime > currentWeaponStats.AttackDelayTime;
         }
 
         public override void PrimaryAttack()
@@ -57,8 +57,9 @@ namespace _Project.Scripts.Weapon
         {
             var characterForwardDir = characterTransform.forward;
             characterForwardDir.y = 0;
-            
-            var collidersFoundNumber = Physics.OverlapSphereNonAlloc(characterTransform.position, sphereCastRadius, raycastCollidersFound, layerMask);
+
+            var collidersFoundNumber = Physics.OverlapSphereNonAlloc(characterTransform.position,
+                currentWeaponStats.SphereCastRadius, raycastCollidersFound, currentWeaponStats.LayerMask);
             for (var i = 0; i < collidersFoundNumber; i++)
             {
                 var colliderFound = raycastCollidersFound[i];
@@ -91,7 +92,7 @@ namespace _Project.Scripts.Weapon
             }
             
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(characterTransform.position, sphereCastRadius);
+            Gizmos.DrawWireSphere(characterTransform.position, currentWeaponStats.SphereCastRadius);
         }
 #endif
         
@@ -104,13 +105,50 @@ namespace _Project.Scripts.Weapon
             }
             
             meleeWeaponDefinition = definition;
-            attackDelayTime = meleeWeaponDefinition.AttackDelayTime;
-            sphereCastRadius = meleeWeaponDefinition.SpereCastRadius;
-            maxSpreadRange = meleeWeaponDefinition.MaxSpreadRange;
-            maxSpreadRangePerSide = maxSpreadRange / 2;
-            layerMask = meleeWeaponDefinition.LayerMask;
-            maxNumberOfEnemies = meleeWeaponDefinition.MaxNumberOfEnemies;
-            raycastCollidersFound = new Collider[maxNumberOfEnemies];
+
+            baseWeaponStats = meleeWeaponDefinition.GetWeaponStatistics();
+            
+            raycastCollidersFound = new Collider[meleeWeaponDefinition.MaxNumberOfEnemies];
+            RestoreMeleeWeaponStatistics();
+        }
+        
+        public override void CalculateWeaponStatsWithUpgrades(WeaponDefinition weaponDefinition, IWeaponStatistics weaponStatistics)
+        {
+            if (meleeWeaponDefinition is not null)
+            {
+                if(weaponDefinition != meleeWeaponDefinition)
+                {
+                    return;
+                }
+            }
+            else if (weaponDefinition != (RangedWeaponDefinition)WeaponDefinition)
+            {
+                return;
+            }
+
+            var statistics = (MeleeWeaponStatistics)weaponStatistics;
+            weaponUpgrades = statistics;
+
+            RestoreMeleeWeaponStatistics();
+        }
+
+        public void ApplyMeleeWeaponStatistics(MeleeWeaponStatistics meleeWeaponStatistics)
+        {
+            currentWeaponStats = meleeWeaponStatistics;
+
+            ResetSpread();
+        }
+
+        public void RestoreMeleeWeaponStatistics()
+        {
+            currentWeaponStats = baseWeaponStats + weaponUpgrades;
+            
+            ResetSpread();
+        }
+        
+        private void ResetSpread()
+        {
+            maxSpreadRangePerSide = baseWeaponStats.MaxSpreadRange / 2;
         }
 
         public override void LoadWeaponInstanceInfo(WeaponInstanceInfo weaponInstanceInfo)

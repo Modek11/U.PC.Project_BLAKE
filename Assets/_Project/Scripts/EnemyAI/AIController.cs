@@ -1,4 +1,5 @@
 using _Project.Scripts;
+using _Project.Scripts.GlobalHandlers;
 using _Project.Scripts.Weapon;
 using MBT;
 using UnityEngine;

@@ -1,6 +1,8 @@
+using _Project.Scripts.Weapon.Statistics;
+using _Project.Scripts.Weapon.Upgrades.Bullet;
 using UnityEngine;
 
-namespace _Project.Scripts.Weapon
+namespace _Project.Scripts.Weapon.Definition
 {
     [CreateAssetMenu(fileName = "Ranged Weapon definition", menuName = "Project BLAKE/Ranged Weapon")]
     public class RangedWeaponDefinition : WeaponDefinition
@@ -46,5 +48,20 @@ namespace _Project.Scripts.Weapon
         public float EffectDuration;
         
         public float ShootDelayTime;
+
+        public RangedWeaponStatistics GetWeaponStatistics()
+        {
+            return new RangedWeaponStatistics(
+                WaitingTimeForNextShoot,
+                BulletType,
+                SpreadType,
+                Spread,
+                SpreadStep,
+                SpreadThreshold,
+                SpreadResetThreshold,
+                ProjectilesPerShot,
+                MagazineSize,
+                Range);
+        }
     }
 }

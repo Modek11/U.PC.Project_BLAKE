@@ -23,10 +23,9 @@ namespace _Project.Scripts.PointsSystem
     
     public class EnemyDeathMediator : Singleton<EnemyDeathMediator>
     {
-        [SerializeField] private PlayerCurrencyController playerCurrencyController;
         [SerializeField] private ComboController comboController;
 
-        private float points => playerCurrencyController.Points;
+        private float points => PlayerCurrencyController.Points;
         private float comboCounter => comboController.ComboCounter;
         private int killsCounter => comboController.KillsCounter;
         private bool shouldComboStart => comboController.ShouldComboStart;
@@ -34,11 +33,11 @@ namespace _Project.Scripts.PointsSystem
         public event Action<ComboAndPointsValues> OnRegisteredEnemyDeath;
 
         public ComboController ComboController => comboController;
-        public PlayerCurrencyController PlayerCurrencyController => playerCurrencyController;
+        public PlayerCurrencyController PlayerCurrencyController => PlayerCurrencyController.Instance;
         public void RegisterEnemyDeath(int pointsForKill, EnemyTypeEnum enemyTypeEnum)
         {
             comboController.RegisterEnemyDeath();
-            playerCurrencyController.RegisterEnemyDeath(pointsForKill);
+            PlayerCurrencyController.RegisterEnemyDeath(pointsForKill);
 
             var values = new ComboAndPointsValues(points, comboCounter, killsCounter, shouldComboStart);
             OnRegisteredEnemyDeath?.Invoke(values);

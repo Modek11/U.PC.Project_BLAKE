@@ -1,6 +1,7 @@
+using _Project.Scripts.Weapon.Statistics;
 using UnityEngine;
 
-namespace _Project.Scripts.Weapon
+namespace _Project.Scripts.Weapon.Definition
 {
     [CreateAssetMenu(fileName = "Melee Weapon definition", menuName = "Project BLAKE/Melee Weapon")]
     public class MeleeWeaponDefinition : WeaponDefinition
@@ -18,5 +19,15 @@ namespace _Project.Scripts.Weapon
 
         [Tooltip("Performance value: \n -higher value store more data \n -too low value can cause not damaging enemy")]
         public int MaxNumberOfEnemies;
+        
+        public MeleeWeaponStatistics GetWeaponStatistics()
+        {
+            return new MeleeWeaponStatistics(
+                    AttackDelayTime,
+                    SpereCastRadius,
+                    MaxSpreadRange,
+                    LayerMask,
+                    MaxNumberOfEnemies);
+        }
     }
 }
