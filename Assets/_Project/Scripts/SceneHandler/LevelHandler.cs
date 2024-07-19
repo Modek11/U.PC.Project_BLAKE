@@ -61,10 +61,10 @@ namespace _Project.Scripts.SceneHandler
         public void ResetValues()
         {
             levelIndex = 0;
-            ReferenceManager.PlayerInputController?.GetComponent<PlayerPerkManager>().RemoveAllPerks();
-            ReferenceManager.PlayerCurrencyController?.ResetValues();
             if (ReferenceManager.PlayerInputController != null)
             {
+                ReferenceManager.PlayerInputController?.GetComponent<PlayerPerkManager>().RemoveAllPerks();
+                ReferenceManager.PlayerCurrencyController?.ResetValues();
                 Destroy(ReferenceManager.PlayerInputController.gameObject);
             }
         }
