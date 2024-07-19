@@ -38,8 +38,7 @@ namespace _Project.Scripts.Weapon.Upgrades.UI
         
         public WeaponUpgradeCardUI CreateNewUpgradeCard(WeaponUpgradeCardUI upgradeCardPrefab)
         {
-            var upgradeCardUI = Instantiate(upgradeCardPrefab, upgradeCardParent, false);
-            return upgradeCardUI;
+            return Instantiate(upgradeCardPrefab, upgradeCardParent, false);
         }
         
         private void SwitchRerollButtonInteractable()

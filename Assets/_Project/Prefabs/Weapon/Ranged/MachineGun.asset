@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 3}
   WeaponGFX: {fileID: 539712161414889713, guid: 7e0af4d7e171e6148a07c86bfa73cbee,
     type: 3}
-  WeaponName: MachineGun
+  WeaponName: Machine Gun
   DropRate: 0.6
   AbilitiesToGrant:
   - {fileID: 11400000, guid: babcf2078afcab3428df17ef838c3ee2, type: 2}
