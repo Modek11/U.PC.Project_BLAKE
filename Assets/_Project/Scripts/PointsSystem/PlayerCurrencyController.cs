@@ -26,6 +26,13 @@ namespace _Project.Scripts.PointsSystem
             ReferenceManager.PlayerCurrencyController = this;
         }
 
+        public void ResetValues()
+        {
+            points = 0;
+            deathPointsModifier = 0;
+            lostPointOnDeathPercentage = 20;
+        }
+
         public void RegisterEnemyDeath(int pointsForKill)
         {
             float pointsToAdd = pointsForKill * EnemyDeathMediator.Instance.ComboController.ComboCounter;
