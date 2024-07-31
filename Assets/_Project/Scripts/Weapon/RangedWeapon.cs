@@ -67,7 +67,7 @@ namespace _Project.Scripts.Weapon
             if (weaponOwnerIsEnemy)
             {
                 CastEnemyWeaponVFX();
-                await UniTask.Delay(TimeSpan.FromSeconds(shootDelayTime));
+                await UniTask.Delay(TimeSpan.FromSeconds(shootDelayTime), cancellationToken: this.GetCancellationTokenOnDestroy());
             }
 
             if (audioSource != null)
