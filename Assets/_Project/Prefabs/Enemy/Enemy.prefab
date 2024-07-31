@@ -3420,6 +3420,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1280
   raycastOrigin: {fileID: 2290463781106356550}
+  fovCheckDelay: 0.1
+  maxBackVisibilityDistance: 3
+  findPlayerFromBehindDelay: 0.75
   CanSeePlayer: 0
 --- !u!114 &6426853079096780474
 MonoBehaviour:
@@ -3438,6 +3441,8 @@ MonoBehaviour:
   maxRespawns: 3
   explosionParticle: {fileID: 6361431522622511341, guid: 12d7691791b971b41b6074506d2a114d,
     type: 3}
+  shieldParticle: {fileID: 0}
+  shieldExplosionParticle: {fileID: 0}
   animator: {fileID: 4250661716291628411}
   godMode: 0
   speed: 6
@@ -3446,6 +3451,7 @@ MonoBehaviour:
   weaponPickup: {fileID: 8762673793604440, guid: 533ffb6a79d6ba94ca899689f9df94f3,
     type: 3}
   SpawnedInRoom: {fileID: 0}
+  savageThreeActivated: 0
 --- !u!114 &3069750451913799309
 MonoBehaviour:
   m_ObjectHideFlags: 0
