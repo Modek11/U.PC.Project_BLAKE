@@ -3386,6 +3386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Weapon: {fileID: 0}
   NavMeshAgent: {fileID: 0}
+  alarmEnemiesInRoomDelay: 2.5
   CombatStateReference:
     useConstant: 0
     mode: 0

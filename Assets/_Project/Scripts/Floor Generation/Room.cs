@@ -74,6 +74,8 @@ public class Room : MonoBehaviour
     [HideInInspector]
     public Room cameFromRoom;
 
+    public List<EnemyCharacter> SpawnedEnemiesList => spawnedEnemies;
+
     public delegate void OnEnemySpawn(EnemyCharacter character);
     public event OnEnemySpawn enemySpawned;
 
@@ -473,11 +475,6 @@ public class Room : MonoBehaviour
             return spawnPoint.position;
         }
         else return transform.position;
-    }
-
-    public List<EnemyCharacter> GetSpawnedEnemies()
-    {
-        return spawnedEnemies;
     }
 
     private void RemoveEnemyFromList(BlakeCharacter blakeCharacter)
