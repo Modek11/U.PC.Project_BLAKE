@@ -8,19 +8,19 @@ namespace _Project.Scripts.Weapon.Statistics
     public struct MeleeWeaponStatistics : IWeaponStatistics
     {
         public MeleeWeaponStatistics(float attackDelayTime, float sphereCastRadius, 
-            int maxSpreadRange, LayerMask layerMask, int maxNumberOfEnemies)
+            int maxSpreadRange, LayerMask enemyLayerMask, int maxNumberOfEnemies)
         {
             AttackDelayTime = attackDelayTime;
             SphereCastRadius = sphereCastRadius;
             MaxSpreadRange = maxSpreadRange;
-            LayerMask = layerMask;
+            EnemyLayerMask = enemyLayerMask;
             MaxNumberOfEnemies = maxNumberOfEnemies;
         }
 
         public float AttackDelayTime;
         public float SphereCastRadius;
         public int MaxSpreadRange;
-        public LayerMask LayerMask;
+        public LayerMask EnemyLayerMask;
         public int MaxNumberOfEnemies;
         
         public static MeleeWeaponStatistics operator +(MeleeWeaponStatistics a, MeleeWeaponStatistics b)
@@ -29,7 +29,7 @@ namespace _Project.Scripts.Weapon.Statistics
                 a.AttackDelayTime + b.AttackDelayTime,
                 a.SphereCastRadius + b.SphereCastRadius,
                 a.MaxSpreadRange + b.MaxSpreadRange,
-                a.LayerMask, // Assuming LayerMask should remain unchanged
+                a.EnemyLayerMask, // Assuming LayerMask should remain unchanged
                 a.MaxNumberOfEnemies + b.MaxNumberOfEnemies
             );
         }
@@ -47,8 +47,8 @@ namespace _Project.Scripts.Weapon.Statistics
             if (MaxSpreadRange != 0)
                 result.Add(nameof(MaxSpreadRange), MaxSpreadRange);
 
-            if (LayerMask != 0)
-                result.Add(nameof(LayerMask), LayerMask.value);
+            if (EnemyLayerMask != 0)
+                result.Add(nameof(EnemyLayerMask), EnemyLayerMask.value);
 
             if (MaxNumberOfEnemies != 0)
                 result.Add(nameof(MaxNumberOfEnemies), MaxNumberOfEnemies);
@@ -78,7 +78,7 @@ namespace _Project.Scripts.Weapon.Statistics
                 nameof(AttackDelayTime) => AttackDelayTime,
                 nameof(SphereCastRadius) => SphereCastRadius,
                 nameof(MaxSpreadRange) => MaxSpreadRange,
-                nameof(LayerMask) => LayerMask.value,
+                nameof(EnemyLayerMask) => EnemyLayerMask.value,
                 nameof(MaxNumberOfEnemies) => MaxNumberOfEnemies,
                 _ => null
             };
@@ -90,7 +90,7 @@ namespace _Project.Scripts.Weapon.Statistics
             return AttackDelayTime != 0 ||
                    SphereCastRadius != 0 ||
                    MaxSpreadRange != 0 ||
-                   LayerMask != 0 ||
+                   EnemyLayerMask != 0 ||
                    MaxNumberOfEnemies != 0;
         }
 

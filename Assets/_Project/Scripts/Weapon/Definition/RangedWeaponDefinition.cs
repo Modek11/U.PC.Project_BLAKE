@@ -42,6 +42,11 @@ namespace _Project.Scripts.Weapon.Definition
         public int MagazineSize;
         
         public float Range;
+
+        [Space(10), Header("PLAYER ONLY")] 
+        public float LoudnessRange;
+        
+        public LayerMask EnemyLayerMask;
         
         [Space(10), Header("ENEMY ONLY")] 
         [Header("Muzzle flash")]
@@ -61,7 +66,9 @@ namespace _Project.Scripts.Weapon.Definition
                 SpreadResetThreshold,
                 ProjectilesPerShot,
                 MagazineSize,
-                Range);
+                Range,
+                LoudnessRange,
+                EnemyLayerMask);
         }
     }
 }

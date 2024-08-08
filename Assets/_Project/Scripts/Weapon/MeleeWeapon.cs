@@ -59,7 +59,7 @@ namespace _Project.Scripts.Weapon
             characterForwardDir.y = 0;
 
             var collidersFoundNumber = Physics.OverlapSphereNonAlloc(characterTransform.position,
-                currentWeaponStats.SphereCastRadius, raycastCollidersFound, currentWeaponStats.LayerMask);
+                currentWeaponStats.SphereCastRadius, raycastCollidersFound, currentWeaponStats.EnemyLayerMask);
             for (var i = 0; i < collidersFoundNumber; i++)
             {
                 var colliderFound = raycastCollidersFound[i];
@@ -86,7 +86,7 @@ namespace _Project.Scripts.Weapon
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
-            if (!Application.isPlaying)
+            if (!Application.isPlaying || !drawDebugGizmos)
             {
                 return;
             }

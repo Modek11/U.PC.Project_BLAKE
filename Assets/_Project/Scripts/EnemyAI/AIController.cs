@@ -96,7 +96,6 @@ public class AIController : MonoBehaviour
         if (newCanSeePlayer)
         {
             CombatStateReference.GetVariable().Value = CombatState.Attack;
-            Debug.Log($"XDDD StateChanged, waiting for alarm enemies");
             DOVirtual.DelayedCall(alarmEnemiesInRoomDelay, () => ChangeStateForEveryInRoom(CombatState.Chase), false).SetLink(gameObject);
             
             if (IsInvoking("ClearPlayerFocus"))
