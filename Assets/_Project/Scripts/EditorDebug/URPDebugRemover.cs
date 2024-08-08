@@ -6,7 +6,12 @@ namespace _Project.Scripts.EditorDebug
 {
     public class URPDebugRemover : MonoBehaviour
     {
-        void OnEnable()
+        private void Start()
+        {
+            OnEnable();
+        }
+
+        private void OnEnable()
         {
             var fieldInfo = typeof(UnityEngine.Rendering.DebugManager).GetField("debugActionMap",
                 BindingFlags.NonPublic | BindingFlags.Instance);
