@@ -38,10 +38,10 @@ namespace _Project.Scripts.ConsoleCommands
 
         private void SpawnGun(string weaponName)
         {
-            weaponName = weaponName.ToLower();
+            weaponName = weaponName.ToLower().Replace(" ", "");
             foreach (var weaponDefinition in weaponDefinitionHolder.ranged)
             {
-                var weaponDefinitionName = weaponDefinition.WeaponName.ToLower();
+                var weaponDefinitionName = weaponDefinition.WeaponName.ToLower().Replace(" ", "");
                 if (weaponName != weaponDefinitionName)
                 {
                     continue;
@@ -54,7 +54,7 @@ namespace _Project.Scripts.ConsoleCommands
             }
         }
         
-        private void SpawnGun(string weaponName,string weaponName2)
+        private void SpawnGun(string weaponName, string weaponName2)
         {
             SpawnGun($"{weaponName} {weaponName2}");
         }

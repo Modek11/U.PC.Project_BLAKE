@@ -247,7 +247,6 @@ namespace _Project.Scripts.Weapon
                 
                 var projectileAngle = Random.Range(negativeSpreadThreshold, positiveSpreadThreshold);
                 projectilesAngles.Add(projectileAngle);
-                Debug.Log($"{currentSpread}, ");
                 
                 if (currentSpread < currentWeaponStats.SpreadThreshold)
                 {

@@ -20,6 +20,9 @@ namespace _Project.Scripts.ConsoleCommands
             DevConsole.singleton.AddCommand(command = new ActionCommand<bool>(GodMode) { className = NAME });
             commandsHolder.Add(command);
             
+            DevConsole.singleton.AddCommand(command = new ActionCommand<bool>(TrueGodMode) { className = NAME });
+            commandsHolder.Add(command);
+
             DevConsole.singleton.AddCommand(command = new ActionCommand<bool>(ShortDash) { className = NAME });
             commandsHolder.Add(command);
 
@@ -30,6 +33,22 @@ namespace _Project.Scripts.ConsoleCommands
         private void GodMode(bool isEnabled)
         {
             ReferenceManager.BlakeHeroCharacter.SetGodMode(isEnabled);
+        }
+
+        private void TrueGodMode(bool isEnabled)
+        {
+            foreach (var command1 in DevConsole.singleton.GetCommands())
+            {
+                if (command1.name is "Player.GodMode" or "Player.ShortDash" or "Weapons.InfiniteAmmo")
+                {
+                    command1.Execute(new object[] {isEnabled});
+                }
+                if (command1.name == "Weapons.SpawnGun" && isEnabled && command1.signature.parameters.Length == 1)
+                {
+                    command1.Execute(new object[] {"glock"});
+                    command1.Execute(new object[] {"machine gun"});
+                }
+            }
         }
         
         private void ShortDash(bool isEnabled)
