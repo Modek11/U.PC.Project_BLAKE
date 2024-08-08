@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5241348274939121157}
   - component: {fileID: 5241348274939121158}
   - component: {fileID: 1601041519742388656}
+  - component: {fileID: 1307527757562084293}
   m_Layer: 0
   m_Name: DevConsoleCommands
   m_TagString: Untagged
@@ -97,3 +98,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e0c789267980a914ba4db4693e5a8a9b, type: 2}
   - {fileID: 11400000, guid: a111b7fa5c94d68438265fc1a909d851, type: 2}
   - {fileID: 11400000, guid: de30911e444a8334fadc4a8a9ac2eeb9, type: 2}
+--- !u!114 &1307527757562084293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5241348274939121159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc391d3442fed94a91ca7bdc42d8d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
