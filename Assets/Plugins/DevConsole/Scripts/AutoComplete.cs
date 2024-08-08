@@ -162,10 +162,12 @@ namespace SickDev.DevConsole {
                 StringBuilder commandsRegexString = new StringBuilder(".*");
 
                 while(match.Success) {
-                    commandsRegexString.Append(string.Format(@"({0}|((\.|_){1})).*", match.Value, StringToFirstLowerCase(match.Value)));
+                    string lowerMatch = match.Value.ToLower();
+                    commandsRegexString.Append(string.Format(@"({0}|((\.|_){1})).*", lowerMatch, lowerMatch));
                     match = match.NextMatch();
                 }
-                return new Regex(commandsRegexString.ToString());
+
+                return new Regex(commandsRegexString.ToString(), RegexOptions.IgnoreCase);
             }
 
             void CategorizeMatches(string text, Regex regex) {
