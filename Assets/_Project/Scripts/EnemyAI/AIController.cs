@@ -81,8 +81,10 @@ public class AIController : MonoBehaviour
         this.Waypoints = waypoints;
     }
     
-    public void ChangeCombatState(CombatState combatState)
+    public void TryChangeCombatState(CombatState combatState)
     {
+        if (!character.IsAlive) return;
+        
         CombatStateReference.GetVariable().Value = combatState;
         if (IsInvoking("ClearPlayerFocus"))
         {
@@ -118,7 +120,7 @@ public class AIController : MonoBehaviour
         {
             if(enemy.AIController == this) continue;
             
-            enemy.AIController.ChangeCombatState(combatState);
+            enemy.AIController.TryChangeCombatState(combatState);
         }
     }
 

@@ -29,7 +29,7 @@ MonoBehaviour:
   AttackDelayTime: 0.5
   SpereCastRadius: 2
   MaxSpreadRange: 90
-  LayerMask:
+  EnemyLayerMask:
     serializedVersion: 2
     m_Bits: 512
   MaxNumberOfEnemies: 5

@@ -160,7 +160,7 @@ namespace _Project.Scripts.Weapon
                 currentWeaponStats.LoudnessRange, currentWeaponStats.EnemyLayerMask);
             foreach (var enemy in collidersFoundNumber)
             {
-                enemy.GetComponent<AIController>().ChangeCombatState(CombatState.Chase);
+                enemy.GetComponent<AIController>().TryChangeCombatState(CombatState.Chase);
             }
         }
 
