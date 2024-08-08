@@ -272,7 +272,6 @@ namespace _Project.Scripts.UI.Gameplay
             ReferenceManager.PlayerInputController.onMapPressEvent -= ShowMap;
             ReferenceManager.PlayerInputController.onMapReleaseEvent -= HideMap;
 
-
             EnemyDeathMediator.Instance.OnRegisteredEnemyDeath -= UpdatePointsAndCombo;
             ReferenceManager.PlayerCurrencyController.OnPointsChanged -= RefreshPoints;
             EnemyDeathMediator.Instance.ComboController.OnComboTimerEnd -= HideComboTexts;

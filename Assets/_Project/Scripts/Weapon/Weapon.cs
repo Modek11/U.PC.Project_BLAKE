@@ -7,8 +7,9 @@ namespace _Project.Scripts.Weapon
 {
     public abstract class Weapon : MonoBehaviour
     {
-        [SerializeField]
-        public WeaponDefinition WeaponDefinition;
+        [SerializeField] protected bool drawDebugGizmos;
+        
+        [SerializeField] public WeaponDefinition WeaponDefinition;
 
         //BlakeCharacter
         private BlakeCharacter owner;

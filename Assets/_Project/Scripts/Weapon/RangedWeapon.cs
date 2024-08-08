@@ -126,14 +126,7 @@ namespace _Project.Scripts.Weapon
         {
             if (BulletsLeft == 0)
             {
-                if(!weaponsManager.throwOnNoAmmo) return false;
-                //Spawn and throw weapon
-                var spawnedThrowable = Instantiate(throwableWeapon, bulletsSpawnPoint.position, transform.rotation);
-                spawnedThrowable.transform.parent = null;
-                spawnedThrowable.SetupVFX(rangedWeaponDefinition.WeaponGFX);
-                spawnedThrowable.SetupBullet(0, transform.parent.gameObject);
-                StartCoroutine("UnequipSelf");
-                return true;
+                return TryThrowWeapon();
             }
 
             var list = GetCalculatedProjectilesAngles();
@@ -151,8 +144,35 @@ namespace _Project.Scripts.Weapon
                 }
             }
 
+            if (!weaponOwnerIsEnemy)
+            {
+                SpreadWeaponSound();
+            }
+
             if (!infinityAmmo) BulletsLeft--;
 
+            return true;
+        }
+
+        private void SpreadWeaponSound()
+        {
+            var collidersFoundNumber = Physics.OverlapSphere(Owner.transform.position,
+                currentWeaponStats.LoudnessRange, currentWeaponStats.EnemyLayerMask);
+            foreach (var enemy in collidersFoundNumber)
+            {
+                enemy.GetComponent<AIController>().ChangeCombatState(CombatState.Chase);
+            }
+        }
+
+        private bool TryThrowWeapon()
+        {
+            if(!weaponsManager.throwOnNoAmmo) return false;
+            //Spawn and throw weapon
+            var spawnedThrowable = Instantiate(throwableWeapon, bulletsSpawnPoint.position, transform.rotation);
+            spawnedThrowable.transform.parent = null;
+            spawnedThrowable.SetupVFX(rangedWeaponDefinition.WeaponGFX);
+            spawnedThrowable.SetupBullet(0, transform.parent.gameObject);
+            StartCoroutine("UnequipSelf");
             return true;
         }
 
@@ -332,6 +352,17 @@ namespace _Project.Scripts.Weapon
         }
 
 #if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            if (!Application.isPlaying || !drawDebugGizmos)
+            {
+                return;
+            }
+            
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(Owner.transform.position, currentWeaponStats.LoudnessRange);
+        }
+        
         public void SetInfiniteAmmo(bool setInfinite)
         {
             infinityAmmo = setInfinite;

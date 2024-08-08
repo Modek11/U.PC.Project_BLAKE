@@ -18,7 +18,7 @@ namespace _Project.Scripts.Weapon.Upgrades
             foreach (var upgradeData in meleeUpgradeData)
             {
                 upgradeData.WeaponDefinition = weaponDefinition;
-                upgradeData.meleeWeaponStatistics.LayerMask = 0;
+                upgradeData.meleeWeaponStatistics.EnemyLayerMask = 0;
             }
             
             foreach (var upgradeData in rangedUpgradeData)

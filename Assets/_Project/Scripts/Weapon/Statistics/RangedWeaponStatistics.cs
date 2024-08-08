@@ -10,7 +10,7 @@ namespace _Project.Scripts.Weapon.Statistics
     {
         public RangedWeaponStatistics(float waitingTimeForNextShoot, BulletType bulletType, 
             SpreadType spreadType, float spread, float spreadStep, float spreadThreshold, float spreadResetThreshold, 
-            int projectilesPerShot, int magazineSize, float range)
+            int projectilesPerShot, int magazineSize, float range, float loudnessRange, LayerMask enemyLayerMask)
         {
             WaitingTimeForNextShoot = waitingTimeForNextShoot;
             BulletType = bulletType;
@@ -22,6 +22,8 @@ namespace _Project.Scripts.Weapon.Statistics
             ProjectilesPerShot = projectilesPerShot;
             MagazineSize = magazineSize;
             Range = range;
+            LoudnessRange = loudnessRange;
+            EnemyLayerMask = enemyLayerMask;
         }
 
         public float WaitingTimeForNextShoot;
@@ -34,14 +36,17 @@ namespace _Project.Scripts.Weapon.Statistics
         public int ProjectilesPerShot;
         public int MagazineSize;
         public float Range;
+        public float LoudnessRange;
+        public LayerMask EnemyLayerMask;
         
         public static RangedWeaponStatistics operator +(RangedWeaponStatistics a, RangedWeaponStatistics b)
         {
             if ((a.BulletType != BulletType.Undefined && b.BulletType != BulletType.Undefined) || 
-                (a.SpreadType != SpreadType.Undefined && b.SpreadType != SpreadType.Undefined))
+                (a.SpreadType != SpreadType.Undefined && b.SpreadType != SpreadType.Undefined) ||
+                (a.EnemyLayerMask != 0 && b.EnemyLayerMask != 0))
             {
                 Debug.LogError(
-                    "You are trying to combine two different BulletTypes or SpreadTypes. Returning Types from first variable!");
+                    "You are trying to combine two different BulletTypes or SpreadTypes or LayerMask. Returning Types from first variable!");
             }
             
             return new RangedWeaponStatistics(
@@ -54,7 +59,9 @@ namespace _Project.Scripts.Weapon.Statistics
                 a.SpreadResetThreshold + b.SpreadResetThreshold,
                 a.ProjectilesPerShot + b.ProjectilesPerShot,
                 a.MagazineSize + b.MagazineSize,
-                a.Range + b.Range
+                a.Range + b.Range,
+                a.LoudnessRange + b.LoudnessRange,
+                a.EnemyLayerMask // Assuming layerMask should remain unchanged
             );
         }
         
@@ -91,6 +98,12 @@ namespace _Project.Scripts.Weapon.Statistics
 
             if (Range != 0)
                 result.Add(nameof(Range), Range);
+            
+            if (LoudnessRange != 0)
+                result.Add(nameof(LoudnessRange), LoudnessRange);
+            
+            if(EnemyLayerMask != 0)
+                result.Add(nameof(EnemyLayerMask), EnemyLayerMask);
 
             return result;
         }
@@ -124,6 +137,8 @@ namespace _Project.Scripts.Weapon.Statistics
                 nameof(ProjectilesPerShot) => ProjectilesPerShot,
                 nameof(MagazineSize) => MagazineSize,
                 nameof(Range) => Range,
+                nameof(LoudnessRange) => LoudnessRange,
+                nameof(EnemyLayerMask) => (float)EnemyLayerMask,
                 _ => null
             };
         }
@@ -140,7 +155,9 @@ namespace _Project.Scripts.Weapon.Statistics
                    SpreadResetThreshold != 0 ||
                    ProjectilesPerShot != 0 ||
                    MagazineSize != 0 ||
-                   Range != 0;
+                   Range != 0 ||
+                   LoudnessRange != 0 ||
+                   EnemyLayerMask != 0;
         }
     }
 }
