@@ -21,8 +21,6 @@ namespace _Project.Scripts.ConsoleCommands
         
         protected override void Initialize()
         {
-            base.Initialize();
-            
             DevConsole.singleton.AddCommand(command = new ActionCommand<string>(SpawnGun) { className = NAME });
             commandsHolder.Add(command);
             
@@ -34,6 +32,8 @@ namespace _Project.Scripts.ConsoleCommands
             
             DevConsole.singleton.AddCommand(command = new ActionCommand<bool>(InfiniteAmmo) { className = NAME });
             commandsHolder.Add(command);
+            
+            base.Initialize();
         }
 
         private void SpawnGun(string weaponName)

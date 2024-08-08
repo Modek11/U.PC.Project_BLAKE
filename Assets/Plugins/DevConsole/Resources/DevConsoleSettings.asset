@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9340f545dec0840479a6b26033680948, type: 3}
   m_Name: DevConsoleSettings
   m_EditorClassIdentifier: 
-  selectedTab: 3
+  selectedTab: 0
   attachedLogLevel: -1
   openKey: 96
   autoCompleteKey: 283
@@ -23,7 +23,7 @@ MonoBehaviour:
   optimizeForOnGUI: 1
   groupIdenticalEntries: 0
   useAndFiltering: 0
-  clearInputOnClose: 0
+  clearInputOnClose: 1
   enableHistory: 1
   autoCompleteWithEnter: 1
   autoCompleteBehaviour: 2
