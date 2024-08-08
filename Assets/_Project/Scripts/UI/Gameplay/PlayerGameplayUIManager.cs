@@ -269,11 +269,8 @@ namespace _Project.Scripts.UI.Gameplay
             blakeHeroCharacter.OnDamageTaken -= HealthLeftUI;
             blakeHeroCharacter.onRespawn -= OnRespawnUIUpdate;
 
-            if (ReferenceManager.BlakeHeroCharacter is not null)
-            {
-                ReferenceManager.PlayerInputController.onMapPressEvent -= ShowMap;
-                ReferenceManager.PlayerInputController.onMapReleaseEvent -= HideMap;
-            }
+            ReferenceManager.PlayerInputController.onMapPressEvent -= ShowMap;
+            ReferenceManager.PlayerInputController.onMapReleaseEvent -= HideMap;
 
             EnemyDeathMediator.Instance.OnRegisteredEnemyDeath -= UpdatePointsAndCombo;
             ReferenceManager.PlayerCurrencyController.OnPointsChanged -= RefreshPoints;
