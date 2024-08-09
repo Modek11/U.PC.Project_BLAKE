@@ -1,7 +1,7 @@
 using _Project.Scripts;
 using _Project.Scripts.EnemyAI;
 using _Project.Scripts.GlobalHandlers;
-using _Project.Scripts.Weapon;
+using _Project.Scripts.Weapons;
 using DG.Tweening;
 using MBT;
 using UnityEngine;

@@ -1,5 +1,5 @@
 using _Project.Scripts.GlobalHandlers;
-using _Project.Scripts.Weapon;
+using _Project.Scripts.Weapons;
 using SickDev.CommandSystem;
 using SickDev.DevConsole;
 using UnityEngine;
@@ -88,7 +88,7 @@ namespace _Project.Scripts.ConsoleCommands
             }
         }
 
-        private void OnPlayerPickupWeapon(Weapon.Weapon weapon)
+        private void OnPlayerPickupWeapon(Weapon weapon)
         {
             if (weapon != null && weapon is RangedWeapon rangedWeapon)
             {

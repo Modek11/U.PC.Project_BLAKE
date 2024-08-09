@@ -1,4 +1,5 @@
 using _Project.Scripts.GlobalHandlers;
+using _Project.Scripts.Weapons;
 using GameFramework.Abilities;
 
 namespace _Project.Scripts.Abilities

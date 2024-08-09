@@ -1,5 +1,5 @@
 using System;
-using _Project.Scripts.Weapon;
+using _Project.Scripts.Weapons;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
