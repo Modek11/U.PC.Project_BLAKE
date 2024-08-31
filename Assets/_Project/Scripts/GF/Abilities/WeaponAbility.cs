@@ -1,4 +1,4 @@
-using _Project.Scripts.Weapon;
+using _Project.Scripts.Weapons;
 using UnityEngine;
 
 namespace GameFramework.Abilities

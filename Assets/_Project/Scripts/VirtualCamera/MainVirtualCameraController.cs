@@ -24,10 +24,9 @@ namespace _Project.Scripts.VirtualCamera
             _basicOrthoSize = _virtualCamera.m_Lens.OrthographicSize;
         }
 
-        public void ChangeZoom()
+        public void ZoomOutAndResetWithDelay()
         {
-            _tween.Kill();
-            _resetTween.Kill();
+            ResetTweens();
             _resetTween = DOTween.Sequence();
             
             var from = _virtualCamera.m_Lens.OrthographicSize;
@@ -39,6 +38,7 @@ namespace _Project.Scripts.VirtualCamera
             var to = _isZoomedOut ? _basicOrthoSize : _basicOrthoSize + zoomOutValue;
             
             _tween = DOVirtual.Float(from, to, zoomingDuration, v => _virtualCamera.m_Lens.OrthographicSize = v);
+            
             if (!_isZoomedOut)
             {
                 _resetTween.Append(DOVirtual.Float(to, _basicOrthoSize, zoomingDuration, v => _virtualCamera.m_Lens.OrthographicSize = v)
@@ -49,10 +49,22 @@ namespace _Project.Scripts.VirtualCamera
             _isZoomedOut = !_isZoomedOut;
         }
 
-        private void OnDisable()
+        public void ResetZoom()
+        {
+            ResetTweens();
+            var from = _virtualCamera.m_Lens.OrthographicSize;
+            _tween = DOVirtual.Float(from, _basicOrthoSize, zoomingDuration, v => _virtualCamera.m_Lens.OrthographicSize = v);
+        }
+
+        private void ResetTweens()
         {
             _tween.Kill();
             _resetTween.Kill();
+        }
+
+        private void OnDisable()
+        {
+            ResetTweens();
         }
     }
 }

@@ -1,10 +1,8 @@
 using MBT;
 using System;
-using _Project.Scripts;
 using _Project.Scripts.GlobalHandlers;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.XR;
 
 [AddComponentMenu("")]
 [MBTNode(name = "Tasks/Move To Target")]
@@ -44,7 +42,7 @@ public class BTT_MoveToTarget : Leaf
         if (AIController.NavMeshAgent.pathStatus == NavMeshPathStatus.PathPartial) { return NodeResult.failure; }
         if (AIController.NavMeshAgent.pathStatus == NavMeshPathStatus.PathInvalid) { return NodeResult.failure; }
         if (!AIController.NavMeshAgent.hasPath) { return NodeResult.failure; }
-        if (AIController.NavMeshAgent.velocity.sqrMagnitude == 0f) { return NodeResult.failure; }
+        //if (AIController.NavMeshAgent.velocity.sqrMagnitude == 0f) { return NodeResult.failure; }
 
         float speed = AIController.GetEnemyScript().CalculateSpeed();
         AIController.NavMeshAgent.speed = speed;

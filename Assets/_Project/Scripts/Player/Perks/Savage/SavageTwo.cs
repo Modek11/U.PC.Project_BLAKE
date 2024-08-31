@@ -1,5 +1,5 @@
-using _Project.Scripts.Weapon;
 using _Project.Scripts.GlobalHandlers;
+using _Project.Scripts.Weapons;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SavageTwoPerk", menuName = "Abilities/Perks/Savage Two")]

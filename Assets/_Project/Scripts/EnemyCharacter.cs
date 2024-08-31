@@ -1,5 +1,5 @@
 using System;
-using _Project.Scripts.Weapon;
+using _Project.Scripts.Weapons;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -19,7 +19,6 @@ namespace _Project.Scripts
         [SerializeField]
         private WeaponPickup weaponPickup;
 
-        private AIController ai;
         private float destroySelfTime = 2f;
         private float dropWeaponTime = .3f;
 
@@ -27,9 +26,11 @@ namespace _Project.Scripts
         public Room SpawnedInRoom;
         public bool savageThreeActivated = false;
 
+        public AIController AIController { get; private set; }
+
         private void Awake()
         {
-            ai = GetComponent<AIController>();
+            AIController = GetComponent<AIController>();
         }
 
         public float CalculateSpeed()
@@ -73,12 +74,12 @@ namespace _Project.Scripts
 
         private async UniTaskVoid DropWeapon(GameObject killer)
         {
-            if (ai.Weapon.WeaponDefinition == null)
+            if (AIController.Weapon.WeaponDefinition == null)
             {
                 Debug.LogError("WeaponDefinition is not valid. " + name);
                 return;
             }
-            var weapon = ai.Weapon;
+            var weapon = AIController.Weapon;
 
             if (savageThreeActivated)
             {
@@ -95,7 +96,7 @@ namespace _Project.Scripts
                     }
                 }
             }
-            Destroy(ai.Weapon.gameObject);
+            Destroy(AIController.Weapon.gameObject);
 
             await UniTask.Delay(TimeSpan.FromSeconds(dropWeaponTime));
 

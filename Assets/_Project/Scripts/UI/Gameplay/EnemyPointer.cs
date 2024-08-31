@@ -27,7 +27,7 @@ public class EnemyPointer : MonoBehaviour
         }
         if (player == null || roomManager == null) return;
         offScreenEnemies.Clear();
-        var list = roomManager.GetActiveRoom()?.GetSpawnedEnemies();
+        var list = roomManager.GetActiveRoom()?.SpawnedEnemiesList;
         if (list == null) return;
         foreach (var enemy in list)
         {

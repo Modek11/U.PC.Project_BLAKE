@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using _Project.Scripts.Floor_Generation;
 using _Project.Scripts.GlobalHandlers;
 using _Project.Scripts.PointsSystem;
-using _Project.Scripts.Weapon;
+using _Project.Scripts.Weapons;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -128,19 +128,19 @@ namespace _Project.Scripts.UI.Gameplay
             mapUI.SetActive(false);
         }
 
-        private void RefreshUI(Weapon.Weapon weapon)
+        private void RefreshUI(Weapon weapon)
         {
             WeaponNameUI(weapon);
             BulletsLeftUI(weapon);
             RefreshPoints(PlayerCurrencyController.Instance.Points);
         }
 
-        private void WeaponNameUI(Weapon.Weapon weapon)
+        private void WeaponNameUI(Weapon weapon)
         {
             weaponName.text = weapon.WeaponDefinition.WeaponName;
         }
 
-        private void BulletsLeftUI(Weapon.Weapon weapon)
+        private void BulletsLeftUI(Weapon weapon)
         {
             var rangedWeapon = weapon as RangedWeapon;
 
@@ -271,7 +271,6 @@ namespace _Project.Scripts.UI.Gameplay
 
             ReferenceManager.PlayerInputController.onMapPressEvent -= ShowMap;
             ReferenceManager.PlayerInputController.onMapReleaseEvent -= HideMap;
-
 
             EnemyDeathMediator.Instance.OnRegisteredEnemyDeath -= UpdatePointsAndCombo;
             ReferenceManager.PlayerCurrencyController.OnPointsChanged -= RefreshPoints;

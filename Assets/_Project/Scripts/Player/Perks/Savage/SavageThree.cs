@@ -1,6 +1,6 @@
-using _Project.Scripts.Weapon;
 using _Project.Scripts;
 using _Project.Scripts.GlobalHandlers;
+using _Project.Scripts.Weapons;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SavageThreePerk", menuName = "Abilities/Perks/Savage Three")]

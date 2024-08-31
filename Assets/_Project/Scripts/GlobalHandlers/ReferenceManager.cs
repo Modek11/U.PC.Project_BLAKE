@@ -5,7 +5,7 @@ using _Project.Scripts.Player;
 using _Project.Scripts.PointsSystem;
 using _Project.Scripts.SceneHandler;
 using _Project.Scripts.VirtualCamera;
-using _Project.Scripts.Weapon.Upgrades;
+using _Project.Scripts.Weapons.Upgrades;
 using Unity.Services.Core;
 
 namespace _Project.Scripts.GlobalHandlers

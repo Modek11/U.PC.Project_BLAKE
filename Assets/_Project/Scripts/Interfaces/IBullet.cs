@@ -1,4 +1,4 @@
-using _Project.Scripts.Weapon.Upgrades.Bullet;
+using _Project.Scripts.Weapons.Upgrades.Bullet;
 using UnityEngine;
 
 public interface IBullet

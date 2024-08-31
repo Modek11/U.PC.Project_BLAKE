@@ -1,5 +1,5 @@
 using _Project.Scripts.GlobalHandlers;
-using _Project.Scripts.Weapon;
+using _Project.Scripts.Weapons;
 using SickDev.CommandSystem;
 using SickDev.DevConsole;
 using UnityEngine;
@@ -21,8 +21,6 @@ namespace _Project.Scripts.ConsoleCommands
         
         protected override void Initialize()
         {
-            base.Initialize();
-            
             DevConsole.singleton.AddCommand(command = new ActionCommand<string>(SpawnGun) { className = NAME });
             commandsHolder.Add(command);
             
@@ -34,14 +32,16 @@ namespace _Project.Scripts.ConsoleCommands
             
             DevConsole.singleton.AddCommand(command = new ActionCommand<bool>(InfiniteAmmo) { className = NAME });
             commandsHolder.Add(command);
+            
+            base.Initialize();
         }
 
         private void SpawnGun(string weaponName)
         {
-            weaponName = weaponName.ToLower();
+            weaponName = weaponName.ToLower().Replace(" ", "");
             foreach (var weaponDefinition in weaponDefinitionHolder.ranged)
             {
-                var weaponDefinitionName = weaponDefinition.WeaponName.ToLower();
+                var weaponDefinitionName = weaponDefinition.WeaponName.ToLower().Replace(" ", "");
                 if (weaponName != weaponDefinitionName)
                 {
                     continue;
@@ -54,7 +54,7 @@ namespace _Project.Scripts.ConsoleCommands
             }
         }
         
-        private void SpawnGun(string weaponName,string weaponName2)
+        private void SpawnGun(string weaponName, string weaponName2)
         {
             SpawnGun($"{weaponName} {weaponName2}");
         }
@@ -88,7 +88,7 @@ namespace _Project.Scripts.ConsoleCommands
             }
         }
 
-        private void OnPlayerPickupWeapon(Weapon.Weapon weapon)
+        private void OnPlayerPickupWeapon(Weapon weapon)
         {
             if (weapon != null && weapon is RangedWeapon rangedWeapon)
             {

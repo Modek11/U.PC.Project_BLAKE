@@ -50,7 +50,6 @@ namespace _Project.Scripts.UI.Gameplay
         private void OnDestroy()
         {
             ReferenceManager.PlayerInputController.escapeButtonEvent -= SwitchPauseGameCanvas;
-
         }
 
     }

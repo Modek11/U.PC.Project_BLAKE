@@ -15,8 +15,6 @@ namespace _Project.Scripts.ConsoleCommands
 
         protected override void Initialize()
         {
-            base.Initialize();
-
             DevConsole.singleton.AddCommand(command = new ActionCommand<string>(AddPerk) { className = NAME });
             commandsHolder.Add(command);
 
@@ -28,6 +26,8 @@ namespace _Project.Scripts.ConsoleCommands
 
             DevConsole.singleton.AddCommand(command = new ActionCommand(AddAllPerks) { className = NAME });
             commandsHolder.Add(command);
+            
+            base.Initialize();
         }
 
         private void AddPerk(string perkName)
