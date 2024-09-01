@@ -141,7 +141,10 @@ public class Room : MonoBehaviour
             roomConnector.UnlockDoor();
             roomConnector.CloseDoor();
         }
-        
+
+
+        SpawnEnemies();
+
         isInitialized = true;
     }
 
@@ -266,7 +269,6 @@ public class Room : MonoBehaviour
 
         if (!isBeaten)
         {
-            SpawnEnemies();
 
             if (spawnedEnemies.Count == 0)
             {
@@ -346,7 +348,7 @@ public class Room : MonoBehaviour
             rt.Reset();
         }
 
-        Invoke("ResetEnemies", 0.5f);
+        //Invoke("ResetEnemies", 0.5f);
 
         foreach (var weapon in instantiatedWeapons.ToArray())
         {
