@@ -30,7 +30,9 @@ public class Fog : MonoBehaviour
         {
             for (int j = 0; j < fogDepth; j++)
             {
-                particles.Add(new FogParticle(i, j, Instantiate(particlePrefab, new Vector3(transform.position.x + i * particleSpacing, transform.position.y + particlesYOffset, transform.position.z + j *particleSpacing), Quaternion.identity, this.transform)));
+                Vector3 local = new Vector3(i * particleSpacing, transform.position.y + particlesYOffset, j* particleSpacing);
+                Vector3 world = transform.TransformPoint(local);
+                particles.Add(new FogParticle(i, j, Instantiate(particlePrefab, world, Quaternion.identity, this.transform)));
             }
         }
     }
@@ -41,10 +43,6 @@ public class Fog : MonoBehaviour
         List<Renderer> toHide = new List<Renderer>();
         foreach(FogParticle particle in particles)
         {
-            if(particle.particlePrefab.transform.position.y != transform.position.y + particlesYOffset)
-            {
-                particle.particlePrefab.transform.position = new Vector3(particle.particlePrefab.transform.position.x, transform.position.y + particlesYOffset, particle.particlePrefab.transform.position.z);
-            }
             Vector3 localPosition = new Vector3(particle.x * particleSpacing, 0, particle.y * particleSpacing);
             Vector3 worldPosition = transform.TransformPoint(localPosition);
             Collider[] hits = Physics.OverlapCapsule(worldPosition - Vector3.up, worldPosition + Vector3.up, 0.2f, objectsToHide);
