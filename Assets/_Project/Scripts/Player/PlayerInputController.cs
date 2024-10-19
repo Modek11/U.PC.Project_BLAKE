@@ -38,6 +38,7 @@ namespace _Project.Scripts.Player
         public event Action onShootStrongCancelEvent;
         public event Action<int> changeWeaponEvent;
         public event Action interactEvent;
+        public event Action altInteractEvent;
         public event Action onMapPressEvent; 
         public event Action onMapReleaseEvent;
         public event Action dashEvent;
@@ -83,6 +84,14 @@ namespace _Project.Scripts.Player
             if(context.performed)
             {
                 interactEvent?.Invoke();
+            }
+        }
+
+        public void OnAltInteract(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                altInteractEvent?.Invoke();
             }
         }
 

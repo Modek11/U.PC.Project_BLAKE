@@ -51,6 +51,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "AltInteract",
+                    "type": "Button",
+                    "id": "17223dc6-393d-412b-a79f-0837a6e3b483",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Map",
                     "type": "Button",
                     "id": "5687928f-5e57-44f1-b96a-39b35ed0d295",
@@ -261,6 +270,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ShootStrong",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "083c51e1-2625-406e-8972-38b2cd799f5a",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AltInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -3,6 +3,7 @@ using UnityEngine;
 using Unity.AI.Navigation;
 using System;
 using _Project.Scripts;
+using System.Linq;
 
 public enum RoomType
 {
@@ -31,9 +32,6 @@ public class Room : MonoBehaviour
     [SerializeField]
     private RandomizedRoomObject[] randomObjects;
 
-    [SerializeField]
-    private GameObject fog;
-
     private RoomManager roomManager;
 
     [SerializeField, Header("Minimap variables")]
@@ -56,6 +54,23 @@ public class Room : MonoBehaviour
 
     [SerializeField]
     private Transform spawnPoint;
+
+    [Header("Fog")]
+    private bool isControlPerkActivated = false;
+    [SerializeField]
+    private GameObject fog;
+    [SerializeField]
+    private GameObject fogBlockerPrefab;
+    [SerializeField]
+    private int fogBlockerAmount = 1;
+    [SerializeField]
+    private int fogBlockerUpgradeAmount = 2;
+    [SerializeField]
+    private float fogBlockerSize = 1f;
+    [SerializeField]
+    private Transform[] fogPoints;
+    [SerializeField]
+    private List<GameObject> activefogBlockers = new List<GameObject>();
 
     private BlakeHeroCharacter blakeHeroCharacter;
     private List<RoomTrigger> triggers = new List<RoomTrigger>();
@@ -108,10 +123,45 @@ public class Room : MonoBehaviour
         }
     }
 
+    public void SetControlPerkOne(bool value)
+    {
+        isControlPerkActivated = value;
+    }
+
+    public void SetupFogBlockers()
+    {
+        if (!isControlPerkActivated) return;
+        if (fogBlockerPrefab == null) return;
+        if (fogPoints.Length == 0) return;
+        List<Transform> avaiblePoints = new List<Transform>(fogPoints);
+        for(int i = 0; i < fogBlockerUpgradeAmount; i++)
+        {
+            var point = avaiblePoints[UnityEngine.Random.Range(0, avaiblePoints.Count)];
+            var fogBlocker = Instantiate(fogBlockerPrefab, point.position, Quaternion.identity, this.transform);
+            fogBlocker.transform.localScale *= fogBlockerSize;
+            activefogBlockers.Add(fogBlocker);
+            avaiblePoints.Remove(point);
+
+            if(i < fogBlockerUpgradeAmount && i >= fogBlockerAmount)
+            {
+                fogBlocker.SetActive(false);
+            }
+
+            if (avaiblePoints.Count == 0) break;
+        }
+    }
+
+    public void ActivateAllBlockers()
+    {
+        foreach(var blocker in activefogBlockers)
+        {
+            blocker.SetActive(true);
+        }
+    }
+
     public void InitializeRoom(RoomManager rm)
     {
         roomManager = rm;
-        
         foreach(RandomizedRoomObject randomObject in randomObjects)
         {
             randomObject.InitializeRandomObject();
@@ -142,7 +192,7 @@ public class Room : MonoBehaviour
             roomConnector.CloseDoor();
         }
 
-
+        SetupFogBlockers();
         SpawnEnemies();
 
         isInitialized = true;

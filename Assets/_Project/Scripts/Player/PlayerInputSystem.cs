@@ -73,6 +73,15 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""AltInteract"",
+                    ""type"": ""Button"",
+                    ""id"": ""17223dc6-393d-412b-a79f-0837a6e3b483"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Map"",
                     ""type"": ""Button"",
                     ""id"": ""5687928f-5e57-44f1-b96a-39b35ed0d295"",
@@ -285,6 +294,17 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""ShootStrong"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""083c51e1-2625-406e-8972-38b2cd799f5a"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AltInteract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -332,6 +352,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         m_Gameplay_ShootBasic = m_Gameplay.FindAction("ShootBasic", throwIfNotFound: true);
         m_Gameplay_ShootStrong = m_Gameplay.FindAction("ShootStrong", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
+        m_Gameplay_AltInteract = m_Gameplay.FindAction("AltInteract", throwIfNotFound: true);
         m_Gameplay_Map = m_Gameplay.FindAction("Map", throwIfNotFound: true);
         m_Gameplay_MousePosition = m_Gameplay.FindAction("MousePosition", throwIfNotFound: true);
         m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
@@ -407,6 +428,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_ShootBasic;
     private readonly InputAction m_Gameplay_ShootStrong;
     private readonly InputAction m_Gameplay_Interact;
+    private readonly InputAction m_Gameplay_AltInteract;
     private readonly InputAction m_Gameplay_Map;
     private readonly InputAction m_Gameplay_MousePosition;
     private readonly InputAction m_Gameplay_Dash;
@@ -420,6 +442,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         public InputAction @ShootBasic => m_Wrapper.m_Gameplay_ShootBasic;
         public InputAction @ShootStrong => m_Wrapper.m_Gameplay_ShootStrong;
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
+        public InputAction @AltInteract => m_Wrapper.m_Gameplay_AltInteract;
         public InputAction @Map => m_Wrapper.m_Gameplay_Map;
         public InputAction @MousePosition => m_Wrapper.m_Gameplay_MousePosition;
         public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
@@ -448,6 +471,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @AltInteract.started += instance.OnAltInteract;
+            @AltInteract.performed += instance.OnAltInteract;
+            @AltInteract.canceled += instance.OnAltInteract;
             @Map.started += instance.OnMap;
             @Map.performed += instance.OnMap;
             @Map.canceled += instance.OnMap;
@@ -479,6 +505,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @AltInteract.started -= instance.OnAltInteract;
+            @AltInteract.performed -= instance.OnAltInteract;
+            @AltInteract.canceled -= instance.OnAltInteract;
             @Map.started -= instance.OnMap;
             @Map.performed -= instance.OnMap;
             @Map.canceled -= instance.OnMap;
@@ -599,6 +628,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         void OnShootBasic(InputAction.CallbackContext context);
         void OnShootStrong(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnAltInteract(InputAction.CallbackContext context);
         void OnMap(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);

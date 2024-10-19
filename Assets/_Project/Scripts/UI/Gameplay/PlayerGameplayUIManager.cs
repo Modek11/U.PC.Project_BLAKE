@@ -43,6 +43,8 @@ namespace _Project.Scripts.UI.Gameplay
 
         [SerializeField] 
         private GameObject interactUI;
+        [SerializeField]
+        private GameObject altInteractUI;
 
         [SerializeField]
         private GameObject mapUI;
@@ -87,7 +89,7 @@ namespace _Project.Scripts.UI.Gameplay
             blakeHeroCharacter = player.GetComponent<BlakeHeroCharacter>();
             playerMovement = player.GetComponent<PlayerMovement>();
 
-            playerInteractables.SetInteractUIReference(interactUI);
+            playerInteractables.SetInteractUIReference(interactUI, altInteractUI);
             //dashCooldownImage = dashCooldownUI.transform.GetChild(1).GetComponent<Image>();
 
             EnemyDeathMediator.Instance.OnRegisteredEnemyDeath += UpdatePointsAndCombo;

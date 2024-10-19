@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MechanicalDoor : Door, IInteractable
+public class MechanicalDoor : Door, IInteractable, IAltInteractable
 {
     [SerializeField]
     private Animator animator;
@@ -54,7 +54,19 @@ public class MechanicalDoor : Door, IInteractable
         }
     }
 
+
     public bool CanInteract()
+    {
+        return interactable;
+    }
+
+
+    public void AltInteract(GameObject interacter)
+    {
+        Debug.Log("Peeking");
+    }
+
+    public bool CanAltInteract()
     {
         return interactable;
     }
@@ -95,4 +107,5 @@ public class MechanicalDoor : Door, IInteractable
         var currentState = animator.GetCurrentAnimatorStateInfo(0);
         return currentState.normalizedTime < 1 && animator.GetCurrentAnimatorClipInfo(0).Length > 0;
     }
+
 }
