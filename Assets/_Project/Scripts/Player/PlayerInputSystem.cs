@@ -341,6 +341,45 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""RoomPeeking"",
+            ""id"": ""99ed0cb5-bbad-4485-a338-e3e7a139f48a"",
+            ""actions"": [
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""af84a843-ffc8-4079-905f-3c487b5824ba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8a7c038e-4d47-4705-9ae7-a450c580613e"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b2f8f9ac-44aa-4c44-82eb-e648f6b3b347"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -362,6 +401,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_PerkMenu = m_Debug.FindAction("PerkMenu", throwIfNotFound: true);
+        // RoomPeeking
+        m_RoomPeeking = asset.FindActionMap("RoomPeeking", throwIfNotFound: true);
+        m_RoomPeeking_Cancel = m_RoomPeeking.FindAction("Cancel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -621,6 +663,52 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         }
     }
     public DebugActions @Debug => new DebugActions(this);
+
+    // RoomPeeking
+    private readonly InputActionMap m_RoomPeeking;
+    private List<IRoomPeekingActions> m_RoomPeekingActionsCallbackInterfaces = new List<IRoomPeekingActions>();
+    private readonly InputAction m_RoomPeeking_Cancel;
+    public struct RoomPeekingActions
+    {
+        private @PlayerInputSystem m_Wrapper;
+        public RoomPeekingActions(@PlayerInputSystem wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Cancel => m_Wrapper.m_RoomPeeking_Cancel;
+        public InputActionMap Get() { return m_Wrapper.m_RoomPeeking; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(RoomPeekingActions set) { return set.Get(); }
+        public void AddCallbacks(IRoomPeekingActions instance)
+        {
+            if (instance == null || m_Wrapper.m_RoomPeekingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_RoomPeekingActionsCallbackInterfaces.Add(instance);
+            @Cancel.started += instance.OnCancel;
+            @Cancel.performed += instance.OnCancel;
+            @Cancel.canceled += instance.OnCancel;
+        }
+
+        private void UnregisterCallbacks(IRoomPeekingActions instance)
+        {
+            @Cancel.started -= instance.OnCancel;
+            @Cancel.performed -= instance.OnCancel;
+            @Cancel.canceled -= instance.OnCancel;
+        }
+
+        public void RemoveCallbacks(IRoomPeekingActions instance)
+        {
+            if (m_Wrapper.m_RoomPeekingActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IRoomPeekingActions instance)
+        {
+            foreach (var item in m_Wrapper.m_RoomPeekingActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_RoomPeekingActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public RoomPeekingActions @RoomPeeking => new RoomPeekingActions(this);
     public interface IGameplayActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -640,5 +728,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     public interface IDebugActions
     {
         void OnPerkMenu(InputAction.CallbackContext context);
+    }
+    public interface IRoomPeekingActions
+    {
+        void OnCancel(InputAction.CallbackContext context);
     }
 }

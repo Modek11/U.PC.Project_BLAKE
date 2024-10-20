@@ -3,7 +3,9 @@ using UnityEngine;
 using Unity.AI.Navigation;
 using System;
 using _Project.Scripts;
-using System.Linq;
+using _Project.Scripts.Floor_Generation;
+using Cinemachine;
+using _Project.Scripts.GlobalHandlers;
 
 public enum RoomType
 {
@@ -71,6 +73,8 @@ public class Room : MonoBehaviour
     private Transform[] fogPoints;
     [SerializeField]
     private List<GameObject> activefogBlockers = new List<GameObject>();
+    [SerializeField]
+    private CinemachineVirtualCamera peekCamera;
 
     private BlakeHeroCharacter blakeHeroCharacter;
     private List<RoomTrigger> triggers = new List<RoomTrigger>();
@@ -128,6 +132,27 @@ public class Room : MonoBehaviour
         isControlPerkActivated = value;
     }
 
+    public void Peek()
+    {
+        if (peekCamera == null) return;
+        ReferenceManager.PlayerInputController.onPeekingCancel += StopPeek;
+        roomManager.GetComponent<FloorManager>().GetMainCamera().enabled = false;
+        peekCamera.gameObject.SetActive(true);
+    }
+
+    public void StopPeek()
+    {
+        if (peekCamera == null) return;
+        roomManager.GetComponent<FloorManager>().GetMainCamera().enabled = true;
+        peekCamera.gameObject.SetActive(false);
+        ReferenceManager.PlayerInputController.onPeekingCancel -= StopPeek;
+
+    }
+
+    public bool HavePeekingCam()
+    {
+        return peekCamera != null;
+    }
     public void SetupFogBlockers()
     {
         if (!isControlPerkActivated) return;

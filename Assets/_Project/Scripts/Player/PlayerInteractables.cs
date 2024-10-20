@@ -79,7 +79,8 @@ public class PlayerInteractables : MonoBehaviour
             if(col.GetComponent<IInteractable>() != null)
             {
                 interactables.Add(col.GetComponent<IInteractable>());
-            } else if(col.GetComponent<IAltInteractable>() != null)
+            }
+            if(col.GetComponent<IAltInteractable>() != null)
             {
                 altInteractables.Add(col.GetComponent<IAltInteractable>());
             }
@@ -152,7 +153,7 @@ public class PlayerInteractables : MonoBehaviour
 
     private IAltInteractable GetClosestAltInteractable()
     {
-        if (interactables.Count > 0)
+        if (altInteractables.Count > 0)
         {
             IAltInteractable closest = null;
             float closestDistance = float.MaxValue;
