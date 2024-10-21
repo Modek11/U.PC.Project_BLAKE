@@ -176,6 +176,17 @@ public class Room : MonoBehaviour
         }
     }
 
+    public void AddToBlockerScale(float scale)
+    {
+        fogBlockerSize += scale;
+
+        foreach(var blocker in activefogBlockers)
+        {
+            blocker.transform.localScale = Vector3.one;
+            blocker.transform.localScale *= fogBlockerSize;
+        }
+    }
+
     public void ActivateAllBlockers()
     {
         foreach(var blocker in activefogBlockers)

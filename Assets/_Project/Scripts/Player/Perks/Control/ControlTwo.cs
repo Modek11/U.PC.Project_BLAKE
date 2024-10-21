@@ -3,17 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ControlThreePerk", menuName = "Abilities/Perks/Control Three")]
+[CreateAssetMenu(fileName = "ControlTwoPerk", menuName = "Abilities/Perks/Control Two")]
 
-public class ControlThree : PerkScriptableObject
+public class ControlTwo : PerkScriptableObject
 {
+    public float scaleToAdd = 0.5f;
     PlayerPerkManager player;
     public override void OnPickup(PlayerPerkManager player)
     {
         this.player = player;
         foreach(Room room in ReferenceManager.RoomManager.GetAllRooms())
         {
-            room.ActivateAllBlockers();
+            room.AddToBlockerScale(scaleToAdd);
         }
         ReferenceManager.Instance.OnFloorLoad += Refresh;
     }
@@ -21,12 +22,16 @@ public class ControlThree : PerkScriptableObject
     {
         foreach (Room room in ReferenceManager.RoomManager.GetAllRooms())
         {
-            room.ActivateAllBlockers();
+            room.AddToBlockerScale(scaleToAdd);
         }
     }
 
 
     public override void OnRemove()
     {
+        foreach (Room room in ReferenceManager.RoomManager.GetAllRooms())
+        {
+            room.AddToBlockerScale(-scaleToAdd);
+        }
     }
 }

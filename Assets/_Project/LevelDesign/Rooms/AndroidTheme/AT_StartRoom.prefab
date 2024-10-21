@@ -410,6 +410,7 @@ MonoBehaviour:
   fogBlockerSize: 1
   fogPoints: []
   activefogBlockers: []
+  peekCamera: {fileID: 0}
   gCost: 0
   hCost: 0
   fCost: 0
