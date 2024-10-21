@@ -1,4 +1,5 @@
 using _Project.Scripts.GlobalHandlers;
+using _Project.Scripts.PointsSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class ControlThree : PerkScriptableObject
         {
             room.ActivateAllBlockers();
         }
+        EnemyDeathMediator.Instance.ComboController.AddMinCombo(-0.3f);
         ReferenceManager.Instance.OnFloorLoad += Refresh;
     }
     private void Refresh()
@@ -28,5 +30,6 @@ public class ControlThree : PerkScriptableObject
 
     public override void OnRemove()
     {
+        EnemyDeathMediator.Instance.ComboController.AddMinCombo(0.3f);
     }
 }
