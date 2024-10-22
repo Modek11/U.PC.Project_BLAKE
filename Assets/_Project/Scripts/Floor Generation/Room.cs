@@ -59,6 +59,7 @@ public class Room : MonoBehaviour
 
     [Header("Fog")]
     private bool isControlPerkActivated = false;
+    private bool isControlPerkThreeActivated = false;
     [SerializeField]
     private GameObject fog;
     [SerializeField]
@@ -137,6 +138,12 @@ public class Room : MonoBehaviour
         if (peekCamera == null) return;
         ReferenceManager.PlayerInputController.onPeekingCancel += StopPeek;
         roomManager.GetComponent<FloorManager>().GetMainCamera().enabled = false;
+        ReferenceManager.PlayerInputController.GetComponent<PlayerMovement>().Peek(this);
+
+        for(int i = 0; i < ((isControlPerkThreeActivated)?fogBlockerUpgradeAmount: fogBlockerAmount); i++)
+        {
+            activefogBlockers[i].gameObject.SetActive(true);
+        }
         peekCamera.gameObject.SetActive(true);
     }
 
@@ -145,6 +152,10 @@ public class Room : MonoBehaviour
         if (peekCamera == null) return;
         roomManager.GetComponent<FloorManager>().GetMainCamera().enabled = true;
         peekCamera.gameObject.SetActive(false);
+        foreach(var fogBlocker in activefogBlockers)
+        {
+            fogBlocker.SetActive(false);
+        }
         ReferenceManager.PlayerInputController.onPeekingCancel -= StopPeek;
 
     }
@@ -155,7 +166,6 @@ public class Room : MonoBehaviour
     }
     public void SetupFogBlockers()
     {
-        if (!isControlPerkActivated) return;
         if (fogBlockerPrefab == null) return;
         if (fogPoints.Length == 0) return;
         List<Transform> avaiblePoints = new List<Transform>(fogPoints);
@@ -189,10 +199,7 @@ public class Room : MonoBehaviour
 
     public void ActivateAllBlockers()
     {
-        foreach(var blocker in activefogBlockers)
-        {
-            blocker.SetActive(true);
-        }
+        isControlPerkThreeActivated = true;
     }
 
     public void InitializeRoom(RoomManager rm)

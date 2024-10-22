@@ -11,7 +11,7 @@ public class RoomManager : MonoBehaviour
     public delegate void EnteredRoom(Room room);
     public event EnteredRoom onRoomEnter;
     public event EnteredRoom onRoomLeave;
-    public bool isControlOneActivated;
+    public bool isControlOneActivated = false;
 
     private List<Room> allRooms = new List<Room>();
 

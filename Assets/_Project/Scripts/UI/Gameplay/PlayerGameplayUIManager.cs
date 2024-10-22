@@ -54,7 +54,12 @@ namespace _Project.Scripts.UI.Gameplay
         [SerializeField]
         private GameObject dashCooldownSprite;
         private Dictionary<GameObject, Dash> dashSprites = new Dictionary<GameObject, Dash>();
-    
+
+        [SerializeField]
+        private GameObject controlOnePerkObject;
+        [SerializeField]
+        private GameObject controlOnePerkText;
+
         private GameObject player;
         private WeaponsManager weaponsManager;
         private PlayerInteractables playerInteractables;
@@ -102,6 +107,9 @@ namespace _Project.Scripts.UI.Gameplay
             playerMovement.OnDashRemoved += OnRemoveDash;
             blakeHeroCharacter.OnDamageTaken += HealthLeftUI;
             blakeHeroCharacter.onRespawn += OnRespawnUIUpdate;
+
+            playerMovement.OnPeek += ShowText;
+            ReferenceManager.PlayerInputController.onPeekingCancel += HideText;
             OnRespawnUIUpdate();
             RefreshDashUI();
         }
@@ -118,6 +126,18 @@ namespace _Project.Scripts.UI.Gameplay
                 GameObject sprite = Instantiate(dashCooldownSprite, dashCooldownUI.transform);
                 dashSprites.Add(sprite, dash);
             }
+        }
+
+        private void ShowText(Room room)
+        {
+            if (!ReferenceManager.RoomManager.isControlOneActivated) return;
+            controlOnePerkText.GetComponent<TMP_Text>().text = "Enemies inside: " + room.SpawnedEnemiesList.Count.ToString();
+            controlOnePerkText.SetActive(true);
+        }
+
+        private void HideText()
+        {
+            controlOnePerkText.SetActive(false);
         }
 
         private void ShowMap()
@@ -277,6 +297,10 @@ namespace _Project.Scripts.UI.Gameplay
             EnemyDeathMediator.Instance.OnRegisteredEnemyDeath -= UpdatePointsAndCombo;
             ReferenceManager.PlayerCurrencyController.OnPointsChanged -= RefreshPoints;
             EnemyDeathMediator.Instance.ComboController.OnComboTimerEnd -= HideComboTexts;
+
+
+            playerMovement.OnPeek -= ShowText;
+            ReferenceManager.PlayerInputController.onPeekingCancel -= HideText;
         }
     }
 }

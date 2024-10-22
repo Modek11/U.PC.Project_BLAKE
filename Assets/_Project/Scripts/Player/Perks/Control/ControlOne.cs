@@ -15,7 +15,6 @@ public class ControlOne : PerkScriptableObject
         foreach(Room room in ReferenceManager.RoomManager.GetAllRooms())
         {
             room.SetControlPerkOne(true);
-            room.SetupFogBlockers();
         }
         ReferenceManager.Instance.OnFloorLoad += Refresh;
     }
