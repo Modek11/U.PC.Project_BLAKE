@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 public class OptionsHandler : MonoBehaviour
 {
@@ -83,14 +84,21 @@ public class OptionsHandler : MonoBehaviour
             return;
         }
         
-        resolutionsDropdown.options.Clear(); 
-        
-        foreach (var resolution in Screen.resolutions)
+        resolutionsDropdown.options.Clear();
+
+        if (Screen.resolutions.Length > 0)
         {
-            resolutionsDropdown.options.Add(new TMP_Dropdown.OptionData(resolution.ToString()));
+            foreach (var resolution in Screen.resolutions)
+            {
+                resolutionsDropdown.options.Add(new TMP_Dropdown.OptionData(resolution.ToString()));
+            }
+        }
+        else
+        {
+            resolutionsDropdown.options.Add(new TMP_Dropdown.OptionData("1920 x 1080 @ 60Hz"));
         }
 
-        for (int i = 0; i < resolutionsDropdown.options.Count; i++)
+        for (var i = 0; i < resolutionsDropdown.options.Count; i++)
         {
             if (resolutionsDropdown.options[i].text == $"{Screen.width} x {Screen.height} @ {Screen.currentResolution.refreshRate}Hz")
             {
@@ -140,14 +148,9 @@ public class OptionsHandler : MonoBehaviour
 
         vSyncValueText.text = QualitySettings.vSyncCount > 0 ? ON : OFF;
         vSyncValueText.transform.parent.GetComponent<Toggle>().isOn = QualitySettings.vSyncCount > 0 ? true : false;
-
+        
         qualityDropdown.ClearOptions();
-        qualityDropdown.AddOptions(new List<TMP_Dropdown.OptionData>()
-                { new TMP_Dropdown.OptionData("Low")
-                , new TMP_Dropdown.OptionData("Medium")
-                , new TMP_Dropdown.OptionData("High")
-                , new TMP_Dropdown.OptionData("Ultra") });
-
+        qualityDropdown.AddOptions(QualitySettings.names.ToList());
         qualityDropdown.SetValueWithoutNotify(QualitySettings.GetQualityLevel());
     }
 
